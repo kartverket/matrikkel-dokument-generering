@@ -1,0 +1,40 @@
+{
+	auto_https off
+	admin off
+}
+
+:{$PORT:8086} {
+	encode zstd gzip
+
+	header {
+		-Server
+		X-Frame-Options "DENY"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		X-Permitted-Cross-Domain-Policies "none"
+		Cross-Origin-Opener-Policy "same-origin"
+		Cross-Origin-Embedder-Policy "require-corp"
+		Cross-Origin-Resource-Policy "same-site"
+		// Blacklist
+		Permissions-Policy "autoplay=(), cross-origin-isolated=(), encrypted-media=(), keyboard-map=(), publickey-credentials-get=(), sync-xhr=(), gamepad=(), unload=(), camera=(), microphone=(), geolocation=(), payment=(), usb=(), midi=(), magnetometer=(), gyroscope=(), accelerometer=(), xr-spatial-tracking=(), screen-wake-lock=(), serial=(), hid=(), idle-detection=(), display-capture=()"
+		Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+	}
+
+	handle /api/* {
+		reverse_proxy {$BACKEND_URL} {
+			header_up Host {upstream_hostport}
+		}
+	}
+
+	// Ingen caching
+	handle {
+		root * /srv
+
+		header Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+		header Pragma "no-cache"
+		header Expires "0"
+
+		try_files {path} /index.html
+		file_server
+	}
+}
