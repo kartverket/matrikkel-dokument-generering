@@ -7,9 +7,14 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "lint-fix": "eslint . --fix",
+    "format": "prettier --write \"./**/*.{js,jsx,ts,tsx,css,json}\" --list-different",
+    "format-check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,css,json}\"",
+    "format-secific": "prettier --write ",
     "preview": "vite preview"
   },
   "dependencies": {
+    "prettier": "^3.8.4",
     "react": "^19.2.6",
     "react-dom": "^19.2.6"
   },
