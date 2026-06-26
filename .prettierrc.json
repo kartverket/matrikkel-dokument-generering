@@ -1,8 +1,0 @@
-{
-  "plugins": ["prettier-plugin-organize-imports"],
-  "endOfLine": "auto",
-  "singleQuote": false,
-  "semi": true,
-  "trailingComma": "all",
-  "tabWidth": 2
-}
