@@ -15,7 +15,22 @@ env:
   image_name: ${{ github.repository }}
 
 jobs:
-  build:
+  version:
+    name: Calculate Version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version-string.outputs.version }}
+      image: ${{ steps.version-string.outputs.image }}
+
+    steps:
+      - name: Generate version string
+        id: version-string
+        shell: bash
+        run: |
+          version="$(date -u '+%Y.%m.%d-%H.%M')-$(echo "${GITHUB_SHA}" | cut -c1-7)"
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+          echo "image=ghcr.io/kartverket/matrikkel-pdf-generering:${version}" >> "$GITHUB_OUTPUT"
+  package-image:
     name: Verify, Build and Push
     runs-on: ubuntu-latest
     permissions:
@@ -40,10 +55,6 @@ jobs:
         if: ${{ !github.event.inputs.bypassValidation }}
         run: bun run lint
 
-      - name: "Verify formatting"
-        if: ${{ !github.event.inputs.bypassValidation }}
-        run: bun run format-check
-
       - name: "Build"
         run: bun run build
 
@@ -60,25 +71,28 @@ jobs:
       image_tag: ${{ steps.docker.outputs.image_tag }}
       image_digest: ${{ steps.docker.outputs.image_digest }}
 
-  deploy:
-    needs: [ build ]
-    name: Deploy to dev
-    uses: kartverket/bygning-github-workflows/.github/workflows/update-app-version.yaml@main
-    if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref_name == 'main'
+  deploy-dev:
+    name: "Deploy Dev"
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    needs:
+      - version
+      - package-image
     permissions:
+      actions: read
+      contents: read
       id-token: write
-    with:
-      cluster: atkv3
-      env: dev
-      namespace: matrikkel-main
-      application_name: matrikkel-dokument-generering
-      image_name: ${{ needs.build.outputs.image_name }}
-      image_tag: ${{ needs.build.outputs.image_tag }}
-      image_digest: ${{ needs.build.outputs.image_digest }}
-      identity: matrikkel-dokument-generering
+    steps:
+      - name: Deploy to Dev
+        uses: kartverket/matrikkel-actions/heimdall-deploy@main
+        with:
+          cluster: "atkv3-dev"
+          resource: ".skip/dev.yaml"
+          var: |
+            image=${{ needs.version.outputs.image }},version=${{ needs.version.outputs.version }}
 
   run-pharos:
-    needs: [ build ]
+    needs: [package-image]
     name: Run Pharos
     runs-on: ubuntu-latest
     if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref_name == 'main'
