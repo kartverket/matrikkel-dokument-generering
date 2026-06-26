@@ -26,10 +26,8 @@ jobs:
       - name: "Checkout code"
         uses: actions/checkout@v7
 
-      - name: "Setup node.js"
-        uses: actions/setup-node@v6
-        with:
-          node-version: "24"
+      - name: "Setup node and bun"
+        uses: ./.github/actions/setup-node-and-bun
 
       - name: "Audit dependencies"
         if: ${{ !github.event.inputs.bypassValidation }}
@@ -72,8 +70,8 @@ jobs:
     with:
       cluster: atkv3
       env: dev
-      namespace: matrikkel-core
-      application_name: matrikkel-dokument-generering # Eller matrikkel-pdf-generering-frontend??
+      namespace: matrikkel-main
+      application_name: matrikkel-dokument-generering
       image_name: ${{ needs.build.outputs.image_name }}
       image_tag: ${{ needs.build.outputs.image_tag }}
       image_digest: ${{ needs.build.outputs.image_digest }}
