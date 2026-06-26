@@ -1,0 +1,97 @@
+name: Build and deploy
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions: {}
+
+env:
+  image_registry: ghcr.io
+  image_name: ${{ github.repository }}
+
+jobs:
+  build:
+    name: Verify, Build and Push
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+      pull-requests: write
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@v7
+
+      - name: "Setup node.js"
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+
+      - name: "Audit dependencies"
+        if: ${{ !github.event.inputs.bypassValidation }}
+        run: bun audit --production --audit-level=high
+
+      - name: "Install dependencies"
+        run: bun install --legacy-peer-deps
+
+      - name: "Verify linting"
+        if: ${{ !github.event.inputs.bypassValidation }}
+        run: bun run lint
+
+      - name: "Verify formatting"
+        if: ${{ !github.event.inputs.bypassValidation }}
+        run: bun run format-check
+
+      - name: "Build"
+        run: bun run build
+
+      - name: Build and push docker
+        id: docker
+        if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref_name == 'main'
+        uses: ./.github/actions/build-push-docker
+        with:
+          dockerhub_username: ${{ vars.DOCKERHUB_USERNAME }}
+          dockerhub_token: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    outputs:
+      image_name: ${{ steps.docker.outputs.image_name }}
+      image_tag: ${{ steps.docker.outputs.image_tag }}
+      image_digest: ${{ steps.docker.outputs.image_digest }}
+
+  deploy:
+    needs: [ build ]
+    name: Deploy to dev
+    uses: kartverket/bygning-github-workflows/.github/workflows/update-app-version.yaml@main
+    if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref_name == 'main'
+    permissions:
+      id-token: write
+    with:
+      cluster: atkv3
+      env: dev
+      namespace: matrikkel-core
+      application_name: matrikkel-dokument-generering # Eller matrikkel-pdf-generering-frontend??
+      image_name: ${{ needs.build.outputs.image_name }}
+      image_tag: ${{ needs.build.outputs.image_tag }}
+      image_digest: ${{ needs.build.outputs.image_digest }}
+      identity: matrikkel-dokument-generering
+
+  run-pharos:
+    needs: [ build ]
+    name: Run Pharos
+    runs-on: ubuntu-latest
+    if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref_name == 'main'
+    permissions:
+      actions: read
+      packages: read
+      contents: read
+      security-events: write
+    steps:
+      - name: "Run Pharos"
+        uses: kartverket/pharos@599d3fe4af8bae19fbfda831662e90ee1c406ec2 # v0.6.3
+        with:
+          image_url: ${{ needs.build.outputs.image_name }}@${{ needs.build.outputs.image_digest }}
+          disable_severity_check: true
