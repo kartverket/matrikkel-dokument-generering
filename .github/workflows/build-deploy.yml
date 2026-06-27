@@ -15,6 +15,10 @@ env:
 
 permissions: {}
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   version:
     name: Calculate Version
@@ -32,14 +36,11 @@ jobs:
           echo "version=${version}" >> "$GITHUB_OUTPUT"
           echo "image=ghcr.io/kartverket/matrikkel-dokument-generering:${version}" >> "$GITHUB_OUTPUT"
 
-  package-image:
-    name: Build and (conditionally) Push Docker Image
+  verify:
+    name: Verify (audit, lint, build)
     runs-on: ubuntu-latest
-    needs:
-      - version
     permissions:
-      contents: write
-      packages: write
+      contents: read
 
     steps:
       - uses: actions/checkout@v7
@@ -60,30 +61,68 @@ jobs:
         run: bun run build
 
       - name: Set up Docker Buildx
+        if: github.ref != 'refs/heads/main'
+        uses: docker/setup-buildx-action@v4
+
+      - name: Build Docker image (no push)
+        if: github.ref != 'refs/heads/main'
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: Dockerfile
+          push: false
+          tags: matrikkel-dokument-generering:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  # Deploy
+  # Kjører kun ved push til main
+  package-image:
+    name: Build and Push Docker Image
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    needs:
+      - version
+      - verify
+    permissions:
+      contents: write
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Setup node and bun
+        uses: ./.github/actions/setup-node-and-bun
+
+      - name: Install dependencies
+        run: bun ci
+
+      - name: Build app
+        run: bun run build
+
+      - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
 
       - name: Login to GitHub Container Registry
-        if: github.ref == 'refs/heads/main'
         uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build Docker image
+      - name: Build and push Docker image
         uses: docker/build-push-action@v7
         env:
           image: ${{ needs.version.outputs.image }}
         with:
           context: .
           file: Dockerfile
-          push: ${{ github.ref == 'refs/heads/main' }}
+          push: true
           tags: ${{ env.image }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
       - name: Tag commit med artifaktversjon
-        if: github.ref == 'refs/heads/main'
         run: |
           git tag ${{ needs.version.outputs.version }}
           git push origin ${{ needs.version.outputs.version }}
