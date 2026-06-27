@@ -51,7 +51,7 @@ jobs:
         run: bun audit --production --audit-level=high
 
       - name: Install dependencies
-        run: bun install --legacy-peer-deps
+        run: bun ci
 
       - name: Verify linting
         run: bun run lint
@@ -122,7 +122,7 @@ jobs:
       - name: Deploy to Dev
         uses: kartverket/matrikkel-actions/heimdall-deploy@main
         with:
-          cluster: 'atkv3-dev'
-          resource: '.skip/dev.yaml'
+          cluster: "atkv3-dev"
+          resource: ".skip/dev.yaml"
           var: |
             image=${{ needs.version.outputs.image }},version=${{ needs.version.outputs.version }}
