@@ -1,0 +1,181 @@
+{
+  "rapportType": "BYG0011",
+  "tittel": "Bygg",
+  "kommune": { "nr": "4226", "navn": "HÆGEBOSTAD" },
+  "koordinatsystem": "22 - EUREF89 UTM Sone 32",
+  "locale": "nb",
+  "generertTidspunkt": "2026-05-26T12:28:00Z",
+  "utvalgskriterier": {
+    "bestaaendeBygg": true,
+    "utgaatteBygg": true,
+    "bygninger": true,
+    "bygningsendringer": true,
+    "frededeBygninger": "Alle",
+    "matrikkelenhet": { "gnr": 8, "bnr": 130 },
+    "subrapporter": {
+      "etasjer": true,
+      "bruksenheter": true,
+      "tiltakshavere": true,
+      "kontaktpersoner": true,
+      "hjemmelshavere": true,
+      "kulturminner": true
+    }
+  },
+  "bygninger": [
+    {
+      "bygningsnr": "19271889",
+      "bygningstype": { "kode": "161", "navn": "Fritidsbygg" },
+      "naeringsgruppe": "Annet som ikke er næring",
+      "matrikkelenhet": "4226 - 8/130",
+      "endringer": [
+        {
+          "lopenr": null,
+          "endringskode": null,
+          "bygningsstatus": "Tatt i bruk",
+          "antallBoenheter": 0,
+          "bruksareal": { "bolig": 0, "annet": 71, "totalt": 71 },
+          "bruttoareal": { "bolig": 0, "annet": 0, "totalt": 0 },
+          "bebygdAreal": 31,
+          "koordinat": { "nord": 6469493.8, "ost": 400351.7 },
+          "datoer": {
+            "rammetillatelse": "06.11.1996",
+            "igangsettingstillatelse": "01.08.1997",
+            "midlertidigBrukstillatelse": null,
+            "ferdigattest": null,
+            "tattIBruk": "01.12.1997",
+            "utgaattRevet": null
+          },
+          "etasjeplan": [
+            {
+              "etasjeplan": "Hovedetasje",
+              "etasje": 1,
+              "antallBoenheter": 0,
+              "bruksareal": { "bolig": 0.0, "annet": 71.0, "totalt": 71.0 },
+              "bruttoareal": { "bolig": 0.0, "annet": 0.0, "totalt": 0.0 }
+            }
+          ],
+          "bruksenheter": [
+            {
+              "bruksenhetsnr": "H0101",
+              "type": "Fritidsbolig",
+              "bruksareal": 0,
+              "antallRom": 0,
+              "kjokkentilgang": null,
+              "antallBad": 0,
+              "antallWc": 0,
+              "adresse": "Bjennvannslia 39"
+            }
+          ],
+          "hjemmelshavere": [
+            {
+              "rolle": "Hjemmelshaver",
+              "fnrOrgnr": "088653",
+              "navn": "OLIVENOLJE TRYGG",
+              "bruksenhet": "H0101",
+              "adresse": "Lauksundveien 122, 9194 LAUKSLETTA",
+              "andel": "1 / 1"
+            }
+          ]
+        },
+        {
+          "lopenr": 1,
+          "endringskode": "Tilbygg",
+          "bygningsstatus": "Ferdigattest",
+          "antallBoenheter": 0,
+          "bruksareal": { "bolig": 0, "annet": 14, "totalt": 14 },
+          "bruttoareal": { "bolig": 0, "annet": 0, "totalt": 0 },
+          "bebygdAreal": 31,
+          "koordinat": { "nord": 6469489.4, "ost": 400349.0 },
+          "datoer": {
+            "rammetillatelse": "06.03.2017",
+            "igangsettingstillatelse": null,
+            "midlertidigBrukstillatelse": null,
+            "ferdigattest": "22.01.2020",
+            "tattIBruk": null,
+            "utgaattRevet": null
+          },
+          "etasjeplan": [
+            {
+              "etasjeplan": "Hovedetasje",
+              "etasje": 1,
+              "antallBoenheter": 0,
+              "bruksareal": { "bolig": 0.0, "annet": 14.0, "totalt": 14.0 },
+              "bruttoareal": { "bolig": 0.0, "annet": 0.0, "totalt": 0.0 }
+            }
+          ],
+          "bruksenheter": [
+            {
+              "bruksenhetsnr": null,
+              "type": "Unummerert bruksenhet",
+              "bruksareal": 0,
+              "antallRom": 0,
+              "kjokkentilgang": null,
+              "antallBad": 0,
+              "antallWc": 0,
+              "adresse": null
+            }
+          ],
+          "hjemmelshavere": []
+        },
+        {
+          "lopenr": 2,
+          "endringskode": "Tilbygg",
+          "bygningsstatus": "Igangsettingstillatelse",
+          "antallBoenheter": 0,
+          "bruksareal": { "bolig": 0, "annet": 19, "totalt": 19 },
+          "bruttoareal": { "bolig": 0, "annet": 0, "totalt": 0 },
+          "bebygdAreal": 21,
+          "koordinat": { "nord": 6469499.4, "ost": 400360.8 },
+          "datoer": {
+            "rammetillatelse": null,
+            "igangsettingstillatelse": "01.11.2023",
+            "midlertidigBrukstillatelse": null,
+            "ferdigattest": null,
+            "tattIBruk": null,
+            "utgaattRevet": null
+          },
+          "etasjeplan": [
+            {
+              "etasjeplan": "Hovedetasje",
+              "etasje": 1,
+              "antallBoenheter": 0,
+              "bruksareal": { "bolig": 0.0, "annet": 19.0, "totalt": 19.0 },
+              "bruttoareal": { "bolig": 0.0, "annet": 0.0, "totalt": 0.0 }
+            }
+          ],
+          "bruksenheter": [
+            {
+              "bruksenhetsnr": "H0101",
+              "type": "Fritidsbolig",
+              "bruksareal": 19,
+              "antallRom": 1,
+              "kjokkentilgang": null,
+              "antallBad": 1,
+              "antallWc": 0,
+              "adresse": "Bjennvannslia 39"
+            }
+          ],
+          "tiltakshavere": [
+            {
+              "rolle": "Tiltakshaver",
+              "fnrOrgnr": "209057",
+              "navn": "ORIENTERING KORREKT",
+              "bruksenhet": null,
+              "adresse": null
+            }
+          ],
+          "hjemmelshavere": [
+            {
+              "rolle": "Hjemmelshaver",
+              "fnrOrgnr": "088653",
+              "navn": "OLIVENOLJE TRYGG",
+              "bruksenhet": "H0101",
+              "adresse": "Lauksundveien 122, 9194 LAUKSLETTA",
+              "andel": "1 / 1"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

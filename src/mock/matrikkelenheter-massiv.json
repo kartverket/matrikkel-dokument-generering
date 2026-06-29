@@ -1,0 +1,127 @@
+{
+  "rapportType": "MAT0005",
+  "tittel": "Matrikkelenheter - massiv",
+  "kommune": { "nr": "4226", "navn": "HÆGEBOSTAD" },
+  "koordinatsystem": "22 - EUREF89 UTM Sone 32",
+  "locale": "nb",
+  "generertTidspunkt": "2026-05-26T10:38:00Z",
+  "enheter": [
+    {
+      "knr": "4226",
+      "gnr": 35,
+      "bnr": 3,
+      "type": "Grunneiendom",
+      "bruksnavn": "LAUEN NEDRE",
+      "arealM2": 651950.7,
+      "arealMerknad": "beregnet",
+      "merknad": "Noen fiktive grenser, Hjelpelinje vannkant",
+      "koordinat": { "nord": 6473794.64, "ost": 392437.39 },
+      "hjemmelshavere": [
+        {
+          "rolle": "Hjemmelshaver",
+          "status": "PRODUKTIV",
+          "fnrOrgnr": "059125",
+          "navn": "FORELDER PRODUKTIV",
+          "bruksenhet": "H0101",
+          "adresse": {
+            "adressetype": "Vegadresse",
+            "adressenavn": "Lille Einaren",
+            "nr": 9,
+            "postnr": "3744",
+            "poststed": "SKIEN"
+          },
+          "andel": "1 / 1"
+        }
+      ],
+      "adresser": [
+        {
+          "adressetype": "Vegadresse",
+          "adressenavn": "Fossedalsveien",
+          "nr": 182,
+          "postnr": "4595",
+          "poststed": "TINGVATN"
+        }
+      ],
+      "bygninger": [
+        { "bygningsnr": "24122506", "bygningstype": { "kode": "241", "navn": "Hus for dyr/landbr.lager/silo" }, "bygningsstatus": "Bygning revet/brent" },
+        { "bygningsnr": "169606633", "bygningstype": { "kode": "241", "navn": "Hus for dyr/landbr.lager/silo" }, "bygningsstatus": "Tatt i bruk" },
+        { "bygningsnr": "24122530", "bygningstype": { "kode": "241", "navn": "Hus for dyr/landbr.lager/silo" }, "bygningsstatus": "Bygning revet/brent" },
+        { "bygningsnr": "169606447", "bygningstype": { "kode": "162", "navn": "Seterhus, sel, rorbu o.l." }, "bygningsstatus": "Tatt i bruk" },
+        { "bygningsnr": "24122492", "bygningstype": { "kode": "241", "navn": "Hus for dyr/landbr.lager/silo" }, "bygningsstatus": "Bygning revet/brent" }
+      ],
+      "kategorier": ["STRANDSONE"]
+    },
+    {
+      "knr": "4226",
+      "gnr": 35,
+      "bnr": 7,
+      "fnr": 1,
+      "type": "Festegrunn",
+      "bruksnavn": "LAUEN ØVRE",
+      "arealM2": 2480.5,
+      "arealMerknad": "beregnet",
+      "koordinat": { "nord": 6474012.18, "ost": 392610.55 },
+      "hjemmelshavere": [
+        {
+          "rolle": "Hjemmelshaver",
+          "status": "AKTIV",
+          "fnrOrgnr": "088653",
+          "navn": "OLIVENOLJE TRYGG",
+          "bruksenhet": "H0101",
+          "adresse": {
+            "adressetype": "Vegadresse",
+            "adressenavn": "Lauksundveien",
+            "nr": 122,
+            "postnr": "9194",
+            "poststed": "LAUKSLETTA"
+          },
+          "andel": "1 / 1"
+        }
+      ],
+      "adresser": [
+        {
+          "adressetype": "Vegadresse",
+          "adressenavn": "Bjennvannslia",
+          "nr": 39,
+          "postnr": "4595",
+          "poststed": "TINGVATN"
+        }
+      ],
+      "bygninger": [
+        { "bygningsnr": "19271889", "bygningstype": { "kode": "161", "navn": "Fritidsbygg" }, "bygningsstatus": "Tatt i bruk" }
+      ],
+      "kategorier": []
+    },
+    {
+      "knr": "4226",
+      "gnr": 36,
+      "bnr": 12,
+      "type": "Grunneiendom",
+      "bruksnavn": "MYRA",
+      "arealM2": 14302.0,
+      "arealMerknad": "beregnet",
+      "merknad": "Utgått: sammenslått med 36/4",
+      "koordinat": { "nord": 6475220.03, "ost": 393001.10 },
+      "hjemmelshavere": [
+        {
+          "rolle": "Hjemmelshaver",
+          "status": "UTGÅTT",
+          "fnrOrgnr": "209057",
+          "navn": "ORIENTERING KORREKT",
+          "bruksenhet": "H0101",
+          "adresse": {
+            "adressetype": "Vegadresse",
+            "adressenavn": "Heggestranda",
+            "nr": 4,
+            "postnr": "4596",
+            "poststed": "EIKEN"
+          },
+          "andel": "1 / 2"
+        }
+      ],
+      "adresser": [],
+      "bygninger": [],
+      "kategorier": ["DYRKA_MARK", "FLOMSONE"]
+    }
+  ]
+}
