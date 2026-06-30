@@ -5,7 +5,7 @@ metadata:
   namespace: matrikkel-main
 spec:
   image: "{{ image }}"
-  port: 8086
+  port: 8087
   ingresses:
     - matrikkel-dokument-generering.atkv3-dev.kartverket-intern.cloud
   replicas: 1
@@ -18,12 +18,12 @@ spec:
       memory: 256Mi
 
   liveness:
-    port: 8086
+    port: 8087
     path: /internal/isAlive
     initialDelay: 10
     failureThreshold: 6
   readiness:
-    port: 8086
+    port: 8087
     path: /internal/isReady
     initialDelay: 10
     failureThreshold: 6
