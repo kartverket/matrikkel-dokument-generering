@@ -1,14 +1,7 @@
 version: 2
 
-registries:
-  dockerhub-hardened-images:
-    type: docker-registry
-    url: https://dhi.io
-    username: ${{ vars.DOCKERHUB_USERNAME }}
-    password: ${{ secrets.DOCKERHUB_TOKEN }}
-
 updates:
-  - package-ecosystem: "npm"
+  - package-ecosystem: "bun"
     directory: "/"
     schedule:
       interval: "weekly"
@@ -33,8 +26,6 @@ updates:
 
   - package-ecosystem: "docker"
     directory: "/"
-    registries:
-      - dockerhub-hardened-images
     schedule:
       interval: "weekly"
       day: "sunday"
