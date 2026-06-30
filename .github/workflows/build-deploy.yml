@@ -1,0 +1,161 @@
+name: "Build and deploy"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  version:
+    name: Calculate Version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version-string.outputs.version }}
+      image: ${{ steps.version-string.outputs.image }}
+
+    steps:
+      - name: Generate version string
+        id: version-string
+        shell: bash
+        run: |
+          version="$(date -u '+%Y.%m.%d-%H.%M')-$(echo "${GITHUB_SHA}" | cut -c1-7)"
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+          echo "image=ghcr.io/kartverket/matrikkel-dokument-generering:${version}" >> "$GITHUB_OUTPUT"
+
+  verify:
+    name: Verify (audit, lint, build)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Setup node and bun
+        uses: ./.github/actions/setup-node-and-bun
+
+      - name: Audit dependencies
+        run: bun audit --production --audit-level=high
+
+      - name: Install dependencies
+        run: bun ci
+
+      - name: Verify linting
+        run: bun run lint
+
+      - name: Build app
+        run: bun run build
+
+      - name: Set up Docker Buildx
+        if: github.ref != 'refs/heads/main'
+        uses: docker/setup-buildx-action@v4
+
+      - name: Build Docker image (no push)
+        if: github.ref != 'refs/heads/main'
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: Dockerfile
+          push: false
+          tags: matrikkel-dokument-generering:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  # Deploy
+  # Kjører kun ved push til main
+  package-image:
+    name: Build and Push Docker Image
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    needs:
+      - version
+      - verify
+    permissions:
+      contents: write
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Setup node and bun
+        uses: ./.github/actions/setup-node-and-bun
+
+      - name: Install dependencies
+        run: bun ci
+
+      - name: Build app
+        run: bun run build
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v7
+        env:
+          image: ${{ needs.version.outputs.image }}
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          tags: ${{ env.image }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Tag commit med artifaktversjon
+        run: |
+          git tag ${{ needs.version.outputs.version }}
+          git push origin ${{ needs.version.outputs.version }}
+
+  pharos:
+    name: Run Pharos
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    needs:
+      - version
+      - package-image
+    permissions:
+      actions: read
+      packages: read
+      contents: read
+      security-events: write
+    steps:
+      - name: "Run Pharos"
+        uses: kartverket/pharos@599d3fe4af8bae19fbfda831662e90ee1c406ec2 # v0.6.3
+        with:
+          image_url: ${{ needs.version.outputs.image }}
+          disable_severity_check: true
+
+  deploy-dev:
+    name: "Deploy Dev"
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    needs:
+      - version
+      - package-image
+    permissions:
+      actions: read
+      contents: read
+      id-token: write
+    steps:
+      - name: Deploy to Dev
+        uses: kartverket/matrikkel-actions/heimdall-deploy@main
+        with:
+          cluster: "atkv3-dev"
+          resource: ".skip/dev.yaml"
+          var: |
+            image=${{ needs.version.outputs.image }},version=${{ needs.version.outputs.version }}
