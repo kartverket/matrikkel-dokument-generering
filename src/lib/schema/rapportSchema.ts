@@ -1,13 +1,17 @@
 import { z } from "zod";
 
+export const kommuneSchema = z.object({
+    nr: z.string().min(1),
+    navn: z.string().min(1),
+});
 
 export const rapportSchema = z.object({
-    reportType: z.enum(["bygg", "matrikkelenhet-massiv"]),
+    rapportType: z.string().min(1),
     tittel: z.string().min(1, "Title is required"),
-    kommune: z.object({
-        nr: z.string(),
-        kommuneNummer: z.string()
-    }),
-    koordinatsystem: z.string(),
-    locale: z.enum(["nb", "nn"]),
-})
+    kommune: kommuneSchema,
+    koordinatsystem: z.string().min(1),
+    locale: z.string().min(1),
+    generertTidspunkt: z.string().min(1),
+});
+
+export type Rapport = z.infer<typeof rapportSchema>;
