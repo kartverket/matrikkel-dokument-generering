@@ -1,5 +1,5 @@
 # Ignorerer alle filer, og deretter whitelister spesifikke nødvendige filer for å bygge Docker imaget.
 **
 !/dist
-!/src/server.ts
+!/src
 !/Dockerfile
