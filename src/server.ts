@@ -1,6 +1,6 @@
-const port = Number(process.env.PORT) || 3000;
+import { renderDocument} from "./Document.tsx";
 
-const distDir = "./dist";
+const port = Number(process.env.PORT) || 3000;
 
 const server = Bun.serve({
   port,
@@ -14,12 +14,16 @@ const server = Bun.serve({
       return new Response("OK");
     }
 
-    const pathname = url.pathname === "/" ? "/index.html" : url.pathname;
+    if (url.pathname === "/render" && req.method === "POST") {
+      const data = await req.json();
+      const html = renderDocument(data);
 
-    const file = Bun.file(`${distDir}${pathname}`);
-    if (await file.exists()) {
-      return new Response(file);
+      return new Response(html, {
+        status: 200,
+        headers: { "Content-Type": "text/html; charset=utf-8" },
+      });
     }
+
     return new Response("Not Found", { status: 404 });
   },
 });
