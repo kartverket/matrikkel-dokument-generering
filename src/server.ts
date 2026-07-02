@@ -1,4 +1,5 @@
-import { renderDocument} from "./Document.tsx";
+import { renderDocument } from "./Document.tsx";
+import { validateByggRapport } from "./lib/validators.ts";
 
 const port = Number(process.env.PORT) || 3000;
 
@@ -16,7 +17,17 @@ const server = Bun.serve({
 
     if (url.pathname === "/render" && req.method === "POST") {
       const data = await req.json();
-      const html = renderDocument(data);
+
+      const validatedData = validateByggRapport(data);
+      if (!validatedData.valid) {
+        return new Response(JSON.stringify({ errors: validatedData.errors }), {
+          status: 400,
+          headers: { "Content-Type": "application/json; charset=utf-8" },
+        });
+      }
+
+      const html = renderDocument(validatedData.data);
+
 
       return new Response(html, {
         status: 200,
