@@ -150,15 +150,10 @@ const bygningerSchema = z.object({
 });
 
 export type ByggRapport = z.infer<typeof byggRapportSchema>;
-export const byggRapportBaseSchema = rapportSchema.extend({
+export const byggRapportSchema = rapportSchema.extend({
     rapportType: z.literal("BYG0011"),
-});
-
-export const byggRapportSchema = byggRapportBaseSchema.extend({
     utvalgskriterier: utvalgskriterierSchema,
     bygninger: z.array(bygningerSchema),
 });
-
-
 
 

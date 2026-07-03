@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const kommuneSchema = z.object({
+const kommuneSchema = z.object({
     nr: z.string().min(1),
     navn: z.string().min(1),
 });

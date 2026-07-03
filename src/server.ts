@@ -20,7 +20,7 @@ const server = Bun.serve({
 
       const validatedData = validateByggRapport(data);
       if (!validatedData.valid) {
-        return new Response(JSON.stringify({ errors: validatedData.errors }), {
+        return new Response(JSON.stringify({ errors: validatedData }), {
           status: 400,
           headers: { "Content-Type": "application/json; charset=utf-8" },
         });

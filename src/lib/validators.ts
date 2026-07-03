@@ -1,21 +1,18 @@
 import { z } from "zod";
 import {
-    byggRapportBaseSchema,
     byggRapportSchema,
 } from "./schema/byggRapportSchema";
 
+const invalid = (error: z.ZodError) => ({
+    valid: false as const,
+    errors: z.flattenError(error).fieldErrors,
+});
 
 export function validateByggRapport(
     data: unknown,
 ) {
-    const baseResult = byggRapportBaseSchema.safeParse(data);
-    if (!baseResult.success) {
-        return { valid: false, errors: z.flattenError(baseResult.error).fieldErrors };
-    }
+
 
     const result = byggRapportSchema.safeParse(data);
-    if (!result.success) {
-        return { valid: false, errors: z.flattenError(result.error).fieldErrors };
-    }
-    return { valid: true, data: result.data };
+    return result.success ? { valid: true, data: result.data } : invalid(result.error);
 }
