@@ -1,25 +1,30 @@
 import { renderToStaticMarkup } from "react-dom/server"
+import { Section } from "./components/Section.tsx"
+import { Table } from "./components/Table.tsx"
 import { Header } from "./components/Header.tsx"
-import { Bygning } from "./components/Bygning"
-import type { Rapport } from "./types.ts"
 
 const css = ""
 
-function DocumentComponent({ data }: { data: Rapport }) {
-  return (
-    <div>
-      <Header
-        rapportType={data.rapportType}
-        tittel={data.tittel}
-        kommune={data.kommune}
-        koordinatsystem={data.koordinatsystem}
-        generertTidspunkt={data.generertTidspunkt}
-      />
+function DocumentComponent({ data }: { data: any }) { // Bytt til Rapport-type senere
 
-      {data.bygninger.map((bygning) => (
-        <Bygning key={bygning.bygningsnr} {...bygning} />
+  const headerPairs = [
+    { key: "Rapporttype", value: data.rapportType},
+    { key: "Kommune", value: `${data.kommune.navn} (${data.kommune.nr})`},
+    { key: "Koordinatsystem", value: data.koordinatsystem },
+    { key: "Generert tidspunkt", value: data.generertTidspunkt }
+  ]
+
+  return (
+    <>
+      <Header title={data.tittel} pairs={headerPairs} />
+      {data.bygninger.map((bygning: any) => (
+        <Section key={bygning.bygningsnr} title={`Bygning ${bygning.bygningsnr} – ${bygning.bygningstype.navn}`}>
+          <Table rows={[
+            { label: "Matrikkelenhet", value: bygning.matrikkelenhet },
+          ]} />
+        </Section>
       ))}
-    </div>
+    </>
   )
 }
 
@@ -27,7 +32,7 @@ export function renderDocument(data: unknown): string {
   console.dir(data, { depth: 10, colors: true })
 
   const body = renderToStaticMarkup(
-    <DocumentComponent data={data as Rapport} />,
+    <DocumentComponent data={data} />,
   )
   return `<!DOCTYPE html>
             <html lang="en">

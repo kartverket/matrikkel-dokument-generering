@@ -1,19 +1,18 @@
+import type { Pair } from "../types";
+
 type HeaderProps = {
-    rapportType: string;
-    tittel: string;
-    kommune: { nr: string; navn: string };
-    koordinatsystem: string;
-    generertTidspunkt: string;
+    title: string;
+    pairs?: Pair[]
+    
 };
 
-export function Header({ rapportType, tittel, kommune, koordinatsystem, generertTidspunkt }: HeaderProps) {
+export function Header({ title, pairs }: HeaderProps) {
     return (
-        <div>
-            <h1>{tittel} – {rapportType}</h1>
-            <p>Kommune: {kommune.navn}</p>
-            <p>Kommunenummer: {kommune.nr}</p>
-            <p>Koordinatsystem: {koordinatsystem}</p>
-            <p>Generert: {new Date(generertTidspunkt).toLocaleString("nb")}</p>
-        </div>
+        <>
+            <h1>{title}</h1>
+            {pairs && pairs.map((pair) => (
+                <p key={pair.key}>{pair.key}: {pair.value}</p>
+            ))}
+        </>
     );
 }

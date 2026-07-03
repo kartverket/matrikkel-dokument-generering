@@ -25,3 +25,6 @@ dist-ssr
 
 # Lokal config
 .env
+
+# Mock data
+mock-data.json
