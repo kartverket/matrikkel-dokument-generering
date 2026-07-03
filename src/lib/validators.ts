@@ -5,22 +5,17 @@ import {
 } from "./schema/byggRapportSchema";
 
 
-
-function flattenErrors(error: z.ZodError) {
-    return z.flattenError(error).fieldErrors;
-}
-
 export function validateByggRapport(
     data: unknown,
 ) {
     const baseResult = byggRapportBaseSchema.safeParse(data);
     if (!baseResult.success) {
-        return { valid: false, errors: flattenErrors(baseResult.error) };
+        return { valid: false, errors: z.flattenError(baseResult.error).fieldErrors };
     }
 
     const result = byggRapportSchema.safeParse(data);
     if (!result.success) {
-        return { valid: false, errors: flattenErrors(result.error) };
+        return { valid: false, errors: z.flattenError(result.error).fieldErrors };
     }
     return { valid: true, data: result.data };
 }
