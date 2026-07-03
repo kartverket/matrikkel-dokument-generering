@@ -2,22 +2,28 @@ import { renderToStaticMarkup } from "react-dom/server"
 import { Section } from "./components/Section.tsx"
 import { Table } from "./components/Table.tsx"
 import { Header } from "./components/Header.tsx"
+import type { ByggRapport } from "./lib/schema/byggRapportSchema.ts"
 
 const css = ""
 
-function DocumentComponent({ data }: { data: any }) { // Bytt til Rapport-type senere
+interface Props {
+  document: ByggRapport
+}
+
+
+function DocumentComponent({ document }: Props) { 
 
   const headerPairs = [
-    { key: "Rapporttype", value: data.rapportType},
-    { key: "Kommune", value: `${data.kommune.navn} (${data.kommune.nr})`},
-    { key: "Koordinatsystem", value: data.koordinatsystem },
-    { key: "Generert tidspunkt", value: data.generertTidspunkt }
+    { key: "Rapporttype", value: document.rapportType},
+    { key: "Kommune", value: `${document.kommune.navn} (${document.kommune.nr})`},
+    { key: "Koordinatsystem", value: document.koordinatsystem },
+    { key: "Generert tidspunkt", value: document.generertTidspunkt }
   ]
 
   return (
     <>
-      <Header title={data.tittel} pairs={headerPairs} />
-      {data.bygninger.map((bygning: any) => (
+      <Header title={document.tittel} pairs={headerPairs} />
+      {document.bygninger.map((bygning) => (
         <Section key={bygning.bygningsnr} title={`Bygning ${bygning.bygningsnr} – ${bygning.bygningstype.navn}`}>
           <Table rows={[
             { label: "Matrikkelenhet", value: bygning.matrikkelenhet },
@@ -28,11 +34,11 @@ function DocumentComponent({ data }: { data: any }) { // Bytt til Rapport-type s
   )
 }
 
-export function renderDocument(data: unknown): string {
-  console.dir(data, { depth: 10, colors: true })
+export function renderDocument(document: ByggRapport): string {
+  console.dir(document, { depth: 10, colors: true })
 
   const body = renderToStaticMarkup(
-    <DocumentComponent data={data} />,
+    <DocumentComponent document={document} />,
   )
   return `<!DOCTYPE html>
             <html lang="en">

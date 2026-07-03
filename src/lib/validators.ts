@@ -11,8 +11,6 @@ const invalid = (error: z.ZodError) => ({
 export function validateByggRapport(
     data: unknown,
 ) {
-
-
     const result = byggRapportSchema.safeParse(data);
     return result.success ? { valid: true, data: result.data } : invalid(result.error);
 }
