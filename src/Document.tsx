@@ -20,16 +20,47 @@ function DocumentComponent({ document }: Props) {
     { key: "Generert tidspunkt", value: document.generertTidspunkt }
   ]
 
+ 
+
   return (
     <>
       <Header title={document.tittel} pairs={headerPairs} />
       {document.bygninger.map((bygning) => (
-        <Section key={bygning.bygningsnr} title={`Bygning ${bygning.bygningsnr} – ${bygning.bygningstype.navn}`}>
+        <Section key={bygning.bygningsnr} title={`Bygningstype`}>
           <Table rows={[
+            {label: "Bygningsnummer", value: bygning.bygningsnr },
+            { label: "Bygningstype", value: bygning.bygningstype.navn },
             { label: "Matrikkelenhet", value: bygning.matrikkelenhet },
+            {
+  label: "Adresseverdig", value: bygning.adresseverdig ? "Ja" : "Nei" },
+            { label: "Næringsgruppe", value: bygning.naeringsgruppe },
+            { label: "Matrikkelenhet", value: bygning.matrikkelenhet },
+            
           ]} />
+
+
+          <h3>Endringer</h3>
+          {bygning.endringer.map((endring) => (
+            <div key={endring.lopenr}>
+
+              <h4>
+                {`${endring.lopenr === 0 ? "Original" : `Endring ${endring.lopenr.toString()}`}`}
+              </h4>
+              <Table rows={[
+                {label: "Løpenummer", value: endring.lopenr.toString() },
+                { label: "Endringskode", value: endring.endringskode },
+                { label: "Bygningsstatus", value: endring.bygningsstatus.navn },
+                { label: "Antall boenheter", value: endring.antallBoenheter.toString() },
+              ]} />
+            </div>
+          ))}
+
+
         </Section>
       ))}
+
+
+
     </>
   )
 }
