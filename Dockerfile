@@ -11,7 +11,7 @@ RUN addgroup -g ${USER_ID} ${USER_NAME} \
 WORKDIR /srv
 
 COPY --chown=${USER_ID}:${USER_ID} dist ./dist
-COPY --chown=${USER_ID}:${USER_ID} src/server.ts ./src/server.ts
+COPY --chown=${USER_ID}:${USER_ID} src ./src
 
 USER ${USER_NAME}
 
