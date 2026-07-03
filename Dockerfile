@@ -22,8 +22,8 @@ RUN addgroup -g ${USER_ID} ${USER_NAME} \
 
 WORKDIR /srv
 
-COPY --chown=${USER_ID}:${USER_ID} dist ./dist
-COPY --chown=${USER_ID}:${USER_ID} src ./src
+COPY --from=builder --chown=${USER_ID}:${USER_ID} /srv/src/server.js ./src/server.js
+COPY --from=builder --chown=${USER_ID}:${USER_ID} /srv/dist ./dist
 
 USER ${USER_NAME}
 
