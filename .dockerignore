@@ -1,5 +1,7 @@
-# Ignorerer alle filer, og deretter whitelister spesifikke nødvendige filer for å bygge Docker imaget.
-**
-!/dist
-!/src
-!/Dockerfile
+.github
+.husky
+.idea
+.security
+.skip
+dist
+node_modules
