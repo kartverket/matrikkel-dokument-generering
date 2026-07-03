@@ -85,15 +85,6 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - name: Setup node and bun
-        uses: ./.github/actions/setup-node-and-bun
-
-      - name: Install dependencies
-        run: bun ci
-
-      - name: Build app
-        run: bun run build
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
 
