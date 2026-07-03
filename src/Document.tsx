@@ -1,20 +1,20 @@
-import { renderToStaticMarkup } from "react-dom/server";
-import type { ByggRapport } from "./lib/schema/byggRapportSchema";
+import { renderToStaticMarkup } from "react-dom/server"
+import type { ByggRapport } from "./lib/schema/byggRapportSchema"
 
 const css = ""
 
 function DocumentComponent({ data }: { data: ByggRapport }) {
-    return <div className="text-2xl font-bold">{JSON.stringify(data)}</div>;
+  return <div className="text-2xl font-bold">{JSON.stringify(data)}</div>
 }
 
 export function renderDocument(data: ByggRapport): string {
-    const body = renderToStaticMarkup(<DocumentComponent data={data} />);
-    return `<!DOCTYPE html>
+  const body = renderToStaticMarkup(<DocumentComponent data={data} />)
+  return `<!DOCTYPE html>
             <html lang="en">
             <head>
               <meta charset="utf-8">
               <style>${css}</style>
             </head>
             <body>${body}</body>
-            </html>`;
+            </html>`
 }
