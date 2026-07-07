@@ -1,14 +1,11 @@
 import { renderToStaticMarkup } from "react-dom/server"
 import type { ByggRapport } from "./lib/schema/byggRapportSchema"
-import { byggRapportStructure } from "./lib/structure/byggRapportStructure"
-import { renderReportStructure } from "./lib/structure/reportStructure"
+import { byggRapportStructure, renderReportStructure } from "./lib/structure"
 
 const css = ""
 
 function DocumentComponent({ data }: { data: ByggRapport }) {
-  return (
-    <>{renderReportStructure(data, byggRapportStructure)}</>
-  )
+  return <>{renderReportStructure(data, byggRapportStructure)}</>
 }
 
 export function renderDocument(data: ByggRapport): string {

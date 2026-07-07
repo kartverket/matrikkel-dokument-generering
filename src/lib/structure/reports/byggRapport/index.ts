@@ -1,0 +1,1 @@
+export { byggRapportStructure } from "./structure"
