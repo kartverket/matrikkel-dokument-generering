@@ -1,6 +1,6 @@
 import type { Row } from "../types";
 
-export function Table({ rows }: { rows: Row[] }) {
+export function Table({ rows }: { rows: readonly Row[] }) {
   return (
     <table style={{ marginBottom: "1rem", padding: "1rem", border: "1px solid #ccc", borderRadius: "4px" }}>
       <tbody>

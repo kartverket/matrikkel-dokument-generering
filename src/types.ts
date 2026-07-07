@@ -5,7 +5,7 @@ export type Pair = {
 
 export type Row = {
   label: string;
-  value: string | null;
+  value: React.ReactNode | null;
 };
 
 export type Column<T> = {

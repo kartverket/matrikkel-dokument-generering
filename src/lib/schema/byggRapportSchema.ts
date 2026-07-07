@@ -139,7 +139,7 @@ const bygningsendringSchema = z.object({
   kulturminner: z.array(kulturminneSchema).optional().default([]),
 })
 
-const bygningerSchema = z.object({
+const bygningSchema = z.object({
   id: z.number(),
   bygningsnr: z.string().min(1),
   bygningstype: bygningstypeSchema,
@@ -149,9 +149,18 @@ const bygningerSchema = z.object({
   endringer: z.array(bygningsendringSchema),
 })
 
-export type ByggRapport = z.infer<typeof byggRapportSchema>
 export const byggRapportSchema = rapportSchema.extend({
   rapportType: z.literal("BYG0011"),
   utvalgskriterier: utvalgskriterierSchema,
-  bygninger: z.array(bygningerSchema),
+  bygninger: z.array(bygningSchema),
 })
+
+export type ByggRapport = z.infer<typeof byggRapportSchema>
+export type ByggRapportBygning = z.infer<typeof bygningSchema>
+export type ByggRapportEndring = z.infer<typeof bygningsendringSchema>
+export type ByggRapportEtasjeplan = z.infer<typeof bygningsetasjeSchema>
+export type ByggRapportBruksenhet = z.infer<typeof bruksenhetSchema>
+export type ByggRapportHjemmelshaver = z.infer<typeof hjemmelshaverSchema>
+export type ByggRapportTiltakshaver = z.infer<typeof tiltakshaverSchema>
+export type ByggRapportKontaktperson = z.infer<typeof kontaktpersonSchema>
+export type ByggRapportKulturminne = z.infer<typeof kulturminneSchema>

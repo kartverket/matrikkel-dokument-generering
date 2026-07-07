@@ -1,6 +1,6 @@
 import type { Column } from "../types";
 
-export function DataTable<T>({ columns, rows, getKey }: { columns: Column<T>[]; rows: T[]; getKey: (row: T) => string }) {
+export function DataTable<T>({ columns, rows, getKey }: { columns: readonly Column<T>[]; rows: readonly T[]; getKey: (row: T) => string }) {
   return (
     <table>
       <thead>
