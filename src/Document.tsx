@@ -1,6 +1,7 @@
 import { renderToStaticMarkup } from "react-dom/server"
 import type { ByggRapport } from "./lib/schema/byggRapportSchema"
-import { byggRapportStructure, renderReportStructure } from "./lib/structure"
+import { renderReportStructure } from "./lib/structure/core/render"
+import { byggRapportStructure } from "./lib/structure/reports/byggRapport/structure"
 
 const css = ""
 
