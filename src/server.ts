@@ -26,7 +26,7 @@ const server = Bun.serve({
         })
       }
 
-      const html = renderDocument(validatedData.data)
+      const html = await renderDocument(validatedData.data)
 
       return new Response(html, {
         status: 200,

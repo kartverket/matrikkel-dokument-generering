@@ -1,11 +1,10 @@
 import { renderToStaticMarkup } from "react-dom/server"
 import type { ByggRapport } from "./lib/schema/byggRapportSchema"
+import { loadPdfDocumentAssets } from "./lib/pdfDocumentAssets"
 import { Section } from "./components/Section"
 import { Table } from "./components/Table"
 
-const css = ""
-
-function DocumentComponent({ data }: { data: ByggRapport }) { 
+function DocumentComponent({ data }: { data: ByggRapport }) {
   return (
     // Eksempel på hvordan man kan bruke Section og Table komponentene til å lage et dokument basert på ByggRapport data
     <>
@@ -80,17 +79,19 @@ function DocumentComponent({ data }: { data: ByggRapport }) {
           ))}
         </Section>
       ))}
-  </>
+    </>
   )
 }
 
-export function renderDocument(data: ByggRapport): string {
+export async function renderDocument(data: ByggRapport): Promise<string> {
+  const documentAssets = await loadPdfDocumentAssets()
   const body = renderToStaticMarkup(<DocumentComponent data={data} />)
   return `<!DOCTYPE html>
             <html lang="en">
             <head>
               <meta charset="utf-8">
-              <style>${css}</style>
+              ${documentAssets.stylesheetLinks}
+              <style>${documentAssets.css}</style>
             </head>
             <body>${body}</body>
             </html>`

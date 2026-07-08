@@ -16,6 +16,10 @@
   "dependencies": {
     "@kv-designsystem/react": "^1.0.0-alpha.2",
     "@navikt/aksel-icons": "^8.14.0",
+    "postcss": "^8.5.16",
+    "postcss-calc": "^10.1.1",
+    "postcss-custom-properties": "^15.0.1",
+    "postcss-preset-env": "^11.3.2",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "zod": "^4.4.3"
