@@ -1,5 +1,4 @@
-import { Section } from "../../../components/Section"
-import { Table } from "../../../components/Table"
+import { Heading, Table } from "@kv-designsystem/react"
 import type { ReportStructure, StructureBlock, ValueResolver } from "./types"
 
 export function renderReportStructure<T>(
@@ -29,7 +28,18 @@ function renderBlock<T>(
         return []
       }
 
-      return [<Table key={key} rows={rows} />]
+      return [
+        <Table key={key} border>
+          <Table.Body>
+            {rows.map((row) => (
+              <Table.Row key={row.label}>
+                <Table.HeaderCell scope="row">{row.label}</Table.HeaderCell>
+                <Table.Cell>{row.value}</Table.Cell>
+              </Table.Row>
+            ))}
+          </Table.Body>
+        </Table>,
+      ]
     }
 
     case "dataTable": {
@@ -44,9 +54,10 @@ function renderBlock<T>(
       }
 
       return [
-        <Section key={key} title={resolveValue(block.title, value, 0)}>
+        <section key={key}>
+          <Heading level={2}>{resolveValue(block.title, value, 0)}</Heading>
           {children}
-        </Section>,
+        </section>,
       ]
     }
 

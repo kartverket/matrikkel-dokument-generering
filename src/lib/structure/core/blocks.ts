@@ -1,6 +1,6 @@
+import { Heading, Table } from "@kv-designsystem/react"
 import { createElement } from "react"
-import { DataTable } from "../../../components/DataTable"
-import { Section } from "../../../components/Section"
+import type { Column } from "../../../types"
 import { renderReportStructure } from "./render"
 import type {
   DataTableBlock,
@@ -36,14 +36,7 @@ export function dataTable<T, TRow>(
         return []
       }
 
-      return [
-        createElement(DataTable<TRow>, {
-          key,
-          columns: config.columns,
-          rows,
-          getKey: config.getKey,
-        }),
-      ]
+      return [renderTable(key, config.columns, rows, config.getKey)]
     },
   }
 }
@@ -73,15 +66,72 @@ export function repeatSection<T, TItem>(
         }
 
         return [
-          createElement(Section, {
-            key: `${key}-${config.getKey(item)}`,
-            title: resolveValue(config.title, item, index),
+          createSection(
+            `${key}-${config.getKey(item)}`,
+            resolveValue(config.title, item, index),
             children,
-          }),
+          ),
         ]
       })
     },
   }
+}
+
+function createSection(
+  key: string,
+  title: string,
+  children: React.ReactNode[],
+): React.ReactNode {
+  return createElement(
+    "section",
+    { key },
+    createElement(Heading, { level: 2 }, title),
+    ...children,
+  )
+}
+
+function renderTable<TRow>(
+  key: string,
+  columns: readonly Column<TRow>[],
+  rows: readonly TRow[],
+  getKey: (row: TRow) => string,
+): React.ReactNode {
+  return createElement(
+    Table,
+    { key, border: true },
+    createElement(
+      Table.Head,
+      null,
+      createElement(
+        Table.Row,
+        null,
+        ...columns.map((column) =>
+          createElement(
+            Table.HeaderCell,
+            { key: column.header },
+            column.header,
+          ),
+        ),
+      ),
+    ),
+    createElement(
+      Table.Body,
+      null,
+      ...rows.map((row) =>
+        createElement(
+          Table.Row,
+          { key: getKey(row) },
+          ...columns.map((column) =>
+            createElement(
+              Table.Cell,
+              { key: column.header },
+              column.render(row),
+            ),
+          ),
+        ),
+      ),
+    ),
+  )
 }
 
 function resolveValue<T, TValue>(

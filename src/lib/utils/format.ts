@@ -1,3 +1,3 @@
 export function formatArea(value: number) {
-    return `${value} m²`
+  return `${value} m²`
 }

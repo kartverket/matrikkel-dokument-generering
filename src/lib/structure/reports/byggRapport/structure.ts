@@ -5,7 +5,12 @@ import type {
   ByggRapportEtasjeplan as Etasjeplan,
 } from "../../../schema/byggRapportSchema"
 import { formatArea } from "../../../utils/format"
-import { createReportStructure, dataTable, repeatSection, section } from "../../core/blocks"
+import {
+  createReportStructure,
+  dataTable,
+  repeatSection,
+  section,
+} from "../../core/blocks"
 
 export const byggRapportStructure = createReportStructure<ByggRapport>([
   repeatSection<ByggRapport, Bygning>({
