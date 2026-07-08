@@ -1,4 +1,5 @@
 import { Table } from "@kv-designsystem/react"
+import { useTranslation } from "react-i18next"
 import type { Bygningsendring } from "../lib/schema/byggRapportSchema"
 import { formatArea } from "../lib/utils/format"
 
@@ -7,6 +8,8 @@ interface Props {
 }
 
 export function EtasjerSection({ etasjeEndringer }: Props) {
+  const { t } = useTranslation()
+
   if (!etasjeEndringer || etasjeEndringer.length === 0) return null
 
   const rader = etasjeEndringer.flatMap((endring) =>
@@ -19,23 +22,45 @@ export function EtasjerSection({ etasjeEndringer }: Props) {
     <Table zebra border>
       <Table.Head>
         <Table.Row>
-          <Table.HeaderCell>Endring</Table.HeaderCell>
-          <Table.HeaderCell>Etasjeplan</Table.HeaderCell>
-          <Table.HeaderCell>Etasje</Table.HeaderCell>
-          <Table.HeaderCell>Antall boenheter</Table.HeaderCell>
-          <Table.HeaderCell>Bruksareal bolig</Table.HeaderCell>
-          <Table.HeaderCell>Bruksareal annet</Table.HeaderCell>
-          <Table.HeaderCell>Bruksareal totalt</Table.HeaderCell>
-          <Table.HeaderCell>Bruttoareal bolig</Table.HeaderCell>
-          <Table.HeaderCell>Bruttoareal annet</Table.HeaderCell>
-          <Table.HeaderCell>Bruttoareal totalt</Table.HeaderCell>
+          <Table.HeaderCell>
+            {t("rapport.BYG0011.etasjer.endring")}
+          </Table.HeaderCell>
+          <Table.HeaderCell>
+            {t("rapport.BYG0011.etasjer.etasjeplan")}
+          </Table.HeaderCell>
+          <Table.HeaderCell>
+            {t("rapport.BYG0011.etasjer.etasje")}
+          </Table.HeaderCell>
+          <Table.HeaderCell>
+            {t("rapport.BYG0011.etasjer.antallBoenheter")}
+          </Table.HeaderCell>
+          <Table.HeaderCell>
+            {t("rapport.BYG0011.etasjer.bruksarealBolig")}
+          </Table.HeaderCell>
+          <Table.HeaderCell>
+            {t("rapport.BYG0011.etasjer.bruksarealAnnet")}
+          </Table.HeaderCell>
+          <Table.HeaderCell>
+            {t("rapport.BYG0011.etasjer.bruksarealTotalt")}
+          </Table.HeaderCell>
+          <Table.HeaderCell>
+            {t("rapport.BYG0011.etasjer.bruttoarealBolig")}
+          </Table.HeaderCell>
+          <Table.HeaderCell>
+            {t("rapport.BYG0011.etasjer.bruttoarealAnnet")}
+          </Table.HeaderCell>
+          <Table.HeaderCell>
+            {t("rapport.BYG0011.etasjer.bruttoarealTotalt")}
+          </Table.HeaderCell>
         </Table.Row>
       </Table.Head>
       <Table.Body>
         {rader.map(({ endring, etasje: e }) => (
           <Table.Row key={`${endring.id}-${e.etasjeplan}-${e.etasje}`}>
             <Table.Cell>
-              {endring.lopenr === 0 ? "Opprinnelig" : `${endring.lopenr}`}
+              {endring.lopenr === 0
+                ? t("rapport.BYG0011.etasjer.opprinnelig")
+                : `${endring.lopenr}`}
             </Table.Cell>
             <Table.Cell>{e.etasjeplan}</Table.Cell>
             <Table.Cell>{e.etasje}</Table.Cell>

@@ -1,24 +1,37 @@
 import { renderToStaticMarkup } from "react-dom/server"
-import type { ByggRapport } from "./lib/schema/byggRapportSchema"
+import { I18nextProvider, useTranslation } from "react-i18next"
 import { Section } from "./components/Section"
 import { Table } from "./components/Table"
+import { createI18n } from "./lib/i18n/createI18n"
+import type { ByggRapport } from "./lib/schema/byggRapportSchema"
 import { EtasjerSection } from "./sections/Etasjer"
 
 const css = ""
 
 function DocumentComponent({ data }: { data: ByggRapport }) {
+  const { t } = useTranslation()
+
   return (
     // Eksempel på hvordan man kan bruke Section og Table komponentene til å lage et dokument basert på ByggRapport data
     <>
       {data.bygninger.map((bygning) => (
         <Section
           key={bygning.bygningsnr}
-          title={`Bygning ${bygning.bygningsnr} – ${bygning.bygningstype.navn}`}
+          title={t("rapport.BYG0011.title", {
+            bygningsnr: bygning.bygningsnr,
+            bygningstype: bygning.bygningstype.navn,
+          })}
         >
           <Table
             rows={[
-              { label: "Matrikkelenhet", value: bygning.matrikkelenhet },
-              { label: "Næringsgrupppe", value: bygning.naeringsgruppe },
+              {
+                label: t("rapport.BYG0011.matrikkelenhet"),
+                value: bygning.matrikkelenhet,
+              },
+              {
+                label: t("rapport.BYG0011.naeringsgruppe"),
+                value: bygning.naeringsgruppe,
+              },
             ]}
           />
 
@@ -112,9 +125,14 @@ function DocumentComponent({ data }: { data: ByggRapport }) {
 }
 
 export function renderDocument(data: ByggRapport): string {
-  const body = renderToStaticMarkup(<DocumentComponent data={data} />)
+  const i18n = createI18n(data.locale)
+  const body = renderToStaticMarkup(
+    <I18nextProvider i18n={i18n}>
+      <DocumentComponent data={data} />
+    </I18nextProvider>,
+  )
   return `<!DOCTYPE html>
-            <html lang="en">
+            <html lang="${data.locale}">
             <head>
               <meta charset="utf-8">
               <style>${css}</style>
