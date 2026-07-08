@@ -1,6 +1,6 @@
 export const nn = {
-  document: {
-    bygning: {
+  rapport: {
+    BYG0011: {
       title: "Bygning {{bygningsnr}} – {{bygningstype}}",
       matrikkelenhet: "Matrikkeleining",
       naeringsgruppe: "Næringsgruppe",
