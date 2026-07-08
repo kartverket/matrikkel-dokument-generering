@@ -4,6 +4,7 @@ import type {
   ByggRapportEndring as Endring,
   ByggRapportEtasjeplan as Etasjeplan,
 } from "../../../schema/byggRapportSchema"
+import { createElement } from "react"
 import { formatArea } from "../../../utils/format"
 import {
   createReportStructure,
@@ -11,6 +12,16 @@ import {
   repeatSection,
   section,
 } from "../../core/blocks"
+
+function renderArealFordeling(areal: Etasjeplan["bruksareal"]) {
+  return createElement(
+    "div",
+    null,
+    createElement("div", null, `Bolig: ${formatArea(areal.bolig)}`),
+    createElement("div", null, `Annet: ${formatArea(areal.annet)}`),
+    createElement("div", null, `Totalt: ${formatArea(areal.totalt)}`),
+  )
+}
 
 export const byggRapportStructure = createReportStructure<ByggRapport>([
   repeatSection<ByggRapport, Bygning>({
@@ -33,18 +44,22 @@ export const byggRapportStructure = createReportStructure<ByggRapport>([
             blocks: [
               dataTable<Endring, Etasjeplan>({
                 columns: [
+                  { header: "Etasjeplan", render: (row) => row.etasjeplan },
                   {
                     header: "Etasje",
-                    render: (row) => `${row.etasje} – ${row.etasjeplan}`,
+                    render: (row) => row.etasje,
                   },
-                  { header: "Boenheter", render: (row) => row.antallBoenheter },
+                  {
+                    header: "Antall boenheter",
+                    render: (row) => row.antallBoenheter,
+                  },
                   {
                     header: "Bruksareal",
-                    render: (row) => formatArea(row.bruksareal.totalt),
+                    render: (row) => renderArealFordeling(row.bruksareal),
                   },
                   {
                     header: "Bruttoareal",
-                    render: (row) => formatArea(row.bruttoareal.totalt),
+                    render: (row) => renderArealFordeling(row.bruttoareal),
                   },
                 ],
                 rows: (endring) => endring.etasjeplan,

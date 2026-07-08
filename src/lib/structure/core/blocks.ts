@@ -117,10 +117,10 @@ function renderTable<TRow>(
     createElement(
       Table.Body,
       null,
-      ...rows.map((row) =>
+      ...rows.map((row, index) =>
         createElement(
           Table.Row,
-          { key: getKey(row) },
+          { key: `${getKey(row)}-${index}` },
           ...columns.map((column) =>
             createElement(
               Table.Cell,
