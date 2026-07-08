@@ -1,14 +1,14 @@
+import { createElement } from "react"
 import type {
   ByggRapport,
   ByggRapportBygning as Bygning,
   ByggRapportEndring as Endring,
   ByggRapportEtasjeplan as Etasjeplan,
 } from "../../../schema/byggRapportSchema"
-import { createElement } from "react"
 import { formatArea } from "../../../utils/format"
 import {
+  columnTable,
   createReportStructure,
-  dataTable,
   repeatSection,
   section,
 } from "../../core/blocks"
@@ -42,7 +42,7 @@ export const byggRapportStructure = createReportStructure<ByggRapport>([
             title: "Etasjeplan",
             when: (endring) => endring.etasjeplan.length > 0,
             blocks: [
-              dataTable<Endring, Etasjeplan>({
+              columnTable<Endring, Etasjeplan>({
                 columns: [
                   { header: "Etasjeplan", render: (row) => row.etasjeplan },
                   {

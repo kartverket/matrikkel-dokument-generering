@@ -42,7 +42,7 @@ function renderBlock<T>(
       ]
     }
 
-    case "dataTable": {
+    case "columnTable": {
       return block.render(value, key)
     }
 

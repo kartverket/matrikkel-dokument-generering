@@ -12,19 +12,22 @@ type RenderBlock<T> = {
 
 export type TableBlock<T> = {
   type: "table"
+} & TableConfig<T>
+
+export type TableConfig<T> = {
   rows: (value: T) => readonly Row[]
   when?: Predicate<T>
 }
 
-export type DataTableConfig<T, TRow> = {
+export type ColumnTableConfig<T, TRow> = {
   columns: readonly Column<TRow>[]
   rows: (value: T) => readonly TRow[]
   getKey: (row: TRow) => string
   when?: Predicate<T>
 }
 
-export type DataTableBlock<T, _TRow = never> = RenderBlock<T> & {
-  type: "dataTable"
+export type ColumnTableBlock<T, _TRow = never> = RenderBlock<T> & {
+  type: "columnTable"
 }
 
 export type SectionBlock<T> = {
@@ -48,7 +51,7 @@ export type RepeatSectionBlock<T, _TItem = never> = RenderBlock<T> & {
 
 export type StructureBlock<T> =
   | TableBlock<T>
-  | DataTableBlock<T>
+  | ColumnTableBlock<T>
   | SectionBlock<T>
   | RepeatSectionBlock<T>
 

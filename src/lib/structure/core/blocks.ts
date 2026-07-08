@@ -3,13 +3,14 @@ import { createElement } from "react"
 import type { Column } from "../../../types"
 import { renderReportStructure } from "./render"
 import type {
-  DataTableBlock,
-  DataTableConfig,
+  ColumnTableBlock,
+  ColumnTableConfig,
   RepeatSectionBlock,
   RepeatSectionConfig,
   ReportStructure,
   SectionBlock,
   TableBlock,
+  TableConfig,
   ValueResolver,
 } from "./types"
 
@@ -19,15 +20,15 @@ export function createReportStructure<T>(
   return blocks
 }
 
-export function table<T>(config: Omit<TableBlock<T>, "type">): TableBlock<T> {
+export function table<T>(config: TableConfig<T>): TableBlock<T> {
   return { type: "table", ...config }
 }
 
-export function dataTable<T, TRow>(
-  config: DataTableConfig<T, TRow>,
-): DataTableBlock<T, TRow> {
+export function columnTable<T, TRow>(
+  config: ColumnTableConfig<T, TRow>,
+): ColumnTableBlock<T, TRow> {
   return {
-    type: "dataTable",
+    type: "columnTable",
     when: config.when,
     render(value, key) {
       const rows = config.rows(value)
