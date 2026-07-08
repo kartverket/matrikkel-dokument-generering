@@ -1,4 +1,5 @@
-import { createElement } from "react"
+import { Paragraph } from "@kv-designsystem/react"
+import { Fragment, createElement } from "react"
 import type {
   ByggRapport,
   ByggRapportBygning as Bygning,
@@ -15,11 +16,23 @@ import {
 
 function renderArealFordeling(areal: Etasjeplan["bruksareal"]) {
   return createElement(
-    "div",
+    Fragment,
     null,
-    createElement("div", null, `Bolig: ${formatArea(areal.bolig)}`),
-    createElement("div", null, `Annet: ${formatArea(areal.annet)}`),
-    createElement("div", null, `Totalt: ${formatArea(areal.totalt)}`),
+    createElement(
+      Paragraph,
+      { "data-size": "sm" },
+      `Bolig: ${formatArea(areal.bolig)}`,
+    ),
+    createElement(
+      Paragraph,
+      { "data-size": "sm" },
+      `Annet: ${formatArea(areal.annet)}`,
+    ),
+    createElement(
+      Paragraph,
+      { "data-size": "sm" },
+      `Totalt: ${formatArea(areal.totalt)}`,
+    ),
   )
 }
 
