@@ -71,8 +71,10 @@ const kulturminneSchema = z.object({
 const bruksenhetSchema = z.object({
   bruksenhetsnr: z.string().nullable(),
   type: z.string().min(1),
-  etasjeplankode: z.string().nullable(),
-  etasjenummer: z.number().nullable(),
+  matrikkelenhet: z.object({
+    gnr: z.number(),
+    bnr: z.number(),
+  }),
   bruksareal: z.number(),
   antallRom: z.number(),
   kjokkentilgang: z.boolean().nullable(),
@@ -155,3 +157,4 @@ export const byggRapportSchema = rapportSchema.extend({
   utvalgskriterier: utvalgskriterierSchema,
   bygninger: z.array(bygningerSchema),
 })
+export type Bruksenhet = z.infer<typeof bruksenhetSchema>

@@ -1,6 +1,6 @@
 import type { Column } from "../types";
 
-export function DataTable<T>({ columns, rows, getKey }: { columns: Column<T>[]; rows: T[]; getKey: (row: T) => string }) {
+export function DataTable<T>({ columns, rows, getKey }: { columns: Column<T>[]; rows: T[]; getKey: (row: T, index: number) => string }) {
   return (
     <table>
       <thead>
@@ -11,8 +11,8 @@ export function DataTable<T>({ columns, rows, getKey }: { columns: Column<T>[]; 
         </tr>
       </thead>
       <tbody>
-        {rows.map((row) => (
-          <tr key={getKey(row)}>
+        {rows.map((row, i) => (
+          <tr key={getKey(row, i)}>
             {columns.map((col) => (
               <td key={col.header}>{col.render(row)}</td>
             ))}
