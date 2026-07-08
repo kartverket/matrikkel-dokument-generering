@@ -37,7 +37,6 @@ function DocumentComponent({ data }: { data: ByggRapport }) {
           {bygning.endringer.map((endring) => (
             <Section key={endring.id} title={endring.lopenr === 0 ? "Opprinnelig bygg" : `Endring ${endring.lopenr} – ${endring.endringskode}`}>
               
-              <Bruksenheter bruksenheter={endring.bruksenheter} />
 
               <Table
                 rows={[
@@ -69,37 +68,23 @@ function DocumentComponent({ data }: { data: ByggRapport }) {
                 <Section title="Etasjeplan">
                   {endring.etasjeplan.map((e) => (
                     <Table
-                      key={e.etasje}
-                      rows={[
-                        {
-                          label: "Etasje",
-                          value: `${e.etasje} – ${e.etasjeplan}`,
-                        },
-                        {
-                          label: "Bruksareal totalt",
-                          value: `${e.bruksareal.totalt} m²`,
-                        },
-                      ]}
+                    key={e.etasje}
+                    rows={[
+                      {
+                        label: "Etasje",
+                        value: `${e.etasje} – ${e.etasjeplan}`,
+                      },
+                      {
+                        label: "Bruksareal totalt",
+                        value: `${e.bruksareal.totalt} m²`,
+                      },
+                    ]}
                     />
                   ))}
                 </Section>
               )}
 
-              {endring.bruksenheter.length > 0 && (
-                <Section title="Bruksenheter">
-                  {endring.bruksenheter.map((b, i) => (
-                    <Table
-                      key={b.bruksenhetsnr ?? i}
-                      rows={[
-                        { label: "Type", value: b.type },
-                        { label: "Bruksenhetsnr", value: b.bruksenhetsnr },
-                        { label: "Adresse", value: b.adresse },
-                        { label: "Bruksareal", value: `${b.bruksareal} m²` },
-                      ]}
-                    />
-                  ))}
-                </Section>
-              )}
+              <Bruksenheter bruksenheter={endring.bruksenheter} />
 
               {endring.hjemmelshavere.length > 0 && (
                 <Section title="Hjemmelshavere">
