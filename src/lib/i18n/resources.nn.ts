@@ -9,6 +9,7 @@ export const nn = {
         bruksenhetsnr: "Brukseinheitsnr",
         type: "Type",
         matrikkelenhet: "Matrikkeleining",
+        kjokkentilgang: "Kjøkentilgang",
         adresse: "Adresse",
         bra: "BRA",
         rom: "Rom",

@@ -17,6 +17,7 @@ export default function Bruksenheter({ bruksenheter }: BruksenhetProps) {
         { header: t("rapport.BYG0011.bruksenheter.adresse"), render: (b) => b.adresse ?? "–" },
         { header: t("rapport.BYG0011.bruksenheter.bra"), render: (b) => `${b.bruksareal} m²` },
         { header: t("rapport.BYG0011.bruksenheter.rom"), render: (b) => String(b.antallRom) },
+        { header: t("rapport.BYG0011.bruksenheter.kjokkentilgang"), render: (b) => Boolean(b.kjokkentilgang) ? "Ja" : "Nei" },
         { header: t("rapport.BYG0011.bruksenheter.bad"), render: (b) => String(b.antallBad) },
         { header: t("rapport.BYG0011.bruksenheter.wc"), render: (b) => String(b.antallWc) },
     ]
