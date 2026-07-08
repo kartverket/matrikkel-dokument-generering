@@ -16,8 +16,10 @@
   "dependencies": {
     "@kv-designsystem/react": "^1.0.0-alpha.2",
     "@navikt/aksel-icons": "^8.14.0",
+    "i18next": "^26.3.4",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
+    "react-i18next": "^17.0.8",
     "zod": "^4.4.3"
   },
   "devDependencies": {
