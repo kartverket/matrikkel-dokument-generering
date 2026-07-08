@@ -1,18 +1,25 @@
 import { Table } from "@kv-designsystem/react"
-import type { Etasjeplan } from "../lib/schema/byggRapportSchema"
+import type { Bygningsendring } from "../lib/schema/byggRapportSchema"
 import { formatArea } from "../lib/utils/format"
 
 interface Props {
-  etasjer?: Etasjeplan[] | null
+  etasjeEndringer?: Bygningsendring[] | null
 }
 
-export function EtasjerSection({ etasjer }: Props) {
-  if (!etasjer || etasjer.length === 0) return null
+export function EtasjerSection({ etasjeEndringer }: Props) {
+  if (!etasjeEndringer || etasjeEndringer.length === 0) return null
+
+  const rader = etasjeEndringer.flatMap((endring) =>
+    endring.etasjeplan.map((etasje) => ({ endring, etasje })),
+  )
+
+  if (rader.length === 0) return null
 
   return (
     <Table zebra border>
       <Table.Head>
         <Table.Row>
+          <Table.HeaderCell>Endring</Table.HeaderCell>
           <Table.HeaderCell>Etasjeplan</Table.HeaderCell>
           <Table.HeaderCell>Etasje</Table.HeaderCell>
           <Table.HeaderCell>Antall boenheter</Table.HeaderCell>
@@ -25,8 +32,11 @@ export function EtasjerSection({ etasjer }: Props) {
         </Table.Row>
       </Table.Head>
       <Table.Body>
-        {etasjer.map((e) => (
-          <Table.Row key={`${e.etasjeplan}-${e.etasje}`}>
+        {rader.map(({ endring, etasje: e }) => (
+          <Table.Row key={`${endring.id}-${e.etasjeplan}-${e.etasje}`}>
+            <Table.Cell>
+              {endring.lopenr === 0 ? "Opprinnelig" : `${endring.lopenr}`}
+            </Table.Cell>
             <Table.Cell>{e.etasjeplan}</Table.Cell>
             <Table.Cell>{e.etasje}</Table.Cell>
             <Table.Cell>{e.antallBoenheter}</Table.Cell>

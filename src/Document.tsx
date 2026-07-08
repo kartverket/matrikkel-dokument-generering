@@ -22,6 +22,8 @@ function DocumentComponent({ data }: { data: ByggRapport }) {
             ]}
           />
 
+          <EtasjerSection etasjeEndringer={bygning.endringer} />
+
           {bygning.endringer.map((endring) => (
             <Section
               key={endring.id}
@@ -56,8 +58,6 @@ function DocumentComponent({ data }: { data: ByggRapport }) {
                   { label: "Utgått/revet", value: endring.datoer.utgaattRevet },
                 ]}
               />
-
-              <EtasjerSection etasjer={endring.etasjeplan} />
 
               {endring.bruksenheter.length > 0 && (
                 <Section title="Bruksenheter">
