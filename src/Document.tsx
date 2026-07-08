@@ -5,6 +5,7 @@ import { Table } from "./components/Table"
 import Bruksenheter from "./sections/Bruksenheter.tsx";
 import { createI18n } from "./lib/i18n/createI18n"
 import type { ByggRapport } from "./lib/schema/byggRapportSchema"
+import { EtasjerSection } from "./sections/Etasjer"
 
 const css = ""
 
@@ -33,6 +34,8 @@ function DocumentComponent({ data }: { data: ByggRapport }) {
               },
             ]}
           />
+
+          <EtasjerSection etasjeEndringer={bygning.endringer} />
 
           {bygning.endringer.map((endring) => (
             <Section key={endring.id} title={endring.lopenr === 0 ? "Opprinnelig bygg" : `Endring ${endring.lopenr} – ${endring.endringskode}`}>
@@ -64,27 +67,9 @@ function DocumentComponent({ data }: { data: ByggRapport }) {
                 ]}
               />
 
-              {endring.etasjeplan.length > 0 && (
-                <Section title="Etasjeplan">
-                  {endring.etasjeplan.map((e) => (
-                    <Table
-                    key={e.etasje}
-                    rows={[
-                      {
-                        label: "Etasje",
-                        value: `${e.etasje} – ${e.etasjeplan}`,
-                      },
-                      {
-                        label: "Bruksareal totalt",
-                        value: `${e.bruksareal.totalt} m²`,
-                      },
-                    ]}
-                    />
-                  ))}
-                </Section>
+              {endring.bruksenheter.length > 0 && (
+                <Bruksenheter bruksenheter={endring.bruksenheter} />
               )}
-
-              <Bruksenheter bruksenheter={endring.bruksenheter} />
 
               {endring.hjemmelshavere.length > 0 && (
                 <Section title="Hjemmelshavere">
