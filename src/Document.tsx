@@ -4,6 +4,7 @@ import { Section } from "./components/Section"
 import { Table } from "./components/Table"
 import { createI18n } from "./lib/i18n/createI18n"
 import type { ByggRapport } from "./lib/schema/byggRapportSchema"
+import { EtasjerSection } from "./sections/Etasjer"
 
 const css = ""
 
@@ -33,6 +34,8 @@ function DocumentComponent({ data }: { data: ByggRapport }) {
               },
             ]}
           />
+
+          <EtasjerSection etasjeEndringer={bygning.endringer} />
 
           {bygning.endringer.map((endring) => (
             <Section
@@ -68,26 +71,6 @@ function DocumentComponent({ data }: { data: ByggRapport }) {
                   { label: "Utgått/revet", value: endring.datoer.utgaattRevet },
                 ]}
               />
-
-              {endring.etasjeplan.length > 0 && (
-                <Section title="Etasjeplan">
-                  {endring.etasjeplan.map((e) => (
-                    <Table
-                      key={e.etasje}
-                      rows={[
-                        {
-                          label: "Etasje",
-                          value: `${e.etasje} – ${e.etasjeplan}`,
-                        },
-                        {
-                          label: "Bruksareal totalt",
-                          value: `${e.bruksareal.totalt} m²`,
-                        },
-                      ]}
-                    />
-                  ))}
-                </Section>
-              )}
 
               {endring.bruksenheter.length > 0 && (
                 <Section title="Bruksenheter">
