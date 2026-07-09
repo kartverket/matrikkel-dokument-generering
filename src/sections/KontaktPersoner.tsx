@@ -39,8 +39,8 @@ export function KontaktPersoner({ kontaktpersoner }: Props) {
           </Table.Row>
         </Table.Head>
         <Table.Body>
-          {kontaktpersoner.map((person, i) => (
-            <Table.Row key={`${person.eierIdent}-${i}`}>
+          {kontaktpersoner.map((person) => (
+            <Table.Row key={person.eierIdent}>
               <Table.Cell>{person.rolle}</Table.Cell>
               <Table.Cell>{person.eierIdent}</Table.Cell>
               <Table.Cell>{person.navn}</Table.Cell>

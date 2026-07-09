@@ -2,10 +2,11 @@ import { renderToStaticMarkup } from "react-dom/server"
 import { I18nextProvider, useTranslation } from "react-i18next"
 import { Section } from "./components/Section"
 import { Table } from "./components/Table"
-import Bruksenheter from "./sections/Bruksenheter.tsx";
 import { createI18n } from "./lib/i18n/createI18n"
 import type { ByggRapport } from "./lib/schema/byggRapportSchema"
+import Bruksenheter from "./sections/Bruksenheter.tsx"
 import { EtasjerSection } from "./sections/Etasjer"
+import { KontaktPersoner } from "./sections/KontaktPersoner"
 
 const css = ""
 
@@ -38,9 +39,14 @@ function DocumentComponent({ data }: { data: ByggRapport }) {
           <EtasjerSection etasjeEndringer={bygning.endringer} />
 
           {bygning.endringer.map((endring) => (
-            <Section key={endring.id} title={endring.lopenr === 0 ? "Opprinnelig bygg" : `Endring ${endring.lopenr} – ${endring.endringskode}`}>
-              
-
+            <Section
+              key={endring.id}
+              title={
+                endring.lopenr === 0
+                  ? "Opprinnelig bygg"
+                  : `Endring ${endring.lopenr} – ${endring.endringskode}`
+              }
+            >
               <Table
                 rows={[
                   { label: "Status", value: endring.bygningsstatus.navn },
@@ -99,6 +105,8 @@ function DocumentComponent({ data }: { data: ByggRapport }) {
                   ))}
                 </Section>
               )}
+
+              <KontaktPersoner kontaktpersoner={endring.kontaktpersoner} />
             </Section>
           ))}
         </Section>
