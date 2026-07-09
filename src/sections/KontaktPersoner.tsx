@@ -1,6 +1,5 @@
 import { Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import { Section } from "../components/Section"
 import type { Kontaktperson } from "../lib/schema/byggRapportSchema"
 import { joinStrings } from "../lib/utils/joinStrings"
 
@@ -16,7 +15,8 @@ export function KontaktPersoner({ kontaktpersoner }: Props) {
   const kp = "rapport.BYG0011.kontaktpersoner"
 
   return (
-    <Section title={t(`${kp}.title`)}>
+    <section>
+      <h2>{t(`${kp}.title`)}</h2>
       <Table zebra border>
         <Table.Head>
           <Table.Row>
@@ -72,6 +72,6 @@ export function KontaktPersoner({ kontaktpersoner }: Props) {
           ))}
         </Table.Body>
       </Table>
-    </Section>
+    </section>
   )
 }
