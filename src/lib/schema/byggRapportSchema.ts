@@ -51,7 +51,25 @@ const byggPersonSchema = z.object({
   adresse: z.string().nullable(),
 })
 
-const tiltakshaverSchema = byggPersonSchema
+const tiltakshaverSchema = z.object({
+  rolle: z.string().min(1),
+  eierIdent: z.string().min(1),
+  navn: z.string().min(1),
+  adresselinje1: z.string().nullable(),
+  adresselinje2: z.string().nullable(),
+  adresselinje3: z.string().nullable(),
+  postnummeromradenr: z.string().nullable(),
+  postnummeromradenavn: z.string().nullable(),
+  land: z.string().nullable(),
+  bruksenhetsnr: z.string().nullable(),
+  datofra: z.string().nullable(),
+  datofraSOSI: z.string().nullable(),
+  harDatofra: z.boolean().optional().default(false),
+  kategorikode: z.string().nullable(),
+  kontaktpersonKode: z.string().nullable(),
+  statuskode: z.string().nullable(),
+  eierErUtgatt: z.boolean().optional().default(false),
+})
 
 const kontaktpersonSchema = z.object({
   rolle: z.string().min(1),
@@ -178,4 +196,5 @@ export type Etasjeplan = z.infer<typeof bygningsetasjeSchema>
 export type Bygningsendring = z.infer<typeof bygningsendringSchema>
 export type Bygning = z.infer<typeof bygningerSchema>
 export type Kontaktperson = z.infer<typeof kontaktpersonSchema>
+export type Tiltakshaver = z.infer<typeof tiltakshaverSchema>
 export type Bruksenhet = z.infer<typeof bruksenhetSchema>
