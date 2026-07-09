@@ -53,8 +53,24 @@ const byggPersonSchema = z.object({
 
 const tiltakshaverSchema = byggPersonSchema
 
-const kontaktpersonSchema = byggPersonSchema.extend({
-  telefonnummer: z.string().min(1),
+const kontaktpersonSchema = z.object({
+  rolle: z.string().min(1),
+  eierIdent: z.string().min(1),
+  navn: z.string().min(1),
+  adresselinje1: z.string().nullable(),
+  adresselinje2: z.string().nullable(),
+  adresselinje3: z.string().nullable(),
+  postnummeromradenr: z.string().nullable(),
+  postnummeromradenavn: z.string().nullable(),
+  land: z.string().nullable(),
+  bruksenhetsnr: z.string().nullable(),
+  datofra: z.string().nullable(),
+  datofraSOSI: z.string().nullable(),
+  harDatofra: z.boolean().optional().default(false),
+  kategorikode: z.string().nullable(),
+  kontaktpersonKode: z.string().nullable(),
+  statuskode: z.string().nullable(),
+  eierErUtgatt: z.boolean().optional().default(false),
 })
 
 const hjemmelshaverSchema = byggPersonSchema.extend({
