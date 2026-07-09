@@ -73,8 +73,31 @@ const kontaktpersonSchema = z.object({
   eierErUtgatt: z.boolean().optional().default(false),
 })
 
-const hjemmelshaverSchema = byggPersonSchema.extend({
+const hjemmelshaverSchema = z.object({
+  eierIdent: z.string().min(1),
+  navn: z.string().min(1),
+  eierforhold: z.string().min(1),
   andel: z.string().min(1),
+  adresselinje1: z.string().nullable(),
+  adresselinje2: z.string().nullable(),
+  adresselinje3: z.string().nullable(),
+  postnummer: z.string().nullable(),
+  poststed: z.string().nullable(),
+  land: z.string().nullable(),
+  statuskode: z.string().nullable(),
+  eierErUtgatt: z.boolean().optional().default(false),
+  datofra: z.string().nullable(),
+  datotil: z.string().nullable(),
+  kategorikode: z.string().nullable(),
+  bruksenhetsnr: z.string().nullable(),
+  harAndel: z.boolean().nullable(),
+  erSelveier: z.boolean().nullable(),
+  matrikkelenhet: z.object({
+    gnr: z.number(),
+    bnr: z.number(),
+    fnr: z.number().nullable(),
+    snr: z.number().nullable(),
+  }).nullable()
 })
 
 const kulturminneSchema = z.object({
@@ -178,3 +201,4 @@ export type Etasjeplan = z.infer<typeof bygningsetasjeSchema>
 export type Bygningsendring = z.infer<typeof bygningsendringSchema>
 export type Kontaktperson = z.infer<typeof kontaktpersonSchema>
 export type Bruksenhet = z.infer<typeof bruksenhetSchema>
+export type Hjemmelshaver = z.infer<typeof hjemmelshaverSchema>

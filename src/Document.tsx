@@ -6,6 +6,7 @@ import type { ByggRapport } from "./lib/schema/byggRapportSchema"
 import Bruksenheter from "./sections/Bruksenheter.tsx"
 import { EtasjerSection } from "./sections/Etasjer"
 import { KontaktPersoner } from "./sections/KontaktPersoner.tsx"
+import { Hjemmelshavere } from "./sections/Hjemmelshavere.tsx"
 
 function DocumentComponent({ data }: { data: ByggRapport }) {
   return (
@@ -20,6 +21,7 @@ function DocumentComponent({ data }: { data: ByggRapport }) {
                 <>
                   <Bruksenheter bruksenheter={endring.bruksenheter} />
                   <KontaktPersoner kontaktpersoner={endring.kontaktpersoner} />
+                  <Hjemmelshavere hjemmelshavere={endring.hjemmelshavere} />
                 </>
               )}
             </Fragment>
