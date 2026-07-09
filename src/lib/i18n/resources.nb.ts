@@ -17,6 +17,7 @@ export const nb = {
         wc: "WC",
       },
       etasjer: {
+        title: "Etasjer",
         endring: "Endring",
         etasjeplan: "Etasjeplan",
         etasje: "Etasje",
