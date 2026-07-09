@@ -2,16 +2,10 @@ import { Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import { Section } from "../components/Section"
 import type { Kontaktperson } from "../lib/schema/byggRapportSchema"
+import { joinStrings } from "../lib/utils/joinStrings"
 
 interface Props {
   kontaktpersoner?: Kontaktperson[] | null
-}
-
-const DASH = "–"
-
-function join(parts: (string | null | undefined)[], separator: string): string {
-  const value = parts.filter((p) => p != null && p !== "").join(separator)
-  return value.length > 0 ? value : DASH
 }
 
 export function KontaktPersoner({ kontaktpersoner }: Props) {
@@ -45,7 +39,7 @@ export function KontaktPersoner({ kontaktpersoner }: Props) {
               <Table.Cell>{person.eierIdent}</Table.Cell>
               <Table.Cell>{person.navn}</Table.Cell>
               <Table.Cell>
-                {join(
+                {joinStrings(
                   [
                     person.adresselinje1,
                     person.adresselinje2,
@@ -55,21 +49,24 @@ export function KontaktPersoner({ kontaktpersoner }: Props) {
                 )}
               </Table.Cell>
               <Table.Cell>
-                {join(
+                {joinStrings(
                   [person.postnummeromradenr, person.postnummeromradenavn],
                   " ",
                 )}
               </Table.Cell>
-              <Table.Cell>{person.land ?? DASH}</Table.Cell>
-              <Table.Cell>{person.bruksenhetsnr ?? DASH}</Table.Cell>
-              <Table.Cell>{person.datofra ?? DASH}</Table.Cell>
+              <Table.Cell>{person.land ?? "-"}</Table.Cell>
+              <Table.Cell>{person.bruksenhetsnr ?? "-"}</Table.Cell>
+              <Table.Cell>{person.datofra ?? "-"}</Table.Cell>
               <Table.Cell>
-                {join([person.kategorikode, person.kontaktpersonKode], " / ")}
+                {joinStrings(
+                  [person.kategorikode, person.kontaktpersonKode],
+                  " / ",
+                )}
               </Table.Cell>
               <Table.Cell>
                 {person.eierErUtgatt
                   ? t(`${kp}.utgatt`)
-                  : (person.statuskode ?? DASH)}
+                  : (person.statuskode ?? "-")}
               </Table.Cell>
             </Table.Row>
           ))}
