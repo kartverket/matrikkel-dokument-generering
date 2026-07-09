@@ -1,5 +1,6 @@
 import { renderDocument } from "./Document.tsx"
 import { htmlToPdf } from "./lib/pdf/gotenberg.ts"
+import { getDocumentCss } from "./lib/pdf/styles.ts"
 import { validateByggRapport } from "./lib/validators.ts"
 
 const port = Number(process.env.PORT) || 3000
@@ -29,9 +30,9 @@ const server = Bun.serve({
         })
       }
 
-      const html = renderDocument(validatedData.data)
-
       try {
+        const css = await getDocumentCss()
+        const html = renderDocument(validatedData.data, css)
         const pdf = await htmlToPdf(html)
         return new Response(pdf, {
           status: 200,

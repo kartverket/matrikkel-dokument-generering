@@ -34,17 +34,19 @@ function DocumentComponent({ data }: { data: ByggRapport }) {
   )
 }
 
-export function renderDocument(data: ByggRapport): string {
+export function renderDocument(data: ByggRapport, css = ""): string {
   const i18n = createI18n(data.locale)
   const body = renderToStaticMarkup(
     <I18nextProvider i18n={i18n}>
       <DocumentComponent data={data} />
     </I18nextProvider>,
   )
+  const styleTag = css ? `<style>${css}</style>` : ""
   return `<!DOCTYPE html>
             <html lang="${data.locale}">
             <head>
               <meta charset="utf-8">
+              ${styleTag}
             </head>
             <body>${body}</body>
             </html>`
