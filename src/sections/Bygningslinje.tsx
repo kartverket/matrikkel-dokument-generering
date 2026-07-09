@@ -1,46 +1,15 @@
 import { Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import type { Bygning, Bygningsendring } from "../lib/schema/byggRapportSchema"
+import type { Bygning } from "../lib/schema/byggRapportSchema"
+import { arealLinje } from "../lib/utils/arealLinje"
 import { formatArea } from "../lib/utils/format"
+import { isFerdigstilt } from "../lib/utils/isFerdigstilt"
+import { jaNei } from "../lib/utils/jaNei"
+import { minner } from "../lib/utils/minner"
+import { utgattKode } from "../lib/utils/utgattKode"
 
 interface Props {
   bygning: Bygning
-}
-
-const SEFRAK_KATEGORI = "SEFRAK-registrert bygning"
-
-function jaNei(value: boolean): string {
-  return value ? "Ja" : "Nei"
-}
-
-function arealLinje(a: {
-  bolig: number
-  annet: number
-  totalt: number
-}): string {
-  return `${a.bolig} / ${a.annet} / ${a.totalt} m²`
-}
-
-function erFerdigstilt(endring: Bygningsendring): boolean {
-  return (
-    endring.datoer.ferdigattest !== null || endring.datoer.tattIBruk !== null
-  )
-}
-
-function utgattKode(endring: Bygningsendring): string {
-  return endring.bygningsstatus.bestaaende
-    ? "-"
-    : endring.bygningsstatus.kortkode
-}
-
-function minner(endring: Bygningsendring): string {
-  const harSefrak = endring.kulturminner.some(
-    (k) => k.kategori === SEFRAK_KATEGORI,
-  )
-  const harEnkelt = endring.kulturminner.some(
-    (k) => k.kategori !== SEFRAK_KATEGORI,
-  )
-  return `${jaNei(harSefrak)} / ${jaNei(harEnkelt)}`
 }
 
 export function Bygningslinje({ bygning }: Props) {
@@ -111,7 +80,7 @@ export function Bygningslinje({ bygning }: Props) {
               <Table.Cell>
                 {endring.koordinat.nord}, {endring.koordinat.ost}
               </Table.Cell>
-              <Table.Cell>{jaNei(erFerdigstilt(endring))}</Table.Cell>
+              <Table.Cell>{jaNei(isFerdigstilt(endring))}</Table.Cell>
               <Table.Cell>{minner(endring)}</Table.Cell>
             </Table.Row>
           ))}
