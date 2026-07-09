@@ -6,8 +6,6 @@ import type { ByggRapport } from "./lib/schema/byggRapportSchema"
 import Bruksenheter from "./sections/Bruksenheter.tsx"
 import { EtasjerSection } from "./sections/Etasjer"
 
-const css = ""
-
 function DocumentComponent({ data }: { data: ByggRapport }) {
   return (
     <>
@@ -41,7 +39,6 @@ export function renderDocument(data: ByggRapport): string {
             <html lang="${data.locale}">
             <head>
               <meta charset="utf-8">
-              <style>${css}</style>
             </head>
             <body>${body}</body>
             </html>`
