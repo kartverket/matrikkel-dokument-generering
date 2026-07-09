@@ -5,6 +5,7 @@ import { createI18n } from "./lib/i18n/createI18n"
 import type { ByggRapport } from "./lib/schema/byggRapportSchema"
 import Bruksenheter from "./sections/Bruksenheter.tsx"
 import { EtasjerSection } from "./sections/Etasjer"
+import { KontaktPersoner } from "./sections/KontaktPersoner.tsx"
 
 function DocumentComponent({ data }: { data: ByggRapport }) {
   return (
@@ -13,15 +14,16 @@ function DocumentComponent({ data }: { data: ByggRapport }) {
         <Fragment key={bygning.id}>
           <EtasjerSection etasjeEndringer={bygning.endringer} />
 
-          {bygning.endringer.map(
-            (endring) =>
-              endring.bruksenheter.length > 0 && (
-                <Bruksenheter
-                  key={endring.id}
-                  bruksenheter={endring.bruksenheter}
-                />
-              ),
-          )}
+          {bygning.endringer.map((endring) => (
+            <Fragment key={endring.id}>
+              {endring.bruksenheter.length > 0 && (
+                <>
+                  <Bruksenheter bruksenheter={endring.bruksenheter} />
+                  <KontaktPersoner kontaktpersoner={endring.kontaktpersoner} />
+                </>
+              )}
+            </Fragment>
+          ))}
         </Fragment>
       ))}
     </>
