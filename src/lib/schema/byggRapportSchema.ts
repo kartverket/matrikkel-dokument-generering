@@ -77,7 +77,6 @@ const hjemmelshaverSchema = z.object({
   eierIdent: z.string().min(1),
   navn: z.string().min(1),
   eierforhold: z.string().min(1),
-  andel: z.string().min(1),
   adresselinje1: z.string().nullable(),
   adresselinje2: z.string().nullable(),
   adresselinje3: z.string().nullable(),
