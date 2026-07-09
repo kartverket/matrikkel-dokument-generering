@@ -16,6 +16,7 @@ export function Hjemmelshavere({ hjemmelshavere }: Props) {
 
     return (
         <>
+            <h2>{t(`${kp}.title`)}</h2>
             <Table zebra border>
                 <Table.Head>
                     <Table.Row>
