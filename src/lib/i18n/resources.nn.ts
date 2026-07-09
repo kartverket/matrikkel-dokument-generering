@@ -48,6 +48,7 @@ export const nn = {
         title: "Heimelshavarar",
         eierIdent: "Fødselsnr/orgnr",
         navn: "Namn",
+        andel: "Andel",
         eierforhold: "Eigarforhold",
         bruksenhetsnr: "Tilknytt brukseining",
         adresselinjer: "Adresselinjer",

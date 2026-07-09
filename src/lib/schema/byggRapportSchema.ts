@@ -76,6 +76,8 @@ const kontaktpersonSchema = z.object({
 const hjemmelshaverSchema = z.object({
   eierIdent: z.string().min(1),
   navn: z.string().min(1),
+  andelTeller: z.number().nullable(),
+  andelNevner: z.number().nullable(),
   eierforhold: z.string().min(1),
   adresselinje1: z.string().nullable(),
   adresselinje2: z.string().nullable(),

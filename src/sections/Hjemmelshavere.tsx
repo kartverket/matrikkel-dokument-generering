@@ -22,6 +22,8 @@ export function Hjemmelshavere({ hjemmelshavere }: Props) {
                     <Table.Row>
                         <Table.HeaderCell>{t(`${kp}.eierIdent`)}</Table.HeaderCell>
                         <Table.HeaderCell>{t(`${kp}.navn`)}</Table.HeaderCell>
+                        <Table.HeaderCell>{t(`${kp}.andel`)}</Table.HeaderCell>
+                        <Table.HeaderCell>{t(`${kp}.eierforhold`)}</Table.HeaderCell>
                         <Table.HeaderCell>{t(`${kp}.adresselinjer`)}</Table.HeaderCell>
                         <Table.HeaderCell>{t(`${kp}.poststed`)}</Table.HeaderCell>
                         <Table.HeaderCell>{t(`${kp}.land`)}</Table.HeaderCell>
@@ -36,6 +38,10 @@ export function Hjemmelshavere({ hjemmelshavere }: Props) {
                         <Table.Row key={hh.eierIdent}>
                             <Table.Cell>{hh.eierIdent}</Table.Cell>
                             <Table.Cell>{hh.navn}</Table.Cell>
+                            <Table.Cell>{hh.harAndel ? `${hh.andelTeller}/${hh.andelNevner}` : "-"}</Table.Cell>
+                            <Table.Cell>
+                                {hh.erSelveier ? t(`${kp}.erSelveier`) : t(`${kp}.harAndel`)}
+                            </Table.Cell>
                             <Table.Cell>
                                 {joinStrings(
                                     [
