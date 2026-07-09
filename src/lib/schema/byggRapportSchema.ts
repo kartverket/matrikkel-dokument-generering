@@ -151,12 +151,14 @@ const bygningerSchema = z.object({
   endringer: z.array(bygningsendringSchema),
 })
 
-export type ByggRapport = z.infer<typeof byggRapportSchema>
-export type Etasjeplan = z.infer<typeof bygningsetasjeSchema>
-export type Bygningsendring = z.infer<typeof bygningsendringSchema>
 export const byggRapportSchema = rapportSchema.extend({
   rapportType: z.literal("BYG0011"),
   utvalgskriterier: utvalgskriterierSchema,
   bygninger: z.array(bygningerSchema),
 })
+
+export type ByggRapport = z.infer<typeof byggRapportSchema>
+export type Etasjeplan = z.infer<typeof bygningsetasjeSchema>
+export type Bygningsendring = z.infer<typeof bygningsendringSchema>
+export type Kontaktperson = z.infer<typeof kontaktpersonSchema>
 export type Bruksenhet = z.infer<typeof bruksenhetSchema>
