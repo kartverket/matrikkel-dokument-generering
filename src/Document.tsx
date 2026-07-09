@@ -4,6 +4,7 @@ import { I18nextProvider } from "react-i18next"
 import { createI18n } from "./lib/i18n/createI18n"
 import type { ByggRapport } from "./lib/schema/byggRapportSchema"
 import Bruksenheter from "./sections/Bruksenheter.tsx"
+import { Bygningslinje } from "./sections/Bygningslinje.tsx"
 import { EtasjerSection } from "./sections/Etasjer"
 import { KontaktPersoner } from "./sections/KontaktPersoner.tsx"
 
@@ -12,6 +13,7 @@ function DocumentComponent({ data }: { data: ByggRapport }) {
     <>
       {data.bygninger.map((bygning) => (
         <Fragment key={bygning.id}>
+          <Bygningslinje bygning={bygning} />
           <EtasjerSection etasjeEndringer={bygning.endringer} />
 
           {bygning.endringer.map((endring) => (
