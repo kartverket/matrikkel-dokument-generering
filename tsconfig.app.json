@@ -4,7 +4,12 @@
     "target": "es2023",
     "lib": ["ES2023", "DOM"],
     "module": "esnext",
-    "types": ["vite/client", "bun", "@kv-designsystem/theme/types", "@kv-designsystem/react/html"],
+    "types": [
+      "vite/client",
+      "bun",
+      "@kv-designsystem/theme/types",
+      "@kv-designsystem/react/html"
+    ],
     "skipLibCheck": true,
     /* Bundler mode */
     "moduleResolution": "bundler",
