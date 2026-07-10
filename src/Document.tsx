@@ -5,13 +5,13 @@ import { createI18n } from "./lib/i18n/createI18n"
 import type { ByggRapport } from "./lib/schema/byggRapportSchema"
 import Bruksenheter from "./sections/Bruksenheter.tsx"
 import { Bygningslinje } from "./sections/Bygningslinje.tsx"
-import { EtasjerSection } from "./sections/Etasjer"
+import { EtasjerSection } from "./sections/Etasjer.tsx"
 import { Hjemmelshavere } from "./sections/Hjemmelshavere.tsx"
 import { KontaktPersoner } from "./sections/KontaktPersoner.tsx"
 import { Tiltakshavere } from "./sections/Tiltakshavere.tsx"
 import RegistrerteVedtak from "./sections/RegistrerteVedtak.tsx"
 
-function DocumentComponent({ data }: { data: ByggRapport }) {
+export function DocumentComponent({ data }: { data: ByggRapport }) {
   return (
     <>
       <h1 className="text-3xl font-bold underline text-red-500">
