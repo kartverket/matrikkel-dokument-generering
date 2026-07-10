@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "tsc -b && vite build && bun run build:css",
-    "build:css": "bun build src/document.css --outfile dist/document-styles.css --minify",
+    "build:css": "tailwindcss -i src/document.css -o dist/document-styles.css --minify",
     "lint": "biome lint .",
     "lint:fix": "biome check --write .",
     "format": "biome format --write .",

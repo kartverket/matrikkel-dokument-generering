@@ -9,17 +9,24 @@ async function buildCss(): Promise<string> {
     return prebuilt.text()
   }
 
-  const result = await Bun.build({
-    entrypoints: [CSS_ENTRYPOINT],
-    minify: true,
-  })
+  // Fallback for dev: kjør Tailwind-kompilatoren slik at utility-klassene
+  // faktisk genereres. `bun build` bundler kun CSS og kjører ikke Tailwind.
+  const proc = Bun.spawn(
+    ["bunx", "@tailwindcss/cli", "-i", CSS_ENTRYPOINT, "-o", "-", "--minify"],
+    { stdout: "pipe", stderr: "pipe" },
+  )
 
-  if (!result.success || result.outputs.length === 0) {
-    const details = result.logs.map((log) => String(log)).join("\n")
-    throw new Error(`Klarte ikke å bygge dokument-CSS:\n${details}`)
+  const [css, stderr, exitCode] = await Promise.all([
+    new Response(proc.stdout).text(),
+    new Response(proc.stderr).text(),
+    proc.exited,
+  ])
+
+  if (exitCode !== 0 || css.length === 0) {
+    throw new Error(`Klarte ikke å bygge dokument-CSS:\n${stderr}`)
   }
 
-  return result.outputs[0].text()
+  return css
 }
 
 export function getDocumentCss(): Promise<string> {
