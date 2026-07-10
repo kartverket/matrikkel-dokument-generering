@@ -8,10 +8,14 @@ import { EtasjerSection } from "./sections/Etasjer"
 import { Hjemmelshavere } from "./sections/Hjemmelshavere.tsx"
 import { KontaktPersoner } from "./sections/KontaktPersoner.tsx"
 import { Tiltakshavere } from "./sections/Tiltakshavere.tsx"
+import RegistrerteVedtak from "./sections/RegistrerteVedtak.tsx"
 
 function DocumentComponent({ data }: { data: ByggRapport }) {
   return (
     <>
+      <h1 className="text-3xl font-bold underline text-red-500">
+        askljlsjods
+      </h1>
       {data.bygninger.map((bygning) => (
         <Fragment key={bygning.id}>
           <EtasjerSection etasjeEndringer={bygning.endringer} />
@@ -21,6 +25,12 @@ function DocumentComponent({ data }: { data: ByggRapport }) {
               {endring.bruksenheter.length > 0 && (
                 <>
                   <Bruksenheter bruksenheter={endring.bruksenheter} />
+                  <RegistrerteVedtak
+                    Rammetillatelse={endring.datoer.rammetillatelse}
+                    Igangsettingstillatelse={endring.datoer.igangsettingstillatelse}
+                    MidlertidigBrukstillatelse={endring.datoer.midlertidigBrukstillatelse}
+                    Ferdigattest={endring.datoer.ferdigattest}
+                  />
                   <KontaktPersoner kontaktpersoner={endring.kontaktpersoner} />
                   <Hjemmelshavere hjemmelshavere={endring.hjemmelshavere} />
                 </>
