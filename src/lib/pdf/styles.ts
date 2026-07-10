@@ -9,8 +9,6 @@ async function buildCss(): Promise<string> {
     return prebuilt.text()
   }
 
-  // Fallback for dev: kjør Tailwind-kompilatoren slik at utility-klassene
-  // faktisk genereres. `bun build` bundler kun CSS og kjører ikke Tailwind.
   const proc = Bun.spawn(
     ["bunx", "@tailwindcss/cli", "-i", CSS_ENTRYPOINT, "-o", "-", "--minify"],
     { stdout: "pipe", stderr: "pipe" },
