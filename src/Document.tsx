@@ -6,6 +6,7 @@ import type { ByggRapport } from "./lib/schema/byggRapportSchema"
 import Bruksenheter from "./sections/Bruksenheter.tsx"
 import { Bygningslinje } from "./sections/Bygningslinje.tsx"
 import { EtasjerSection } from "./sections/Etasjer"
+import { Hjemmelshavere } from "./sections/Hjemmelshavere.tsx"
 import { KontaktPersoner } from "./sections/KontaktPersoner.tsx"
 import { Tiltakshavere } from "./sections/Tiltakshavere.tsx"
 
@@ -23,6 +24,7 @@ function DocumentComponent({ data }: { data: ByggRapport }) {
                 <>
                   <Bruksenheter bruksenheter={endring.bruksenheter} />
                   <KontaktPersoner kontaktpersoner={endring.kontaktpersoner} />
+                  <Hjemmelshavere hjemmelshavere={endring.hjemmelshavere} />
                 </>
               )}
               {data.utvalgskriterier.subrapporter.tiltakshavere && (
@@ -36,17 +38,19 @@ function DocumentComponent({ data }: { data: ByggRapport }) {
   )
 }
 
-export function renderDocument(data: ByggRapport): string {
+export function renderDocument(data: ByggRapport, css = ""): string {
   const i18n = createI18n(data.locale)
   const body = renderToStaticMarkup(
     <I18nextProvider i18n={i18n}>
       <DocumentComponent data={data} />
     </I18nextProvider>,
   )
+  const styleTag = css ? `<style>${css}</style>` : ""
   return `<!DOCTYPE html>
             <html lang="${data.locale}">
             <head>
               <meta charset="utf-8">
+              ${styleTag}
             </head>
             <body>${body}</body>
             </html>`
