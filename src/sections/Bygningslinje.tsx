@@ -4,9 +4,7 @@ import type { Bygning } from "../lib/schema/byggRapportSchema"
 import { arealLinje } from "../lib/utils/arealLinje"
 import { formatArea } from "../lib/utils/format"
 import { isFerdigstilt } from "../lib/utils/isFerdigstilt"
-import { jaNei } from "../lib/utils/jaNei"
-import { minner } from "../lib/utils/minner"
-import { utgattKode } from "../lib/utils/utgattKode"
+import { getKulturMinner } from "../lib/utils/getKulturMinner"
 
 interface Props {
   bygning: Bygning
@@ -59,7 +57,7 @@ export function Bygningslinje({ bygning }: Props) {
               <Table.Cell>{endring.lopenr}</Table.Cell>
               <Table.Cell>{endring.endringskode ?? "-"}</Table.Cell>
               <Table.Cell>{endring.bygningsstatus.navn}</Table.Cell>
-              <Table.Cell>{utgattKode(endring)}</Table.Cell>
+              <Table.Cell>{endring.bygningsstatus.kode ?? "-"}</Table.Cell>
               <Table.Cell>{bygning.bygningstype.navn}</Table.Cell>
               <Table.Cell>{bygning.bygningstype.kode}</Table.Cell>
               <Table.Cell>{bygning.naeringsgruppe}</Table.Cell>
@@ -80,8 +78,8 @@ export function Bygningslinje({ bygning }: Props) {
               <Table.Cell>
                 {endring.koordinat.nord}, {endring.koordinat.ost}
               </Table.Cell>
-              <Table.Cell>{jaNei(isFerdigstilt(endring))}</Table.Cell>
-              <Table.Cell>{minner(endring)}</Table.Cell>
+              <Table.Cell>{isFerdigstilt(endring) ? "Ja" : "Nei"}</Table.Cell>
+              <Table.Cell>{getKulturMinner(endring)}</Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>
