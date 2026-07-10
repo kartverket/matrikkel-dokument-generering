@@ -12,11 +12,12 @@
     "format": "biome format --write .",
     "format:check": "biome check . --formatter-enabled=true --linter-enabled=false --assist-enabled=false",
     "preview": "vite preview --host 0.0.0.0",
-    "serve": "bun src/server.ts"
+    "serve": "bun run build:css && bun src/server.ts"
   },
   "dependencies": {
     "@kv-designsystem/react": "^1.0.0-alpha.2",
     "@navikt/aksel-icons": "^8.14.0",
+    "@tailwindcss/cli": "^4.3.2",
     "i18next": "^26.3.4",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
@@ -36,7 +37,7 @@
     "@vitejs/plugin-react": "^6.0.1",
     "babel-plugin-react-compiler": "^1.0.0",
     "husky": "^9.1.7",
-    "tailwindcss": "^4.3.1",
+    "tailwindcss": "^4.3.2",
     "typescript": "~6.0.2",
     "vite": "^8.0.12"
   }

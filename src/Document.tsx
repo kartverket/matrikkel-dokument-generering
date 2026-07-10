@@ -15,6 +15,7 @@ export function DocumentComponent({ data }: { data: ByggRapport }) {
     <>
       {data.bygninger.map((bygning) => (
         <Fragment key={bygning.id}>
+          <h1 className="text-2xl text-red-500 bg-purple-600">Test</h1>
           <Bygningslinje bygning={bygning} />
           <EtasjerSection etasjeEndringer={bygning.endringer} />
 
