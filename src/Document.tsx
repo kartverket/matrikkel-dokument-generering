@@ -5,8 +5,9 @@ import { createI18n } from "./lib/i18n/createI18n"
 import type { ByggRapport } from "./lib/schema/byggRapportSchema"
 import Bruksenheter from "./sections/Bruksenheter.tsx"
 import { EtasjerSection } from "./sections/Etasjer"
-import { KontaktPersoner } from "./sections/KontaktPersoner.tsx"
 import { Hjemmelshavere } from "./sections/Hjemmelshavere.tsx"
+import { KontaktPersoner } from "./sections/KontaktPersoner.tsx"
+import { Tiltakshavere } from "./sections/Tiltakshavere.tsx"
 
 function DocumentComponent({ data }: { data: ByggRapport }) {
   return (
@@ -23,6 +24,9 @@ function DocumentComponent({ data }: { data: ByggRapport }) {
                   <KontaktPersoner kontaktpersoner={endring.kontaktpersoner} />
                   <Hjemmelshavere hjemmelshavere={endring.hjemmelshavere} />
                 </>
+              )}
+              {data.utvalgskriterier.subrapporter.tiltakshavere && (
+                <Tiltakshavere endring={endring} />
               )}
             </Fragment>
           ))}
