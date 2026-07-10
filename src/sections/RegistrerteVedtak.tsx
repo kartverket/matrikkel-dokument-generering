@@ -1,16 +1,20 @@
 import { Table } from "@kv-designsystem/react"
 
 interface RegistrerteVedtakProps {
-    Rammetillatelse?: string | null
-    Igangsettingstillatelse?: string | null
-    MidlertidigBrukstillatelse?: string | null
-    Ferdigattest?: string | null
+    datoer: {
+        rammetillatelse: string | null
+        igangsettingstillatelse: string | null
+        midlertidigBrukstillatelse: string | null
+        ferdigattest: string | null
+    }
+    lopenr: number
 }
 
-export default function RegistrerteVedtak({ Rammetillatelse, Igangsettingstillatelse, MidlertidigBrukstillatelse, Ferdigattest }: RegistrerteVedtakProps) {
+export default function RegistrerteVedtak({ datoer, lopenr }: RegistrerteVedtakProps) {
     return (
         <section className="py-4 max-w-md">
             <p className="text-sm font-light">Registrerte Vedtak</p>
+            <p>Løpenr: {lopenr}</p>
             <Table>
                 <Table.Head>
                     <Table.Row>
@@ -19,28 +23,28 @@ export default function RegistrerteVedtak({ Rammetillatelse, Igangsettingstillat
                     </Table.Row>
                 </Table.Head>
                 <Table.Body>
-                    {Rammetillatelse && (
+                    {datoer.rammetillatelse && (
                         <Table.Row>
                             <Table.Cell>Rammetillatelse</Table.Cell>
-                            <Table.Cell>{Rammetillatelse}</Table.Cell>
+                            <Table.Cell>{datoer.rammetillatelse}</Table.Cell>
                         </Table.Row>
                     )}
-                    {Igangsettingstillatelse && (
+                    {datoer.igangsettingstillatelse && (
                         <Table.Row>
                             <Table.Cell>Igangsettingstillatelse</Table.Cell>
-                            <Table.Cell>{Igangsettingstillatelse}</Table.Cell>
+                            <Table.Cell>{datoer.igangsettingstillatelse}</Table.Cell>
                         </Table.Row>
                     )}
-                    {MidlertidigBrukstillatelse && (
+                    {datoer.midlertidigBrukstillatelse && (
                         <Table.Row>
                             <Table.Cell>Midlertidig brukstillatelse</Table.Cell>
-                            <Table.Cell>{MidlertidigBrukstillatelse}</Table.Cell>
+                            <Table.Cell>{datoer.midlertidigBrukstillatelse}</Table.Cell>
                         </Table.Row>
                     )}
-                    {Ferdigattest && (
+                    {datoer.ferdigattest && (
                         <Table.Row>
                             <Table.Cell>Ferdigattest</Table.Cell>
-                            <Table.Cell>{Ferdigattest}</Table.Cell>
+                            <Table.Cell>{datoer.ferdigattest}</Table.Cell>
                         </Table.Row>
                     )}
                 </Table.Body>

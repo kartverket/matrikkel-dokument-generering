@@ -27,12 +27,7 @@ function DocumentComponent({ data }: { data: ByggRapport }) {
               {endring.bruksenheter.length > 0 && (
                 <>
                   <Bruksenheter bruksenheter={endring.bruksenheter} />
-                  <RegistrerteVedtak
-                    Rammetillatelse={endring.datoer.rammetillatelse}
-                    Igangsettingstillatelse={endring.datoer.igangsettingstillatelse}
-                    MidlertidigBrukstillatelse={endring.datoer.midlertidigBrukstillatelse}
-                    Ferdigattest={endring.datoer.ferdigattest}
-                  />
+                  <RegistrerteVedtak lopenr={endring.lopenr} datoer={endring.datoer} />
                   <KontaktPersoner kontaktpersoner={endring.kontaktpersoner} />
                   <Hjemmelshavere hjemmelshavere={endring.hjemmelshavere} />
                 </>
