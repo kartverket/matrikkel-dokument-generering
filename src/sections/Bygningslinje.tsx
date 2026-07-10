@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next"
 import type { Bygning } from "../lib/schema/byggRapportSchema"
 import { arealLinje } from "../lib/utils/arealLinje"
 import { formatArea } from "../lib/utils/format"
-import { isFerdigstilt } from "../lib/utils/isFerdigstilt"
 import { getKulturMinner } from "../lib/utils/getKulturMinner"
+import { isFerdigstilt } from "../lib/utils/isFerdigstilt"
 
 interface Props {
   bygning: Bygning
