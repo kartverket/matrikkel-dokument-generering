@@ -211,6 +211,7 @@ export const byggRapportSchema = rapportSchema.extend({
 export type ByggRapport = z.infer<typeof byggRapportSchema>
 export type Etasjeplan = z.infer<typeof bygningsetasjeSchema>
 export type Bygningsendring = z.infer<typeof bygningsendringSchema>
+export type Bygning = z.infer<typeof bygningerSchema>
 export type Kontaktperson = z.infer<typeof kontaktpersonSchema>
 export type Bruksenhet = z.infer<typeof bruksenhetSchema>
 export type Hjemmelshaver = z.infer<typeof hjemmelshaverSchema>
