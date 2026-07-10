@@ -5,16 +5,17 @@ import { createI18n } from "./lib/i18n/createI18n"
 import type { ByggRapport } from "./lib/schema/byggRapportSchema"
 import Bruksenheter from "./sections/Bruksenheter.tsx"
 import { Bygningslinje } from "./sections/Bygningslinje.tsx"
-import { EtasjerSection } from "./sections/Etasjer"
+import { EtasjerSection } from "./sections/Etasjer.tsx"
 import { Hjemmelshavere } from "./sections/Hjemmelshavere.tsx"
 import { KontaktPersoner } from "./sections/KontaktPersoner.tsx"
 import { Tiltakshavere } from "./sections/Tiltakshavere.tsx"
 
-function DocumentComponent({ data }: { data: ByggRapport }) {
+export function DocumentComponent({ data }: { data: ByggRapport }) {
   return (
     <>
       {data.bygninger.map((bygning) => (
         <Fragment key={bygning.id}>
+          <h1 className="text-2xl text-red-500 bg-purple-600">Test</h1>
           <Bygningslinje bygning={bygning} />
           <EtasjerSection etasjeEndringer={bygning.endringer} />
 
