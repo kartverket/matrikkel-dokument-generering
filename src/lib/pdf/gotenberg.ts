@@ -10,6 +10,7 @@ const CONVERT_PATH = "/forms/chromium/convert/html"
 export async function htmlToPdf(html: string): Promise<ArrayBuffer> {
   const form = new FormData()
   form.append("files", new Blob([html], { type: "text/html" }), "index.html")
+  form.append("printBackground", "true")
 
   const response = await fetch(`${GOTENBERG_URL}${CONVERT_PATH}`, {
     method: "POST",
