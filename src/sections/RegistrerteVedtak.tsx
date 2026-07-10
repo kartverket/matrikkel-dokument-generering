@@ -14,7 +14,7 @@ export default function RegistrerteVedtak({ datoer, lopenr }: RegistrerteVedtakP
     return (
         <section className="py-4 max-w-md">
             <p className="text-sm font-light">Registrerte Vedtak</p>
-            <p>Løpenr: {lopenr}</p>
+            <p className="p-2 bg-[#DAEBF5]">Løpenr: {lopenr}</p>
             <Table>
                 <Table.Head>
                     <Table.Row>

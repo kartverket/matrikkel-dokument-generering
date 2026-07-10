@@ -14,9 +14,6 @@ import RegistrerteVedtak from "./sections/RegistrerteVedtak.tsx"
 export function DocumentComponent({ data }: { data: ByggRapport }) {
   return (
     <>
-      <h1 className="text-3xl font-bold underline text-red-500">
-        askljlsjods
-      </h1>
       {data.bygninger.map((bygning) => (
         <Fragment key={bygning.id}>
           <Bygningslinje bygning={bygning} />
