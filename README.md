@@ -94,8 +94,8 @@ Endepunkter:
 Spesifikasjonen kan åpnes i en hvilken som helst OpenAPI-visning, for eksempel:
 
 ```sh
-# Interaktiv dokumentasjon i nettleseren
-bunx @redocly/cli preview-docs openapi.yaml
+# Bygg statisk HTML-dokumentasjon
+bunx @redocly/cli build-docs openapi.yaml
 
 # Valider spesifikasjonen
 bunx @redocly/cli lint openapi.yaml
