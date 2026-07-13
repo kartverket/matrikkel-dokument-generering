@@ -9,5 +9,6 @@ export function formatDateTime(
   return new Intl.DateTimeFormat(locale, {
     dateStyle: "long",
     timeStyle: "short",
+    timeZone: "Europe/Oslo",
   }).format(new Date(value))
 }

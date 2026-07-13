@@ -4,7 +4,7 @@ import { Heading, Paragraph } from "@kv-designsystem/react"
 import { formatDateTime } from "../lib/utils/format"
 
 interface Props {
-    data: ByggRapport
+    data: Pick<ByggRapport, "tittel" | "rapportType" | "kommune" | "generertTidspunkt" | "locale" | "koordinatsystem">
 }
 
 export function Metadata({ data }: Props) {
