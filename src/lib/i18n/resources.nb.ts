@@ -2,6 +2,14 @@ export const nb = {
   rapport: {
     BYG0011: {
       title: "Bygning {{bygningsnr}} – {{bygningstype}}",
+      metadata: {
+        rapportType: "Rapporttype",
+        rapportNr: "Rapportnr",
+        kommune: "Kommune",
+        kommuneNr: "Kommunenr",
+        koordinatsystem: "Koordinatsystem",
+        generertTidspunkt: "Generert tidspunkt",
+      },
       matrikkelenhet: "Matrikkelenhet",
       naeringsgruppe: "Næringsgruppe",
       arealfordeling: {
