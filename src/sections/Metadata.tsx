@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next"
 import type { ByggRapport } from "../lib/schema/byggRapportSchema"
+import { Heading, Paragraph } from "@kv-designsystem/react"
 
 const m = "rapport.BYG0011.metadata"
 
@@ -16,13 +17,17 @@ export function Metadata({ data }: Props) {
     }).format(new Date(data.generertTidspunkt))
 
     return (
-        <header className="bg-kv-blue-subtle p-4 font-semibold">
-            <h1 className="text-2xl font-bold">{data.tittel}</h1>
-            <div className="grid grid-cols-2 gap-1 py-2">
-                <p>Matrikkelrapport {data.rapportType}</p>
-                <p>Kommune: {data.kommune.nr} {data.kommune.navn}</p>
-                <p>{formattedDate}</p>
-                <p>{t(`${m}.koordinatsystem`)}: {data.koordinatsystem}</p>
+        <header className="bg-kv-blue-subtle p-4">
+            <Heading level={1}>{data.tittel}</Heading>
+            <div className="flex justify-between max-w-6xl pt-2">
+                <div>
+                    <Paragraph>Matrikkelrapport {data.rapportType}</Paragraph>
+                    <Paragraph>Kommune: {data.kommune.nr} {data.kommune.navn}</Paragraph>
+                </div>
+                <div>
+                    <Paragraph>{formattedDate}</Paragraph>
+                    <Paragraph>{t(`${m}.koordinatsystem`)}: {data.koordinatsystem}</Paragraph>
+                </div>
             </div>
         </header>
     )
