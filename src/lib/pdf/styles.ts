@@ -1,5 +1,5 @@
 const PREBUILT_CSS_PATH = "./dist/document-styles.css"
-const CSS_ENTRYPOINT = "./src/document.css"
+const CSS_ENTRYPOINT = "./src/index.css"
 
 let cssPromise: Promise<string> | null = null
 

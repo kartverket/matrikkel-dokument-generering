@@ -47,7 +47,7 @@ export default function Arealfordeling({ endring }: Props) {
         </dd>
       </dl>
 
-      <Table className="[--dsc-table-color:var(--ds-color-neutral-text-default)]">
+      <Table className="text-kv-default">
         <Table.Head>
           <Table.Row>
             <Table.HeaderCell>{t(`${af}.etasje`)}</Table.HeaderCell>

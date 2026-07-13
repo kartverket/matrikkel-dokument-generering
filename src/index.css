@@ -5,6 +5,7 @@
 
 @theme {
   --color-kv-subtle: var(--ds-color-neutral-text-subtle);
+  --color-kv-default: var(--ds-color-neutral-text-default);
 }
 
 body {
