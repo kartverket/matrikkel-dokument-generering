@@ -44,8 +44,6 @@ export const nn = {
           tidligere: "Tidlegare",
           periodeFra: "Periode frå",
           periodeTil: "Periode til",
-          nedreVenstre: "Nedre venstre hjørne",
-          ovreHoeyre: "Øvre høgre hjørne",
           ost: "Aust",
           nord: "Nord",
         },
