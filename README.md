@@ -94,10 +94,10 @@ Endepunkter:
 Spesifikasjonen kan åpnes i en hvilken som helst OpenAPI-visning, for eksempel:
 
 ```sh
-# Generer openapi.yaml etter endringer i skjemaer eller rutemetadata
+# Generer openapi.yaml 
 bun run generate:openapi
 
-# Kontroller at den inncheckede spesifikasjonen er oppdatert
+# Kontroller at spesifikasjonen er oppdatert
 bun run check:openapi
 
 # Bygg statisk HTML-dokumentasjon
