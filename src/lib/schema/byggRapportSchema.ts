@@ -36,8 +36,8 @@ const egenregistrerteFelterSchema = z
     byggeaar: z.number().nullable(),
     energikilder: z.array(egenregistrertSchema),
     oppvarming: z.array(egenregistrertSchema),
-    vannforsyning: egenregistrertSchema.nullable(),
-    avlop: egenregistrertSchema.nullable(),
+    vannforsyning: z.object(egenregistrertSchema.shape).nullable(),
+    avlop: z.object(egenregistrertSchema.shape).nullable(),
   })
   .meta({ id: "EgenregistrerteFelter" })
 
