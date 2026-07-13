@@ -8,15 +8,13 @@ interface Props {
   endring: Bygningsendring
 }
 
-const subtle = "text-[var(--ds-color-neutral-text-subtle)]"
-
 export default function Arealfordeling({ endring }: Props) {
   const { t } = useTranslation()
   const af = "rapport.BYG0011.arealfordeling"
 
   return (
     <section className="flex flex-col gap-8 my-16">
-      <Heading level={2} className={`font-normal ${subtle}`}>
+      <Heading level={2} className="font-normal text-kv-subtle">
         {t(`${af}.title`)}
       </Heading>
 
@@ -75,10 +73,10 @@ export default function Arealfordeling({ endring }: Props) {
                     >
                       <span>{etasje.etasjeplan}</span>
                     </Heading>
-                    <span className={`font-normal ${subtle}`}>
+                    <span className="font-normal text-kv-subtle">
                       {t(`${af}.nr`, { nr: etasje.etasje })}
                     </span>
-                    <span className={`font-normal ${subtle}`}>
+                    <span className="font-normal text-kv-subtle">
                       {t(`${af}.boenheter`, { antall: etasje.antallBoenheter })}
                     </span>
                   </span>

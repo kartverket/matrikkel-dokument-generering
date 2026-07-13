@@ -3,6 +3,10 @@
 @import "tailwindcss";
 @import "@kv-designsystem/react/blue" layer(designsystem);
 
+@theme {
+  --color-kv-subtle: var(--ds-color-neutral-text-subtle);
+}
+
 body {
   font-family: "Inter", sans-serif;
   font-optical-sizing: auto;
