@@ -1,6 +1,7 @@
 # Matrikkel Dokument Generering
 
 Tjenesten tar imot en strukturert JSON, renderer den til HTML og konverterer resultatet til PDF via [Gotenberg](https://github.com/kartverket/pdf-generator).
+API-serveren er bygget med [Hono](https://hono.dev/) på Bun.
 
 Følgende rapporter støttes:
 - BYG0011 - Byggrapport
@@ -26,6 +27,7 @@ Løsningen er delt over tre selvstendige repoer:
 
 - Kjør React-appen (Vite dev-server): `bun run dev`
 - Kjør linting (med og uten fiksing): `bun run lint:fix` og `bun run lint`
+- Kjør tester: `bun run test`
 - Formatter prosjektet (med og uten endringer): `bun run format` og `bun run format:check`
 - Bygg produksjonsartefakter (`dist/`): `bun run build`
 - Forhåndsvis produksjonsbygg: `bun run preview`
@@ -72,40 +74,41 @@ returnerer en PDF. Den er avhengig av at Gotenberg kjører.
 
 ### Miljøvariabler
 
-| Variabel       | Standard                | Beskrivelse                              |
-| -------------- | ----------------------- | ---------------------------------------- |
-| `PORT`         | `3000`                  | Port API-serveren lytter på.             |
-| `GOTENBERG_URL`| `http://0.0.0.0:8089`   | URL til Gotenberg-tjenesten.             |
+| Variabel        | Standard              | Beskrivelse                  |
+| --------------- | --------------------- | ---------------------------- |
+| `PORT`          | `3000`                | Port API-serveren lytter på. |
+| `GOTENBERG_URL` | `http://0.0.0.0:8089` | URL til Gotenberg-tjenesten. |
 
 ## API-dokumentasjon (OpenAPI)
 
-API-et er beskrevet i [`openapi.yaml`](./openapi.yaml). Spesifikasjonen genereres
-fra Zod-skjemaene og rutemetadata i [`src/openapi.ts`](./src/openapi.ts), slik at
-API-valideringen og dokumentasjonen bruker de samme skjemaene.
+API-et er beskrevet i [`openapi.yaml`](./openapi.yaml). 
+Serveren eksponerer  spesifikasjonen som JSON og en Swagger UI mens den kjører.
 
 Endepunkter:
 
-| Metode | Sti                  | Beskrivelse                                            |
-| ------ | -------------------- | ------------------------------------------------------ |
-| `POST` | `/create-document`   | Validerer byggrapport og returnerer PDF (`application/pdf`).|
-| `GET`  | `/internal/isAlive`  | Liveness-probe (returnerer `OK`).                      |
-| `GET`  | `/internal/isReady`  | Readiness-probe (returnerer `OK`).                     |
+| Metode | Sti                 | Beskrivelse                                                   |
+| ------ | ------------------- | ------------------------------------------------------------- |
+| `POST` | `/create-document`  | Validerer byggrapport og returnerer PDF (`application/pdf`).   |
+| `GET`  | `/internal/isAlive` | Liveness-probe (returnerer `OK`).                              |
+| `GET`  | `/internal/isReady` | Readiness-probe (returnerer `OK`).                             |
+| `GET`  | `/internal/metrics` | Prometheus-metrikker        |
+| `GET`  | `/openapi.json`     | OpenAPI-spesifikasjonen    |
+| `GET`  | `/docs`             | Swagger UI              |
+| `GET`  | `/openapi.json` | OpenAPI |
 
 Spesifikasjonen kan åpnes i en hvilken som helst OpenAPI-visning, for eksempel:
 
 ```sh
-# Generer openapi.yaml 
+# Generer openapi.yaml
 bun run generate:openapi
 
 # Kontroller at spesifikasjonen er oppdatert
 bun run check:openapi
-
-# Bygg statisk HTML-dokumentasjon
-bunx @redocly/cli build-docs openapi.yaml
-
-# Valider spesifikasjonen
-bunx @redocly/cli lint openapi.yaml
 ```
+
+Interaktive dokumentasjonen tilgjengelig på
+[http://localhost:3000/docs](http://localhost:3000/docs)
+[http://localhost:3000/internal/metrics](http://localhost:3000/internal/metrics).
 
 ## Docker
 

@@ -2,7 +2,8 @@
   "extends": "./tsconfig.node.json",
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.scripts.tsbuildinfo",
-    "types": ["node", "bun"]
+    "types": ["node", "bun"],
+    "jsx": "react-jsx"
   },
   "include": ["scripts/**/*.ts"]
 }

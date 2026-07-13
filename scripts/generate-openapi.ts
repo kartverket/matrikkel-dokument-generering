@@ -1,5 +1,8 @@
 import { stringify } from "yaml"
-import { openApiDocument } from "../src/openapi"
+import { app } from "../src/app.ts"
+import { openApiConfig } from "../src/openapi.ts"
+
+const openApiDocument = app.getOpenAPIDocument(openApiConfig)
 
 const generatedNotice = `# Denne filen er automatisk generert av \`bun run generate:openapi\`.
 `

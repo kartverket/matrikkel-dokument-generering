@@ -24,113 +24,62 @@ tags:
     description: Generering av PDF-dokumenter
   - name: Internal
     description: Helsesjekk-endepunkter
-paths:
-  /create-document:
-    post:
-      tags:
-        - Dokument
-      summary: Generer PDF fra en byggrapport
-      description: Validerer innsendt byggrapport mot skjemaet. Ved gyldig input renderes dokumentet til
-        HTML og konverteres til PDF. Ved ugyldig input returneres valideringsfeil per felt.
-      operationId: createDocument
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ByggRapport"
-      responses:
-        "200":
-          description: PDF-dokumentet ble generert.
-          content:
-            application/pdf:
-              schema:
-                type: string
-                format: binary
-        "400":
-          description: Valideringen av byggrapporten feilet.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ValidationErrorResponse"
-        "502":
-          description: PDF-generering via Gotenberg feilet.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/PdfErrorResponse"
-  /internal/isAlive:
-    get:
-      tags:
-        - Internal
-      summary: Liveness-probe
-      description: Returnerer alltid `OK` når prosessen kjører.
-      operationId: isAlive
-      responses:
-        "200":
-          description: Tjenesten kjører.
-          content:
-            text/plain:
-              schema:
-                type: string
-                enum:
-                  - OK
-  /internal/isReady:
-    get:
-      tags:
-        - Internal
-      summary: Readiness-probe
-      description: Returnerer alltid `OK` når prosessen er klar.
-      operationId: isReady
-      responses:
-        "200":
-          description: Tjenesten er klar.
-          content:
-            text/plain:
-              schema:
-                type: string
-                enum:
-                  - OK
 components:
   schemas:
-    ByggRapport:
+    ValidationErrorResponse:
       type: object
       properties:
-        rapportType:
-          type: string
-          enum:
-            - BYG0011
-          description: Rapporttype. Må være `BYG0011`.
-        tittel:
-          type: string
-          minLength: 1
-        kommune:
-          $ref: "#/components/schemas/Kommune"
-        koordinatsystem:
-          type: string
-          minLength: 1
-          example: EUREF89 UTM sone 32
-        locale:
-          $ref: "#/components/schemas/Locale"
-        generertTidspunkt:
-          type: string
-          minLength: 1
-          example: 2026-07-10T12:00:00Z
-        utvalgskriterier:
-          $ref: "#/components/schemas/Utvalgskriterier"
-        bygninger:
-          type: array
-          items:
-            $ref: "#/components/schemas/Bygning"
+        errors:
+          type: object
+          properties:
+            valid:
+              type: boolean
+              enum:
+                - false
+            errors:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: string
+          required:
+            - valid
+            - errors
       required:
-        - rapportType
-        - tittel
-        - kommune
-        - koordinatsystem
-        - locale
-        - generertTidspunkt
-        - utvalgskriterier
-        - bygninger
+        - errors
+      description: Returneres når byggrapporten ikke passerer validering. Feilene er gruppert etter feltnavn.
+    PdfErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          example: PDF-generering feilet
+        details:
+          type: string
+          example: "Gotenberg svarte med 500: ..."
+      required:
+        - error
+        - details
+      description: Returneres når konvertering til PDF feiler.
+    ByggRapport:
+      allOf:
+        - $ref: "#/components/schemas/Rapport"
+        - type: object
+          properties:
+            rapportType:
+              type: string
+              enum:
+                - BYG0011
+              description: Rapporttype. Må være `BYG0011`.
+            utvalgskriterier:
+              $ref: "#/components/schemas/Utvalgskriterier"
+            bygninger:
+              type: array
+              items:
+                $ref: "#/components/schemas/Bygning"
+          required:
+            - utvalgskriterier
+            - bygninger
       description: Byggrapport som skal genereres til PDF.
     Kommune:
       type: object
@@ -259,8 +208,8 @@ components:
         lopenr:
           type: number
         endringskode:
-          nullable: true
           type: string
+          nullable: true
         bygningsstatus:
           $ref: "#/components/schemas/Bygningsstatus"
         antallBoenheter:
@@ -284,24 +233,24 @@ components:
           items:
             $ref: "#/components/schemas/Bruksenhet"
         tiltakshavere:
-          default: []
           type: array
           items:
             $ref: "#/components/schemas/Tiltakshaver"
-        kontaktpersoner:
           default: []
+        kontaktpersoner:
           type: array
           items:
             $ref: "#/components/schemas/Kontaktperson"
+          default: []
         hjemmelshavere:
           type: array
           items:
             $ref: "#/components/schemas/Hjemmelshaver"
         kulturminner:
-          default: []
           type: array
           items:
             $ref: "#/components/schemas/Kulturminne"
+          default: []
       required:
         - id
         - bygningId
@@ -362,23 +311,23 @@ components:
       type: object
       properties:
         rammetillatelse:
-          nullable: true
           type: string
+          nullable: true
         igangsettingstillatelse:
-          nullable: true
           type: string
+          nullable: true
         midlertidigBrukstillatelse:
-          nullable: true
           type: string
+          nullable: true
         ferdigattest:
-          nullable: true
           type: string
+          nullable: true
         tattIBruk:
-          nullable: true
           type: string
+          nullable: true
         utgaattRevet:
-          nullable: true
           type: string
+          nullable: true
       required:
         - rammetillatelse
         - igangsettingstillatelse
@@ -410,8 +359,8 @@ components:
       type: object
       properties:
         bruksenhetsnr:
-          nullable: true
           type: string
+          nullable: true
         type:
           type: string
           minLength: 1
@@ -422,20 +371,17 @@ components:
         antallRom:
           type: number
         kjokkentilgang:
-          nullable: true
           type: boolean
+          nullable: true
         antallBad:
           type: number
         antallWc:
           type: number
         adresse:
-          nullable: true
           type: string
-        egenregistrert:
           nullable: true
-          allOf:
-            - $ref: "#/components/schemas/EgenregistrerteFelter"
-          type: object
+        egenregistrert:
+          $ref: "#/components/schemas/EgenregistrerteFelter"
       required:
         - bruksenhetsnr
         - type
@@ -449,20 +395,11 @@ components:
         - egenregistrert
     EgenregistrerteFelter:
       type: object
+      nullable: true
       properties:
         byggeaar:
-          nullable: true
           type: number
-        vannforsyning:
           nullable: true
-          allOf:
-            - $ref: "#/components/schemas/Egenregistrert"
-          type: object
-        avlop:
-          nullable: true
-          allOf:
-            - $ref: "#/components/schemas/Egenregistrert"
-          type: object
         energikilder:
           type: array
           items:
@@ -471,12 +408,20 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Egenregistrert"
+        vannforsyning:
+          allOf:
+            - $ref: "#/components/schemas/Egenregistrert"
+            - nullable: true
+        avlop:
+          allOf:
+            - $ref: "#/components/schemas/Egenregistrert"
+            - nullable: true
       required:
         - byggeaar
-        - vannforsyning
-        - avlop
         - energikilder
         - oppvarming
+        - vannforsyning
+        - avlop
     Egenregistrert:
       type: object
       properties:
@@ -495,11 +440,11 @@ components:
       type: object
       properties:
         gyldigFra:
-          nullable: true
           type: number
+          nullable: true
         gyldigTil:
-          nullable: true
           type: number
+          nullable: true
       required:
         - gyldigFra
         - gyldigTil
@@ -516,47 +461,47 @@ components:
           type: string
           minLength: 1
         adresselinje1:
-          nullable: true
           type: string
+          nullable: true
         adresselinje2:
-          nullable: true
           type: string
+          nullable: true
         adresselinje3:
-          nullable: true
           type: string
+          nullable: true
         postnummeromradenr:
-          nullable: true
           type: string
+          nullable: true
         postnummeromradenavn:
-          nullable: true
           type: string
+          nullable: true
         land:
-          nullable: true
           type: string
+          nullable: true
         bruksenhetsnr:
-          nullable: true
           type: string
+          nullable: true
         datofra:
-          nullable: true
           type: string
+          nullable: true
         datofraSOSI:
-          nullable: true
           type: string
+          nullable: true
         harDatofra:
-          default: false
           type: boolean
+          default: false
         kategorikode:
-          nullable: true
           type: string
+          nullable: true
         kontaktpersonKode:
-          nullable: true
           type: string
+          nullable: true
         statuskode:
-          nullable: true
           type: string
+          nullable: true
         eierErUtgatt:
-          default: false
           type: boolean
+          default: false
       required:
         - rolle
         - eierIdent
@@ -586,47 +531,47 @@ components:
           type: string
           minLength: 1
         adresselinje1:
-          nullable: true
           type: string
+          nullable: true
         adresselinje2:
-          nullable: true
           type: string
+          nullable: true
         adresselinje3:
-          nullable: true
           type: string
+          nullable: true
         postnummeromradenr:
-          nullable: true
           type: string
+          nullable: true
         postnummeromradenavn:
-          nullable: true
           type: string
+          nullable: true
         land:
-          nullable: true
           type: string
+          nullable: true
         bruksenhetsnr:
-          nullable: true
           type: string
+          nullable: true
         datofra:
-          nullable: true
           type: string
+          nullable: true
         datofraSOSI:
-          nullable: true
           type: string
+          nullable: true
         harDatofra:
-          default: false
           type: boolean
+          default: false
         kategorikode:
-          nullable: true
           type: string
+          nullable: true
         kontaktpersonKode:
-          nullable: true
           type: string
+          nullable: true
         statuskode:
-          nullable: true
           type: string
+          nullable: true
         eierErUtgatt:
-          default: false
           type: boolean
+          default: false
       required:
         - rolle
         - eierIdent
@@ -653,61 +598,58 @@ components:
           type: string
           minLength: 1
         andelTeller:
-          nullable: true
           type: number
+          nullable: true
         andelNevner:
-          nullable: true
           type: number
+          nullable: true
         eierforhold:
           type: string
           minLength: 1
         adresselinje1:
-          nullable: true
           type: string
+          nullable: true
         adresselinje2:
-          nullable: true
           type: string
+          nullable: true
         adresselinje3:
-          nullable: true
           type: string
+          nullable: true
         postnummer:
-          nullable: true
           type: string
+          nullable: true
         poststed:
-          nullable: true
           type: string
+          nullable: true
         land:
-          nullable: true
           type: string
+          nullable: true
         statuskode:
-          nullable: true
           type: string
+          nullable: true
         eierErUtgatt:
+          type: boolean
           default: false
-          type: boolean
         datofra:
-          nullable: true
           type: string
+          nullable: true
         datotil:
-          nullable: true
           type: string
+          nullable: true
         kategorikode:
-          nullable: true
           type: string
+          nullable: true
         bruksenhetsnr:
-          nullable: true
           type: string
+          nullable: true
         harAndel:
-          nullable: true
           type: boolean
+          nullable: true
         erSelveier:
-          nullable: true
           type: boolean
-        matrikkelenhet:
           nullable: true
-          allOf:
-            - $ref: "#/components/schemas/MatrikkelenhetFull"
-          type: object
+        matrikkelenhet:
+          $ref: "#/components/schemas/MatrikkelenhetFull"
       required:
         - eierIdent
         - navn
@@ -730,17 +672,18 @@ components:
         - matrikkelenhet
     MatrikkelenhetFull:
       type: object
+      nullable: true
       properties:
         gnr:
           type: number
         bnr:
           type: number
         fnr:
-          nullable: true
           type: number
+          nullable: true
         snr:
-          nullable: true
           type: number
+          nullable: true
       required:
         - gnr
         - bnr
@@ -766,41 +709,99 @@ components:
         - navn
         - status
         - kategori
-    ValidationErrorResponse:
+    Rapport:
       type: object
       properties:
-        errors:
-          type: object
-          properties:
-            valid:
-              type: boolean
-              enum:
-                - false
-            errors:
-              type: object
-              additionalProperties:
-                type: array
-                items:
-                  type: string
-          required:
-            - valid
-            - errors
-          additionalProperties: false
-      required:
-        - errors
-      additionalProperties: false
-      description: Returneres når byggrapporten ikke passerer validering. Feilene er gruppert etter feltnavn.
-    PdfErrorResponse:
-      type: object
-      properties:
-        error:
+        rapportType:
           type: string
-          example: PDF-generering feilet
-        details:
+          minLength: 1
+        tittel:
           type: string
-          example: "Gotenberg svarte med 500: ..."
+          minLength: 1
+        kommune:
+          $ref: "#/components/schemas/Kommune"
+        koordinatsystem:
+          type: string
+          minLength: 1
+          example: EUREF89 UTM sone 32
+        locale:
+          $ref: "#/components/schemas/Locale"
+        generertTidspunkt:
+          type: string
+          minLength: 1
+          example: 2026-07-10T12:00:00Z
       required:
-        - error
-        - details
-      additionalProperties: false
-      description: Returneres når konvertering til PDF feiler.
+        - rapportType
+        - tittel
+        - kommune
+        - koordinatsystem
+        - locale
+        - generertTidspunkt
+  parameters: {}
+paths:
+  /internal/isAlive:
+    get:
+      tags:
+        - Internal
+      summary: Liveness-probe
+      description: Returnerer alltid `OK` når prosessen kjører.
+      operationId: isAlive
+      responses:
+        "200":
+          description: Tjenesten svarer.
+          content:
+            text/plain:
+              schema:
+                type: string
+                enum:
+                  - OK
+  /internal/isReady:
+    get:
+      tags:
+        - Internal
+      summary: Readiness-probe
+      description: Returnerer alltid `OK` når prosessen er klar.
+      operationId: isReady
+      responses:
+        "200":
+          description: Tjenesten svarer.
+          content:
+            text/plain:
+              schema:
+                type: string
+                enum:
+                  - OK
+  /create-document:
+    post:
+      tags:
+        - Dokument
+      summary: Generer PDF fra en byggrapport
+      description: Validerer innsendt byggrapport mot skjemaet. Ved gyldig input renderes dokumentet til
+        HTML og konverteres til PDF. Ved ugyldig input returneres valideringsfeil per felt.
+      operationId: createDocument
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ByggRapport"
+      responses:
+        "200":
+          description: PDF-dokumentet ble generert.
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        "400":
+          description: Valideringen av byggrapporten feilet.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "502":
+          description: PDF-generering via Gotenberg feilet.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PdfErrorResponse"

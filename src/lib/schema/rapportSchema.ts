@@ -1,4 +1,4 @@
-import { z } from "zod"
+import { z } from "@hono/zod-openapi"
 
 const kommuneSchema = z
   .object({
@@ -24,7 +24,7 @@ export const rapportSchema = z
       .min(1)
       .meta({ example: "2026-07-10T12:00:00Z" }),
   })
-  .meta({ id: "Rapport" })
+  .openapi("Rapport")
 
 export type Rapport = z.infer<typeof rapportSchema>
 export type RapportLocale = z.infer<typeof localeSchema>

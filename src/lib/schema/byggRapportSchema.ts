@@ -1,4 +1,4 @@
-import { z } from "zod"
+import { z } from "@hono/zod-openapi"
 import { rapportSchema } from "./rapportSchema"
 
 const arealFordelingSchema = z
@@ -34,10 +34,10 @@ const egenregistrertSchema = z
 const egenregistrerteFelterSchema = z
   .object({
     byggeaar: z.number().nullable(),
-    vannforsyning: egenregistrertSchema.nullable(),
-    avlop: egenregistrertSchema.nullable(),
     energikilder: z.array(egenregistrertSchema),
     oppvarming: z.array(egenregistrertSchema),
+    vannforsyning: egenregistrertSchema.nullable(),
+    avlop: egenregistrertSchema.nullable(),
   })
   .meta({ id: "EgenregistrerteFelter" })
 
@@ -248,8 +248,7 @@ export const byggRapportSchema = rapportSchema
     utvalgskriterier: utvalgskriterierSchema,
     bygninger: z.array(bygningerSchema),
   })
-  .meta({
-    id: "ByggRapport",
+  .openapi("ByggRapport", {
     description: "Byggrapport som skal genereres til PDF.",
   })
 
