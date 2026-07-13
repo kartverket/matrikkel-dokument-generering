@@ -6,6 +6,8 @@
 @theme {
   --color-kv-subtle: var(--ds-color-neutral-text-subtle);
   --color-kv-default: var(--ds-color-neutral-text-default);
+  --color-kv-blue: var(--ds-color-accent-base-default);
+  --color-kv-blue-subtle: var(--ds-color-accent-surface-tinted);
 }
 
 body {

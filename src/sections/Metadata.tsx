@@ -15,8 +15,8 @@ export function Metadata({ data }: Props) {
         timeStyle: "short",
     }).format(new Date(data.generertTidspunkt))
 
-    return ( // TODO: endre bg til KV blå
-        <header className="bg-blue-100 p-4 font-semibold">
+    return (
+        <header className="bg-kv-blue-subtle p-4 font-semibold">
             <h1 className="text-2xl font-bold">{data.tittel}</h1>
             <div className="grid grid-cols-2 gap-1 py-2">
                 <p>Matrikkelrapport {data.rapportType}</p>
