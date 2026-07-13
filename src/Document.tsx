@@ -26,7 +26,7 @@ export function DocumentComponent({ data }: { data: ByggRapport }) {
               {endring.bruksenheter.length > 0 && (
                 <>
                   <Bruksenheter bruksenheter={endring.bruksenheter} />
-                  <RegistrerteVedtak lopenr={endring.lopenr} datoer={endring.datoer} />
+                  <RegistrerteVedtak datoer={endring.datoer} />
                   <KontaktPersoner kontaktpersoner={endring.kontaktpersoner} />
                   <Hjemmelshavere hjemmelshavere={endring.hjemmelshavere} />
                 </>
