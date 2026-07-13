@@ -57,6 +57,8 @@ describe("HTTP API", () => {
     expect(openApiResponse.status).toBe(200)
     expect(openApi.openapi).toBe("3.0.3")
     expect(openApi.paths["/create-document"].post).toBeDefined()
+    expect(openApi.components.schemas.ValidationErrorResponse).toBeDefined()
+    expect(openApi.components.schemas.PdfErrorResponse).toBeDefined()
 
     const docsResponse = await app.request("/docs")
     expect(docsResponse.status).toBe(200)
