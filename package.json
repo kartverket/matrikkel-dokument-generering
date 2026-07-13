@@ -6,17 +6,20 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "tsc -b && vite build && bun run build:css",
-    "build:css": "bun build src/document.css --outfile dist/document-styles.css --minify",
+    "build:css": "tailwindcss -i src/index.css -o dist/document-styles.css --minify",
     "lint": "biome lint .",
     "lint:fix": "biome check --write .",
-    "format": "biome format --write .",
+    "sort:classes": "biome lint --write --only=nursery/useSortedClasses .",
+    "format": "biome format --write . && biome check --write --formatter-enabled=false --linter-enabled=false . && bun run sort:classes",
     "format:check": "biome check . --formatter-enabled=true --linter-enabled=false --assist-enabled=false",
+    "prepare": "husky",
     "preview": "vite preview --host 0.0.0.0",
-    "serve": "bun src/server.ts"
+    "serve": "bun run build:css && bun src/server.ts"
   },
   "dependencies": {
     "@kv-designsystem/react": "^1.0.0-alpha.2",
     "@navikt/aksel-icons": "^8.14.0",
+    "@tailwindcss/cli": "^4.3.2",
     "i18next": "^26.3.4",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
@@ -36,7 +39,7 @@
     "@vitejs/plugin-react": "^6.0.1",
     "babel-plugin-react-compiler": "^1.0.0",
     "husky": "^9.1.7",
-    "tailwindcss": "^4.3.1",
+    "tailwindcss": "^4.3.2",
     "typescript": "~6.0.2",
     "vite": "^8.0.12"
   }
