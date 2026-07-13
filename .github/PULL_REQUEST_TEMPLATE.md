@@ -12,8 +12,6 @@
 
 ## Sjekkliste
 
-- [ ] Jeg har lintet prosjektet (`bun run lint:fix`)
-- [ ] Jeg har formatert prosjektet (`bun run format`)
 - [ ] Jeg har lagt til bokmål-oversettelse (`resources.nb.ts`)
 - [ ] Jeg har lagt til nynorsk-oversettelse (`resources.nn.ts`)
 - [ ] Jeg har bygget prosjektet uten feil (`bun run build`)
