@@ -54,19 +54,19 @@ API-serveren er avhengig av at Gotenberg kjører.
    docker compose up -d
    ```
 
-2. **Start API-serveren:**
+2. **Start klienten og API-serveren:**
 
    ```sh
-   bun run serve
+   bun run dev
    ```
 
-   Serveren kjører da på [http://localhost:3000](http://localhost:3000)
-   (eller porten satt i `PORT`).
+   - Klienten kjører på [http://localhost:5173](http://localhost:5173) med Vite HMR.
+   - API-serveren kjører på [http://localhost:3000](http://localhost:3000) med Bun hot reload.
 
 3. **Test at den svarer:**
 
    ```sh
-   curl http://localhost:3000/internal/isAlive        # -> OK
+   curl http://localhost:3000/internal/isAlive        # -> Alive
 
    curl -X POST http://localhost:3000/create-document \
      -H "Content-Type: application/json" \
@@ -95,8 +95,8 @@ Endepunkter:
 | Metode | Sti                 | Beskrivelse                                                   |
 | ------ | ------------------- | ------------------------------------------------------------- |
 | `POST` | `/create-document`  | Validerer byggrapport og returnerer PDF (`application/pdf`).   |
-| `GET`  | `/internal/isAlive` | Liveness-probe (returnerer `OK`).                              |
-| `GET`  | `/internal/isReady` | Readiness-probe (returnerer `OK`).                             |
+| `GET`  | `/internal/isAlive` | Liveness-probe (returnerer `Alive`).                           |
+| `GET`  | `/internal/isReady` | Readiness-probe (returnerer `Ready`).                          |
 | `GET`  | `/internal/metrics` | Prometheus-metrikker for tjenesten.                       |
 | `GET`  | `/openapi.json`     | Dynamisk generert OpenAPI-spesifikasjon.                  |
 | `GET`  | `/docs`             | Interaktiv Swagger UI.                                    |

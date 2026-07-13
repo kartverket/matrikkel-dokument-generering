@@ -5,13 +5,13 @@ const app = createApp()
 
 describe("HTTP API", () => {
   test.each([
-    "/internal/isAlive",
-    "/internal/isReady",
-  ])("%s returns OK", async (path) => {
+    ["/internal/isAlive", "Alive"],
+    ["/internal/isReady", "Ready"],
+  ])("%s returns %s", async (path, expectedBody) => {
     const response = await app.request(path)
 
     expect(response.status).toBe(200)
-    expect(await response.text()).toBe("OK")
+    expect(await response.text()).toBe(expectedBody)
   })
 
   test("validates create-document requests through the route schema", async () => {
