@@ -1,4 +1,4 @@
-import { Table } from "@kv-designsystem/react"
+import { Table, Paragraph } from "@kv-designsystem/react"
 
 interface RegistrerteVedtakProps {
     datoer: {
@@ -13,8 +13,8 @@ interface RegistrerteVedtakProps {
 export default function RegistrerteVedtak({ datoer, lopenr }: RegistrerteVedtakProps) {
     return (
         <section className="py-4 max-w-md">
-            <p className="text-sm font-light">Registrerte Vedtak</p>
-            <p className="p-2 bg-[#DAEBF5]">Løpenr: {lopenr}</p>
+            <Paragraph className="text-sm font-light">Registrerte Vedtak</Paragraph>
+            <Paragraph className="p-2 bg-[#DAEBF5]">Løpenr: {lopenr}</Paragraph>
             <Table>
                 <Table.Head>
                     <Table.Row>
