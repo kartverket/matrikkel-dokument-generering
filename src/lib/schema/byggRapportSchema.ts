@@ -43,16 +43,25 @@ const bygningsstatusSchema = z.object({
   bestaaende: z.boolean(),
 })
 
-const byggPersonSchema = z.object({
+const tiltakshaverSchema = z.object({
   rolle: z.string().min(1),
-  fnrOrgnr: z.string().min(1),
+  eierIdent: z.string().min(1),
   navn: z.string().min(1),
-  bruksenhet: z.string().nullable(),
-  adresse: z.string().nullable(),
+  adresselinje1: z.string().nullable(),
+  adresselinje2: z.string().nullable(),
+  adresselinje3: z.string().nullable(),
+  postnummeromradenr: z.string().nullable(),
+  postnummeromradenavn: z.string().nullable(),
+  land: z.string().nullable(),
+  bruksenhetsnr: z.string().nullable(),
+  datofra: z.string().nullable(),
+  datofraSOSI: z.string().nullable(),
+  harDatofra: z.boolean().optional().default(false),
+  kategorikode: z.string().nullable(),
+  kontaktpersonKode: z.string().nullable(),
+  statuskode: z.string().nullable(),
+  eierErUtgatt: z.boolean().optional().default(false),
 })
-
-const tiltakshaverSchema = byggPersonSchema
-
 const kontaktpersonSchema = z.object({
   rolle: z.string().min(1),
   eierIdent: z.string().min(1),
@@ -73,8 +82,34 @@ const kontaktpersonSchema = z.object({
   eierErUtgatt: z.boolean().optional().default(false),
 })
 
-const hjemmelshaverSchema = byggPersonSchema.extend({
-  andel: z.string().min(1),
+const hjemmelshaverSchema = z.object({
+  eierIdent: z.string().min(1),
+  navn: z.string().min(1),
+  andelTeller: z.number().nullable(),
+  andelNevner: z.number().nullable(),
+  eierforhold: z.string().min(1),
+  adresselinje1: z.string().nullable(),
+  adresselinje2: z.string().nullable(),
+  adresselinje3: z.string().nullable(),
+  postnummer: z.string().nullable(),
+  poststed: z.string().nullable(),
+  land: z.string().nullable(),
+  statuskode: z.string().nullable(),
+  eierErUtgatt: z.boolean().optional().default(false),
+  datofra: z.string().nullable(),
+  datotil: z.string().nullable(),
+  kategorikode: z.string().nullable(),
+  bruksenhetsnr: z.string().nullable(),
+  harAndel: z.boolean().nullable(),
+  erSelveier: z.boolean().nullable(),
+  matrikkelenhet: z
+    .object({
+      gnr: z.number(),
+      bnr: z.number(),
+      fnr: z.number().nullable(),
+      snr: z.number().nullable(),
+    })
+    .nullable(),
 })
 
 const kulturminneSchema = z.object({
@@ -176,5 +211,7 @@ export const byggRapportSchema = rapportSchema.extend({
 export type ByggRapport = z.infer<typeof byggRapportSchema>
 export type Etasjeplan = z.infer<typeof bygningsetasjeSchema>
 export type Bygningsendring = z.infer<typeof bygningsendringSchema>
+export type Bygning = z.infer<typeof bygningerSchema>
 export type Kontaktperson = z.infer<typeof kontaktpersonSchema>
 export type Bruksenhet = z.infer<typeof bruksenhetSchema>
+export type Hjemmelshaver = z.infer<typeof hjemmelshaverSchema>

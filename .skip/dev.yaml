@@ -10,6 +10,10 @@ spec:
     - matrikkel-dokument-generering.atkv3-dev.kartverket-intern.cloud
   replicas: 1
 
+  env:
+    - name: GOTENBERG_URL
+      value: "http://pdf-generator.atkv3-dev.kartverket-intern.cloud"
+
   resources:
     requests:
       cpu: 50m

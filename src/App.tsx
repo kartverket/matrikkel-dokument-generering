@@ -1,5 +1,30 @@
+import { I18nextProvider } from "react-i18next"
+import { DocumentComponent } from "./Document.tsx"
+import { createI18n } from "./lib/i18n/createI18n.ts"
+import type { ByggRapport } from "./lib/schema/byggRapportSchema.ts"
+import "./index.css"
+
+const mockModules = import.meta.glob<{ default: ByggRapport }>(
+  "./mockData/*.ts",
+  { eager: true },
+)
+const mockData = Object.values(mockModules)[0]?.default
+
 function App() {
-  return <section className="bg-red-200">matrikkel-dokument-generering</section>
+  if (!mockData) {
+    return (
+      <section className="flex h-screen w-screen items-center justify-center text-2xl font-bold text-red-700">
+        <h1>Ingen mockdata funnet</h1>
+      </section>
+    )
+  }
+
+  const i18n = createI18n(mockData.locale)
+  return (
+    <I18nextProvider i18n={i18n}>
+      <DocumentComponent data={mockData} />
+    </I18nextProvider>
+  )
 }
 
 export default App
