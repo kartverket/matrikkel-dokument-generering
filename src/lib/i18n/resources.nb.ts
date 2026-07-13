@@ -3,9 +3,7 @@ export const nb = {
     BYG0011: {
       title: "Bygning {{bygningsnr}} – {{bygningstype}}",
       utvalgskriterier: {
-        title: "Utvalgskriterier for rapporten",
-        description:
-          "Kriteriene viser hvilket utvalg som ble brukt da rapporten ble generert.",
+        title: "Utvalgskriterier",
         ja: "Ja",
         nei: "Nei",
         ikkeAngitt: "Ikke angitt",

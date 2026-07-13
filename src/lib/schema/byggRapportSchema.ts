@@ -155,14 +155,18 @@ const bygningsetasjeSchema = z.object({
 })
 
 const utvalgskriterierSchema = z.object({
-  bestaaendeBygg: z.boolean(),
-  utgaatteBygg: z.boolean(),
-  bygninger: z.boolean(),
-  bygningsendringer: z.boolean(),
-  frededeBygninger: z.string().min(1),
-  bygningsnr: valgfriTekstSchema,
-  bygningstyper: z.array(bygningstypeSchema),
-  lopenr: z.number().nullable(),
+  omfang: z.object({
+    bestaaendeBygg: z.boolean(),
+    utgaatteBygg: z.boolean(),
+    bygninger: z.boolean(),
+    bygningsendringer: z.boolean(),
+    frededeBygninger: z.string().min(1),
+  }),
+  bygning: z.object({
+    bygningsnr: valgfriTekstSchema,
+    bygningstyper: z.array(bygningstypeSchema),
+    lopenr: z.number().nullable(),
+  }),
   adresse: z.object({
     adressekode: valgfriTekstSchema,
     bruksenhetsnr: valgfriTekstSchema,
