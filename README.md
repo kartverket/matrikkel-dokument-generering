@@ -25,7 +25,7 @@ Løsningen er delt over tre selvstendige repoer:
 
 ## Utvikling
 
-- Kjør React-appen (Vite dev-server): `bun run dev`
+- Kjør klienten og API-serveren med hot reload: `bun run dev`
 - Kjør linting (med og uten fiksing): `bun run lint:fix` og `bun run lint`
 - Kjør tester: `bun run test`
 - Formatter prosjektet (med og uten endringer): `bun run format` og `bun run format:check`
@@ -39,12 +39,14 @@ automatisk kjøres på alle commits.
 
 ## Kjøre API-serveren
 
-API-serveren eksponerer `POST /create-document` som tar imot en byggrapport og
-returnerer en PDF. Den er avhengig av at Gotenberg kjører.
+```zsh
+bun run dev
+```
+
+API-serveren er avhengig av at Gotenberg kjører.
 
 1. **Start Gotenberg** (kjører på port `8089`). Gotenberg-tjenesten ligger i et
    eget repo, [pdf-generator](https://github.com/kartverket/pdf-generator).
-   Klon det og start tjenesten med Docker Compose:
 
    ```sh
    git clone https://github.com/kartverket/pdf-generator.git

@@ -26,7 +26,7 @@ const createDocumentRoute = createRoute({
   },
   responses: {
     200: {
-      description: "PDF-dokumentet ble generert.",
+      description: "PDF-en ble generert.",
       content: {
         "application/pdf": {
           schema: z.string().openapi({ format: "binary" }),
@@ -34,7 +34,7 @@ const createDocumentRoute = createRoute({
       },
     },
     400: {
-      description: "Valideringen av byggrapporten feilet.",
+      description: "Valideringen av rapporten feilet.",
       content: {
         "application/json": { schema: validationErrorResponseSchema },
       },
