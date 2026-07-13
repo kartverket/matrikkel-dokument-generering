@@ -1,5 +1,5 @@
 import { Heading, Paragraph, Table } from "@kv-designsystem/react"
-import { type CSSProperties, Fragment } from "react"
+import { Fragment } from "react"
 import { useTranslation } from "react-i18next"
 import type { Bygningsendring } from "../lib/schema/byggRapportSchema"
 import { formatArea } from "../lib/utils/format"
@@ -8,10 +8,6 @@ interface Props {
   endring: Bygningsendring
 }
 
-const tableStyle = {
-  "--dsc-table-color": "var(--ds-color-neutral-text-default)",
-} as CSSProperties
-
 const subtle = "text-[var(--ds-color-neutral-text-subtle)]"
 
 export default function Arealfordeling({ endring }: Props) {
@@ -19,41 +15,41 @@ export default function Arealfordeling({ endring }: Props) {
   const af = "rapport.BYG0011.arealfordeling"
 
   return (
-    <section className="flex flex-col gap-8">
-      <Heading level={2} className={`text-sm! font-normal! ${subtle}`}>
+    <section className="flex flex-col gap-8 my-16">
+      <Heading level={2} className={`font-normal ${subtle}`}>
         {t(`${af}.title`)}
       </Heading>
 
       <dl className="grid grid-cols-[max-content_1fr] items-baseline gap-x-12 gap-y-3">
         <dt>
-          <Paragraph data-size="sm">{t(`${af}.bebygdAreal`)}</Paragraph>
+          <Paragraph data-size="lg">{t(`${af}.bebygdAreal`)}</Paragraph>
         </dt>
         <dd>
-          <Paragraph data-size="lg" className="font-semibold!">
+          <Paragraph data-size="lg" className="font-semibold">
             {formatArea(endring.bebygdAreal)}
           </Paragraph>
         </dd>
 
         <dt>
-          <Paragraph data-size="sm">{t(`${af}.bruksareal`)}</Paragraph>
+          <Paragraph data-size="lg">{t(`${af}.bruksareal`)}</Paragraph>
         </dt>
         <dd>
-          <Paragraph data-size="lg" className="font-semibold!">
+          <Paragraph data-size="lg" className="font-semibold">
             {formatArea(endring.bruksareal.totalt)}
           </Paragraph>
         </dd>
 
         <dt>
-          <Paragraph data-size="sm">{t(`${af}.koordinater`)}</Paragraph>
+          <Paragraph data-size="lg">{t(`${af}.koordinater`)}</Paragraph>
         </dt>
         <dd>
-          <Paragraph data-size="lg" className="font-semibold!">
+          <Paragraph data-size="lg" className="font-semibold">
             {endring.koordinat.nord} / {endring.koordinat.ost}
           </Paragraph>
         </dd>
       </dl>
 
-      <Table style={tableStyle}>
+      <Table className="[--dsc-table-color:var(--ds-color-neutral-text-default)]">
         <Table.Head>
           <Table.Row>
             <Table.HeaderCell>{t(`${af}.etasje`)}</Table.HeaderCell>
@@ -68,14 +64,14 @@ export default function Arealfordeling({ endring }: Props) {
                 <Table.HeaderCell
                   colSpan={3}
                   scope="colgroup"
-                  className="border-b-0! pt-8"
+                  className="border-b-0 pt-8"
                 >
                   <span className="flex items-baseline gap-4">
                     <Heading
                       level={3}
                       data-size="sm"
                       asChild
-                      className="font-semibold!"
+                      className="font-semibold"
                     >
                       <span>{etasje.etasjeplan}</span>
                     </Heading>

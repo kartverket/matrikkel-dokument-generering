@@ -1,5 +1,7 @@
+@layer theme, base, components, designsystem, utilities;
+
 @import "tailwindcss";
-@import "@kv-designsystem/react/blue";
+@import "@kv-designsystem/react/blue" layer(designsystem);
 
 body {
   font-family: "Inter", sans-serif;
