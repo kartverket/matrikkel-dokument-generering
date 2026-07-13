@@ -13,7 +13,7 @@ const mockData = Object.values(mockModules)[0]?.default
 function App() {
   if (!mockData) {
     return (
-      <section className="flex h-screen w-screen items-center justify-center text-2xl font-bold text-red-700">
+      <section className="flex h-screen w-screen items-center justify-center font-bold text-2xl text-red-700">
         <h1>Ingen mockdata funnet</h1>
       </section>
     )
