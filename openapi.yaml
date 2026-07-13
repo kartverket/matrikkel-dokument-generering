@@ -1,23 +1,22 @@
-openapi: 3.0.3
+# Denne filen er automatisk generert av `bun run generate:openapi`.openapi: 3.1.0
 info:
   title: Matrikkel Dokument Generering API
-  description: >-
+  description: |-
     API for å generere PDF-dokumenter fra matrikkelrapporter. Tjenesten tar imot
-    en strukturert JSON, renderer den til HTML og
-    konverterer resultatet til PDF via [Gotenberg](https://github.com/kartverket/pdf-generator).
+    en strukturert JSON, renderer den til HTML og konverterer resultatet til PDF via
+    [Gotenberg](https://github.com/kartverket/pdf-generator).
 
     Følgende rapporter støttes:
     - BYG0011 – Byggrapport
   version: 1.0.0
   license:
     name: Se LICENCE.md
-    url: https://github.com/kartverket/matrikkel-dokument-generering/blob/main/LICENSE.md
+    url: https://github.com/kartverket/matrikkel-dokument-generering/blob/main/LICENCE.md
 servers:
   - url: http://localhost:3000
     description: Lokal utvikling
   - url: http://localhost:8087
     description: Container
-# Tjenesten har ingen autentisering.
 security: []
 tags:
   - name: Dokument
@@ -30,10 +29,8 @@ paths:
       tags:
         - Dokument
       summary: Generer PDF fra en byggrapport
-      description: >-
-        Validerer innsendt byggrapport mot skjemaet. Ved gyldig input renderes
-        dokumentet til HTML og konverteres til PDF. Ved ugyldig input returneres
-        valideringsfeil per felt.
+      description: Validerer innsendt byggrapport mot skjemaet. Ved gyldig input renderes dokumentet til
+        HTML og konverteres til PDF. Ved ugyldig input returneres valideringsfeil per felt.
       operationId: createDocument
       requestBody:
         required: true
@@ -56,7 +53,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ValidationErrorResponse"
         "502":
-          description: PDF-generering (Gotenberg) feilet.
+          description: PDF-generering via Gotenberg feilet.
           content:
             application/json:
               schema:
@@ -75,13 +72,13 @@ paths:
             text/plain:
               schema:
                 type: string
-                example: OK
+                const: OK
   /internal/isReady:
     get:
       tags:
         - Internal
       summary: Readiness-probe
-      description: Returnerer alltid `OK` når prosessen er klar til å ta imot trafikk.
+      description: Returnerer alltid `OK` når prosessen er klar.
       operationId: isReady
       responses:
         "200":
@@ -90,26 +87,15 @@ paths:
             text/plain:
               schema:
                 type: string
-                example: OK
+                const: OK
 components:
   schemas:
     ByggRapport:
       type: object
-      description: Byggrapport (rapporttype BYG0011) som skal genereres til PDF.
-      required:
-        - rapportType
-        - tittel
-        - kommune
-        - koordinatsystem
-        - locale
-        - generertTidspunkt
-        - utvalgskriterier
-        - bygninger
       properties:
         rapportType:
           type: string
-          enum:
-            - BYG0011
+          const: BYG0011
           description: Rapporttype. Må være `BYG0011`.
         tittel:
           type: string
@@ -125,25 +111,25 @@ components:
         generertTidspunkt:
           type: string
           minLength: 1
-          description: Tidspunkt rapporten ble generert (fritekst/ISO-streng).
-          example: "2026-07-10T12:00:00Z"
+          example: 2026-07-10T12:00:00Z
         utvalgskriterier:
           $ref: "#/components/schemas/Utvalgskriterier"
         bygninger:
           type: array
           items:
             $ref: "#/components/schemas/Bygning"
-    Locale:
-      type: string
-      description: Målform for dokumentet – bokmål (`nb`) eller nynorsk (`nn`).
-      enum:
-        - nb
-        - nn
+      required:
+        - rapportType
+        - tittel
+        - kommune
+        - koordinatsystem
+        - locale
+        - generertTidspunkt
+        - utvalgskriterier
+        - bygninger
+      description: Byggrapport som skal genereres til PDF.
     Kommune:
       type: object
-      required:
-        - nr
-        - navn
       properties:
         nr:
           type: string
@@ -153,16 +139,17 @@ components:
           type: string
           minLength: 1
           example: Oslo
+      required:
+        - nr
+        - navn
+    Locale:
+      type: string
+      enum:
+        - nb
+        - nn
+      description: Målform for dokumentet – bokmål (`nb`) eller nynorsk (`nn`).
     Utvalgskriterier:
       type: object
-      required:
-        - bestaaendeBygg
-        - utgaatteBygg
-        - bygninger
-        - bygningsendringer
-        - frededeBygninger
-        - matrikkelenhet
-        - subrapporter
       properties:
         bestaaendeBygg:
           type: boolean
@@ -179,13 +166,6 @@ components:
           $ref: "#/components/schemas/MatrikkelenhetGnrBnr"
         subrapporter:
           type: object
-          required:
-            - etasjer
-            - bruksenheter
-            - tiltakshavere
-            - kontaktpersoner
-            - hjemmelshavere
-            - kulturminner
           properties:
             etasjer:
               type: boolean
@@ -199,16 +179,33 @@ components:
               type: boolean
             kulturminner:
               type: boolean
+          required:
+            - etasjer
+            - bruksenheter
+            - tiltakshavere
+            - kontaktpersoner
+            - hjemmelshavere
+            - kulturminner
+      required:
+        - bestaaendeBygg
+        - utgaatteBygg
+        - bygninger
+        - bygningsendringer
+        - frededeBygninger
+        - matrikkelenhet
+        - subrapporter
+    MatrikkelenhetGnrBnr:
+      type: object
+      properties:
+        gnr:
+          type: number
+        bnr:
+          type: number
+      required:
+        - gnr
+        - bnr
     Bygning:
       type: object
-      required:
-        - id
-        - bygningsnr
-        - bygningstype
-        - adresseverdig
-        - naeringsgruppe
-        - matrikkelenhet
-        - endringer
       properties:
         id:
           type: number
@@ -225,57 +222,31 @@ components:
         matrikkelenhet:
           type: string
           minLength: 1
-          description: Matrikkelenhet som tekst (f.eks. "gnr/bnr").
         endringer:
           type: array
           items:
             $ref: "#/components/schemas/Bygningsendring"
-    Bygningstype:
-      type: object
-      required:
-        - kode
-        - navn
-      properties:
-        kode:
-          type: number
-        navn:
-          type: string
-          minLength: 1
-    Bygningsstatus:
-      type: object
-      required:
-        - kode
-        - kortkode
-        - navn
-        - bestaaende
-      properties:
-        kode:
-          type: number
-        kortkode:
-          type: string
-          minLength: 1
-        navn:
-          type: string
-          minLength: 1
-        bestaaende:
-          type: boolean
-    Bygningsendring:
-      type: object
       required:
         - id
-        - bygningId
-        - lopenr
-        - endringskode
-        - bygningsstatus
-        - antallBoenheter
-        - bruksareal
-        - bruttoareal
-        - bebygdAreal
-        - koordinat
-        - datoer
-        - etasjeplan
-        - bruksenheter
-        - hjemmelshavere
+        - bygningsnr
+        - bygningstype
+        - adresseverdig
+        - naeringsgruppe
+        - matrikkelenhet
+        - endringer
+    Bygningstype:
+      type: object
+      properties:
+        kode:
+          type: number
+        navn:
+          type: string
+          minLength: 1
+      required:
+        - kode
+        - navn
+    Bygningsendring:
+      type: object
       properties:
         id:
           type: number
@@ -284,8 +255,9 @@ components:
         lopenr:
           type: number
         endringskode:
-          type: string
-          nullable: true
+          anyOf:
+            - type: string
+            - type: "null"
         bygningsstatus:
           $ref: "#/components/schemas/Bygningsstatus"
         antallBoenheter:
@@ -309,13 +281,13 @@ components:
           items:
             $ref: "#/components/schemas/Bruksenhet"
         tiltakshavere:
-          type: array
           default: []
+          type: array
           items:
             $ref: "#/components/schemas/Tiltakshaver"
         kontaktpersoner:
-          type: array
           default: []
+          type: array
           items:
             $ref: "#/components/schemas/Kontaktperson"
         hjemmelshavere:
@@ -323,16 +295,45 @@ components:
           items:
             $ref: "#/components/schemas/Hjemmelshaver"
         kulturminner:
-          type: array
           default: []
+          type: array
           items:
             $ref: "#/components/schemas/Kulturminne"
+      required:
+        - id
+        - bygningId
+        - lopenr
+        - endringskode
+        - bygningsstatus
+        - antallBoenheter
+        - bruksareal
+        - bruttoareal
+        - bebygdAreal
+        - koordinat
+        - datoer
+        - etasjeplan
+        - bruksenheter
+        - hjemmelshavere
+    Bygningsstatus:
+      type: object
+      properties:
+        kode:
+          type: number
+        kortkode:
+          type: string
+          minLength: 1
+        navn:
+          type: string
+          minLength: 1
+        bestaaende:
+          type: boolean
+      required:
+        - kode
+        - kortkode
+        - navn
+        - bestaaende
     ArealFordeling:
       type: object
-      required:
-        - bolig
-        - annet
-        - totalt
       properties:
         bolig:
           type: number
@@ -340,18 +341,47 @@ components:
           type: number
         totalt:
           type: number
+      required:
+        - bolig
+        - annet
+        - totalt
     Koordinat:
       type: object
-      required:
-        - nord
-        - ost
       properties:
         nord:
           type: number
         ost:
           type: number
+      required:
+        - nord
+        - ost
     Bygningsdatoer:
       type: object
+      properties:
+        rammetillatelse:
+          anyOf:
+            - type: string
+            - type: "null"
+        igangsettingstillatelse:
+          anyOf:
+            - type: string
+            - type: "null"
+        midlertidigBrukstillatelse:
+          anyOf:
+            - type: string
+            - type: "null"
+        ferdigattest:
+          anyOf:
+            - type: string
+            - type: "null"
+        tattIBruk:
+          anyOf:
+            - type: string
+            - type: "null"
+        utgaattRevet:
+          anyOf:
+            - type: string
+            - type: "null"
       required:
         - rammetillatelse
         - igangsettingstillatelse
@@ -359,33 +389,8 @@ components:
         - ferdigattest
         - tattIBruk
         - utgaattRevet
-      properties:
-        rammetillatelse:
-          type: string
-          nullable: true
-        igangsettingstillatelse:
-          type: string
-          nullable: true
-        midlertidigBrukstillatelse:
-          type: string
-          nullable: true
-        ferdigattest:
-          type: string
-          nullable: true
-        tattIBruk:
-          type: string
-          nullable: true
-        utgaattRevet:
-          type: string
-          nullable: true
     Bygningsetasje:
       type: object
-      required:
-        - etasjeplan
-        - etasje
-        - antallBoenheter
-        - bruksareal
-        - bruttoareal
       properties:
         etasjeplan:
           type: string
@@ -398,8 +403,44 @@ components:
           $ref: "#/components/schemas/ArealFordeling"
         bruttoareal:
           $ref: "#/components/schemas/ArealFordeling"
+      required:
+        - etasjeplan
+        - etasje
+        - antallBoenheter
+        - bruksareal
+        - bruttoareal
     Bruksenhet:
       type: object
+      properties:
+        bruksenhetsnr:
+          anyOf:
+            - type: string
+            - type: "null"
+        type:
+          type: string
+          minLength: 1
+        matrikkelenhet:
+          $ref: "#/components/schemas/MatrikkelenhetGnrBnr"
+        bruksareal:
+          type: number
+        antallRom:
+          type: number
+        kjokkentilgang:
+          anyOf:
+            - type: boolean
+            - type: "null"
+        antallBad:
+          type: number
+        antallWc:
+          type: number
+        adresse:
+          anyOf:
+            - type: string
+            - type: "null"
+        egenregistrert:
+          anyOf:
+            - $ref: "#/components/schemas/EgenregistrerteFelter"
+            - type: "null"
       required:
         - bruksenhetsnr
         - type
@@ -411,53 +452,21 @@ components:
         - antallWc
         - adresse
         - egenregistrert
-      properties:
-        bruksenhetsnr:
-          type: string
-          nullable: true
-        type:
-          type: string
-          minLength: 1
-        matrikkelenhet:
-          $ref: "#/components/schemas/MatrikkelenhetGnrBnr"
-        bruksareal:
-          type: number
-        antallRom:
-          type: number
-        kjokkentilgang:
-          type: boolean
-          nullable: true
-        antallBad:
-          type: number
-        antallWc:
-          type: number
-        adresse:
-          type: string
-          nullable: true
-        egenregistrert:
-          nullable: true
-          allOf:
-            - $ref: "#/components/schemas/EgenregistrerteFelter"
     EgenregistrerteFelter:
       type: object
-      required:
-        - byggeaar
-        - vannforsyning
-        - avlop
-        - energikilder
-        - oppvarming
       properties:
         byggeaar:
-          type: number
-          nullable: true
+          anyOf:
+            - type: number
+            - type: "null"
         vannforsyning:
-          nullable: true
-          allOf:
+          anyOf:
             - $ref: "#/components/schemas/Egenregistrert"
+            - type: "null"
         avlop:
-          nullable: true
-          allOf:
+          anyOf:
             - $ref: "#/components/schemas/Egenregistrert"
+            - type: "null"
         energikilder:
           type: array
           items:
@@ -466,12 +475,14 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Egenregistrert"
+      required:
+        - byggeaar
+        - vannforsyning
+        - avlop
+        - energikilder
+        - oppvarming
     Egenregistrert:
       type: object
-      required:
-        - data
-        - erGjeldende
-        - gyldighetsperiode
       properties:
         data:
           type: string
@@ -480,20 +491,90 @@ components:
           type: boolean
         gyldighetsperiode:
           $ref: "#/components/schemas/Gyldighetsperiode"
+      required:
+        - data
+        - erGjeldende
+        - gyldighetsperiode
     Gyldighetsperiode:
       type: object
+      properties:
+        gyldigFra:
+          anyOf:
+            - type: number
+            - type: "null"
+        gyldigTil:
+          anyOf:
+            - type: number
+            - type: "null"
       required:
         - gyldigFra
         - gyldigTil
-      properties:
-        gyldigFra:
-          type: number
-          nullable: true
-        gyldigTil:
-          type: number
-          nullable: true
     Tiltakshaver:
       type: object
+      properties:
+        rolle:
+          type: string
+          minLength: 1
+        eierIdent:
+          type: string
+          minLength: 1
+        navn:
+          type: string
+          minLength: 1
+        adresselinje1:
+          anyOf:
+            - type: string
+            - type: "null"
+        adresselinje2:
+          anyOf:
+            - type: string
+            - type: "null"
+        adresselinje3:
+          anyOf:
+            - type: string
+            - type: "null"
+        postnummeromradenr:
+          anyOf:
+            - type: string
+            - type: "null"
+        postnummeromradenavn:
+          anyOf:
+            - type: string
+            - type: "null"
+        land:
+          anyOf:
+            - type: string
+            - type: "null"
+        bruksenhetsnr:
+          anyOf:
+            - type: string
+            - type: "null"
+        datofra:
+          anyOf:
+            - type: string
+            - type: "null"
+        datofraSOSI:
+          anyOf:
+            - type: string
+            - type: "null"
+        harDatofra:
+          default: false
+          type: boolean
+        kategorikode:
+          anyOf:
+            - type: string
+            - type: "null"
+        kontaktpersonKode:
+          anyOf:
+            - type: string
+            - type: "null"
+        statuskode:
+          anyOf:
+            - type: string
+            - type: "null"
+        eierErUtgatt:
+          default: false
+          type: boolean
       required:
         - rolle
         - eierIdent
@@ -510,61 +591,72 @@ components:
         - kategorikode
         - kontaktpersonKode
         - statuskode
-      properties:
-        rolle:
-          type: string
-          minLength: 1
-        eierIdent:
-          type: string
-          minLength: 1
-        navn:
-          type: string
-          minLength: 1
-        adresselinje1:
-          type: string
-          nullable: true
-        adresselinje2:
-          type: string
-          nullable: true
-        adresselinje3:
-          type: string
-          nullable: true
-        postnummeromradenr:
-          type: string
-          nullable: true
-        postnummeromradenavn:
-          type: string
-          nullable: true
-        land:
-          type: string
-          nullable: true
-        bruksenhetsnr:
-          type: string
-          nullable: true
-        datofra:
-          type: string
-          nullable: true
-        datofraSOSI:
-          type: string
-          nullable: true
-        harDatofra:
-          type: boolean
-          default: false
-        kategorikode:
-          type: string
-          nullable: true
-        kontaktpersonKode:
-          type: string
-          nullable: true
-        statuskode:
-          type: string
-          nullable: true
-        eierErUtgatt:
-          type: boolean
-          default: false
     Kontaktperson:
       type: object
-      description: Samme struktur som Tiltakshaver.
+      properties:
+        rolle:
+          type: string
+          minLength: 1
+        eierIdent:
+          type: string
+          minLength: 1
+        navn:
+          type: string
+          minLength: 1
+        adresselinje1:
+          anyOf:
+            - type: string
+            - type: "null"
+        adresselinje2:
+          anyOf:
+            - type: string
+            - type: "null"
+        adresselinje3:
+          anyOf:
+            - type: string
+            - type: "null"
+        postnummeromradenr:
+          anyOf:
+            - type: string
+            - type: "null"
+        postnummeromradenavn:
+          anyOf:
+            - type: string
+            - type: "null"
+        land:
+          anyOf:
+            - type: string
+            - type: "null"
+        bruksenhetsnr:
+          anyOf:
+            - type: string
+            - type: "null"
+        datofra:
+          anyOf:
+            - type: string
+            - type: "null"
+        datofraSOSI:
+          anyOf:
+            - type: string
+            - type: "null"
+        harDatofra:
+          default: false
+          type: boolean
+        kategorikode:
+          anyOf:
+            - type: string
+            - type: "null"
+        kontaktpersonKode:
+          anyOf:
+            - type: string
+            - type: "null"
+        statuskode:
+          anyOf:
+            - type: string
+            - type: "null"
+        eierErUtgatt:
+          default: false
+          type: boolean
       required:
         - rolle
         - eierIdent
@@ -581,60 +673,85 @@ components:
         - kategorikode
         - kontaktpersonKode
         - statuskode
+    Hjemmelshaver:
+      type: object
       properties:
-        rolle:
-          type: string
-          minLength: 1
         eierIdent:
           type: string
           minLength: 1
         navn:
           type: string
           minLength: 1
+        andelTeller:
+          anyOf:
+            - type: number
+            - type: "null"
+        andelNevner:
+          anyOf:
+            - type: number
+            - type: "null"
+        eierforhold:
+          type: string
+          minLength: 1
         adresselinje1:
-          type: string
-          nullable: true
+          anyOf:
+            - type: string
+            - type: "null"
         adresselinje2:
-          type: string
-          nullable: true
+          anyOf:
+            - type: string
+            - type: "null"
         adresselinje3:
-          type: string
-          nullable: true
-        postnummeromradenr:
-          type: string
-          nullable: true
-        postnummeromradenavn:
-          type: string
-          nullable: true
+          anyOf:
+            - type: string
+            - type: "null"
+        postnummer:
+          anyOf:
+            - type: string
+            - type: "null"
+        poststed:
+          anyOf:
+            - type: string
+            - type: "null"
         land:
-          type: string
-          nullable: true
-        bruksenhetsnr:
-          type: string
-          nullable: true
-        datofra:
-          type: string
-          nullable: true
-        datofraSOSI:
-          type: string
-          nullable: true
-        harDatofra:
-          type: boolean
-          default: false
-        kategorikode:
-          type: string
-          nullable: true
-        kontaktpersonKode:
-          type: string
-          nullable: true
+          anyOf:
+            - type: string
+            - type: "null"
         statuskode:
-          type: string
-          nullable: true
+          anyOf:
+            - type: string
+            - type: "null"
         eierErUtgatt:
-          type: boolean
           default: false
-    Hjemmelshaver:
-      type: object
+          type: boolean
+        datofra:
+          anyOf:
+            - type: string
+            - type: "null"
+        datotil:
+          anyOf:
+            - type: string
+            - type: "null"
+        kategorikode:
+          anyOf:
+            - type: string
+            - type: "null"
+        bruksenhetsnr:
+          anyOf:
+            - type: string
+            - type: "null"
+        harAndel:
+          anyOf:
+            - type: boolean
+            - type: "null"
+        erSelveier:
+          anyOf:
+            - type: boolean
+            - type: "null"
+        matrikkelenhet:
+          anyOf:
+            - $ref: "#/components/schemas/MatrikkelenhetFull"
+            - type: "null"
       required:
         - eierIdent
         - navn
@@ -655,75 +772,28 @@ components:
         - harAndel
         - erSelveier
         - matrikkelenhet
+    MatrikkelenhetFull:
+      type: object
       properties:
-        eierIdent:
-          type: string
-          minLength: 1
-        navn:
-          type: string
-          minLength: 1
-        andelTeller:
+        gnr:
           type: number
-          nullable: true
-        andelNevner:
+        bnr:
           type: number
-          nullable: true
-        eierforhold:
-          type: string
-          minLength: 1
-        adresselinje1:
-          type: string
-          nullable: true
-        adresselinje2:
-          type: string
-          nullable: true
-        adresselinje3:
-          type: string
-          nullable: true
-        postnummer:
-          type: string
-          nullable: true
-        poststed:
-          type: string
-          nullable: true
-        land:
-          type: string
-          nullable: true
-        statuskode:
-          type: string
-          nullable: true
-        eierErUtgatt:
-          type: boolean
-          default: false
-        datofra:
-          type: string
-          nullable: true
-        datotil:
-          type: string
-          nullable: true
-        kategorikode:
-          type: string
-          nullable: true
-        bruksenhetsnr:
-          type: string
-          nullable: true
-        harAndel:
-          type: boolean
-          nullable: true
-        erSelveier:
-          type: boolean
-          nullable: true
-        matrikkelenhet:
-          nullable: true
-          allOf:
-            - $ref: "#/components/schemas/MatrikkelenhetFull"
+        fnr:
+          anyOf:
+            - type: number
+            - type: "null"
+        snr:
+          anyOf:
+            - type: number
+            - type: "null"
+      required:
+        - gnr
+        - bnr
+        - fnr
+        - snr
     Kulturminne:
       type: object
-      required:
-        - id
-        - navn
-        - status
-        - kategori
       properties:
         id:
           type: string
@@ -737,68 +807,38 @@ components:
         kategori:
           type: string
           minLength: 1
-    MatrikkelenhetGnrBnr:
-      type: object
       required:
-        - gnr
-        - bnr
-      properties:
-        gnr:
-          type: number
-        bnr:
-          type: number
-    MatrikkelenhetFull:
-      type: object
-      required:
-        - gnr
-        - bnr
-        - fnr
-        - snr
-      properties:
-        gnr:
-          type: number
-        bnr:
-          type: number
-        fnr:
-          type: number
-          nullable: true
-        snr:
-          type: number
-          nullable: true
+        - id
+        - navn
+        - status
+        - kategori
     ValidationErrorResponse:
       type: object
-      description: >-
-        Returneres med HTTP 400 når byggrapporten ikke passerer validering.
-        `errors.errors` er et objekt hvor hver nøkkel er et feltnavn og verdien
-        er en liste med feilmeldinger for det feltet.
-      required:
-        - errors
       properties:
         errors:
           type: object
-          required:
-            - valid
-            - errors
           properties:
             valid:
               type: boolean
-              enum:
-                - false
+              const: false
             errors:
               type: object
+              propertyNames:
+                type: string
               additionalProperties:
                 type: array
                 items:
                   type: string
-              example:
-                tittel:
-                  - Title is required
+          required:
+            - valid
+            - errors
+          additionalProperties: false
+      required:
+        - errors
+      additionalProperties: false
+      description: Returneres når byggrapporten ikke passerer validering. Feilene er gruppert etter feltnavn.
     PdfErrorResponse:
       type: object
-      description: Returneres med HTTP 502 når konvertering til PDF feiler.
-      required:
-        - error
-        - details
       properties:
         error:
           type: string
@@ -806,3 +846,8 @@ components:
         details:
           type: string
           example: "Gotenberg svarte med 500: ..."
+      required:
+        - error
+        - details
+      additionalProperties: false
+      description: Returneres når konvertering til PDF feiler.

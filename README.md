@@ -81,7 +81,9 @@ returnerer en PDF. Den er avhengig av at Gotenberg kjører.
 
 ## API-dokumentasjon (OpenAPI)
 
-API-et er beskrevet i [`openapi.yaml`](./openapi.yaml).
+API-et er beskrevet i [`openapi.yaml`](./openapi.yaml). Spesifikasjonen genereres
+fra Zod-skjemaene og rutemetadata i [`src/openapi.ts`](./src/openapi.ts), slik at
+API-valideringen og dokumentasjonen bruker de samme skjemaene.
 
 Endepunkter:
 
@@ -94,6 +96,12 @@ Endepunkter:
 Spesifikasjonen kan åpnes i en hvilken som helst OpenAPI-visning, for eksempel:
 
 ```sh
+# Generer openapi.yaml etter endringer i skjemaer eller rutemetadata
+bun run generate:openapi
+
+# Kontroller at den inncheckede spesifikasjonen er oppdatert
+bun run check:openapi
+
 # Bygg statisk HTML-dokumentasjon
 bunx @redocly/cli build-docs openapi.yaml
 
