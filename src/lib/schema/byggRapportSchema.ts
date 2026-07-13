@@ -260,3 +260,4 @@ export type Bygning = z.infer<typeof bygningerSchema>
 export type Kontaktperson = z.infer<typeof kontaktpersonSchema>
 export type Bruksenhet = z.infer<typeof bruksenhetSchema>
 export type Hjemmelshaver = z.infer<typeof hjemmelshaverSchema>
+export type BygningsDatoerSchema = z.infer<typeof bygningsdatoerSchema>
