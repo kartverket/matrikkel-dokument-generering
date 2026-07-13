@@ -1,8 +1,7 @@
 import { useTranslation } from "react-i18next"
 import type { ByggRapport } from "../lib/schema/byggRapportSchema"
 import { Heading, Paragraph } from "@kv-designsystem/react"
-
-const m = "rapport.BYG0011.metadata"
+import { formatDateTime } from "../lib/utils/format"
 
 interface Props {
     data: ByggRapport
@@ -10,11 +9,6 @@ interface Props {
 
 export function Metadata({ data }: Props) {
     const { t } = useTranslation()
-
-    const formattedDate = new Intl.DateTimeFormat(data.locale, {
-        dateStyle: "long",
-        timeStyle: "short",
-    }).format(new Date(data.generertTidspunkt))
 
     return (
         <header className="bg-kv-blue-subtle p-4">
@@ -25,8 +19,8 @@ export function Metadata({ data }: Props) {
                     <Paragraph>Kommune: {data.kommune.nr} {data.kommune.navn}</Paragraph>
                 </div>
                 <div>
-                    <Paragraph>{formattedDate}</Paragraph>
-                    <Paragraph>{t(`${m}.koordinatsystem`)}: {data.koordinatsystem}</Paragraph>
+                    <Paragraph>{formatDateTime(data.generertTidspunkt, data.locale)}</Paragraph>
+                    <Paragraph>{t(`rapport.BYG0011.metadata.koordinatsystem`)}: {data.koordinatsystem}</Paragraph>
                 </div>
             </div>
         </header>
