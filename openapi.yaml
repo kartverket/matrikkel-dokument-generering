@@ -1,5 +1,5 @@
 # Denne filen er automatisk generert av `bun run generate:openapi`.
-openapi: 3.1.0
+openapi: 3.0.3
 info:
   title: Matrikkel Dokument Generering API
   description: |-
@@ -73,7 +73,8 @@ paths:
             text/plain:
               schema:
                 type: string
-                const: OK
+                enum:
+                  - OK
   /internal/isReady:
     get:
       tags:
@@ -88,7 +89,8 @@ paths:
             text/plain:
               schema:
                 type: string
-                const: OK
+                enum:
+                  - OK
 components:
   schemas:
     ByggRapport:
@@ -96,7 +98,8 @@ components:
       properties:
         rapportType:
           type: string
-          const: BYG0011
+          enum:
+            - BYG0011
           description: Rapporttype. Må være `BYG0011`.
         tittel:
           type: string
@@ -256,9 +259,8 @@ components:
         lopenr:
           type: number
         endringskode:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         bygningsstatus:
           $ref: "#/components/schemas/Bygningsstatus"
         antallBoenheter:
@@ -360,29 +362,23 @@ components:
       type: object
       properties:
         rammetillatelse:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         igangsettingstillatelse:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         midlertidigBrukstillatelse:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         ferdigattest:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         tattIBruk:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         utgaattRevet:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
       required:
         - rammetillatelse
         - igangsettingstillatelse
@@ -414,9 +410,8 @@ components:
       type: object
       properties:
         bruksenhetsnr:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         type:
           type: string
           minLength: 1
@@ -427,21 +422,20 @@ components:
         antallRom:
           type: number
         kjokkentilgang:
-          anyOf:
-            - type: boolean
-            - type: "null"
+          nullable: true
+          type: boolean
         antallBad:
           type: number
         antallWc:
           type: number
         adresse:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         egenregistrert:
-          anyOf:
+          nullable: true
+          allOf:
             - $ref: "#/components/schemas/EgenregistrerteFelter"
-            - type: "null"
+          type: object
       required:
         - bruksenhetsnr
         - type
@@ -457,17 +451,18 @@ components:
       type: object
       properties:
         byggeaar:
-          anyOf:
-            - type: number
-            - type: "null"
+          nullable: true
+          type: number
         vannforsyning:
-          anyOf:
+          nullable: true
+          allOf:
             - $ref: "#/components/schemas/Egenregistrert"
-            - type: "null"
+          type: object
         avlop:
-          anyOf:
+          nullable: true
+          allOf:
             - $ref: "#/components/schemas/Egenregistrert"
-            - type: "null"
+          type: object
         energikilder:
           type: array
           items:
@@ -500,13 +495,11 @@ components:
       type: object
       properties:
         gyldigFra:
-          anyOf:
-            - type: number
-            - type: "null"
+          nullable: true
+          type: number
         gyldigTil:
-          anyOf:
-            - type: number
-            - type: "null"
+          nullable: true
+          type: number
       required:
         - gyldigFra
         - gyldigTil
@@ -523,56 +516,44 @@ components:
           type: string
           minLength: 1
         adresselinje1:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         adresselinje2:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         adresselinje3:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         postnummeromradenr:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         postnummeromradenavn:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         land:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         bruksenhetsnr:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         datofra:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         datofraSOSI:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         harDatofra:
           default: false
           type: boolean
         kategorikode:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         kontaktpersonKode:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         statuskode:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         eierErUtgatt:
           default: false
           type: boolean
@@ -605,56 +586,44 @@ components:
           type: string
           minLength: 1
         adresselinje1:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         adresselinje2:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         adresselinje3:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         postnummeromradenr:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         postnummeromradenavn:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         land:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         bruksenhetsnr:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         datofra:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         datofraSOSI:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         harDatofra:
           default: false
           type: boolean
         kategorikode:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         kontaktpersonKode:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         statuskode:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         eierErUtgatt:
           default: false
           type: boolean
@@ -684,75 +653,61 @@ components:
           type: string
           minLength: 1
         andelTeller:
-          anyOf:
-            - type: number
-            - type: "null"
+          nullable: true
+          type: number
         andelNevner:
-          anyOf:
-            - type: number
-            - type: "null"
+          nullable: true
+          type: number
         eierforhold:
           type: string
           minLength: 1
         adresselinje1:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         adresselinje2:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         adresselinje3:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         postnummer:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         poststed:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         land:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         statuskode:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         eierErUtgatt:
           default: false
           type: boolean
         datofra:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         datotil:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         kategorikode:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         bruksenhetsnr:
-          anyOf:
-            - type: string
-            - type: "null"
+          nullable: true
+          type: string
         harAndel:
-          anyOf:
-            - type: boolean
-            - type: "null"
+          nullable: true
+          type: boolean
         erSelveier:
-          anyOf:
-            - type: boolean
-            - type: "null"
+          nullable: true
+          type: boolean
         matrikkelenhet:
-          anyOf:
+          nullable: true
+          allOf:
             - $ref: "#/components/schemas/MatrikkelenhetFull"
-            - type: "null"
+          type: object
       required:
         - eierIdent
         - navn
@@ -781,13 +736,11 @@ components:
         bnr:
           type: number
         fnr:
-          anyOf:
-            - type: number
-            - type: "null"
+          nullable: true
+          type: number
         snr:
-          anyOf:
-            - type: number
-            - type: "null"
+          nullable: true
+          type: number
       required:
         - gnr
         - bnr
@@ -821,11 +774,10 @@ components:
           properties:
             valid:
               type: boolean
-              const: false
+              enum:
+                - false
             errors:
               type: object
-              propertyNames:
-                type: string
               additionalProperties:
                 type: array
                 items:

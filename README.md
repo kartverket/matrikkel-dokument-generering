@@ -1,12 +1,10 @@
 # Matrikkel Dokument Generering
 
-Genererer PDF-dokumenter fra matrikkelrapporter (rapporttype `BYG0011`). Prosjektet
-består av to deler:
+Tjenesten tar imot en strukturert JSON, renderer den til HTML og konverterer resultatet til PDF via [Gotenberg](https://github.com/kartverket/pdf-generator).
 
-- **React-app** for å bygge og forhåndsvise dokumentmalen.
-- **API-server** som tar imot en byggrapport som JSON,
-  renderer den til HTML og konverterer resultatet til PDF via
-  [Gotenberg](https://gotenberg.dev/).
+Følgende rapporter støttes:
+- BYG0011 - Byggrapport
+
 
 ## Relaterte repoer
 
