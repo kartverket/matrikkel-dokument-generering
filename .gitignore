@@ -27,4 +27,4 @@ dist-ssr
 .env
 
 # Mock data
-src/mockData/
+/src/mockData/
