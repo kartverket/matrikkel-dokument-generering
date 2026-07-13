@@ -1,8 +1,7 @@
+import { config } from "../config/env.ts"
 import { app } from "./app.ts"
 
-const port = Number(process.env.PORT) || 3000
-
 export default {
-  port,
+  port: config.port,
   fetch: app.fetch,
 }

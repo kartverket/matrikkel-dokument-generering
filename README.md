@@ -74,15 +74,19 @@ returnerer en PDF. Den er avhengig av at Gotenberg kjører.
 
 ### Miljøvariabler
 
-| Variabel        | Standard              | Beskrivelse                  |
-| --------------- | --------------------- | ---------------------------- |
-| `PORT`          | `3000`                | Port API-serveren lytter på. |
-| `GOTENBERG_URL` | `http://0.0.0.0:8089` | URL til Gotenberg-tjenesten. |
+Miljøvariablene valideres ved oppstart i [`src/config/env.ts`](./src/config/env.ts).
+
+| Variabel               | Standard              | Beskrivelse                       |
+| ---------------------- | --------------------- | --------------------------------- |
+| `PORT`                 | `3000`                | Port API-serveren lytter på.      |
+| `GOTENBERG_URL`        | `http://0.0.0.0:8089` | URL til Gotenberg-tjenesten.      |
+| `GOTENBERG_TIMEOUT_MS` | `10000`               | Tidsavbrudd mot Gotenberg i ms.   |
 
 ## API-dokumentasjon (OpenAPI)
 
-API-et er beskrevet i [`openapi.yaml`](./openapi.yaml). 
-Serveren eksponerer  spesifikasjonen som JSON og en Swagger UI mens den kjører.
+OpenAPI-spesifikasjonen genereres dynamisk fra Hono-rutene under
+[`src/api/routes`](./src/api/routes). Når serveren kjører, er spesifikasjonen
+tilgjengelig som JSON på `/openapi.json` og gjennom Swagger UI på `/docs`.
 
 Endepunkter:
 
@@ -91,23 +95,12 @@ Endepunkter:
 | `POST` | `/create-document`  | Validerer byggrapport og returnerer PDF (`application/pdf`).   |
 | `GET`  | `/internal/isAlive` | Liveness-probe (returnerer `OK`).                              |
 | `GET`  | `/internal/isReady` | Readiness-probe (returnerer `OK`).                             |
-| `GET`  | `/internal/metrics` | Prometheus-metrikker        |
-| `GET`  | `/openapi.json`     | OpenAPI-spesifikasjonen    |
-| `GET`  | `/docs`             | Swagger UI              |
-| `GET`  | `/openapi.json` | OpenAPI |
+| `GET`  | `/internal/metrics` | Prometheus-metrikker for tjenesten.                       |
+| `GET`  | `/openapi.json`     | Dynamisk generert OpenAPI-spesifikasjon.                  |
+| `GET`  | `/docs`             | Interaktiv Swagger UI.                                    |
 
-Spesifikasjonen kan åpnes i en hvilken som helst OpenAPI-visning, for eksempel:
-
-```sh
-# Generer openapi.yaml
-bun run generate:openapi
-
-# Kontroller at spesifikasjonen er oppdatert
-bun run check:openapi
-```
-
-Interaktive dokumentasjonen tilgjengelig på
-[http://localhost:3000/docs](http://localhost:3000/docs)
+Den interaktive dokumentasjonen er tilgjengelig på
+[http://localhost:3000/docs](http://localhost:3000/docs), og metrikker på
 [http://localhost:3000/internal/metrics](http://localhost:3000/internal/metrics).
 
 ## Docker

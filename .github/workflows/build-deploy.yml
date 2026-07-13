@@ -51,8 +51,8 @@ jobs:
       - name: Verify linting
         run: bun run lint
 
-      - name: Verify OpenAPI specification
-        run: bun run check:openapi
+      - name: Run tests
+        run: bun run test
 
       - name: Build app
         run: bun run build
