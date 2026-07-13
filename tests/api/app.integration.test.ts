@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test"
+import { describe, expect, spyOn, test } from "bun:test"
 import { createApp } from "../../src/api/app.ts"
 
 const app = createApp()
@@ -59,6 +59,26 @@ describe("HTTP API", () => {
     expect(openApi.paths["/create-document"].post).toBeDefined()
     expect(openApi.components.schemas.ValidationErrorResponse).toBeDefined()
     expect(openApi.components.schemas.PdfErrorResponse).toBeDefined()
+    expect(openApi.servers).toEqual([
+      { url: "/", description: "Gjeldende miljø" },
+    ])
+
+    const invalidNullableSchemas: string[] = []
+    const visitSchema = (value: unknown, path = "$") => {
+      if (!value || typeof value !== "object") return
+
+      const schema = value as Record<string, unknown>
+      if (schema.nullable === true && schema.type === undefined) {
+        invalidNullableSchemas.push(path)
+      }
+
+      for (const [key, child] of Object.entries(schema)) {
+        visitSchema(child, `${path}.${key}`)
+      }
+    }
+
+    visitSchema(openApi)
+    expect(invalidNullableSchemas).toEqual([])
 
     const docsResponse = await app.request("/docs")
     expect(docsResponse.status).toBe(200)
@@ -83,5 +103,27 @@ describe("HTTP API", () => {
 
     expect(response.status).toBe(404)
     expect(await response.text()).toBe("Not Found")
+  })
+
+  test("returns a generic response for unexpected errors", async () => {
+    const errorApp = createApp()
+    const error = new Error("Sensitive internal details")
+    const errorLog = spyOn(console, "error").mockImplementation(() => {})
+    errorApp.get("/throws", () => {
+      throw error
+    })
+
+    try {
+      const response = await errorApp.request("/throws")
+      const body = await response.text()
+
+      expect(response.status).toBe(500)
+      expect(response.headers.get("Content-Type")).toContain("text/plain")
+      expect(body).toBe("Internal Server Error")
+      expect(body).not.toContain(error.message)
+      expect(errorLog).toHaveBeenCalledWith("Unhandled request error", error)
+    } finally {
+      errorLog.mockRestore()
+    }
   })
 })

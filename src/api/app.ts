@@ -41,7 +41,8 @@ export function createApp() {
       )
     }
 
-    throw error
+    console.error("Unhandled request error", error)
+    return c.text("Internal Server Error", 500)
   })
 
   return app

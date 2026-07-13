@@ -18,10 +18,7 @@ Følgende rapporter støttes:
       url: "https://github.com/kartverket/matrikkel-dokument-generering/blob/main/LICENCE.md",
     },
   },
-  servers: [
-    { url: "http://localhost:3000", description: "Lokal utvikling" },
-    { url: "http://localhost:8087", description: "Container" },
-  ],
+  servers: [{ url: "/", description: "Gjeldende miljø" }],
   security: [],
   tags: [
     { name: "Dokument", description: "Generering av PDF-dokumenter" },
