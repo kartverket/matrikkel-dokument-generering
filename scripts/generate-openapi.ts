@@ -1,7 +1,8 @@
 import { stringify } from "yaml"
 import { openApiDocument } from "../src/openapi"
 
-const generatedNotice = `# Denne filen er automatisk generert av \`bun run generate:openapi\`.`
+const generatedNotice = `# Denne filen er automatisk generert av \`bun run generate:openapi\`.
+`
 
 const yaml = stringify(openApiDocument, {
   lineWidth: 100,
@@ -15,7 +16,7 @@ if (Bun.argv.includes("--check")) {
 
   if (current !== output) {
     console.error(
-      "openapi.yaml er utdatert. Kjør `bun run generate:openapi` og sjekk inn endringen.",
+      "openapi.yaml er utdatert. Kjør `bun run generate:openapi` og oppdater endringen.",
     )
     process.exit(1)
   }
