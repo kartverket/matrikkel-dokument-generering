@@ -58,6 +58,14 @@ export const nb = {
           kulturminner: "Kulturminner",
         },
       },
+      metadata: {
+        rapportType: "Rapporttype",
+        rapportNr: "Rapportnr",
+        kommune: "Kommune",
+        kommuneNr: "Kommunenr",
+        koordinatsystem: "Koordinatsystem",
+        generertTidspunkt: "Generert tidspunkt",
+      },
       matrikkelenhet: "Matrikkelenhet",
       naeringsgruppe: "Næringsgruppe",
       arealfordeling: {

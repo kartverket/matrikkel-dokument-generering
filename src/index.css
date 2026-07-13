@@ -8,6 +8,8 @@
   --color-kv-default: var(--ds-color-neutral-text-default);
   --color-kv-border: var(--ds-color-neutral-border-subtle);
   --color-kv-surface: var(--ds-color-neutral-background-default);
+  --color-kv-blue: var(--ds-color-accent-base-default);
+  --color-kv-blue-subtle: var(--ds-color-accent-surface-tinted);
 }
 
 body {
