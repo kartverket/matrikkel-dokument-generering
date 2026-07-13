@@ -19,10 +19,15 @@
     "serve": "bun run build:css && bun src/server.ts"
   },
   "dependencies": {
+    "@hono/prometheus": "^1.0.3",
+    "@hono/swagger-ui": "^0.6.1",
+    "@hono/zod-openapi": "^1.4.0",
     "@kv-designsystem/react": "^1.0.0-alpha.2",
     "@navikt/aksel-icons": "^8.14.0",
     "@tailwindcss/cli": "^4.3.2",
+    "hono": "^4.12.30",
     "i18next": "^26.3.4",
+    "prom-client": "^15.1.3",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "react-i18next": "^17.0.8",
@@ -44,7 +49,6 @@
     "tailwindcss": "^4.3.2",
     "typescript": "~6.0.2",
     "vite": "^8.0.12",
-    "yaml": "^2.9.0",
-    "zod-openapi": "^6.0.0"
+    "yaml": "^2.9.0"
   }
 }
