@@ -28,7 +28,7 @@ export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {
               {bygningsstatusKriterier.naavaerende.length > 0 ? (
                 <span className="flex flex-wrap gap-2">
                   {bygningsstatusKriterier.naavaerende.map((status) => (
-                    <Tag key={status} data-color="accent" variant="outline">
+                    <Tag key={status} data-color="success" variant="outline">
                       {status}
                     </Tag>
                   ))}

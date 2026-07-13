@@ -10,6 +10,7 @@
   --color-kv-surface: var(--ds-color-neutral-background-default);
   --color-kv-blue: var(--ds-color-accent-base-default);
   --color-kv-blue-subtle: var(--ds-color-accent-surface-tinted);
+  --color-kv-green: var(--ds-color-success-base-default);
 }
 
 body {
