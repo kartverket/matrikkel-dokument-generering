@@ -10,10 +10,12 @@ import { EtasjerSection } from "./sections/Etasjer.tsx"
 import { Hjemmelshavere } from "./sections/Hjemmelshavere.tsx"
 import { KontaktPersoner } from "./sections/KontaktPersoner.tsx"
 import { Tiltakshavere } from "./sections/Tiltakshavere.tsx"
+import { Utvalgskriterier } from "./sections/Utvalgskriterier.tsx"
 
 export function DocumentComponent({ data }: { data: ByggRapport }) {
   return (
     <>
+      <Utvalgskriterier kriterier={data.utvalgskriterier} />
       {data.bygninger.map((bygning) => (
         <Fragment key={bygning.id}>
           <Bygningslinje bygning={bygning} />
