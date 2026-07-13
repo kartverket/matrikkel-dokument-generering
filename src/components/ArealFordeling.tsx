@@ -13,7 +13,7 @@ export default function Arealfordeling({ endring }: Props) {
   const af = "rapport.BYG0011.arealfordeling"
 
   return (
-    <section className="flex flex-col gap-8 my-16">
+    <section className="my-16 flex flex-col gap-8">
       <Heading className="font-normal text-kv-subtle text-lg">
         {t(`${af}.title`)}
       </Heading>
