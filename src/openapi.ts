@@ -125,7 +125,6 @@ Følgende rapporter støttes:
   },
   {
     override: ({ jsonSchema }) => {
-      // OpenAPI 3.0 requires `type` next to `nullable`, including for $ref wrappers.
       if (
         jsonSchema.nullable === true &&
         jsonSchema.type === undefined &&
