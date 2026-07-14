@@ -45,14 +45,7 @@ bun run dev
 
 API-serveren er avhengig av at Gotenberg kjører.
 
-1. **Start Gotenberg** (kjører på port `8089`). Gotenberg-tjenesten ligger i et
-   eget repo, [pdf-generator](https://github.com/kartverket/pdf-generator).
-
-   ```sh
-   git clone https://github.com/kartverket/pdf-generator.git
-   cd pdf-generator
-   docker compose up -d
-   ```
+1. **Start Gotenberg** (se: [/kartverket/pdf-generator](https://github.com/kartverket/pdf-generator))
 
 2. **Start klienten og API-serveren:**
 
@@ -60,8 +53,8 @@ API-serveren er avhengig av at Gotenberg kjører.
    bun run dev
    ```
 
-   - Klienten kjører på [http://localhost:5173](http://localhost:5173) med Vite HMR.
-   - API-serveren kjører på [http://localhost:3000](http://localhost:3000) med Bun hot reload.
+   - Klienten kjører på [http://localhost:5173](http://localhost:5173)
+   - API-serveren kjører på [http://localhost:3000](http://localhost:3000)
 
 3. **Test at den svarer:**
 
@@ -86,9 +79,6 @@ Miljøvariablene valideres ved oppstart i [`src/config/env.ts`](./src/config/env
 
 ## API-dokumentasjon (OpenAPI)
 
-OpenAPI-spesifikasjonen genereres dynamisk fra Hono-rutene under
-[`src/api/routes`](./src/api/routes). Når serveren kjører, er spesifikasjonen
-tilgjengelig som JSON på `/openapi.json` og gjennom Swagger UI på `/docs`.
 
 Endepunkter:
 
@@ -101,9 +91,7 @@ Endepunkter:
 | `GET`  | `/openapi.json`     | Dynamisk generert OpenAPI-spesifikasjon.                  |
 | `GET`  | `/docs`             | Interaktiv Swagger UI.                                    |
 
-Den interaktive dokumentasjonen er tilgjengelig på
-[http://localhost:3000/docs](http://localhost:3000/docs), og metrikker på
-[http://localhost:3000/internal/metrics](http://localhost:3000/internal/metrics).
+
 
 ## Docker
 
