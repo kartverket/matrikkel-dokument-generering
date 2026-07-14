@@ -34,7 +34,7 @@ export default function Byggoversikt({ bygning }: Props) {
   }
 
   return (
-    <section className="p-6">
+    <section className="py-8">
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-4">
           <Label className="text-kv-blue text-sm">03</Label>
