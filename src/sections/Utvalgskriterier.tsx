@@ -12,9 +12,10 @@ import type { Utvalgskriterier as UtvalgskriterierType } from "../lib/schema/byg
 
 interface Props {
   kriterier: UtvalgskriterierType
+  koordinatsystem: string
 }
 
-export function Utvalgskriterier({ kriterier }: Props) {
+export function Utvalgskriterier({ kriterier, koordinatsystem }: Props) {
   const { t } = useTranslation()
 
   return (
@@ -39,7 +40,10 @@ export function Utvalgskriterier({ kriterier }: Props) {
       <BygningsstatusKriterier
         bygningsstatusKriterier={kriterier.bygningsstatus}
       />
-      <SokevinduKriterier sokevinduKriterier={kriterier.sokevindu} />
+      <SokevinduKriterier
+        sokevinduKriterier={kriterier.sokevindu}
+        koordinatsystem={koordinatsystem}
+      />
       <SubrapporterKriterier subrapporterKriterier={kriterier.subrapporter} />
     </section>
   )

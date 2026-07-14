@@ -50,6 +50,12 @@ export const nn = {
           ost: "Aust",
           nord: "Nord",
         },
+        sokevindu: {
+          kartIkkeTilgjengelig: "Kartgrunnlaget kunne ikkje lastast",
+          valgtOmraade: "Søkjeområde",
+          ovreHoeyre: "Øvre høgre",
+          nedreVenstre: "Nedre venstre",
+        },
         subrapporter: {
           etasjer: "Etasjar",
           bruksenheter: "Brukseiningar",
