@@ -3,12 +3,7 @@ const CSS_ENTRYPOINT = "./src/index.css"
 
 let cssPromise: Promise<string> | null = null
 
-async function buildCss(): Promise<string> {
-  const prebuilt = Bun.file(PREBUILT_CSS_PATH)
-  if (await prebuilt.exists()) {
-    return prebuilt.text()
-  }
-
+async function buildCssFromSource(): Promise<string> {
   const proc = Bun.spawn(
     ["bunx", "@tailwindcss/cli", "-i", CSS_ENTRYPOINT, "-o", "-", "--minify"],
     { stdout: "pipe", stderr: "pipe" },
@@ -27,9 +22,22 @@ async function buildCss(): Promise<string> {
   return css
 }
 
-export function getDocumentCss(): Promise<string> {
+async function getPrebuiltCss(): Promise<string> {
+  const prebuilt = Bun.file(PREBUILT_CSS_PATH)
+  if (!(await prebuilt.exists())) {
+    throw new Error(`Fant ikke ferdigbygd dokument-CSS: ${PREBUILT_CSS_PATH}`)
+  }
+
+  return prebuilt.text()
+}
+
+export async function getDocumentCss(): Promise<string> {
+  if (await Bun.file(CSS_ENTRYPOINT).exists()) {
+    return buildCssFromSource()
+  }
+
   if (!cssPromise) {
-    cssPromise = buildCss().catch((error) => {
+    cssPromise = getPrebuiltCss().catch((error) => {
       cssPromise = null
       throw error
     })
