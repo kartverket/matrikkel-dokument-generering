@@ -1,5 +1,4 @@
-const GOTENBERG_URL = process.env.GOTENBERG_URL ?? "http://0.0.0.0:8089"
-const GOTENBERG_TIMEOUT_MS = 10_000
+import { config } from "../../config/env.ts"
 
 const CONVERT_PATH = "/forms/chromium/convert/html"
 
@@ -12,11 +11,11 @@ export async function htmlToPdf(html: string): Promise<ArrayBuffer> {
   form.append("files", new Blob([html], { type: "text/html" }), "index.html")
   form.append("printBackground", "true")
 
-  const response = await fetch(`${GOTENBERG_URL}${CONVERT_PATH}`, {
+  const response = await fetch(`${config.gotenbergUrl}${CONVERT_PATH}`, {
     method: "POST",
     headers: { accept: "application/pdf" },
     body: form,
-    signal: AbortSignal.timeout(GOTENBERG_TIMEOUT_MS),
+    signal: AbortSignal.timeout(config.gotenbergTimeoutMs),
   })
 
   if (!response.ok) {
