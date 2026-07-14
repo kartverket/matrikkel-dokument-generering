@@ -5,15 +5,15 @@ import ArealFordeling from "./components/ArealFordeling.tsx"
 import { createI18n } from "./lib/i18n/createI18n"
 import type { ByggRapport } from "./lib/schema/byggRapportSchema"
 import Bruksenheter from "./sections/Bruksenheter.tsx"
+import Byggoversikt from "./sections/Byggoversikt.tsx"
 import { Bygningslinje } from "./sections/Bygningslinje.tsx"
 import { EtasjerSection } from "./sections/Etasjer.tsx"
 import { Hjemmelshavere } from "./sections/Hjemmelshavere.tsx"
 import { KontaktPersoner } from "./sections/KontaktPersoner.tsx"
+import { Metadata } from "./sections/Metadata.tsx"
 import RegistrerteVedtak from "./sections/RegistrerteVedtak.tsx"
 import { Tiltakshavere } from "./sections/Tiltakshavere.tsx"
 import { Utvalgskriterier } from "./sections/Utvalgskriterier.tsx"
-import Byggoversikt from "./sections/Byggoversikt.tsx"
-import { Metadata } from "./sections/Metadata.tsx"
 
 export function DocumentComponent({ data }: { data: ByggRapport }) {
   return (
