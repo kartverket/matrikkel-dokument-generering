@@ -1,4 +1,7 @@
+import { shared } from "./resources.shared"
+
 export const nn = {
+  ...shared,
   rapport: {
     BYG0011: {
       title: "Bygning {{bygningsnr}} – {{bygningstype}}",

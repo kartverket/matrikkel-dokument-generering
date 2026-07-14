@@ -1,8 +1,7 @@
 import { Heading, Table, Tag } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { Utvalgskriterier } from "../../lib/schema/byggRapportSchema"
-
-const dateFormatter = new Intl.DateTimeFormat("nb-NO")
+import { formatDate } from "../../lib/utils/formatDate"
 
 interface Props {
   bygningsstatusKriterier: Utvalgskriterier["bygningsstatus"]
@@ -11,6 +10,7 @@ interface Props {
 export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {
   const { t } = useTranslation()
   const uk = "rapport.BYG0011.utvalgskriterier"
+
   const ikkeAngitt = t(`${uk}.ikkeAngitt`)
 
   return (
@@ -61,11 +61,7 @@ export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {
               {t(`${uk}.felt.periodeFra`)}
             </Table.HeaderCell>
             <Table.Cell>
-              {bygningsstatusKriterier.periodeFra
-                ? dateFormatter.format(
-                    new Date(bygningsstatusKriterier.periodeFra),
-                  )
-                : ikkeAngitt}
+              {formatDate(t, bygningsstatusKriterier.periodeFra, ikkeAngitt)}
             </Table.Cell>
           </Table.Row>
           <Table.Row>
@@ -73,11 +69,7 @@ export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {
               {t(`${uk}.felt.periodeTil`)}
             </Table.HeaderCell>
             <Table.Cell>
-              {bygningsstatusKriterier.periodeTil
-                ? dateFormatter.format(
-                    new Date(bygningsstatusKriterier.periodeTil),
-                  )
-                : ikkeAngitt}
+              {formatDate(t, bygningsstatusKriterier.periodeTil, ikkeAngitt)}
             </Table.Cell>
           </Table.Row>
         </Table.Body>
