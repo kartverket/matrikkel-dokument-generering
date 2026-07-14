@@ -36,6 +36,8 @@ const bygningstypeSchema = z.object({
   navn: z.string().min(1),
 })
 
+const valgfriTekstSchema = z.string().nullable()
+
 const bygningsstatusSchema = z.object({
   kode: z.number(),
   kortkode: z.string().min(1),
@@ -153,14 +155,47 @@ const bygningsetasjeSchema = z.object({
 })
 
 const utvalgskriterierSchema = z.object({
-  bestaaendeBygg: z.boolean(),
-  utgaatteBygg: z.boolean(),
-  bygninger: z.boolean(),
-  bygningsendringer: z.boolean(),
-  frededeBygninger: z.string().min(1),
+  omfang: z.object({
+    bestaaendeBygg: z.boolean(),
+    utgaatteBygg: z.boolean(),
+    bygninger: z.boolean(),
+    bygningsendringer: z.boolean(),
+    frededeBygninger: z.string().min(1),
+  }),
+  bygning: z.object({
+    bygningsnr: valgfriTekstSchema,
+    bygningstyper: z.array(bygningstypeSchema),
+    lopenr: z.number().nullable(),
+  }),
+  adresse: z.object({
+    adressekode: valgfriTekstSchema,
+    bruksenhetsnr: valgfriTekstSchema,
+    adressenavn: valgfriTekstSchema,
+    nr: z.number().nullable(),
+    bokstav: valgfriTekstSchema,
+    utenBokstav: z.boolean(),
+    tilleggsnavn: valgfriTekstSchema,
+  }),
   matrikkelenhet: z.object({
     gnr: z.number(),
     bnr: z.number(),
+    fnr: z.number().nullable(),
+    snr: z.number().nullable(),
+  }),
+  hjemmelshaver: z.object({
+    foedselsEllerOrgnr: valgfriTekstSchema,
+    etternavn: valgfriTekstSchema,
+    fornavn: valgfriTekstSchema,
+  }),
+  bygningsstatus: z.object({
+    naavaerende: z.array(z.string()),
+    tidligere: z.array(z.string()),
+    periodeFra: valgfriTekstSchema,
+    periodeTil: valgfriTekstSchema,
+  }),
+  sokevindu: z.object({
+    nedreVenstre: koordinatSchema,
+    ovreHoeyre: koordinatSchema,
   }),
   subrapporter: z.object({
     etasjer: z.boolean(),
@@ -215,4 +250,5 @@ export type Bygning = z.infer<typeof bygningerSchema>
 export type Kontaktperson = z.infer<typeof kontaktpersonSchema>
 export type Bruksenhet = z.infer<typeof bruksenhetSchema>
 export type Hjemmelshaver = z.infer<typeof hjemmelshaverSchema>
+export type Utvalgskriterier = z.infer<typeof utvalgskriterierSchema>
 export type BygningsDatoerSchema = z.infer<typeof bygningsdatoerSchema>
