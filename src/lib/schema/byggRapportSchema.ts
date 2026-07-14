@@ -240,6 +240,7 @@ const bygningsendringSchema = z
     bygningId: z.number(),
     lopenr: z.number(),
     endringskode: z.string().nullable(),
+    beskrivelse: z.string().nullable().optional().default(null),
     bygningsstatus: bygningsstatusSchema,
     antallBoenheter: z.number(),
     bruksareal: arealFordelingSchema,
@@ -256,6 +257,49 @@ const bygningsendringSchema = z
   })
   .meta({ id: "Bygningsendring" })
 
+const bruksenhetHjemmelshaverDetaljSchema = z
+  .object({
+    id: z.string().min(1),
+    navn: z.string().min(1),
+    meta: z.string().min(1),
+  })
+  .meta({ id: "BruksenhetHjemmelshaverDetalj" })
+
+const bruksenhetEndringDetaljSchema = z
+  .object({
+    id: z.string().min(1),
+    tittel: z.string().min(1),
+    status: z.string().min(1),
+    endringskode: z.string().min(1),
+    beskrivelse: z.string().min(1),
+    bygningstype: z.string().min(1),
+    bebygdAreal: z.string().min(1),
+    rammetillatelse: z.string().min(1),
+    igangsettingstillatelse: z.string().min(1),
+    ferdigattest: z.string().min(1),
+    koordinater: z.string().min(1),
+  })
+  .meta({ id: "BruksenhetEndringDetalj" })
+
+const bruksenhetDetaljSchema = z
+  .object({
+    id: z.string().min(1),
+    nummer: z.string().min(1),
+    typeChip: z.string().min(1).nullable(),
+    seksjon: z.string().nullable(),
+    bruksenhetstype: z.string().min(1),
+    adresse: z.string().min(1),
+    etasje: z.string().min(1),
+    bruksareal: z.string().min(1),
+    antallRom: z.string().min(1),
+    kjokken: z.string().min(1),
+    antallBad: z.string().min(1),
+    antallWc: z.string().min(1),
+    hjemmelshavere: z.array(bruksenhetHjemmelshaverDetaljSchema),
+    endringer: z.array(bruksenhetEndringDetaljSchema),
+  })
+  .meta({ id: "BruksenhetDetalj" })
+
 const bygningerSchema = z
   .object({
     id: z.number(),
@@ -264,6 +308,7 @@ const bygningerSchema = z
     adresseverdig: z.boolean(),
     naeringsgruppe: z.string().min(1),
     matrikkelenhet: z.string().min(1),
+    bruksenheter: z.array(bruksenhetDetaljSchema),
     endringer: z.array(bygningsendringSchema),
   })
   .meta({ id: "Bygning" })
@@ -287,6 +332,7 @@ export type Bygning = z.infer<typeof bygningerSchema>
 export type Kontaktperson = z.infer<typeof kontaktpersonSchema>
 export type Tiltakshaver = z.infer<typeof tiltakshaverSchema>
 export type Bruksenhet = z.infer<typeof bruksenhetSchema>
+export type BruksenhetDetalj = z.infer<typeof bruksenhetDetaljSchema>
 export type Hjemmelshaver = z.infer<typeof hjemmelshaverSchema>
 export type Utvalgskriterier = z.infer<typeof utvalgskriterierSchema>
 export type BygningsDatoerSchema = z.infer<typeof bygningsdatoerSchema>
