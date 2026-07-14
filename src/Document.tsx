@@ -17,11 +17,11 @@ import Byggoversikt from "./sections/Byggoversikt.tsx"
 export function DocumentComponent({ data }: { data: ByggRapport }) {
   return (
     <>
-      {/* <Metadata data={data} /> */}
+      <Metadata data={data} />
       {data.bygninger.map((bygning) => (
         <Fragment key={bygning.id}>
           <Byggoversikt bygning={bygning} />
-          {/* <Bygningslinje bygning={bygning} />
+          <Bygningslinje bygning={bygning} />
           <EtasjerSection etasjeEndringer={bygning.endringer} />
 
           {bygning.endringer.map((endring) => (
@@ -38,8 +38,8 @@ export function DocumentComponent({ data }: { data: ByggRapport }) {
               {data.utvalgskriterier.subrapporter.tiltakshavere && (
                 <Tiltakshavere endring={endring} />
               )}
-            </Fragment> */}
-          {/* ))} */}
+            </Fragment>
+          ))}
         </Fragment>
       ))}
     </>
