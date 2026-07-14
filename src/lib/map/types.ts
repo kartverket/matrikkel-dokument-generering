@@ -1,4 +1,4 @@
-import type { EpsgCode } from "../schema/rapportSchema"
+import type { EpsgCode } from "./koordinatsystem"
 
 export interface Coordinate {
   nord: number

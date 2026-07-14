@@ -1,6 +1,6 @@
 import { Card } from "@kv-designsystem/react"
-import type { PropsWithChildren } from "react"
-import type { EpsgCode } from "../../lib/schema/rapportSchema"
+import { type PropsWithChildren, useState } from "react"
+import type { EpsgCode } from "../../lib/map/koordinatsystem"
 
 interface Props extends PropsWithChildren {
   imageUrl: string
@@ -16,6 +16,8 @@ export function Kart({
   accessibleLabel,
   children,
 }: Props) {
+  const [imageFailed, setImageFailed] = useState(false)
+
   return (
     <Card className="overflow-hidden border border-kv-border">
       <Card.Block className="p-0">
@@ -25,22 +27,28 @@ export function Kart({
         >
           <div
             className="absolute inset-0 flex items-center justify-center text-kv-subtle text-sm"
-            aria-hidden="true"
+            role={imageFailed ? "status" : undefined}
+            aria-hidden={!imageFailed}
           >
             {fallbackText}
           </div>
 
-          <img
-            src={imageUrl}
-            alt=""
-            className="absolute inset-0 size-full object-cover"
-            decoding="sync"
-            fetchPriority="high"
-          />
-          {children}
-          <span className="absolute top-3 right-3 z-30 rounded-md border border-black/15 bg-white/95 px-2.5 py-1 font-semibold text-[#34454f] text-[0.625rem] tracking-wide shadow-sm">
-            EPSG:{epsg}
-          </span>
+          {!imageFailed && (
+            <>
+              <img
+                src={imageUrl}
+                alt=""
+                className="absolute inset-0 size-full object-cover"
+                decoding="sync"
+                fetchPriority="high"
+                onError={() => setImageFailed(true)}
+              />
+              {children}
+              <span className="absolute top-3 right-3 z-30 rounded-md border border-black/15 bg-white/95 px-2.5 py-1 font-semibold text-[#34454f] text-[0.625rem] tracking-wide shadow-sm">
+                EPSG:{epsg}
+              </span>
+            </>
+          )}
         </figure>
       </Card.Block>
     </Card>

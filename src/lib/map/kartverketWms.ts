@@ -1,4 +1,4 @@
-import { type EpsgCode, epsgCodeSchema } from "../schema/rapportSchema"
+import { type EpsgCode, resolveEpsg } from "./koordinatsystem"
 import type {
   KartverketMapDefinition,
   MapRectangle,
@@ -19,29 +19,6 @@ interface Viewport {
   maxOst: number
   width: number
   height: number
-}
-
-function parseEpsgCode(value: number | undefined): EpsgCode | undefined {
-  const result = epsgCodeSchema.safeParse(value)
-  return result.success ? result.data : undefined
-}
-
-function resolveEpsg(koordinatsystem: string): EpsgCode {
-  const explicitEpsg = koordinatsystem.match(/EPSG\s*:?\s*(\d{4,5})/i)
-  const explicitCode = parseEpsgCode(
-    explicitEpsg ? Number(explicitEpsg[1]) : undefined,
-  )
-
-  if (explicitCode) {
-    return explicitCode
-  }
-
-  const utmZone = koordinatsystem.match(/(?:UTM|sone)\D*(2[9]|3[0-6])/i)
-  const utmCode = parseEpsgCode(
-    utmZone ? 25800 + Number(utmZone[1]) : undefined,
-  )
-
-  return utmCode ?? 25832
 }
 
 function createViewport(sokevindu: SearchWindow): Viewport {
@@ -159,6 +136,11 @@ export function createKartverketMap(
   koordinatsystem: string,
 ): KartverketMapDefinition {
   const epsg = resolveEpsg(koordinatsystem)
+
+  if (!epsg) {
+    throw new Error(`Koordinatsystemet "${koordinatsystem}" støttes ikke`)
+  }
+
   const viewport = createViewport(sokevindu)
   const scaleBar = createScaleBar(viewport.width)
 
