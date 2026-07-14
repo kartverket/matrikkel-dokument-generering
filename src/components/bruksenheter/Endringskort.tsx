@@ -13,12 +13,12 @@ export function Endringskort({
   return (
     <Card
       data-endring-id={endring.id}
-      variant="tinted"
-      className="border border-kv-border"
+      variant="default"
+      className="border border-kv-border bg-kv-gray"
     >
       <Card.Block className="p-5">
         <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-          <Heading level={5} data-size="xs">
+          <Heading level={5} data-size="xs" className="font-medium">
             {endring.tittel}
           </Heading>
           <Tag data-color="accent" variant="outline">
