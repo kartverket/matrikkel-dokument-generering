@@ -112,13 +112,6 @@ const matrikkelenhetFullSchema = z
   })
   .meta({ id: "MatrikkelenhetFull" })
 
-const matrikkelenhetGnrBnrSchema = z
-  .object({
-    gnr: z.number(),
-    bnr: z.number(),
-  })
-  .meta({ id: "MatrikkelenhetGnrBnr" })
-
 const hjemmelshaverSchema = z
   .object({
     eierIdent: z.string().min(1),
@@ -153,11 +146,13 @@ const kulturminneSchema = z
   })
   .meta({ id: "Kulturminne" })
 
-const bruksenhetSchema = z
+export const bruksenhetSchema = z
   .object({
     bruksenhetsnr: z.string().nullable(),
     type: z.string().min(1),
-    matrikkelenhet: matrikkelenhetGnrBnrSchema,
+    matrikkelenhet: matrikkelenhetFullSchema,
+    etasjeplankode: z.enum(["H", "L", "U", "K"]).nullable(),
+    etasjenummer: z.number().nullable(),
     bruksareal: z.number(),
     antallRom: z.number(),
     kjokkentilgang: z.boolean().nullable(),
@@ -290,6 +285,7 @@ export type Etasjeplan = z.infer<typeof bygningsetasjeSchema>
 export type Bygningsendring = z.infer<typeof bygningsendringSchema>
 export type Bygning = z.infer<typeof bygningerSchema>
 export type Kontaktperson = z.infer<typeof kontaktpersonSchema>
+export type Tiltakshaver = z.infer<typeof tiltakshaverSchema>
 export type Bruksenhet = z.infer<typeof bruksenhetSchema>
 export type Hjemmelshaver = z.infer<typeof hjemmelshaverSchema>
 export type Utvalgskriterier = z.infer<typeof utvalgskriterierSchema>

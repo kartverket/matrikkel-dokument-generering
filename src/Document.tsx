@@ -29,7 +29,11 @@ export function DocumentComponent({ data }: { data: ByggRapport }) {
               <ArealFordeling endring={endring} />
               {endring.bruksenheter.length > 0 && (
                 <>
-                  <Bruksenheter bruksenheter={endring.bruksenheter} />
+                  <Bruksenheter
+                    bruksenheter={endring.bruksenheter}
+                    kommunenr={data.kommune.nr}
+                    hjemmelshavere={endring.hjemmelshavere}
+                  />
                   <RegistrerteVedtak datoer={endring.datoer} />
                   <KontaktPersoner kontaktpersoner={endring.kontaktpersoner} />
                   <Hjemmelshavere hjemmelshavere={endring.hjemmelshavere} />
