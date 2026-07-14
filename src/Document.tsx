@@ -9,15 +9,17 @@ import { Bygningslinje } from "./sections/Bygningslinje.tsx"
 import { EtasjerSection } from "./sections/Etasjer.tsx"
 import { Hjemmelshavere } from "./sections/Hjemmelshavere.tsx"
 import { KontaktPersoner } from "./sections/KontaktPersoner.tsx"
-import { Tiltakshavere } from "./sections/Tiltakshavere.tsx"
 import RegistrerteVedtak from "./sections/RegistrerteVedtak.tsx"
-import { Metadata } from "./sections/Metadata.tsx"
+import { Tiltakshavere } from "./sections/Tiltakshavere.tsx"
+import { Utvalgskriterier } from "./sections/Utvalgskriterier.tsx"
 import Byggoversikt from "./sections/Byggoversikt.tsx"
+import { Metadata } from "./sections/Metadata.tsx"
 
 export function DocumentComponent({ data }: { data: ByggRapport }) {
   return (
     <>
       <Metadata data={data} />
+      <Utvalgskriterier kriterier={data.utvalgskriterier} />
       {data.bygninger.map((bygning) => (
         <Fragment key={bygning.id}>
           <Byggoversikt bygning={bygning} />
