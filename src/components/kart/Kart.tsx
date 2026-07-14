@@ -1,5 +1,4 @@
 import { Card } from "@kv-designsystem/react"
-import { CompassIcon } from "@navikt/aksel-icons"
 import type { PropsWithChildren } from "react"
 import type { EpsgCode } from "../../lib/schema/rapportSchema"
 
@@ -38,12 +37,7 @@ export function Kart({
             decoding="sync"
             fetchPriority="high"
           />
-
           {children}
-
-          <span className="absolute top-3 left-3 z-30 flex size-11 items-center justify-center rounded-full border border-black/20 bg-white/95 text-kv-blue shadow-sm">
-            <CompassIcon aria-hidden className="size-7" />
-          </span>
           <span className="absolute top-3 right-3 z-30 rounded-md border border-black/15 bg-white/95 px-2.5 py-1 font-semibold text-[#34454f] text-[0.625rem] tracking-wide shadow-sm">
             EPSG:{epsg}
           </span>
