@@ -48,6 +48,8 @@ const bygningstypeSchema = z
   })
   .meta({ id: "Bygningstype" })
 
+const valgfriTekstSchema = z.string().nullable()
+
 const bygningsstatusSchema = z
   .object({
     kode: z.number(),
@@ -138,7 +140,7 @@ const hjemmelshaverSchema = z
     bruksenhetsnr: z.string().nullable(),
     harAndel: z.boolean().nullable(),
     erSelveier: z.boolean().nullable(),
-    matrikkelenhet: matrikkelenhetFullSchema.nullable(),
+    matrikkelenhet: z.object(matrikkelenhetFullSchema.shape).nullable(),
   })
   .meta({ id: "Hjemmelshaver" })
 
@@ -189,12 +191,43 @@ const bygningsetasjeSchema = z
 
 const utvalgskriterierSchema = z
   .object({
-    bestaaendeBygg: z.boolean(),
-    utgaatteBygg: z.boolean(),
-    bygninger: z.boolean(),
-    bygningsendringer: z.boolean(),
-    frededeBygninger: z.string().min(1),
-    matrikkelenhet: matrikkelenhetGnrBnrSchema,
+    omfang: z.object({
+      bestaaendeBygg: z.boolean(),
+      utgaatteBygg: z.boolean(),
+      bygninger: z.boolean(),
+      bygningsendringer: z.boolean(),
+      frededeBygninger: z.string().min(1),
+    }),
+    bygning: z.object({
+      bygningsnr: valgfriTekstSchema,
+      bygningstyper: z.array(bygningstypeSchema),
+      lopenr: z.number().nullable(),
+    }),
+    adresse: z.object({
+      adressekode: valgfriTekstSchema,
+      bruksenhetsnr: valgfriTekstSchema,
+      adressenavn: valgfriTekstSchema,
+      nr: z.number().nullable(),
+      bokstav: valgfriTekstSchema,
+      utenBokstav: z.boolean(),
+      tilleggsnavn: valgfriTekstSchema,
+    }),
+    matrikkelenhet: matrikkelenhetFullSchema,
+    hjemmelshaver: z.object({
+      foedselsEllerOrgnr: valgfriTekstSchema,
+      etternavn: valgfriTekstSchema,
+      fornavn: valgfriTekstSchema,
+    }),
+    bygningsstatus: z.object({
+      naavaerende: z.array(z.string()),
+      tidligere: z.array(z.string()),
+      periodeFra: valgfriTekstSchema,
+      periodeTil: valgfriTekstSchema,
+    }),
+    sokevindu: z.object({
+      nedreVenstre: koordinatSchema,
+      ovreHoeyre: koordinatSchema,
+    }),
     subrapporter: z.object({
       etasjer: z.boolean(),
       bruksenheter: z.boolean(),
@@ -259,4 +292,5 @@ export type Bygning = z.infer<typeof bygningerSchema>
 export type Kontaktperson = z.infer<typeof kontaktpersonSchema>
 export type Bruksenhet = z.infer<typeof bruksenhetSchema>
 export type Hjemmelshaver = z.infer<typeof hjemmelshaverSchema>
+export type Utvalgskriterier = z.infer<typeof utvalgskriterierSchema>
 export type BygningsDatoerSchema = z.infer<typeof bygningsdatoerSchema>

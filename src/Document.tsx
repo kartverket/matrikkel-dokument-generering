@@ -12,11 +12,13 @@ import { KontaktPersoner } from "./sections/KontaktPersoner.tsx"
 import { Metadata } from "./sections/Metadata.tsx"
 import RegistrerteVedtak from "./sections/RegistrerteVedtak.tsx"
 import { Tiltakshavere } from "./sections/Tiltakshavere.tsx"
+import { Utvalgskriterier } from "./sections/Utvalgskriterier.tsx"
 
 export function DocumentComponent({ data }: { data: ByggRapport }) {
   return (
     <>
       <Metadata data={data} />
+      <Utvalgskriterier kriterier={data.utvalgskriterier} />
       {data.bygninger.map((bygning) => (
         <Fragment key={bygning.id}>
           <Bygningslinje bygning={bygning} />
