@@ -38,7 +38,7 @@ export function KartUtvalg({
         y={selection.y}
         width={selection.width}
         height={selection.height}
-        className="fill-kv-blue/15 stroke-kv-blue stroke-6"
+        className="fill-kv-blue/15 stroke-6 stroke-kv-blue"
         vectorEffect="non-scaling-stroke"
       />
       <rect
@@ -91,7 +91,7 @@ export function KartUtvalg({
           x={scaleBarCenter}
           y={scaleBarY - 14}
           textAnchor="middle"
-          className="fill-white stroke-black/70 stroke-3 font-semibold text-[16px] [paint-order:stroke]"
+          className="fill-white stroke-3 stroke-black/70 font-semibold text-[16px] [paint-order:stroke]"
         >
           {scaleBar.label}
         </text>
