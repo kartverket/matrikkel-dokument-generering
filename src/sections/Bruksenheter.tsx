@@ -16,7 +16,7 @@ export default function Bruksenheter({ bruksenheter }: Props) {
   return (
     <section className="my-16">
       <div className="mb-7 flex items-baseline gap-4 border-kv-blue border-b-2 pb-3">
-        <span className="font-extrabold text-kv-blue text-sm tracking-widest tabular-nums">
+        <span className="font-extrabold text-kv-blue text-sm tabular-nums tracking-widest">
           04
         </span>
         <Heading level={2} data-size="md">
