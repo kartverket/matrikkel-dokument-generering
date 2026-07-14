@@ -26,13 +26,13 @@ export function DocumentComponent({ data }: { data: ByggRapport }) {
         <Fragment key={bygning.id}>
           <Bygningslinje bygning={bygning} />
           <EtasjerSection etasjeEndringer={bygning.endringer} />
+          <Bruksenheter bruksenheter={bygning.bruksenheter} />
 
           {bygning.endringer.map((endring) => (
             <Fragment key={endring.id}>
               <ArealFordeling endring={endring} />
               {endring.bruksenheter.length > 0 && (
                 <>
-                  <Bruksenheter bruksenheter={endring.bruksenheter} />
                   <RegistrerteVedtak datoer={endring.datoer} />
                   <KontaktPersoner kontaktpersoner={endring.kontaktpersoner} />
                   <Hjemmelshavere hjemmelshavere={endring.hjemmelshavere} />
