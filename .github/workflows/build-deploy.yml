@@ -51,6 +51,9 @@ jobs:
       - name: Verify linting
         run: bun run lint
 
+      - name: Run tests
+        run: bun run test
+
       - name: Build app
         run: bun run build
 

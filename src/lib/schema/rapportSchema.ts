@@ -1,21 +1,33 @@
-import { z } from "zod"
+import { z } from "@hono/zod-openapi"
 import { type EpsgCode, koordinatsystemSchema } from "../map/koordinatsystem"
 
-const kommuneSchema = z.object({
-  nr: z.string().min(1),
-  navn: z.string().min(1),
+const kommuneSchema = z
+  .object({
+    nr: z.string().min(1).meta({ example: "0301" }),
+    navn: z.string().min(1).meta({ example: "Oslo" }),
+  })
+  .meta({ id: "Kommune" })
+
+const localeSchema = z.enum(["nb", "nn"]).meta({
+  id: "Locale",
+  description: "Målform for dokumentet – bokmål (`nb`) eller nynorsk (`nn`).",
 })
 
-const localeSchema = z.enum(["nb", "nn"]) //Bokmål og nynorsk
-
-export const rapportSchema = z.object({
-  rapportType: z.string().min(1),
-  tittel: z.string().min(1, "Title is required"),
-  kommune: kommuneSchema,
-  koordinatsystem: koordinatsystemSchema,
-  locale: localeSchema,
-  generertTidspunkt: z.string().min(1),
-})
+export const rapportSchema = z
+  .object({
+    rapportType: z.string().min(1),
+    tittel: z.string().min(1, "Title is required"),
+    kommune: kommuneSchema,
+    koordinatsystem: koordinatsystemSchema.meta({
+      example: "22 - EUREF89 UTM Sone 32",
+    }),
+    locale: localeSchema,
+    generertTidspunkt: z
+      .string()
+      .min(1)
+      .meta({ example: "2026-07-10T12:00:00Z" }),
+  })
+  .openapi("Rapport")
 
 export type Rapport = z.infer<typeof rapportSchema>
 export type RapportLocale = z.infer<typeof localeSchema>
