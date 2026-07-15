@@ -1,68 +1,162 @@
-import { Table } from "@kv-designsystem/react"
+import { Card, Divider, Heading, Paragraph, Tag } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import type { Bruksenhet } from "../lib/schema/byggRapportSchema.ts"
-import { formatArea } from "../lib/utils/format"
+import { Endringskort } from "../components/bruksenheter/Endringskort.tsx"
+import type { BruksenhetDetalj } from "../lib/schema/byggRapportSchema.ts"
 
-interface BruksenhetProps {
-  bruksenheter: Bruksenhet[]
+interface Props {
+  bruksenheter: BruksenhetDetalj[]
 }
 
-export default function Bruksenheter({ bruksenheter }: BruksenhetProps) {
+export default function Bruksenheter({ bruksenheter }: Props) {
   const { t } = useTranslation()
+  const translationKey = "rapport.BYG0011.bruksenheter"
+
+  if (bruksenheter.length === 0) return null
 
   return (
-    <>
-      <h2>{t("rapport.BYG0011.bruksenheter.title")}</h2>
-      <Table zebra border>
-        <Table.Head>
-          <Table.Row>
-            <Table.HeaderCell>
-              {t("rapport.BYG0011.bruksenheter.bruksenhetsnr")}
-            </Table.HeaderCell>
-            <Table.HeaderCell>
-              {t("rapport.BYG0011.bruksenheter.type")}
-            </Table.HeaderCell>
-            <Table.HeaderCell>
-              {t("rapport.BYG0011.bruksenheter.matrikkelenhet")}
-            </Table.HeaderCell>
-            <Table.HeaderCell>
-              {t("rapport.BYG0011.bruksenheter.adresse")}
-            </Table.HeaderCell>
-            <Table.HeaderCell>
-              {t("rapport.BYG0011.bruksenheter.bra")}
-            </Table.HeaderCell>
-            <Table.HeaderCell>
-              {t("rapport.BYG0011.bruksenheter.rom")}
-            </Table.HeaderCell>
-            <Table.HeaderCell>
-              {t("rapport.BYG0011.bruksenheter.kjokkentilgang")}
-            </Table.HeaderCell>
-            <Table.HeaderCell>
-              {t("rapport.BYG0011.bruksenheter.bad")}
-            </Table.HeaderCell>
-            <Table.HeaderCell>
-              {t("rapport.BYG0011.bruksenheter.wc")}
-            </Table.HeaderCell>
-          </Table.Row>
-        </Table.Head>
-        <Table.Body>
-          {bruksenheter.map((b, i) => (
-            <Table.Row key={b.bruksenhetsnr ?? String(i)}>
-              <Table.Cell>{b.bruksenhetsnr ?? "–"}</Table.Cell>
-              <Table.Cell>{b.type}</Table.Cell>
-              <Table.Cell>
-                {b.matrikkelenhet.gnr}/{b.matrikkelenhet.bnr}
-              </Table.Cell>
-              <Table.Cell>{b.adresse ?? "–"}</Table.Cell>
-              <Table.Cell>{formatArea(b.bruksareal)}</Table.Cell>
-              <Table.Cell>{b.antallRom}</Table.Cell>
-              <Table.Cell>{b.kjokkentilgang ? "Ja" : "Nei"}</Table.Cell>
-              <Table.Cell>{b.antallBad}</Table.Cell>
-              <Table.Cell>{b.antallWc}</Table.Cell>
-            </Table.Row>
-          ))}
-        </Table.Body>
-      </Table>
-    </>
+    <section className="my-16">
+      <div className="mb-7 flex items-baseline gap-4 border-kv-blue border-b-2 pb-3">
+        <span className="font-extrabold text-kv-blue text-sm tabular-nums tracking-widest">
+          04
+        </span>
+        <Heading level={2} data-size="md">
+          {t(`${translationKey}.title`)}
+        </Heading>
+        <Paragraph className="ml-auto text-kv-subtle text-sm">
+          {t(`${translationKey}.description`)}
+        </Paragraph>
+      </div>
+
+      <div className="flex flex-col gap-5">
+        {bruksenheter.map((bruksenhet) => (
+          <Card
+            key={bruksenhet.id}
+            data-bruksenhet={bruksenhet.nummer}
+            className="break-inside-avoid border border-kv-border"
+          >
+            <Card.Block className="p-7">
+              <div className="mb-6 flex items-start justify-between gap-4">
+                <div className="flex flex-wrap items-center gap-3">
+                  <Heading level={3} data-size="sm">
+                    {bruksenhet.nummer}
+                  </Heading>
+                  {bruksenhet.typeChip && (
+                    <Tag data-color="accent" variant="outline">
+                      {bruksenhet.typeChip}
+                    </Tag>
+                  )}
+                </div>
+                {bruksenhet.seksjon && (
+                  <Paragraph className="text-kv-subtle text-sm">
+                    {bruksenhet.seksjon}
+                  </Paragraph>
+                )}
+              </div>
+
+              <dl className="grid grid-cols-3 gap-x-8 gap-y-5">
+                <div>
+                  <dt className="text-kv-subtle text-sm">
+                    {t(`${translationKey}.bruksenhetstype`)}
+                  </dt>
+                  <dd className="mt-1 font-medium">
+                    {bruksenhet.bruksenhetstype}
+                  </dd>
+                </div>
+                <div className="col-span-2">
+                  <dt className="text-kv-subtle text-sm">
+                    {t(`${translationKey}.adresse`)}
+                  </dt>
+                  <dd className="mt-1 font-medium">{bruksenhet.adresse}</dd>
+                </div>
+                <div>
+                  <dt className="text-kv-subtle text-sm">
+                    {t(`${translationKey}.etasje`)}
+                  </dt>
+                  <dd className="mt-1 font-medium">{bruksenhet.etasje}</dd>
+                </div>
+                <div>
+                  <dt className="text-kv-subtle text-sm">
+                    {t(`${translationKey}.bruksareal`)}
+                  </dt>
+                  <dd className="mt-1 font-medium">{bruksenhet.bruksareal}</dd>
+                </div>
+                <div>
+                  <dt className="text-kv-subtle text-sm">
+                    {t(`${translationKey}.antallRom`)}
+                  </dt>
+                  <dd className="mt-1 font-medium">{bruksenhet.antallRom}</dd>
+                </div>
+                <div>
+                  <dt className="text-kv-subtle text-sm">
+                    {t(`${translationKey}.kjokken`)}
+                  </dt>
+                  <dd className="mt-1 font-medium">{bruksenhet.kjokken}</dd>
+                </div>
+                <div>
+                  <dt className="text-kv-subtle text-sm">
+                    {t(`${translationKey}.antallBad`)}
+                  </dt>
+                  <dd className="mt-1 font-medium">{bruksenhet.antallBad}</dd>
+                </div>
+                <div>
+                  <dt className="text-kv-subtle text-sm">
+                    {t(`${translationKey}.antallWc`)}
+                  </dt>
+                  <dd className="mt-1 font-medium">{bruksenhet.antallWc}</dd>
+                </div>
+              </dl>
+
+              {bruksenhet.seksjon && (
+                <>
+                  <Divider className="my-6" />
+                  <Paragraph className="mb-3 font-bold text-kv-subtle text-xs tracking-wide">
+                    {t(`${translationKey}.hjemmelshaverEier`)}
+                  </Paragraph>
+                  <div className="flex flex-col gap-3">
+                    {bruksenhet.hjemmelshavere.length > 0 ? (
+                      bruksenhet.hjemmelshavere.map((eier) => (
+                        <div
+                          key={eier.id}
+                          className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1"
+                        >
+                          <Paragraph className="font-semibold">
+                            {eier.navn}
+                          </Paragraph>
+                          <Paragraph className="text-kv-subtle text-sm">
+                            {eier.meta}
+                          </Paragraph>
+                        </div>
+                      ))
+                    ) : (
+                      <Paragraph className="font-semibold">
+                        {t(`${translationKey}.tom`)}
+                      </Paragraph>
+                    )}
+                  </div>
+                </>
+              )}
+
+              <Divider className="my-6" />
+              {bruksenhet.endringer.length === 0 ? (
+                <Paragraph className="text-kv-subtle text-sm">
+                  {t(`${translationKey}.ingenEndringer`)}
+                </Paragraph>
+              ) : (
+                <div>
+                  <Paragraph className="mb-3 font-bold text-kv-subtle text-xs tracking-wide">
+                    {t(`${translationKey}.endringerPaBruksenheten`)}
+                  </Paragraph>
+                  <div className="flex flex-col gap-3">
+                    {bruksenhet.endringer.map((endring) => (
+                      <Endringskort key={endring.id} endring={endring} />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </Card.Block>
+          </Card>
+        ))}
+      </div>
+    </section>
   )
 }
