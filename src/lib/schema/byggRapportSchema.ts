@@ -312,7 +312,7 @@ const bruksenhetDetaljSchema = z
     nummer: z.string().min(1).nullable(),
     typeChip: z.string().min(1).nullable(),
     seksjon: z.string().nullable(),
-    bruksenhetstype: z.string().min(1),
+    bruksenhetstype: z.string().min(1).nullable(),
     adresse: z.string().min(1).nullable(),
     etasje: z.string().min(1).nullable(),
     bruksareal: z.string().min(1),

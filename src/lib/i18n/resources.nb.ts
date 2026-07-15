@@ -86,7 +86,8 @@ export const nb = {
       bruksenheter: {
         title: "Bruksenheter",
         description: "Detaljer og endringer per bruksenhet",
-        tom: "TOM",
+        tom: "tom",
+        ingenOppgittBruksenhet: "Ingen oppgitt bruksenhet",
         seksjon: "Seksjon",
         bruksenhetstype: "Bruksenhetstype",
         etasje: "Etasje",

@@ -10,6 +10,11 @@ interface Props {
 export function Endringskort({ endring }: Props) {
   const { t } = useTranslation()
   const translationKey = "rapport.BYG0011.bruksenheter"
+  const tom = t(`${translationKey}.tom`)
+  const visVerdi = (value: string | null | undefined) => ({
+    value: value ?? tom,
+    erTom: value == null,
+  })
 
   return (
     <Card
@@ -45,7 +50,7 @@ export function Endringskort({ endring }: Props) {
           />
           <EndringsDetalje
             label={t(`${translationKey}.endringskode`)}
-            value={endring.endringskode}
+            {...visVerdi(endring.endringskode)}
           />
           <EndringsDetalje
             label={t(`${translationKey}.bygningstype`)}
@@ -69,7 +74,7 @@ export function Endringskort({ endring }: Props) {
           />
           <EndringsDetalje
             label={t(`${translationKey}.endringsbeskrivelse`)}
-            value={endring.beskrivelse}
+            {...visVerdi(endring.beskrivelse)}
             className="col-span-3"
           />
         </dl>
@@ -109,27 +114,27 @@ export function Endringskort({ endring }: Props) {
         <dl className="grid grid-cols-3 gap-x-7 gap-y-4">
           <EndringsDetalje
             label={t(`${translationKey}.rammetillatelse`)}
-            value={endring.rammetillatelse}
+            {...visVerdi(endring.rammetillatelse)}
           />
           <EndringsDetalje
             label={t(`${translationKey}.igangsettingstillatelse`)}
-            value={endring.igangsettingstillatelse}
+            {...visVerdi(endring.igangsettingstillatelse)}
           />
           <EndringsDetalje
             label={t(`${translationKey}.midlertidigBrukstillatelse`)}
-            value={endring.midlertidigBrukstillatelse}
+            {...visVerdi(endring.midlertidigBrukstillatelse)}
           />
           <EndringsDetalje
             label={t(`${translationKey}.ferdigattest`)}
-            value={endring.ferdigattest}
+            {...visVerdi(endring.ferdigattest)}
           />
           <EndringsDetalje
             label={t(`${translationKey}.tattIBruk`)}
-            value={endring.tattIBruk}
+            {...visVerdi(endring.tattIBruk)}
           />
           <EndringsDetalje
             label={t(`${translationKey}.utgaattRevet`)}
-            value={endring.utgaattRevet}
+            {...visVerdi(endring.utgaattRevet)}
           />
         </dl>
 
