@@ -5,6 +5,15 @@ import { defineConfig } from "vite"
 
 // https://vite.dev/config/
 export default defineConfig({
+  build: {
+    rolldownOptions: {
+      output: {
+        codeSplitting: {
+          groups: [{ name: "vendor", test: /node_modules[\\/]/ }],
+        },
+      },
+    },
+  },
   plugins: [
     react(),
     babel({ presets: [reactCompilerPreset()] }),

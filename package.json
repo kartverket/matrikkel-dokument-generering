@@ -18,10 +18,13 @@
     "serve": "bun run build:css && bun src/api/server.ts"
   },
   "dependencies": {
+    "@digdir/designsystemet-css": "^1.14.0",
     "@hono/prometheus": "^1.0.3",
     "@hono/swagger-ui": "^0.6.1",
     "@hono/zod-openapi": "^1.5.0",
+    "@kv-designsystem/css": "1.0.0-alpha.1",
     "@kv-designsystem/react": "^1.0.0-alpha.2",
+    "@kv-designsystem/theme": "1.0.0-alpha.0",
     "@navikt/aksel-icons": "^8.15.0",
     "@tailwindcss/cli": "^4.3.2",
     "hono": "^4.12.30",

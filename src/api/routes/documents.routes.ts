@@ -1,6 +1,6 @@
 import { createRoute, type OpenAPIHono, z } from "@hono/zod-openapi"
-import { renderDocument } from "../../Document.tsx"
 import { htmlToPdf } from "../../lib/pdf/gotenberg.ts"
+import { renderDocument } from "../../lib/pdf/renderDocument.tsx"
 import { getDocumentCss } from "../../lib/pdf/styles.ts"
 import { byggRapportSchema } from "../../lib/schema/byggRapportSchema.ts"
 import {

@@ -1,7 +1,8 @@
+@import "@kv-designsystem/theme/blue";
 @layer theme, base, components, designsystem, utilities;
-
 @import "tailwindcss";
-@import "@kv-designsystem/react/blue" layer(designsystem);
+@import "@digdir/designsystemet-css" layer(designsystem);
+@import "@kv-designsystem/css/components.css" layer(designsystem);
 
 @theme {
   --color-kv-subtle: var(--ds-color-neutral-text-subtle);
