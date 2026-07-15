@@ -12,7 +12,6 @@ const olaNordmann: Hjemmelshaver = {
   navn: "Ola Nordmann",
   andelTeller: 1,
   andelNevner: 2,
-  eierforhold: "Eier",
   adresselinje1: "Belsetveien 114",
   adresselinje2: null,
   adresselinje3: null,

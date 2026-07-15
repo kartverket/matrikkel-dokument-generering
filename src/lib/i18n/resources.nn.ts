@@ -179,7 +179,7 @@ export const nn = {
         gyldigFra: "Gyldig frå",
         kategori: "Kategori / kontakttype",
         status: "Status",
-        utgatt: "Utgått",
+        utgatt: "Død",
       },
       bygningslinje: {
         title: "Bygningsliner",
@@ -224,7 +224,6 @@ export const nn = {
         eierIdent: "Fødselsnr/orgnr",
         navn: "Namn",
         andel: "Andel",
-        eierforhold: "Eigarforhold",
         bruksenhetsnr: "Tilknytt brukseining",
         adresselinjer: "Adresselinjer",
         postnummer: "Postnummer",

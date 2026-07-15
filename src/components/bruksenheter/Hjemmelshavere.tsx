@@ -57,14 +57,6 @@ export function Hjemmelshavere({ hjemmelshavere }: Props) {
                         : "-"}
                     </dd>
                   </div>
-                  <div>
-                    <dt className="text-kv-subtle text-sm">
-                      {t(`${translationKey}.eierforhold`)}
-                    </dt>
-                    <dd className="mt-1 font-medium">
-                      {hjemmelshaver.eierforhold}
-                    </dd>
-                  </div>
                   <div className="col-span-2">
                     <dt className="text-kv-subtle text-sm">
                       {t(`${translationKey}.adresselinjer`)}

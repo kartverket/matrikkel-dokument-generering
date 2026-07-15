@@ -118,7 +118,6 @@ const hjemmelshaverSchema = z
     navn: z.string().min(1),
     andelTeller: z.number().nullable(),
     andelNevner: z.number().nullable(),
-    eierforhold: z.string().min(1),
     adresselinje1: z.string().nullable(),
     adresselinje2: z.string().nullable(),
     adresselinje3: z.string().nullable(),
@@ -287,7 +286,7 @@ const bruksenhetEndringDetaljSchema = z
     igangsettingstillatelse: z.string().min(1),
     midlertidigBrukstillatelse: z.string().min(1),
     ferdigattest: z.string().min(1),
-    tattIBruk: z.string().min(1),
+    tattIBruk: z.string().optional(),
     utgaattRevet: z.string().min(1),
     koordinater: z.string().min(1),
     etasjer: z.array(
