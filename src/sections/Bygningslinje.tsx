@@ -1,5 +1,6 @@
 import { Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
+import { Section } from "../components/Section.tsx"
 import type { Bygning } from "../lib/schema/byggRapportSchema"
 import { arealLinje } from "../lib/utils/arealLinje"
 import { formatArea } from "../lib/utils/format"
@@ -7,10 +8,11 @@ import { getKulturMinner } from "../lib/utils/getKulturMinner"
 import { isFerdigstilt } from "../lib/utils/isFerdigstilt"
 
 interface Props {
+  index: number
   bygning: Bygning
 }
 
-export function Bygningslinje({ bygning }: Props) {
+export function Bygningslinje({ index, bygning }: Props) {
   const { t } = useTranslation()
 
   if (bygning.endringer.length === 0) return null
@@ -18,8 +20,7 @@ export function Bygningslinje({ bygning }: Props) {
   const bl = "rapport.BYG0011.bygningslinje"
 
   return (
-    <section>
-      <h2>{t(`${bl}.title`)}</h2>
+    <Section index={index} title={t(`${bl}.title`)}>
       <Table zebra border>
         <Table.Head>
           <Table.Row>
@@ -84,6 +85,6 @@ export function Bygningslinje({ bygning }: Props) {
           ))}
         </Table.Body>
       </Table>
-    </section>
+    </Section>
   )
 }

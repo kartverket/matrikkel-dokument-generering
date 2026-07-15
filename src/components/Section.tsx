@@ -9,7 +9,7 @@ interface Props {
 
 export function Section({ index, title, description, children }: Props) {
   return (
-    <section>
+    <section className="my-16">
       <div className="mb-7 flex items-baseline gap-4 border-kv-blue border-b-2 pb-3">
         <span className="font-extrabold text-kv-blue text-sm tabular-nums tracking-widest">
           {index.toString().padStart(2, "0")}
