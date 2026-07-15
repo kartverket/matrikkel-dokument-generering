@@ -1,13 +1,15 @@
 import { Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
+import { Section } from "../components/Section.tsx"
 import type { Hjemmelshaver } from "../lib/schema/byggRapportSchema"
 import { joinStrings } from "../lib/utils/joinStrings"
 
 interface Props {
+  index: number
   hjemmelshavere?: Hjemmelshaver[] | null
 }
 
-export function Hjemmelshavere({ hjemmelshavere }: Props) {
+export function Hjemmelshavere({ index, hjemmelshavere }: Props) {
   const { t } = useTranslation()
 
   if (!hjemmelshavere || hjemmelshavere.length === 0) return null
@@ -15,8 +17,7 @@ export function Hjemmelshavere({ hjemmelshavere }: Props) {
   const kp = "rapport.BYG0011.hjemmelshavere"
 
   return (
-    <>
-      <h2>{t(`${kp}.title`)}</h2>
+    <Section index={index} title={t(`${kp}.title`)}>
       <Table zebra border>
         <Table.Head>
           <Table.Row>
@@ -73,6 +74,6 @@ export function Hjemmelshavere({ hjemmelshavere }: Props) {
           ))}
         </Table.Body>
       </Table>
-    </>
+    </Section>
   )
 }

@@ -1,13 +1,15 @@
 import { Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
+import { Section } from "../components/Section.tsx"
 import type { Bygningsendring } from "../lib/schema/byggRapportSchema"
 import { formatArea } from "../lib/utils/format"
 
 interface Props {
+  index: number
   etasjeEndringer?: Bygningsendring[] | null
 }
 
-export function EtasjerSection({ etasjeEndringer }: Props) {
+export function EtasjerSection({ index, etasjeEndringer }: Props) {
   const { t } = useTranslation()
 
   if (!etasjeEndringer || etasjeEndringer.length === 0) return null
@@ -19,8 +21,7 @@ export function EtasjerSection({ etasjeEndringer }: Props) {
   if (rader.length === 0) return null
 
   return (
-    <section>
-      <h2>{t("rapport.BYG0011.etasjer.title")}</h2>
+    <Section index={index} title={t("rapport.BYG0011.etasjer.title")}>
       <Table zebra border>
         <Table.Head>
           <Table.Row>
@@ -77,6 +78,6 @@ export function EtasjerSection({ etasjeEndringer }: Props) {
           ))}
         </Table.Body>
       </Table>
-    </section>
+    </Section>
   )
 }

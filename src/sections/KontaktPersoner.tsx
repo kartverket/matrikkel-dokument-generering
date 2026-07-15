@@ -1,13 +1,15 @@
 import { Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
+import { Section } from "../components/Section.tsx"
 import type { Kontaktperson } from "../lib/schema/byggRapportSchema"
 import { joinStrings } from "../lib/utils/joinStrings"
 
 interface Props {
+  index: number
   kontaktpersoner?: Kontaktperson[] | null
 }
 
-export function KontaktPersoner({ kontaktpersoner }: Props) {
+export function KontaktPersoner({ index, kontaktpersoner }: Props) {
   const { t } = useTranslation()
 
   if (!kontaktpersoner || kontaktpersoner.length === 0) return null
@@ -15,8 +17,7 @@ export function KontaktPersoner({ kontaktpersoner }: Props) {
   const kp = "rapport.BYG0011.kontaktpersoner"
 
   return (
-    <section>
-      <h2>{t(`${kp}.title`)}</h2>
+    <Section index={index} title={t(`${kp}.title`)}>
       <Table zebra border>
         <Table.Head>
           <Table.Row>
@@ -72,6 +73,6 @@ export function KontaktPersoner({ kontaktpersoner }: Props) {
           ))}
         </Table.Body>
       </Table>
-    </section>
+    </Section>
   )
 }
