@@ -22,7 +22,7 @@ export function Hjemmelshavere({ hjemmelshavere }: Props) {
           {t("rapport.BYG0011.bruksenheter.tom")}
         </Paragraph>
       ) : (
-        <div className="grid grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 gap-3">
           {hjemmelshavere.map((hjemmelshaver) => {
             return (
               <Card key={hjemmelshaver.eierIdent}>
