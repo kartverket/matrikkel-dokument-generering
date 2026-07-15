@@ -18,7 +18,10 @@ export function DocumentComponent({ data }: { data: ByggRapport }) {
   return (
     <>
       <Metadata data={data} />
-      <Utvalgskriterier kriterier={data.utvalgskriterier} />
+      <Utvalgskriterier
+        kriterier={data.utvalgskriterier}
+        koordinatsystem={data.koordinatsystem}
+      />
       {data.bygninger.map((bygning) => (
         <Fragment key={bygning.id}>
           <Bygningslinje bygning={bygning} />

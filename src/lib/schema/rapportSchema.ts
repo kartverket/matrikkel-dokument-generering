@@ -1,4 +1,5 @@
 import { z } from "@hono/zod-openapi"
+import { type EpsgCode, koordinatsystemSchema } from "../map/koordinatsystem"
 
 const kommuneSchema = z
   .object({
@@ -17,7 +18,9 @@ export const rapportSchema = z
     rapportType: z.string().min(1),
     tittel: z.string().min(1, "Title is required"),
     kommune: kommuneSchema,
-    koordinatsystem: z.string().min(1).meta({ example: "EUREF89 UTM sone 32" }),
+    koordinatsystem: koordinatsystemSchema.meta({
+      example: "22 - EUREF89 UTM Sone 32",
+    }),
     locale: localeSchema,
     generertTidspunkt: z
       .string()
@@ -28,3 +31,4 @@ export const rapportSchema = z
 
 export type Rapport = z.infer<typeof rapportSchema>
 export type RapportLocale = z.infer<typeof localeSchema>
+export type { EpsgCode }
