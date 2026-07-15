@@ -32,7 +32,10 @@ export function Kontaktpersoner({ kontaktpersoner }: Props) {
                 <Paragraph className="font-semibold">
                   {kontaktperson.navn}
                 </Paragraph>
-                <Tag data-color="neutral" variant="outline">
+                <Tag
+                  data-color={kontaktperson.eierErUtgatt ? "danger" : "success"}
+                  variant="outline"
+                >
                   {kontaktperson.eierErUtgatt
                     ? t(`${translationKey}.utgatt`)
                     : (kontaktperson.statuskode ?? "-")}
