@@ -15,6 +15,7 @@ interface Props {
 export default function Bruksenheter({ index, bruksenheter }: Props) {
   const { t } = useTranslation()
   const translationKey = "rapport.BYG0011.bruksenheter"
+  const tom = t(`${translationKey}.tom`)
 
   if (bruksenheter.length === 0) return null
 
@@ -28,14 +29,14 @@ export default function Bruksenheter({ index, bruksenheter }: Props) {
         {bruksenheter.map((bruksenhet) => (
           <Card
             key={bruksenhet.id}
-            data-bruksenhet={bruksenhet.nummer}
+            data-bruksenhet={bruksenhet.nummer ?? tom}
             className="break-inside-avoid border border-kv-border"
           >
             <Card.Block className="p-7">
               <div className="mb-6 flex items-start justify-between gap-4">
                 <div className="flex flex-wrap items-center gap-3">
                   <Heading level={3} data-size="sm">
-                    {bruksenhet.nummer}
+                    {bruksenhet.nummer ?? tom}
                   </Heading>
                   {bruksenhet.typeChip && (
                     <Tag data-color="accent" variant="outline">
@@ -63,13 +64,17 @@ export default function Bruksenheter({ index, bruksenheter }: Props) {
                   <dt className="text-kv-subtle text-sm">
                     {t(`${translationKey}.adresse`)}
                   </dt>
-                  <dd className="mt-1 font-medium">{bruksenhet.adresse}</dd>
+                  <dd className="mt-1 font-medium">
+                    {bruksenhet.adresse ?? tom}
+                  </dd>
                 </div>
                 <div>
                   <dt className="text-kv-subtle text-sm">
                     {t(`${translationKey}.etasje`)}
                   </dt>
-                  <dd className="mt-1 font-medium">{bruksenhet.etasje}</dd>
+                  <dd className="mt-1 font-medium">
+                    {bruksenhet.etasje ?? tom}
+                  </dd>
                 </div>
                 <div>
                   <dt className="text-kv-subtle text-sm">
@@ -87,7 +92,9 @@ export default function Bruksenheter({ index, bruksenheter }: Props) {
                   <dt className="text-kv-subtle text-sm">
                     {t(`${translationKey}.kjokken`)}
                   </dt>
-                  <dd className="mt-1 font-medium">{bruksenhet.kjokken}</dd>
+                  <dd className="mt-1 font-medium">
+                    {bruksenhet.kjokken ?? tom}
+                  </dd>
                 </div>
                 <div>
                   <dt className="text-kv-subtle text-sm">

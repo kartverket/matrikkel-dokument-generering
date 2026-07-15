@@ -403,10 +403,10 @@ const mockByggRapport: ByggRapport = {
               bebygdAreal: "14 m²",
               rammetillatelse: "12.09.2016",
               igangsettingstillatelse: "06.03.2017",
-              midlertidigBrukstillatelse: "TOM",
+              midlertidigBrukstillatelse: null,
               ferdigattest: "22.01.2020",
               tattIBruk: "22.01.2020",
-              utgaattRevet: "TOM",
+              utgaattRevet: null,
               koordinater: "6 644 118 N / 254 384 Ø",
               etasjer: [
                 {
