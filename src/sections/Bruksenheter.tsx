@@ -1,32 +1,26 @@
 import { Card, Divider, Heading, Paragraph, Tag } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import { Endringskort } from "../components/bruksenheter/Endringskort.tsx"
+import { Section } from "../components/Section.tsx"
 import type { BruksenhetDetalj } from "../lib/schema/byggRapportSchema.ts"
 
 interface Props {
+  index: number
   bruksenheter: BruksenhetDetalj[]
 }
 
-export default function Bruksenheter({ bruksenheter }: Props) {
+export default function Bruksenheter({ index, bruksenheter }: Props) {
   const { t } = useTranslation()
   const translationKey = "rapport.BYG0011.bruksenheter"
 
   if (bruksenheter.length === 0) return null
 
   return (
-    <section className="my-16">
-      <div className="mb-7 flex items-baseline gap-4 border-kv-blue border-b-2 pb-3">
-        <span className="font-extrabold text-kv-blue text-sm tabular-nums tracking-widest">
-          04
-        </span>
-        <Heading level={2} data-size="md">
-          {t(`${translationKey}.title`)}
-        </Heading>
-        <Paragraph className="ml-auto text-kv-subtle text-sm">
-          {t(`${translationKey}.description`)}
-        </Paragraph>
-      </div>
-
+    <Section
+      title={t(`${translationKey}.title`)}
+      index={index}
+      description={t(`${translationKey}.description`)}
+    >
       <div className="flex flex-col gap-5">
         {bruksenheter.map((bruksenhet) => (
           <Card
@@ -157,6 +151,6 @@ export default function Bruksenheter({ bruksenheter }: Props) {
           </Card>
         ))}
       </div>
-    </section>
+    </Section>
   )
 }

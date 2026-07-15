@@ -1,14 +1,16 @@
 import { Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
+import { Section } from "../components/Section.tsx"
 import type { Bygningsendring } from "../lib/schema/byggRapportSchema"
 import { isFerdigstilt } from "../lib/utils/isFerdigstilt"
 import { joinStrings } from "../lib/utils/joinStrings"
 
 interface Props {
+  index: number
   endring: Bygningsendring
 }
 
-export function Tiltakshavere({ endring }: Props) {
+export function Tiltakshavere({ index, endring }: Props) {
   const { t } = useTranslation()
   const tiltakshavere = endring.tiltakshavere
 
@@ -18,8 +20,7 @@ export function Tiltakshavere({ endring }: Props) {
   const th = "rapport.BYG0011.tiltakshavere"
 
   return (
-    <section>
-      <h2>{t(`${th}.title`)}</h2>
+    <Section index={index} title={t(`${th}.title`)}>
       <Table zebra border>
         <Table.Head>
           <Table.Row>
@@ -75,6 +76,6 @@ export function Tiltakshavere({ endring }: Props) {
           ))}
         </Table.Body>
       </Table>
-    </section>
+    </Section>
   )
 }

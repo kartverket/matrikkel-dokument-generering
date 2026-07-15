@@ -18,25 +18,31 @@ export function DocumentComponent({ data }: { data: ByggRapport }) {
   return (
     <>
       <Metadata data={data} />
-      <Utvalgskriterier kriterier={data.utvalgskriterier} />
+      <Utvalgskriterier index={1} kriterier={data.utvalgskriterier} />
       {data.bygninger.map((bygning) => (
         <Fragment key={bygning.id}>
-          <Bygningslinje bygning={bygning} />
-          <EtasjerSection etasjeEndringer={bygning.endringer} />
-          <Bruksenheter bruksenheter={bygning.bruksenheter} />
+          <Bygningslinje index={2} bygning={bygning} />
+          <EtasjerSection index={3} etasjeEndringer={bygning.endringer} />
+          <Bruksenheter index={4} bruksenheter={bygning.bruksenheter} />
 
           {bygning.endringer.map((endring) => (
             <Fragment key={endring.id}>
-              <ArealFordeling endring={endring} />
+              <ArealFordeling index={5} endring={endring} />
               {endring.bruksenheter.length > 0 && (
                 <>
-                  <RegistrerteVedtak datoer={endring.datoer} />
-                  <KontaktPersoner kontaktpersoner={endring.kontaktpersoner} />
-                  <Hjemmelshavere hjemmelshavere={endring.hjemmelshavere} />
+                  <RegistrerteVedtak index={6} datoer={endring.datoer} />
+                  <KontaktPersoner
+                    index={7}
+                    kontaktpersoner={endring.kontaktpersoner}
+                  />
+                  <Hjemmelshavere
+                    index={8}
+                    hjemmelshavere={endring.hjemmelshavere}
+                  />
                 </>
               )}
               {data.utvalgskriterier.subrapporter.tiltakshavere && (
-                <Tiltakshavere endring={endring} />
+                <Tiltakshavere index={9} endring={endring} />
               )}
             </Fragment>
           ))}
