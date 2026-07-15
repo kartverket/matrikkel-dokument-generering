@@ -1,6 +1,7 @@
 import { Heading, Paragraph, Tag } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { Bygningsendring } from "../../lib/schema/byggRapportSchema"
+import { describeChange } from "../../lib/utils/describeChange"
 import { formatDate } from "../../lib/utils/formatDate"
 
 interface Props {
@@ -28,14 +29,21 @@ export default function Historikk({ endringer }: Props) {
 
   if (endringer.length === 0) return null
 
-  const sortert = endringer
+  const stigende = endringer
     .map((endring) => ({ endring, dato: primaerDato(endring) }))
     .toSorted((a, b) => {
-      if (a.dato && b.dato) return b.dato.localeCompare(a.dato)
-      if (a.dato) return -1
-      if (b.dato) return 1
-      return b.endring.lopenr - a.endring.lopenr
+      if (a.dato && b.dato) return a.dato.localeCompare(b.dato)
+      if (a.dato) return 1
+      if (b.dato) return -1
+      return a.endring.lopenr - b.endring.lopenr
     })
+
+  const rader = stigende
+    .map((rad, i) => ({
+      ...rad,
+      beskrivelse: describeChange(t, rad.endring, stigende[i - 1]?.endring),
+    }))
+    .toReversed()
 
   return (
     <div className="space-y-4">
@@ -49,16 +57,13 @@ export default function Historikk({ endringer }: Props) {
       </div>
 
       <ul className="space-y-8 border-kv-green border-l-3 pl-6">
-        {sortert.map(({ endring, dato }) => {
+        {rader.map(({ endring, dato, beskrivelse }) => {
           const bruksenhetsnr = endring.bruksenheter
             .map((b) => b.bruksenhetsnr)
             .filter((v): v is string => Boolean(v))
           const erGroennStatus = groenneStatuser.has(
             endring.bygningsstatus.kortkode,
           )
-          const beskrivelse =
-            endring.beskrivelse ??
-            (endring.lopenr === 0 ? t(`${h}.foersteVedtak`) : null)
 
           return (
             <li key={endring.id} className="space-y-1">

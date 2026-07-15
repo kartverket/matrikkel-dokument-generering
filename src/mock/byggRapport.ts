@@ -1,34 +1,82 @@
 import type {
+  Bruksenhet,
   ByggRapport,
   Bygningsendring,
 } from "../lib/schema/byggRapportSchema"
 
+type Bygningsstatus = Bygningsendring["bygningsstatus"]
+type Bygningsdatoer = Bygningsendring["datoer"]
+
+const statuser = {
+  RA: { kode: 1, kortkode: "RA", navn: "Rammetillatelse", bestaaende: false },
+  IG: {
+    kode: 2,
+    kortkode: "IG",
+    navn: "Igangsettingstillatelse",
+    bestaaende: false,
+  },
+  MB: {
+    kode: 3,
+    kortkode: "MB",
+    navn: "Midlertidig tillatelse",
+    bestaaende: false,
+  },
+  TB: { kode: 4, kortkode: "TB", navn: "Tatt i bruk", bestaaende: true },
+  FA: { kode: 5, kortkode: "FA", navn: "Ferdigattestert", bestaaende: true },
+} satisfies Record<string, Bygningsstatus>
+
+function datoer(overrides: Partial<Bygningsdatoer>): Bygningsdatoer {
+  return {
+    rammetillatelse: null,
+    igangsettingstillatelse: null,
+    midlertidigBrukstillatelse: null,
+    ferdigattest: null,
+    tattIBruk: null,
+    utgaattRevet: null,
+    ...overrides,
+  }
+}
+
+function refBruksenhet(
+  bruksenhetsnr: string,
+  etasjeplankode: "H" | "L" | "U" | "K",
+  etasjenummer: number,
+): Bruksenhet {
+  return {
+    bruksenhetsnr,
+    type: "Bolig",
+    matrikkelenhet: { gnr: 94, bnr: 309, fnr: null, snr: null },
+    etasjeplankode,
+    etasjenummer,
+    bruksareal: 0,
+    antallRom: 0,
+    kjokkentilgang: null,
+    antallBad: 0,
+    antallWc: 0,
+    adresse: null,
+    egenregistrert: null,
+  }
+}
+
 const gjeldendeEndring: Bygningsendring = {
   id: 1001,
   bygningId: 1,
-  lopenr: 1,
+  lopenr: 5,
   endringskode: null,
   beskrivelse: null,
-  bygningsstatus: {
-    kode: 4,
-    kortkode: "TB",
-    navn: "Tatt i bruk",
-    bestaaende: true,
-  },
+  bygningsstatus: statuser.TB,
   antallBoenheter: 1,
   bruksareal: { bolig: 140, annet: 35, totalt: 175 },
   bruttoareal: { bolig: 158, annet: 44, totalt: 202 },
   bebygdAreal: 95,
   koordinat: { nord: 6642100, ost: 597400 },
   koordinatsystem: "EUREF89 UTM sone 32",
-  datoer: {
+  datoer: datoer({
     rammetillatelse: "2019-03-15",
     igangsettingstillatelse: "2019-05-01",
-    midlertidigBrukstillatelse: null,
     ferdigattest: "2020-08-20",
     tattIBruk: "2020-09-01",
-    utgaattRevet: null,
-  },
+  }),
   etasjeplan: [
     {
       etasjeplan: "Hovedetasje",
@@ -238,6 +286,69 @@ const gjeldendeEndring: Bygningsendring = {
   ],
 }
 
+const historiskeEndringer: Bygningsendring[] = [
+  {
+    ...gjeldendeEndring,
+    id: 1002,
+    lopenr: 4,
+    endringskode: "Tilbygg",
+    bygningsstatus: statuser.FA,
+    bruksareal: { bolig: 121, annet: 74, totalt: 195 },
+    datoer: datoer({
+      rammetillatelse: "2016-09-12",
+      igangsettingstillatelse: "2017-03-06",
+      ferdigattest: "2020-01-22",
+    }),
+    bruksenheter: [refBruksenhet("H0103", "K", 1)],
+  },
+  {
+    ...gjeldendeEndring,
+    id: 1003,
+    lopenr: 3,
+    endringskode: "Påbygg",
+    bygningsstatus: statuser.IG,
+    bruksareal: { bolig: 121, annet: 60, totalt: 181 },
+    datoer: datoer({
+      rammetillatelse: "2016-09-12",
+      igangsettingstillatelse: "2017-03-06",
+    }),
+    bruksenheter: [refBruksenhet("H0103", "K", 1)],
+  },
+  {
+    ...gjeldendeEndring,
+    id: 1004,
+    lopenr: 2,
+    endringskode: "Underbygg",
+    bygningsstatus: statuser.RA,
+    bruksareal: { bolig: 102, annet: 60, totalt: 162 },
+    datoer: datoer({ rammetillatelse: "2016-09-12" }),
+    bruksenheter: [refBruksenhet("H0104", "K", 1)],
+  },
+  {
+    ...gjeldendeEndring,
+    id: 1005,
+    lopenr: 1,
+    endringskode: "Ombygging",
+    beskrivelse: "Midlertidig tillatelse er gitt.",
+    bygningsstatus: statuser.MB,
+    bruksareal: { bolig: 102, annet: 0, totalt: 102 },
+    datoer: datoer({ midlertidigBrukstillatelse: "2008-09-12" }),
+    bruksenheter: [refBruksenhet("H0103", "K", 1)],
+  },
+  {
+    ...gjeldendeEndring,
+    id: 1006,
+    lopenr: 0,
+    bygningsstatus: statuser.TB,
+    bruksareal: { bolig: 102, annet: 0, totalt: 102 },
+    datoer: datoer({ tattIBruk: "1998-06-18" }),
+    bruksenheter: [
+      refBruksenhet("H0101", "H", 1),
+      refBruksenhet("H0102", "L", 1),
+    ],
+  },
+]
+
 const mockByggRapport: ByggRapport = {
   rapportType: "BYG0011",
   tittel: "Bygningsrapport – Belsetveien 114",
@@ -388,7 +499,7 @@ const mockByggRapport: ByggRapport = {
         },
       ],
       gjeldende: gjeldendeEndring,
-      endringer: [gjeldendeEndring],
+      endringer: [gjeldendeEndring, ...historiskeEndringer],
     },
   ],
 }

@@ -239,6 +239,15 @@ export const nb = {
           detaljer: "Se flere detaljer under Bruksenheter",
           beroerer: "Berører bruksenhet {{bruksenheter}}",
           foersteVedtak: "Første registrerte vedtak.",
+          areal: {
+            lagtTil: "{{areal}} m² bruksareal ({{type}}) lagt til.",
+            fjernet: "{{areal}} m² bruksareal ({{type}}) fjernet.",
+            godkjent: "{{areal}} m² bruksareal ({{type}}) godkjent for bygging.",
+          },
+          typer: {
+            bolig: "bolig",
+            annet: "annet",
+          },
         },
       },
     },
