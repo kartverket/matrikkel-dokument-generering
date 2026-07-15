@@ -1,8 +1,0 @@
-@import "tailwindcss";
-@import "@kv-designsystem/react/blue";
-
-body {
-  font-family: "Inter", sans-serif;
-  font-optical-sizing: auto;
-  font-feature-settings: "cv05" 1;
-}
