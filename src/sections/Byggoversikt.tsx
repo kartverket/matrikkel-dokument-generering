@@ -1,7 +1,8 @@
 import { Card, Divider, Heading } from "@digdir/designsystemet-react"
 import { Label, Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import ArealFordeling from "../components/ArealFordeling"
+import ArealFordeling from "../components/byggoversikt/ArealFordeling"
+import Historikk from "../components/byggoversikt/Historikk"
 import { Section } from "../components/Section"
 import type { Bygning } from "../lib/schema/byggRapportSchema"
 import { formatDateTime } from "../lib/utils/format"
@@ -108,7 +109,7 @@ export default function Byggoversikt({ bygning, index }: Props) {
 
         <ArealFordeling endring={gjeldende} />
 
-        {/* Sammendrag av historikk */}
+        <Historikk endringer={bygning.endringer} />
       </div>
     </Section>
   )

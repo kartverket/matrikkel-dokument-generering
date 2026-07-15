@@ -1,7 +1,7 @@
 import { Heading, Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import type { Bygningsendring } from "../lib/schema/byggRapportSchema"
-import { formatArea } from "../lib/utils/format"
+import type { Bygningsendring } from "../../lib/schema/byggRapportSchema"
+import { formatArea } from "../../lib/utils/format"
 
 interface Props {
   endring: Bygningsendring

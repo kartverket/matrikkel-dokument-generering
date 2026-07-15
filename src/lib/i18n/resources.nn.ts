@@ -224,6 +224,12 @@ export const nn = {
         koordinater: "Koordinatar",
         koordinatsystem: "Koordinatsystem",
         bygningsnr: "Bygningsnummer",
+        historikk: {
+          title: "Samandrag av bygningshistorikk",
+          detaljer: "Sjå fleire detaljar under Brukseiningar",
+          beroerer: "Berører brukseining {{bruksenheter}}",
+          foersteVedtak: "Første registrerte vedtak.",
+        },
       },
     },
   },
