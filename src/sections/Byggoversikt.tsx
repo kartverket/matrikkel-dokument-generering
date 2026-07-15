@@ -1,10 +1,10 @@
 import { Card, Divider, Heading } from "@digdir/designsystemet-react"
 import { Label, Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import { isFerdigstilt } from "../lib/utils/isFerdigstilt"
 import { Section } from "../components/Section"
 import type { Bygning } from "../lib/schema/byggRapportSchema"
 import { formatDateTime } from "../lib/utils/format"
+import { isFerdigstilt } from "../lib/utils/isFerdigstilt"
 
 interface Props {
   index: number
