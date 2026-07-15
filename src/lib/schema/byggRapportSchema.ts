@@ -267,16 +267,42 @@ const bruksenhetArealfordelingSchema = z
 const bruksenhetEndringDetaljSchema = z
   .object({
     id: z.string().min(1),
+    bygningId: z.string().min(1),
+    lopenr: z.string().min(1),
     tittel: z.string().min(1),
     status: z.string().min(1),
+    bygningsstatus: z.string().min(1),
+    bygningsstatuskode: z.string().min(1),
+    bygningsstatusKortkode: z.string().min(1),
+    bestaaende: z.string().min(1),
     endringskode: z.string().min(1),
     beskrivelse: z.string().min(1),
     bygningstype: z.string().min(1),
+    antallBoenheter: z.string().min(1),
+    bruksareal: z.string().min(1),
+    bruttoareal: z.string().min(1),
     bebygdAreal: z.string().min(1),
     rammetillatelse: z.string().min(1),
     igangsettingstillatelse: z.string().min(1),
+    midlertidigBrukstillatelse: z.string().min(1),
     ferdigattest: z.string().min(1),
+    tattIBruk: z.string().min(1),
+    utgaattRevet: z.string().min(1),
     koordinater: z.string().min(1),
+    etasjer: z.array(
+      z.object({
+        etasjeplan: z.string().min(1),
+        etasje: z.string().min(1),
+        antallBoenheter: z.string().min(1),
+        bruksarealBolig: z.string().min(1),
+        bruksarealAnnet: z.string().min(1),
+        bruksarealTotalt: z.string().min(1),
+        bruttoarealBolig: z.string().min(1),
+        bruttoarealAnnet: z.string().min(1),
+        bruttoarealTotalt: z.string().min(1),
+      }),
+    ),
+    kulturminner: z.array(kulturminneSchema),
   })
   .meta({ id: "BruksenhetEndringDetalj" })
 
