@@ -1,20 +1,11 @@
-import {
-  Card,
-  Divider,
-  Heading,
-  Paragraph,
-  Table,
-  Tag,
-} from "@kv-designsystem/react"
+import { Card, Divider, Heading, Paragraph, Tag } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { BruksenhetDetalj } from "../../lib/schema/byggRapportSchema"
 import { Detail } from "./Detalje"
 
-export function Endringskort({
-  endring,
-}: {
-  endring: BruksenhetDetalj["endringer"][number]
-}) {
+type Endring = BruksenhetDetalj["endringer"][number]
+
+export function Endringskort({ endring }: { endring: Endring }) {
   const { t } = useTranslation()
   const translationKey = "rapport.BYG0011.bruksenheter"
 
@@ -149,54 +140,51 @@ export function Endringskort({
             {t(`${translationKey}.ingenEtasjer`)}
           </Paragraph>
         ) : (
-          <Table border className="text-sm">
-            <Table.Head>
-              <Table.Row>
-                <Table.HeaderCell>
-                  {t("rapport.BYG0011.etasjer.etasjeplan")}
-                </Table.HeaderCell>
-                <Table.HeaderCell>
-                  {t("rapport.BYG0011.etasjer.etasje")}
-                </Table.HeaderCell>
-                <Table.HeaderCell>
-                  {t("rapport.BYG0011.etasjer.antallBoenheter")}
-                </Table.HeaderCell>
-                <Table.HeaderCell>
-                  {t("rapport.BYG0011.etasjer.bruksarealBolig")}
-                </Table.HeaderCell>
-                <Table.HeaderCell>
-                  {t("rapport.BYG0011.etasjer.bruksarealAnnet")}
-                </Table.HeaderCell>
-                <Table.HeaderCell>
-                  {t("rapport.BYG0011.etasjer.bruksarealTotalt")}
-                </Table.HeaderCell>
-                <Table.HeaderCell>
-                  {t("rapport.BYG0011.etasjer.bruttoarealBolig")}
-                </Table.HeaderCell>
-                <Table.HeaderCell>
-                  {t("rapport.BYG0011.etasjer.bruttoarealAnnet")}
-                </Table.HeaderCell>
-                <Table.HeaderCell>
-                  {t("rapport.BYG0011.etasjer.bruttoarealTotalt")}
-                </Table.HeaderCell>
-              </Table.Row>
-            </Table.Head>
-            <Table.Body>
-              {endring.etasjer.map((etasje) => (
-                <Table.Row key={`${etasje.etasjeplan}-${etasje.etasje}`}>
-                  <Table.Cell>{etasje.etasjeplan}</Table.Cell>
-                  <Table.Cell>{etasje.etasje}</Table.Cell>
-                  <Table.Cell>{etasje.antallBoenheter}</Table.Cell>
-                  <Table.Cell>{etasje.bruksarealBolig}</Table.Cell>
-                  <Table.Cell>{etasje.bruksarealAnnet}</Table.Cell>
-                  <Table.Cell>{etasje.bruksarealTotalt}</Table.Cell>
-                  <Table.Cell>{etasje.bruttoarealBolig}</Table.Cell>
-                  <Table.Cell>{etasje.bruttoarealAnnet}</Table.Cell>
-                  <Table.Cell>{etasje.bruttoarealTotalt}</Table.Cell>
-                </Table.Row>
-              ))}
-            </Table.Body>
-          </Table>
+          <div className="divide-y divide-kv-border">
+            {endring.etasjer.map((etasje) => (
+              <dl
+                key={`${etasje.etasjeplan}-${etasje.etasje}`}
+                className="grid break-inside-avoid grid-cols-3 gap-x-7 gap-y-4 py-4 first:pt-0 last:pb-0"
+              >
+                <Detail
+                  label={t("rapport.BYG0011.etasjer.etasjeplan")}
+                  value={etasje.etasjeplan}
+                />
+                <Detail
+                  label={t("rapport.BYG0011.etasjer.etasje")}
+                  value={etasje.etasje}
+                />
+                <Detail
+                  label={t("rapport.BYG0011.etasjer.antallBoenheter")}
+                  value={etasje.antallBoenheter}
+                />
+                <Detail
+                  label={t("rapport.BYG0011.etasjer.bruksarealBolig")}
+                  value={etasje.bruksarealBolig}
+                />
+                <Detail
+                  label={t("rapport.BYG0011.etasjer.bruksarealAnnet")}
+                  value={etasje.bruksarealAnnet}
+                />
+                <Detail
+                  label={t("rapport.BYG0011.etasjer.bruksarealTotalt")}
+                  value={etasje.bruksarealTotalt}
+                />
+                <Detail
+                  label={t("rapport.BYG0011.etasjer.bruttoarealBolig")}
+                  value={etasje.bruttoarealBolig}
+                />
+                <Detail
+                  label={t("rapport.BYG0011.etasjer.bruttoarealAnnet")}
+                  value={etasje.bruttoarealAnnet}
+                />
+                <Detail
+                  label={t("rapport.BYG0011.etasjer.bruttoarealTotalt")}
+                  value={etasje.bruttoarealTotalt}
+                />
+              </dl>
+            ))}
+          </div>
         )}
 
         <Divider className="my-5" />
@@ -208,34 +196,32 @@ export function Endringskort({
             {t(`${translationKey}.ingenKulturminner`)}
           </Paragraph>
         ) : (
-          <Table border className="text-sm">
-            <Table.Head>
-              <Table.Row>
-                <Table.HeaderCell>
-                  {t(`${translationKey}.kulturminneId`)}
-                </Table.HeaderCell>
-                <Table.HeaderCell>
-                  {t(`${translationKey}.kulturminneNavn`)}
-                </Table.HeaderCell>
-                <Table.HeaderCell>
-                  {t(`${translationKey}.kulturminneStatus`)}
-                </Table.HeaderCell>
-                <Table.HeaderCell>
-                  {t(`${translationKey}.kulturminneKategori`)}
-                </Table.HeaderCell>
-              </Table.Row>
-            </Table.Head>
-            <Table.Body>
-              {endring.kulturminner.map((kulturminne) => (
-                <Table.Row key={kulturminne.id}>
-                  <Table.Cell>{kulturminne.id}</Table.Cell>
-                  <Table.Cell>{kulturminne.navn}</Table.Cell>
-                  <Table.Cell>{kulturminne.status}</Table.Cell>
-                  <Table.Cell>{kulturminne.kategori}</Table.Cell>
-                </Table.Row>
-              ))}
-            </Table.Body>
-          </Table>
+          <div className="divide-y divide-kv-border">
+            {endring.kulturminner.map((kulturminne) => (
+              <dl
+                key={kulturminne.id}
+                className="grid break-inside-avoid grid-cols-3 gap-x-7 gap-y-4 py-4 first:pt-0 last:pb-0"
+              >
+                <Detail
+                  label={t(`${translationKey}.kulturminneId`)}
+                  value={kulturminne.id}
+                />
+                <Detail
+                  label={t(`${translationKey}.kulturminneNavn`)}
+                  value={kulturminne.navn}
+                />
+                <Detail
+                  label={t(`${translationKey}.kulturminneStatus`)}
+                  value={kulturminne.status}
+                />
+                <Detail
+                  label={t(`${translationKey}.kulturminneKategori`)}
+                  value={kulturminne.kategori}
+                  className="col-span-3"
+                />
+              </dl>
+            ))}
+          </div>
         )}
       </Card.Block>
     </Card>
