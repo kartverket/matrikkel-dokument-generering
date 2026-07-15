@@ -1,4 +1,4 @@
-import { Heading, Paragraph, Table } from "@kv-designsystem/react"
+import { Heading, Table } from "@kv-designsystem/react"
 import { Fragment } from "react"
 import { useTranslation } from "react-i18next"
 import type { BruksenhetDetalj } from "../lib/schema/byggRapportSchema"
@@ -17,46 +17,41 @@ export default function Arealfordeling({ arealfordeling }: Props) {
       <Heading level={4} data-size="xs" className="mb-4">
         {t(`${af}.title`)}
       </Heading>
-      <div className="flex flex-col gap-8">
-        <dl className="grid grid-cols-[max-content_1fr] items-baseline gap-x-12 gap-y-3">
-          <dt>
-            <Paragraph data-size="lg">{t(`${af}.bebygdAreal`)}</Paragraph>
-          </dt>
-          <dd>
-            <Paragraph data-size="lg" className="font-semibold">
+      <div className="flex flex-col gap-6">
+        <dl className="grid grid-cols-3 gap-x-8 gap-y-5">
+          <div>
+            <dt className="text-kv-subtle text-sm">{t(`${af}.bebygdAreal`)}</dt>
+            <dd className="mt-1 font-medium tabular-nums">
               {formatArea(arealfordeling.bebygdAreal)}
-            </Paragraph>
-          </dd>
-
-          <dt>
-            <Paragraph data-size="lg">{t(`${af}.bruksareal`)}</Paragraph>
-          </dt>
-          <dd>
-            <Paragraph data-size="lg" className="font-semibold">
+            </dd>
+          </div>
+          <div>
+            <dt className="text-kv-subtle text-sm">{t(`${af}.bruksareal`)}</dt>
+            <dd className="mt-1 font-medium tabular-nums">
               {formatArea(arealfordeling.bruksareal.totalt)}
-            </Paragraph>
-          </dd>
-
-          <dt>
-            <Paragraph data-size="lg">{t(`${af}.koordinater`)}</Paragraph>
-          </dt>
-          <dd>
-            <Paragraph data-size="lg" className="font-semibold">
+            </dd>
+          </div>
+          <div>
+            <dt className="text-kv-subtle text-sm">{t(`${af}.koordinater`)}</dt>
+            <dd className="mt-1 font-medium tabular-nums">
               {arealfordeling.koordinat.nord} / {arealfordeling.koordinat.ost}
-            </Paragraph>
-          </dd>
+            </dd>
+          </div>
         </dl>
 
-        <Table className="text-kv-subtle text-xl">
+        <Table border className="w-full table-fixed">
           <Table.Head>
             <Table.Row>
-              <Table.HeaderCell className="border-b-0">
+              <Table.HeaderCell className="w-2/5">
                 {t(`${af}.etasje`)}
               </Table.HeaderCell>
-              <Table.HeaderCell className="border-b-0">
+              <Table.HeaderCell className="w-1/4">
+                {t(`${af}.arealtype`)}
+              </Table.HeaderCell>
+              <Table.HeaderCell className="w-[17.5%] text-right">
                 {t(`${af}.bolig`)}
               </Table.HeaderCell>
-              <Table.HeaderCell className="border-b-0">
+              <Table.HeaderCell className="w-[17.5%] text-right">
                 {t(`${af}.annet`)}
               </Table.HeaderCell>
             </Table.Row>
@@ -66,45 +61,41 @@ export default function Arealfordeling({ arealfordeling }: Props) {
               <Fragment key={`${etasje.etasjeplan}-${etasje.etasje}`}>
                 <Table.Row>
                   <Table.HeaderCell
-                    colSpan={3}
-                    scope="colgroup"
-                    className="border-b-0 pt-8"
+                    rowSpan={2}
+                    scope="rowgroup"
+                    className="bg-kv-gray align-top border-r border-b-0 text-kv-default"
                   >
-                    <span className="flex items-baseline gap-4">
-                      <Heading
-                        level={3}
-                        data-size="sm"
-                        asChild
-                        className="font-medium text-kv-default"
-                      >
-                        <span>{etasje.etasjeplan}</span>
-                      </Heading>
-                      <span className="font-normal text-kv-subtle">
+                    <span className="flex flex-col gap-1">
+                      <span className="font-semibold">{etasje.etasjeplan}</span>
+                      <span className="font-normal text-kv-subtle text-sm">
                         {t(`${af}.nr`, { nr: etasje.etasje })}
-                      </span>
-                      <span className="font-normal text-kv-subtle">
+                        <span aria-hidden="true"> · </span>
                         {t(`${af}.boenheter`, {
                           antall: etasje.antallBoenheter,
                         })}
                       </span>
                     </span>
                   </Table.HeaderCell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell className="text-kv-default">
+                  <Table.HeaderCell scope="row" className="text-kv-default">
                     {t(`${af}.bruksarealRad`)}
-                  </Table.Cell>
-                  <Table.Cell className="">
+                  </Table.HeaderCell>
+                  <Table.Cell className="text-right tabular-nums">
                     {etasje.bruksareal.bolig}
                   </Table.Cell>
-                  <Table.Cell>{etasje.bruksareal.annet}</Table.Cell>
+                  <Table.Cell className="text-right tabular-nums">
+                    {etasje.bruksareal.annet}
+                  </Table.Cell>
                 </Table.Row>
                 <Table.Row>
-                  <Table.Cell className="text-kv-default">
+                  <Table.HeaderCell scope="row" className="text-kv-default">
                     {t(`${af}.bruttoarealRad`)}
+                  </Table.HeaderCell>
+                  <Table.Cell className="text-right tabular-nums">
+                    {etasje.bruttoareal.bolig}
                   </Table.Cell>
-                  <Table.Cell>{etasje.bruttoareal.bolig}</Table.Cell>
-                  <Table.Cell>{etasje.bruttoareal.annet}</Table.Cell>
+                  <Table.Cell className="text-right tabular-nums">
+                    {etasje.bruttoareal.annet}
+                  </Table.Cell>
                 </Table.Row>
               </Fragment>
             ))}
