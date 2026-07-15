@@ -242,7 +242,8 @@ export const nn = {
           areal: {
             lagtTil: "{{areal}} m² bruksareal ({{type}}) lagt til.",
             fjernet: "{{areal}} m² bruksareal ({{type}}) fjerna.",
-            godkjent: "{{areal}} m² bruksareal ({{type}}) godkjent for bygging.",
+            godkjent:
+              "{{areal}} m² bruksareal ({{type}}) godkjent for bygging.",
           },
           typer: {
             bolig: "bustad",

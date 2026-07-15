@@ -38,4 +38,3 @@ export function describeChange(
 
   return parts.length > 0 ? parts.join(" ") : null
 }
-
