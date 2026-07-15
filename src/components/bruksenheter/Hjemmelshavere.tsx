@@ -16,7 +16,7 @@ export function Hjemmelshavere({ hjemmelshavere }: Props) {
       <Heading level={4} data-size="xs" className="mb-4">
         {t(`${translationKey}.title`)}
       </Heading>
-
+      bu
       {hjemmelshavere.length === 0 ? (
         <Paragraph className="text-kv-subtle text-sm">
           {t("rapport.BYG0011.bruksenheter.tom")}

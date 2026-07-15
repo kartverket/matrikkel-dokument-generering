@@ -6,7 +6,7 @@ interface Props {
   className?: string
 }
 
-export function Detail({ label, value, className = "" }: Props) {
+export function EndringsDetalje({ label, value, className = "" }: Props) {
   return (
     <div className={className}>
       <dt className="text-kv-subtle text-sm">{label}</dt>

@@ -1,7 +1,7 @@
 import { Card, Divider, Heading, Paragraph, Tag } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { BruksenhetDetalj } from "../../lib/schema/byggRapportSchema"
-import { Detail } from "./Detalje"
+import { EndringsDetalje } from "./EndringsDetalje"
 
 type Endring = BruksenhetDetalj["endringer"][number]
 
@@ -29,43 +29,43 @@ export function Endringskort({ endring }: { endring: Endring }) {
           {t(`${translationKey}.grunnopplysninger`)}
         </Paragraph>
         <dl className="grid grid-cols-3 gap-x-7 gap-y-4">
-          <Detail
+          <EndringsDetalje
             label={t(`${translationKey}.endringsId`)}
             value={endring.id}
           />
-          <Detail
+          <EndringsDetalje
             label={t(`${translationKey}.bygningsId`)}
             value={endring.bygningId}
           />
-          <Detail
+          <EndringsDetalje
             label={t(`${translationKey}.lopenr`)}
             value={endring.lopenr}
           />
-          <Detail
+          <EndringsDetalje
             label={t(`${translationKey}.endringskode`)}
             value={endring.endringskode}
           />
-          <Detail
+          <EndringsDetalje
             label={t(`${translationKey}.bygningstype`)}
             value={endring.bygningstype}
           />
-          <Detail
+          <EndringsDetalje
             label={t(`${translationKey}.bestaaende`)}
             value={endring.bestaaende}
           />
-          <Detail
+          <EndringsDetalje
             label={t(`${translationKey}.bygningsstatus`)}
             value={endring.bygningsstatus}
           />
-          <Detail
+          <EndringsDetalje
             label={t(`${translationKey}.bygningsstatuskode`)}
             value={endring.bygningsstatuskode}
           />
-          <Detail
+          <EndringsDetalje
             label={t(`${translationKey}.bygningsstatusKortkode`)}
             value={endring.bygningsstatusKortkode}
           />
-          <Detail
+          <EndringsDetalje
             label={t(`${translationKey}.endringsbeskrivelse`)}
             value={endring.beskrivelse}
             className="col-span-3"
@@ -77,23 +77,23 @@ export function Endringskort({ endring }: { endring: Endring }) {
           {t(`${translationKey}.arealOgPlassering`)}
         </Paragraph>
         <dl className="grid grid-cols-3 gap-x-7 gap-y-4">
-          <Detail
+          <EndringsDetalje
             label={t(`${translationKey}.antallBoenheter`)}
             value={endring.antallBoenheter}
           />
-          <Detail
+          <EndringsDetalje
             label={t(`${translationKey}.bruksarealEndring`)}
             value={endring.bruksareal}
           />
-          <Detail
+          <EndringsDetalje
             label={t(`${translationKey}.bruttoarealEndring`)}
             value={endring.bruttoareal}
           />
-          <Detail
+          <EndringsDetalje
             label={t(`${translationKey}.bebygdArealEndring`)}
             value={endring.bebygdAreal}
           />
-          <Detail
+          <EndringsDetalje
             label={t(`${translationKey}.koordinater`)}
             value={endring.koordinater}
             className="col-span-2"
@@ -105,27 +105,27 @@ export function Endringskort({ endring }: { endring: Endring }) {
           {t(`${translationKey}.vedtakOgDatoer`)}
         </Paragraph>
         <dl className="grid grid-cols-3 gap-x-7 gap-y-4">
-          <Detail
+          <EndringsDetalje
             label={t(`${translationKey}.rammetillatelse`)}
             value={endring.rammetillatelse}
           />
-          <Detail
+          <EndringsDetalje
             label={t(`${translationKey}.igangsettingstillatelse`)}
             value={endring.igangsettingstillatelse}
           />
-          <Detail
+          <EndringsDetalje
             label={t(`${translationKey}.midlertidigBrukstillatelse`)}
             value={endring.midlertidigBrukstillatelse}
           />
-          <Detail
+          <EndringsDetalje
             label={t(`${translationKey}.ferdigattest`)}
             value={endring.ferdigattest}
           />
-          <Detail
+          <EndringsDetalje
             label={t(`${translationKey}.tattIBruk`)}
             value={endring.tattIBruk}
           />
-          <Detail
+          <EndringsDetalje
             label={t(`${translationKey}.utgaattRevet`)}
             value={endring.utgaattRevet}
           />
@@ -146,39 +146,39 @@ export function Endringskort({ endring }: { endring: Endring }) {
                 key={`${etasje.etasjeplan}-${etasje.etasje}`}
                 className="grid break-inside-avoid grid-cols-3 gap-x-7 gap-y-4 py-4 first:pt-0 last:pb-0"
               >
-                <Detail
+                <EndringsDetalje
                   label={t("rapport.BYG0011.etasjer.etasjeplan")}
                   value={etasje.etasjeplan}
                 />
-                <Detail
+                <EndringsDetalje
                   label={t("rapport.BYG0011.etasjer.etasje")}
                   value={etasje.etasje}
                 />
-                <Detail
+                <EndringsDetalje
                   label={t("rapport.BYG0011.etasjer.antallBoenheter")}
                   value={etasje.antallBoenheter}
                 />
-                <Detail
+                <EndringsDetalje
                   label={t("rapport.BYG0011.etasjer.bruksarealBolig")}
                   value={etasje.bruksarealBolig}
                 />
-                <Detail
+                <EndringsDetalje
                   label={t("rapport.BYG0011.etasjer.bruksarealAnnet")}
                   value={etasje.bruksarealAnnet}
                 />
-                <Detail
+                <EndringsDetalje
                   label={t("rapport.BYG0011.etasjer.bruksarealTotalt")}
                   value={etasje.bruksarealTotalt}
                 />
-                <Detail
+                <EndringsDetalje
                   label={t("rapport.BYG0011.etasjer.bruttoarealBolig")}
                   value={etasje.bruttoarealBolig}
                 />
-                <Detail
+                <EndringsDetalje
                   label={t("rapport.BYG0011.etasjer.bruttoarealAnnet")}
                   value={etasje.bruttoarealAnnet}
                 />
-                <Detail
+                <EndringsDetalje
                   label={t("rapport.BYG0011.etasjer.bruttoarealTotalt")}
                   value={etasje.bruttoarealTotalt}
                 />
@@ -202,19 +202,19 @@ export function Endringskort({ endring }: { endring: Endring }) {
                 key={kulturminne.id}
                 className="grid break-inside-avoid grid-cols-3 gap-x-7 gap-y-4 py-4 first:pt-0 last:pb-0"
               >
-                <Detail
+                <EndringsDetalje
                   label={t(`${translationKey}.kulturminneId`)}
                   value={kulturminne.id}
                 />
-                <Detail
+                <EndringsDetalje
                   label={t(`${translationKey}.kulturminneNavn`)}
                   value={kulturminne.navn}
                 />
-                <Detail
+                <EndringsDetalje
                   label={t(`${translationKey}.kulturminneStatus`)}
                   value={kulturminne.status}
                 />
-                <Detail
+                <EndringsDetalje
                   label={t(`${translationKey}.kulturminneKategori`)}
                   value={kulturminne.kategori}
                   className="col-span-3"
