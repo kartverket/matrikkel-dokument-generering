@@ -1,6 +1,9 @@
 import { Card, Divider, Heading, Paragraph, Tag } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
+import ArealFordeling from "../components/ArealFordeling.tsx"
 import { Endringskort } from "../components/bruksenheter/Endringskort.tsx"
+import { Hjemmelshavere } from "../components/bruksenheter/Hjemmelshavere.tsx"
+import { Kontaktpersoner } from "../components/bruksenheter/Kontaktpersoner.tsx"
 import { Section } from "../components/Section.tsx"
 import type { BruksenhetDetalj } from "../lib/schema/byggRapportSchema.ts"
 
@@ -100,35 +103,14 @@ export default function Bruksenheter({ index, bruksenheter }: Props) {
                 </div>
               </dl>
 
-              {bruksenhet.seksjon && (
-                <>
-                  <Divider className="my-6" />
-                  <Paragraph className="mb-3 font-bold text-kv-subtle text-xs tracking-wide">
-                    {t(`${translationKey}.hjemmelshaverEier`)}
-                  </Paragraph>
-                  <div className="flex flex-col gap-3">
-                    {bruksenhet.hjemmelshavere.length > 0 ? (
-                      bruksenhet.hjemmelshavere.map((eier) => (
-                        <div
-                          key={eier.id}
-                          className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1"
-                        >
-                          <Paragraph className="font-semibold">
-                            {eier.navn}
-                          </Paragraph>
-                          <Paragraph className="text-kv-subtle text-sm">
-                            {eier.meta}
-                          </Paragraph>
-                        </div>
-                      ))
-                    ) : (
-                      <Paragraph className="font-semibold">
-                        {t(`${translationKey}.tom`)}
-                      </Paragraph>
-                    )}
-                  </div>
-                </>
-              )}
+              <Divider className="my-6" />
+              <ArealFordeling arealfordeling={bruksenhet.arealfordeling} />
+
+              <Divider className="my-6" />
+              <Hjemmelshavere hjemmelshavere={bruksenhet.hjemmelshavere} />
+
+              <Divider className="my-6" />
+              <Kontaktpersoner kontaktpersoner={bruksenhet.kontaktpersoner} />
 
               <Divider className="my-6" />
               {bruksenhet.endringer.length === 0 ? (

@@ -251,19 +251,18 @@ const bygningsendringSchema = z
     etasjeplan: z.array(bygningsetasjeSchema),
     bruksenheter: z.array(bruksenhetSchema),
     tiltakshavere: z.array(tiltakshaverSchema).optional().default([]),
-    kontaktpersoner: z.array(kontaktpersonSchema).optional().default([]),
-    hjemmelshavere: z.array(hjemmelshaverSchema),
     kulturminner: z.array(kulturminneSchema).optional().default([]),
   })
   .meta({ id: "Bygningsendring" })
 
-const bruksenhetHjemmelshaverDetaljSchema = z
+const bruksenhetArealfordelingSchema = z
   .object({
-    id: z.string().min(1),
-    navn: z.string().min(1),
-    meta: z.string().min(1),
+    bebygdAreal: z.number(),
+    bruksareal: arealFordelingSchema,
+    koordinat: koordinatSchema,
+    etasjeplan: z.array(bygningsetasjeSchema),
   })
-  .meta({ id: "BruksenhetHjemmelshaverDetalj" })
+  .meta({ id: "BruksenhetArealfordeling" })
 
 const bruksenhetEndringDetaljSchema = z
   .object({
@@ -295,7 +294,9 @@ const bruksenhetDetaljSchema = z
     kjokken: z.string().min(1),
     antallBad: z.string().min(1),
     antallWc: z.string().min(1),
-    hjemmelshavere: z.array(bruksenhetHjemmelshaverDetaljSchema),
+    arealfordeling: bruksenhetArealfordelingSchema,
+    hjemmelshavere: z.array(hjemmelshaverSchema),
+    kontaktpersoner: z.array(kontaktpersonSchema),
     endringer: z.array(bruksenhetEndringDetaljSchema),
   })
   .meta({ id: "BruksenhetDetalj" })

@@ -85,7 +85,7 @@ export const nn = {
       bruksenheter: {
         title: "Brukseiningar",
         description: "Detaljar og endringar per brukseining",
-        tom: "tom",
+        tom: "TOM",
         seksjon: "Seksjon",
         bruksenhetstype: "Brukseiningstype",
         etasje: "Etasje",

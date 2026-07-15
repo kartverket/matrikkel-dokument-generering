@@ -1,21 +1,22 @@
 import { Heading, Paragraph, Table } from "@kv-designsystem/react"
 import { Fragment } from "react"
 import { useTranslation } from "react-i18next"
-import type { Bygningsendring } from "../lib/schema/byggRapportSchema"
+import type { BruksenhetDetalj } from "../lib/schema/byggRapportSchema"
 import { formatArea } from "../lib/utils/format"
-import { Section } from "./Section.tsx"
 
 interface Props {
-  index: number
-  endring: Bygningsendring
+  arealfordeling: BruksenhetDetalj["arealfordeling"]
 }
 
-export default function Arealfordeling({ index, endring }: Props) {
+export default function Arealfordeling({ arealfordeling }: Props) {
   const { t } = useTranslation()
   const af = "rapport.BYG0011.arealfordeling"
 
   return (
-    <Section index={index} title={t(`${af}.title`)}>
+    <div>
+      <Heading level={4} data-size="xs" className="mb-4">
+        {t(`${af}.title`)}
+      </Heading>
       <div className="flex flex-col gap-8">
         <dl className="grid grid-cols-[max-content_1fr] items-baseline gap-x-12 gap-y-3">
           <dt>
@@ -23,7 +24,7 @@ export default function Arealfordeling({ index, endring }: Props) {
           </dt>
           <dd>
             <Paragraph data-size="lg" className="font-semibold">
-              {formatArea(endring.bebygdAreal)}
+              {formatArea(arealfordeling.bebygdAreal)}
             </Paragraph>
           </dd>
 
@@ -32,7 +33,7 @@ export default function Arealfordeling({ index, endring }: Props) {
           </dt>
           <dd>
             <Paragraph data-size="lg" className="font-semibold">
-              {formatArea(endring.bruksareal.totalt)}
+              {formatArea(arealfordeling.bruksareal.totalt)}
             </Paragraph>
           </dd>
 
@@ -41,7 +42,7 @@ export default function Arealfordeling({ index, endring }: Props) {
           </dt>
           <dd>
             <Paragraph data-size="lg" className="font-semibold">
-              {endring.koordinat.nord} / {endring.koordinat.ost}
+              {arealfordeling.koordinat.nord} / {arealfordeling.koordinat.ost}
             </Paragraph>
           </dd>
         </dl>
@@ -61,7 +62,7 @@ export default function Arealfordeling({ index, endring }: Props) {
             </Table.Row>
           </Table.Head>
           <Table.Body>
-            {endring.etasjeplan.map((etasje) => (
+            {arealfordeling.etasjeplan.map((etasje) => (
               <Fragment key={`${etasje.etasjeplan}-${etasje.etasje}`}>
                 <Table.Row>
                   <Table.HeaderCell
@@ -110,6 +111,6 @@ export default function Arealfordeling({ index, endring }: Props) {
           </Table.Body>
         </Table>
       </div>
-    </Section>
+    </div>
   )
 }
