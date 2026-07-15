@@ -3,9 +3,11 @@ import { useTranslation } from "react-i18next"
 import type { BruksenhetDetalj } from "../../lib/schema/byggRapportSchema"
 import { EndringsDetalje } from "./EndringsDetalje"
 
-type Endring = BruksenhetDetalj["endringer"][number]
+interface Props {
+  endring: BruksenhetDetalj["endringer"][number]
+}
 
-export function Endringskort({ endring }: { endring: Endring }) {
+export function Endringskort({ endring }: Props) {
   const { t } = useTranslation()
   const translationKey = "rapport.BYG0011.bruksenheter"
 
