@@ -1,9 +1,10 @@
 import { Card, Divider, Heading } from "@digdir/designsystemet-react"
 import { Label, Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
+import { isFerdigstilt } from "../lib/utils/isFerdigstilt"
+import { Section } from "../components/Section"
 import type { Bygning } from "../lib/schema/byggRapportSchema"
 import { formatDateTime } from "../lib/utils/format"
-import { Section } from "../components/Section"
 
 interface Props {
   index: number
@@ -13,7 +14,11 @@ interface Props {
 export default function Byggoversikt({ bygning, index }: Props) {
   const { t } = useTranslation()
 
-  const { gjeldende } = bygning
+  const translationKey = "rapport.BYG0011.byggoversikt"
+
+  const gjeldende = bygning.endringer
+    .filter(isFerdigstilt)
+    .toSorted((a, b) => b.lopenr - a.lopenr)[0]
 
   const etasjer = gjeldende.etasjeplan
     .map((e) => `${e.etasjeplan} (${e.etasje})`)
@@ -31,10 +36,8 @@ export default function Byggoversikt({ bygning, index }: Props) {
     bygningsnr: bygning.bygningsnr,
   }
 
-  const bo = "rapport.BYG0011.byggoversikt"
-
   return (
-    <Section index={index} title={t(`${bo}.title`)}>
+    <Section index={index} title={t(`${translationKey}.title`)}>
       <div className="mt-8 space-y-8 rounded-xl border border-kv-blue-subtle p-8">
         <div className="flex items-center justify-between">
           <div>
@@ -69,21 +72,21 @@ export default function Byggoversikt({ bygning, index }: Props) {
             <Paragraph className="text-3xl">
               {gjeldende.bruksareal.totalt} m²
             </Paragraph>
-            <Label>{t(`${bo}.bra`)}</Label>
+            <Label>{t(`${translationKey}.bra`)}</Label>
             <Paragraph data-size="sm">Bruksareal, per nå</Paragraph>
           </Card>
           <Card>
             <Paragraph className="text-3xl">
               {gjeldende.bruttoareal.totalt} m²
             </Paragraph>
-            <Label>{t(`${bo}.bta`)}</Label>
+            <Label>{t(`${translationKey}.bta`)}</Label>
             <Paragraph data-size="sm">Bruttoareal</Paragraph>
           </Card>
           <Card>
             <Paragraph className="text-3xl">
               {gjeldende.bebygdAreal} m²
             </Paragraph>
-            <Label>{t(`${bo}.bya`)}</Label>
+            <Label>{t(`${translationKey}.bya`)}</Label>
             <Paragraph data-size="sm">Bebygd areal</Paragraph>
           </Card>
         </ul>
@@ -95,7 +98,7 @@ export default function Byggoversikt({ bygning, index }: Props) {
             >
           ).map(([key, value]) => (
             <li key={key}>
-              <Label>{t(`${bo}.${key}`)}</Label>
+              <Label>{t(`${translationKey}.${key}`)}</Label>
               <Paragraph data-size="sm">{value}</Paragraph>
             </li>
           ))}
