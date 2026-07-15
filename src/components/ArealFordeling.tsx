@@ -63,7 +63,7 @@ export default function Arealfordeling({ arealfordeling }: Props) {
                   <Table.HeaderCell
                     rowSpan={2}
                     scope="rowgroup"
-                    className="bg-kv-gray align-top border-r border-b-0 text-kv-default"
+                    className="border-r border-b-0 bg-kv-gray align-top text-kv-default"
                   >
                     <span className="flex flex-col gap-1">
                       <span className="font-semibold">{etasje.etasjeplan}</span>
