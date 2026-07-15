@@ -1,6 +1,7 @@
 import { Card, Divider, Heading } from "@digdir/designsystemet-react"
 import { Label, Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
+import ArealFordeling from "../components/ArealFordeling"
 import { Section } from "../components/Section"
 import type { Bygning } from "../lib/schema/byggRapportSchema"
 import { formatDateTime } from "../lib/utils/format"
@@ -91,6 +92,7 @@ export default function Byggoversikt({ bygning, index }: Props) {
           </Card>
         </ul>
 
+        {/* Oversiktsfelt */}
         <ul className="grid grid-cols-2 gap-4">
           {(
             Object.entries(oversikt) as Array<
@@ -103,6 +105,10 @@ export default function Byggoversikt({ bygning, index }: Props) {
             </li>
           ))}
         </ul>
+
+        <ArealFordeling endring={gjeldende} />
+
+        {/* Sammendrag av historikk */}
       </div>
     </Section>
   )

@@ -1,115 +1,64 @@
-import { Heading, Paragraph, Table } from "@kv-designsystem/react"
-import { Fragment } from "react"
+import { Heading, Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { Bygningsendring } from "../lib/schema/byggRapportSchema"
 import { formatArea } from "../lib/utils/format"
-import { Section } from "./Section.tsx"
 
 interface Props {
-  index: number
   endring: Bygningsendring
 }
 
-export default function Arealfordeling({ index, endring }: Props) {
+export default function ArealFordeling({ endring }: Props) {
   const { t } = useTranslation()
   const af = "rapport.BYG0011.arealfordeling"
 
+  const sum = endring.etasjeplan.reduce(
+    (acc, e) => ({
+      antallBoenheter: acc.antallBoenheter + e.antallBoenheter,
+      bolig: acc.bolig + e.bruksareal.bolig,
+      annet: acc.annet + e.bruksareal.annet,
+      bra: acc.bra + e.bruksareal.totalt,
+      bta: acc.bta + e.bruttoareal.totalt,
+    }),
+    { antallBoenheter: 0, bolig: 0, annet: 0, bra: 0, bta: 0 },
+  )
+
   return (
-    <Section index={index} title={t(`${af}.title`)}>
-      <div className="flex flex-col gap-8">
-        <dl className="grid grid-cols-[max-content_1fr] items-baseline gap-x-12 gap-y-3">
-          <dt>
-            <Paragraph data-size="lg">{t(`${af}.bebygdAreal`)}</Paragraph>
-          </dt>
-          <dd>
-            <Paragraph data-size="lg" className="font-semibold">
-              {formatArea(endring.bebygdAreal)}
-            </Paragraph>
-          </dd>
-
-          <dt>
-            <Paragraph data-size="lg">{t(`${af}.bruksareal`)}</Paragraph>
-          </dt>
-          <dd>
-            <Paragraph data-size="lg" className="font-semibold">
-              {formatArea(endring.bruksareal.totalt)}
-            </Paragraph>
-          </dd>
-
-          <dt>
-            <Paragraph data-size="lg">{t(`${af}.koordinater`)}</Paragraph>
-          </dt>
-          <dd>
-            <Paragraph data-size="lg" className="font-semibold">
-              {endring.koordinat.nord} / {endring.koordinat.ost}
-            </Paragraph>
-          </dd>
-        </dl>
-
-        <Table className="text-kv-subtle text-xl">
-          <Table.Head>
-            <Table.Row>
-              <Table.HeaderCell className="border-b-0">
-                {t(`${af}.etasje`)}
-              </Table.HeaderCell>
-              <Table.HeaderCell className="border-b-0">
-                {t(`${af}.bolig`)}
-              </Table.HeaderCell>
-              <Table.HeaderCell className="border-b-0">
-                {t(`${af}.annet`)}
-              </Table.HeaderCell>
+    <div className="space-y-4">
+      <Heading level={4} data-size="xs">
+        {t(`${af}.title`)}
+      </Heading>
+      <Table>
+        <Table.Head>
+          <Table.Row>
+            <Table.HeaderCell>{t(`${af}.etasje`)}</Table.HeaderCell>
+            <Table.HeaderCell>{t(`${af}.boenheter`)}</Table.HeaderCell>
+            <Table.HeaderCell>{t(`${af}.bolig`)}</Table.HeaderCell>
+            <Table.HeaderCell>{t(`${af}.annet`)}</Table.HeaderCell>
+            <Table.HeaderCell>{t(`${af}.bra`)}</Table.HeaderCell>
+            <Table.HeaderCell>{t(`${af}.bta`)}</Table.HeaderCell>
+          </Table.Row>
+        </Table.Head>
+        <Table.Body>
+          {endring.etasjeplan.map((e) => (
+            <Table.Row key={`${e.etasjeplan}-${e.etasje}`}>
+              <Table.Cell>{e.etasjeplan}</Table.Cell>
+              <Table.Cell>{e.antallBoenheter}</Table.Cell>
+              <Table.Cell>{formatArea(e.bruksareal.bolig)}</Table.Cell>
+              <Table.Cell>{formatArea(e.bruksareal.annet)}</Table.Cell>
+              <Table.Cell>{formatArea(e.bruksareal.totalt)}</Table.Cell>
+              <Table.Cell>{formatArea(e.bruttoareal.totalt)}</Table.Cell>
             </Table.Row>
-          </Table.Head>
-          <Table.Body>
-            {endring.etasjeplan.map((etasje) => (
-              <Fragment key={`${etasje.etasjeplan}-${etasje.etasje}`}>
-                <Table.Row>
-                  <Table.HeaderCell
-                    colSpan={3}
-                    scope="colgroup"
-                    className="border-b-0 pt-8"
-                  >
-                    <span className="flex items-baseline gap-4">
-                      <Heading
-                        level={3}
-                        data-size="sm"
-                        asChild
-                        className="font-medium text-kv-default"
-                      >
-                        <span>{etasje.etasjeplan}</span>
-                      </Heading>
-                      <span className="font-normal text-kv-subtle">
-                        {t(`${af}.nr`, { nr: etasje.etasje })}
-                      </span>
-                      <span className="font-normal text-kv-subtle">
-                        {t(`${af}.boenheter`, {
-                          antall: etasje.antallBoenheter,
-                        })}
-                      </span>
-                    </span>
-                  </Table.HeaderCell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell className="text-kv-default">
-                    {t(`${af}.bruksarealRad`)}
-                  </Table.Cell>
-                  <Table.Cell className="">
-                    {etasje.bruksareal.bolig}
-                  </Table.Cell>
-                  <Table.Cell>{etasje.bruksareal.annet}</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell className="text-kv-default">
-                    {t(`${af}.bruttoarealRad`)}
-                  </Table.Cell>
-                  <Table.Cell>{etasje.bruttoareal.bolig}</Table.Cell>
-                  <Table.Cell>{etasje.bruttoareal.annet}</Table.Cell>
-                </Table.Row>
-              </Fragment>
-            ))}
-          </Table.Body>
-        </Table>
-      </div>
-    </Section>
+          ))}
+          <Table.Row className="font-semibold">
+            <Table.HeaderCell scope="row">{t(`${af}.sum`)}</Table.HeaderCell>
+            <Table.Cell>{sum.antallBoenheter}</Table.Cell>
+            <Table.Cell>{formatArea(sum.bolig)}</Table.Cell>
+            <Table.Cell>{formatArea(sum.annet)}</Table.Cell>
+            <Table.Cell>{formatArea(sum.bra)}</Table.Cell>
+            <Table.Cell>{formatArea(sum.bta)}</Table.Cell>
+          </Table.Row>
+        </Table.Body>
+      </Table>
+    </div>
   )
 }

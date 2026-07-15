@@ -1,7 +1,6 @@
 import { Fragment } from "react"
 import { renderToStaticMarkup } from "react-dom/server"
 import { I18nextProvider } from "react-i18next"
-import ArealFordeling from "./components/ArealFordeling.tsx"
 import { createI18n } from "./lib/i18n/createI18n"
 import type { ByggRapport } from "./lib/schema/byggRapportSchema"
 import Bruksenheter from "./sections/Bruksenheter.tsx"
@@ -29,7 +28,6 @@ export function DocumentComponent({ data }: { data: ByggRapport }) {
 
           {bygning.endringer.map((endring) => (
             <Fragment key={endring.id}>
-              <ArealFordeling index={5} endring={endring} />
               {endring.bruksenheter.length > 0 && (
                 <>
                   <RegistrerteVedtak index={6} datoer={endring.datoer} />
