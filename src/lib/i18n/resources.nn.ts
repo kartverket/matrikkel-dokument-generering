@@ -191,6 +191,7 @@ export const nn = {
         naeringsgruppe: "Næringsgruppe",
         etasjer: "Etasjar",
         koordinater: "Koordinatar",
+        koordinatsystem: "Koordinatsystem",
         bygningsnr: "Bygningsnummer",
       },
     },

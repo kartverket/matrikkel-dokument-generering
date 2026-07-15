@@ -3,7 +3,6 @@ import { Label, Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { Bygning } from "../lib/schema/byggRapportSchema"
 import { formatDateTime } from "../lib/utils/format"
-import { isFerdigstilt } from "../lib/utils/isFerdigstilt"
 
 interface Props {
   bygning: Bygning
@@ -12,11 +11,7 @@ interface Props {
 export default function Byggoversikt({ bygning }: Props) {
   const { t } = useTranslation()
 
-  const gjeldende = [...bygning.endringer]
-    .filter(isFerdigstilt)
-    .sort((a, b) => b.lopenr - a.lopenr)[0]
-
-  if (!gjeldende) return null
+  const { gjeldende } = bygning
 
   const etasjer = gjeldende.etasjeplan
     .map((e) => `${e.etasjeplan} (${e.etasje})`)
@@ -29,6 +24,7 @@ export default function Byggoversikt({ bygning }: Props) {
     antallBoenheter: gjeldende.antallBoenheter,
     naeringsgruppe: bygning.naeringsgruppe,
     koordinater: `${gjeldende.koordinat.nord} N / ${gjeldende.koordinat.ost} Ø`,
+    koordinatsystem: gjeldende.koordinatsystem,
     etasjer,
     bygningsnr: bygning.bygningsnr,
   }

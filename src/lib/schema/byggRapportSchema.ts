@@ -251,6 +251,7 @@ const bygningsendringSchema = z
     bruttoareal: arealFordelingSchema,
     bebygdAreal: z.number(),
     koordinat: koordinatSchema,
+    koordinatsystem: z.string().min(1),
     datoer: bygningsdatoerSchema,
     etasjeplan: z.array(bygningsetasjeSchema),
     bruksenheter: z.array(bruksenhetSchema),
@@ -269,6 +270,7 @@ const bygningerSchema = z
     adresseverdig: z.boolean(),
     naeringsgruppe: z.string().min(1),
     matrikkelenhet: z.string().min(1),
+    gjeldende: bygningsendringSchema,
     endringer: z.array(bygningsendringSchema),
   })
   .meta({ id: "Bygning" })
