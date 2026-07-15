@@ -4,10 +4,9 @@ import { createI18n } from "./lib/i18n/createI18n.ts"
 import type { ByggRapport } from "./lib/schema/byggRapportSchema.ts"
 import "./index.css"
 
-const mockModules = import.meta.glob<{ default: ByggRapport }>(
-  "./mockData/*.ts",
-  { eager: true },
-)
+const mockModules = import.meta.glob<{ default: ByggRapport }>("./mock/*.ts", {
+  eager: true,
+})
 const mockData = Object.values(mockModules)[0]?.default
 
 function App() {
