@@ -1,6 +1,7 @@
 import { Card, Divider, Heading, Paragraph, Tag } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { BruksenhetDetalj } from "../../lib/schema/byggRapportSchema"
+import { getDetaljVerdi } from "../../lib/utils/getDetaljVerdi"
 import { EndringsDetalje } from "./EndringsDetalje"
 
 interface Props {
@@ -11,10 +12,6 @@ export function Endringskort({ endring }: Props) {
   const { t } = useTranslation()
   const translationKey = "rapport.BYG0011.bruksenheter"
   const tom = t(`${translationKey}.tom`)
-  const visVerdi = (value: string | null | undefined) => ({
-    value: value ?? tom,
-    erTom: value == null,
-  })
 
   return (
     <Card
@@ -50,7 +47,7 @@ export function Endringskort({ endring }: Props) {
           />
           <EndringsDetalje
             label={t(`${translationKey}.endringskode`)}
-            {...visVerdi(endring.endringskode)}
+            {...getDetaljVerdi(endring.endringskode, tom)}
           />
           <EndringsDetalje
             label={t(`${translationKey}.bygningstype`)}
@@ -74,7 +71,7 @@ export function Endringskort({ endring }: Props) {
           />
           <EndringsDetalje
             label={t(`${translationKey}.endringsbeskrivelse`)}
-            {...visVerdi(endring.beskrivelse)}
+            {...getDetaljVerdi(endring.beskrivelse, tom)}
             className="col-span-3"
           />
         </dl>
@@ -114,27 +111,27 @@ export function Endringskort({ endring }: Props) {
         <dl className="grid grid-cols-3 gap-x-7 gap-y-4">
           <EndringsDetalje
             label={t(`${translationKey}.rammetillatelse`)}
-            {...visVerdi(endring.rammetillatelse)}
+            {...getDetaljVerdi(endring.rammetillatelse, tom)}
           />
           <EndringsDetalje
             label={t(`${translationKey}.igangsettingstillatelse`)}
-            {...visVerdi(endring.igangsettingstillatelse)}
+            {...getDetaljVerdi(endring.igangsettingstillatelse, tom)}
           />
           <EndringsDetalje
             label={t(`${translationKey}.midlertidigBrukstillatelse`)}
-            {...visVerdi(endring.midlertidigBrukstillatelse)}
+            {...getDetaljVerdi(endring.midlertidigBrukstillatelse, tom)}
           />
           <EndringsDetalje
             label={t(`${translationKey}.ferdigattest`)}
-            {...visVerdi(endring.ferdigattest)}
+            {...getDetaljVerdi(endring.ferdigattest, tom)}
           />
           <EndringsDetalje
             label={t(`${translationKey}.tattIBruk`)}
-            {...visVerdi(endring.tattIBruk)}
+            {...getDetaljVerdi(endring.tattIBruk, tom)}
           />
           <EndringsDetalje
             label={t(`${translationKey}.utgaattRevet`)}
-            {...visVerdi(endring.utgaattRevet)}
+            {...getDetaljVerdi(endring.utgaattRevet, tom)}
           />
         </dl>
 

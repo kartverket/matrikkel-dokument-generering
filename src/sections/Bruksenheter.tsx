@@ -1,11 +1,13 @@
 import { Card, Divider, Heading, Paragraph, Tag } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import ArealFordeling from "../components/ArealFordeling.tsx"
+import { EndringsDetalje } from "../components/bruksenheter/EndringsDetalje.tsx"
 import { Endringskort } from "../components/bruksenheter/Endringskort.tsx"
 import { Hjemmelshavere } from "../components/bruksenheter/Hjemmelshavere.tsx"
 import { Kontaktpersoner } from "../components/bruksenheter/Kontaktpersoner.tsx"
 import { Section } from "../components/Section.tsx"
 import type { BruksenhetDetalj } from "../lib/schema/byggRapportSchema.ts"
+import { getDetaljVerdi } from "../lib/utils/getDetaljVerdi.ts"
 
 interface Props {
   index: number
@@ -61,86 +63,39 @@ export default function Bruksenheter({ index, bruksenheter }: Props) {
               </div>
 
               <dl className="grid grid-cols-3 gap-x-8 gap-y-5">
-                <div>
-                  <dt className="text-kv-subtle text-sm">
-                    {t(`${translationKey}.bruksenhetstype`)}
-                  </dt>
-                  <dd
-                    className={
-                      bruksenhet.bruksenhetstype === null
-                        ? "mt-1 text-kv-subtle"
-                        : "mt-1 font-medium"
-                    }
-                  >
-                    {bruksenhet.bruksenhetstype ?? tom}
-                  </dd>
-                </div>
-                <div className="col-span-2">
-                  <dt className="text-kv-subtle text-sm">
-                    {t(`${translationKey}.adresse`)}
-                  </dt>
-                  <dd
-                    className={
-                      bruksenhet.adresse === null
-                        ? "mt-1 text-kv-subtle"
-                        : "mt-1 font-medium"
-                    }
-                  >
-                    {bruksenhet.adresse ?? tom}
-                  </dd>
-                </div>
-                <div>
-                  <dt className="text-kv-subtle text-sm">
-                    {t(`${translationKey}.etasje`)}
-                  </dt>
-                  <dd
-                    className={
-                      bruksenhet.etasje === null
-                        ? "mt-1 text-kv-subtle"
-                        : "mt-1 font-medium"
-                    }
-                  >
-                    {bruksenhet.etasje ?? tom}
-                  </dd>
-                </div>
-                <div>
-                  <dt className="text-kv-subtle text-sm">
-                    {t(`${translationKey}.bruksareal`)}
-                  </dt>
-                  <dd className="mt-1 font-medium">{bruksenhet.bruksareal}</dd>
-                </div>
-                <div>
-                  <dt className="text-kv-subtle text-sm">
-                    {t(`${translationKey}.antallRom`)}
-                  </dt>
-                  <dd className="mt-1 font-medium">{bruksenhet.antallRom}</dd>
-                </div>
-                <div>
-                  <dt className="text-kv-subtle text-sm">
-                    {t(`${translationKey}.kjokken`)}
-                  </dt>
-                  <dd
-                    className={
-                      bruksenhet.kjokken === null
-                        ? "mt-1 text-kv-subtle"
-                        : "mt-1 font-medium"
-                    }
-                  >
-                    {bruksenhet.kjokken ?? tom}
-                  </dd>
-                </div>
-                <div>
-                  <dt className="text-kv-subtle text-sm">
-                    {t(`${translationKey}.antallBad`)}
-                  </dt>
-                  <dd className="mt-1 font-medium">{bruksenhet.antallBad}</dd>
-                </div>
-                <div>
-                  <dt className="text-kv-subtle text-sm">
-                    {t(`${translationKey}.antallWc`)}
-                  </dt>
-                  <dd className="mt-1 font-medium">{bruksenhet.antallWc}</dd>
-                </div>
+                <EndringsDetalje
+                  label={t(`${translationKey}.bruksenhetstype`)}
+                  {...getDetaljVerdi(bruksenhet.bruksenhetstype, tom)}
+                />
+                <EndringsDetalje
+                  label={t(`${translationKey}.adresse`)}
+                  {...getDetaljVerdi(bruksenhet.adresse, tom)}
+                  className="col-span-2"
+                />
+                <EndringsDetalje
+                  label={t(`${translationKey}.etasje`)}
+                  {...getDetaljVerdi(bruksenhet.etasje, tom)}
+                />
+                <EndringsDetalje
+                  label={t(`${translationKey}.bruksareal`)}
+                  value={bruksenhet.bruksareal}
+                />
+                <EndringsDetalje
+                  label={t(`${translationKey}.antallRom`)}
+                  value={bruksenhet.antallRom}
+                />
+                <EndringsDetalje
+                  label={t(`${translationKey}.kjokken`)}
+                  {...getDetaljVerdi(bruksenhet.kjokken, tom)}
+                />
+                <EndringsDetalje
+                  label={t(`${translationKey}.antallBad`)}
+                  value={bruksenhet.antallBad}
+                />
+                <EndringsDetalje
+                  label={t(`${translationKey}.antallWc`)}
+                  value={bruksenhet.antallWc}
+                />
               </dl>
 
               <Divider className="my-6" />
