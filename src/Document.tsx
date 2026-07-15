@@ -5,6 +5,7 @@ import ArealFordeling from "./components/ArealFordeling.tsx"
 import { createI18n } from "./lib/i18n/createI18n"
 import type { ByggRapport } from "./lib/schema/byggRapportSchema"
 import Bruksenheter from "./sections/Bruksenheter.tsx"
+import Byggoversikt from "./sections/Byggoversikt.tsx"
 import { Bygningslinje } from "./sections/Bygningslinje.tsx"
 import { EtasjerSection } from "./sections/Etasjer.tsx"
 import { Hjemmelshavere } from "./sections/Hjemmelshavere.tsx"
@@ -22,6 +23,7 @@ export function DocumentComponent({ data }: { data: ByggRapport }) {
       {data.bygninger.map((bygning) => (
         <Fragment key={bygning.id}>
           <Bygningslinje index={2} bygning={bygning} />
+          <Byggoversikt index={3} bygning={bygning} />
           <EtasjerSection index={3} etasjeEndringer={bygning.endringer} />
           <Bruksenheter index={4} bruksenheter={bygning.bruksenheter} />
 
