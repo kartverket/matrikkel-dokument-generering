@@ -9,32 +9,16 @@ interface Props {
 
 const groenneStatuser = new Set(["FA", "TB"])
 
-const kortDato: Intl.DateTimeFormatOptions = {
-  day: "2-digit",
-  month: "2-digit",
-  year: "numeric",
-  timeZone: "Europe/Oslo",
-}
-
-function primaerDato(endring: Bygningsendring): string | null {
-  const d = endring.datoer
-  const byKortkode: Record<string, string | null | undefined> = {
-    FA: d.ferdigattest,
-    MB: d.midlertidigBrukstillatelse,
-    IG: d.igangsettingstillatelse,
-    RA: d.rammetillatelse,
-    TB: d.tattIBruk,
-    BR: d.utgaattRevet,
-  }
+function primaerDato({ datoer, bygningsstatus }: Bygningsendring) {
   return (
-    byKortkode[endring.bygningsstatus.kortkode] ??
-    d.ferdigattest ??
-    d.midlertidigBrukstillatelse ??
-    d.igangsettingstillatelse ??
-    d.rammetillatelse ??
-    d.tattIBruk ??
-    d.utgaattRevet ??
-    null
+    {
+      FA: datoer.ferdigattest,
+      MB: datoer.midlertidigBrukstillatelse,
+      IG: datoer.igangsettingstillatelse,
+      RA: datoer.rammetillatelse,
+      TB: datoer.tattIBruk,
+      BR: datoer.utgaattRevet,
+    }[bygningsstatus.kortkode] ?? null
   )
 }
 
@@ -64,7 +48,7 @@ export default function Historikk({ endringer }: Props) {
         </Paragraph>
       </div>
 
-      <ul className="space-y-8 border-l-3 border-kv-green pl-6">
+      <ul className="space-y-8 border-kv-green border-l-3 pl-6">
         {sortert.map(({ endring, dato }) => {
           const bruksenhetsnr = endring.bruksenheter
             .map((b) => b.bruksenhetsnr)
@@ -81,7 +65,7 @@ export default function Historikk({ endringer }: Props) {
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
                   <span className="font-semibold">
-                    {formatDate(t, dato, "—", kortDato)}
+                    {formatDate(t, dato, "—", { dateStyle: "short" })}
                   </span>
                   {endring.endringskode && (
                     <Tag data-color="success" variant="outline">

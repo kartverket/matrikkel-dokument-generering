@@ -224,6 +224,16 @@ export const nn = {
         koordinater: "Koordinatar",
         koordinatsystem: "Koordinatsystem",
         bygningsnr: "Bygningsnummer",
+        header: {
+          bygg: "Bygg {{lopenr}}",
+          bygningsnrLopenr: "Bygningsnr. {{bygningsnr}} · Løpenr. {{lopenr}}",
+          ferdigattest: "Ferdigattest: {{dato}}",
+        },
+        nokkeltall: {
+          braBeskrivelse: "Bruksareal, per no",
+          btaBeskrivelse: "Bruttoareal",
+          byaBeskrivelse: "Bebygd areal",
+        },
         historikk: {
           title: "Samandrag av bygningshistorikk",
           detaljer: "Sjå fleire detaljar under Brukseiningar",
