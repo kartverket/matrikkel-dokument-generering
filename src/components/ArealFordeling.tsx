@@ -1,115 +1,114 @@
-import { Heading, Paragraph, Table } from "@kv-designsystem/react"
+import { Heading, Table } from "@kv-designsystem/react"
 import { Fragment } from "react"
 import { useTranslation } from "react-i18next"
-import type { Bygningsendring } from "../lib/schema/byggRapportSchema"
-import { formatArea } from "../lib/utils/format"
-import { Section } from "./Section.tsx"
+import type { BruksenhetDetalj } from "../lib/schema/byggRapportSchema"
+import { formatArea } from "../lib/utils/formatArea"
+import { Detaljgrid, lagDetaljfeltBuilder } from "./Detaljfelt"
 
 interface Props {
-  index: number
-  endring: Bygningsendring
+  arealfordeling: BruksenhetDetalj["arealfordeling"]
 }
 
-export default function Arealfordeling({ index, endring }: Props) {
+const arealFelt = lagDetaljfeltBuilder("rapport.BYG0011.arealfordeling")
+
+function getArealDetaljfelter(arealfordeling: Props["arealfordeling"]) {
+  const valueClassName = "tabular-nums"
+
+  return [
+    arealFelt("bebygdAreal", formatArea(arealfordeling.bebygdAreal), {
+      valueClassName,
+    }),
+    arealFelt("bruksareal", formatArea(arealfordeling.bruksareal.totalt), {
+      valueClassName,
+    }),
+    arealFelt(
+      "koordinater",
+      `${arealfordeling.koordinat.nord} / ${arealfordeling.koordinat.ost}`,
+      { valueClassName },
+    ),
+  ]
+}
+
+export default function Arealfordeling({ arealfordeling }: Props) {
   const { t } = useTranslation()
   const af = "rapport.BYG0011.arealfordeling"
+  const tom = t("tom")
 
   return (
-    <Section index={index} title={t(`${af}.title`)}>
-      <div className="flex flex-col gap-8">
-        <dl className="grid grid-cols-[max-content_1fr] items-baseline gap-x-12 gap-y-3">
-          <dt>
-            <Paragraph data-size="lg">{t(`${af}.bebygdAreal`)}</Paragraph>
-          </dt>
-          <dd>
-            <Paragraph data-size="lg" className="font-semibold">
-              {formatArea(endring.bebygdAreal)}
-            </Paragraph>
-          </dd>
+    <div>
+      <Heading level={4} data-size="xs" className="mb-4">
+        {t(`${af}.title`)}
+      </Heading>
+      <div className="flex flex-col gap-6">
+        <Detaljgrid
+          felter={getArealDetaljfelter(arealfordeling)}
+          tom={tom}
+          className="gap-x-8 gap-y-5"
+        />
 
-          <dt>
-            <Paragraph data-size="lg">{t(`${af}.bruksareal`)}</Paragraph>
-          </dt>
-          <dd>
-            <Paragraph data-size="lg" className="font-semibold">
-              {formatArea(endring.bruksareal.totalt)}
-            </Paragraph>
-          </dd>
-
-          <dt>
-            <Paragraph data-size="lg">{t(`${af}.koordinater`)}</Paragraph>
-          </dt>
-          <dd>
-            <Paragraph data-size="lg" className="font-semibold">
-              {endring.koordinat.nord} / {endring.koordinat.ost}
-            </Paragraph>
-          </dd>
-        </dl>
-
-        <Table className="text-kv-subtle text-xl">
+        <Table border className="w-full table-fixed">
           <Table.Head>
             <Table.Row>
-              <Table.HeaderCell className="border-b-0">
+              <Table.HeaderCell className="w-2/5">
                 {t(`${af}.etasje`)}
               </Table.HeaderCell>
-              <Table.HeaderCell className="border-b-0">
+              <Table.HeaderCell className="w-1/4">
+                {t(`${af}.arealtype`)}
+              </Table.HeaderCell>
+              <Table.HeaderCell className="w-[17.5%] text-right">
                 {t(`${af}.bolig`)}
               </Table.HeaderCell>
-              <Table.HeaderCell className="border-b-0">
+              <Table.HeaderCell className="w-[17.5%] text-right">
                 {t(`${af}.annet`)}
               </Table.HeaderCell>
             </Table.Row>
           </Table.Head>
           <Table.Body>
-            {endring.etasjeplan.map((etasje) => (
+            {arealfordeling.etasjeplan.map((etasje) => (
               <Fragment key={`${etasje.etasjeplan}-${etasje.etasje}`}>
                 <Table.Row>
                   <Table.HeaderCell
-                    colSpan={3}
-                    scope="colgroup"
-                    className="border-b-0 pt-8"
+                    rowSpan={2}
+                    scope="rowgroup"
+                    className="border-r border-b-0 bg-kv-gray align-top text-kv-default"
                   >
-                    <span className="flex items-baseline gap-4">
-                      <Heading
-                        level={3}
-                        data-size="sm"
-                        asChild
-                        className="font-medium text-kv-default"
-                      >
-                        <span>{etasje.etasjeplan}</span>
-                      </Heading>
-                      <span className="font-normal text-kv-subtle">
+                    <span className="flex flex-col gap-1">
+                      <span className="font-semibold">{etasje.etasjeplan}</span>
+                      <span className="font-normal text-kv-subtle text-sm">
                         {t(`${af}.nr`, { nr: etasje.etasje })}
-                      </span>
-                      <span className="font-normal text-kv-subtle">
+                        <span aria-hidden="true"> · </span>
                         {t(`${af}.boenheter`, {
                           antall: etasje.antallBoenheter,
                         })}
                       </span>
                     </span>
                   </Table.HeaderCell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell className="text-kv-default">
+                  <Table.HeaderCell scope="row" className="text-kv-default">
                     {t(`${af}.bruksarealRad`)}
-                  </Table.Cell>
-                  <Table.Cell className="">
+                  </Table.HeaderCell>
+                  <Table.Cell className="text-right tabular-nums">
                     {etasje.bruksareal.bolig}
                   </Table.Cell>
-                  <Table.Cell>{etasje.bruksareal.annet}</Table.Cell>
+                  <Table.Cell className="text-right tabular-nums">
+                    {etasje.bruksareal.annet}
+                  </Table.Cell>
                 </Table.Row>
                 <Table.Row>
-                  <Table.Cell className="text-kv-default">
+                  <Table.HeaderCell scope="row" className="text-kv-default">
                     {t(`${af}.bruttoarealRad`)}
+                  </Table.HeaderCell>
+                  <Table.Cell className="text-right tabular-nums">
+                    {etasje.bruttoareal.bolig}
                   </Table.Cell>
-                  <Table.Cell>{etasje.bruttoareal.bolig}</Table.Cell>
-                  <Table.Cell>{etasje.bruttoareal.annet}</Table.Cell>
+                  <Table.Cell className="text-right tabular-nums">
+                    {etasje.bruttoareal.annet}
+                  </Table.Cell>
                 </Table.Row>
               </Fragment>
             ))}
           </Table.Body>
         </Table>
       </div>
-    </Section>
+    </div>
   )
 }

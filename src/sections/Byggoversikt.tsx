@@ -3,7 +3,7 @@ import { Label, Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import { Section } from "../components/Section"
 import type { Bygning } from "../lib/schema/byggRapportSchema"
-import { formatDateTime } from "../lib/utils/format"
+import { formatDate } from "../lib/utils/formatDate"
 import { isFerdigstilt } from "../lib/utils/isFerdigstilt"
 
 interface Props {
@@ -58,8 +58,7 @@ export default function Byggoversikt({ bygning, index }: Props) {
             </Paragraph>
             {gjeldende.datoer.ferdigattest && (
               <Paragraph className="text-gray-400" data-size="sm">
-                Ferdigattest:{" "}
-                {formatDateTime(gjeldende.datoer.ferdigattest, "nb")}
+                Ferdigattest: {formatDate(t, gjeldende.datoer.ferdigattest, "")}
               </Paragraph>
             )}
           </div>

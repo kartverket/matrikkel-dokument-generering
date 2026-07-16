@@ -118,7 +118,6 @@ const hjemmelshaverSchema = z
     navn: z.string().min(1),
     andelTeller: z.number().nullable(),
     andelNevner: z.number().nullable(),
-    eierforhold: z.string().min(1),
     adresselinje1: z.string().nullable(),
     adresselinje2: z.string().nullable(),
     adresselinje3: z.string().nullable(),
@@ -252,51 +251,78 @@ const bygningsendringSchema = z
     etasjeplan: z.array(bygningsetasjeSchema),
     bruksenheter: z.array(bruksenhetSchema),
     tiltakshavere: z.array(tiltakshaverSchema).optional().default([]),
-    kontaktpersoner: z.array(kontaktpersonSchema).optional().default([]),
-    hjemmelshavere: z.array(hjemmelshaverSchema),
     kulturminner: z.array(kulturminneSchema).optional().default([]),
   })
   .meta({ id: "Bygningsendring" })
 
-const bruksenhetHjemmelshaverDetaljSchema = z
+const bruksenhetArealfordelingSchema = z
   .object({
-    id: z.string().min(1),
-    navn: z.string().min(1),
-    meta: z.string().min(1),
+    bebygdAreal: z.number(),
+    bruksareal: arealFordelingSchema,
+    koordinat: koordinatSchema,
+    etasjeplan: z.array(bygningsetasjeSchema),
   })
-  .meta({ id: "BruksenhetHjemmelshaverDetalj" })
+  .meta({ id: "BruksenhetArealfordeling" })
 
 const bruksenhetEndringDetaljSchema = z
   .object({
     id: z.string().min(1),
+    bygningId: z.string().min(1),
+    lopenr: z.string().min(1),
     tittel: z.string().min(1),
     status: z.string().min(1),
-    endringskode: z.string().min(1),
-    beskrivelse: z.string().min(1),
+    bygningsstatus: z.string().min(1),
+    bygningsstatuskode: z.string().min(1),
+    bygningsstatusKortkode: z.string().min(1),
+    bestaaende: z.string().min(1),
+    endringskode: z.string().min(1).nullable(),
+    beskrivelse: z.string().min(1).nullable(),
     bygningstype: z.string().min(1),
+    antallBoenheter: z.string().min(1),
+    bruksareal: z.string().min(1),
+    bruttoareal: z.string().min(1),
     bebygdAreal: z.string().min(1),
-    rammetillatelse: z.string().min(1),
-    igangsettingstillatelse: z.string().min(1),
-    ferdigattest: z.string().min(1),
+    rammetillatelse: z.string().min(1).nullable(),
+    igangsettingstillatelse: z.string().min(1).nullable(),
+    midlertidigBrukstillatelse: z.string().min(1).nullable(),
+    ferdigattest: z.string().min(1).nullable(),
+    tattIBruk: z.string().nullable(),
+    utgaattRevet: z.string().min(1).nullable(),
     koordinater: z.string().min(1),
+    etasjer: z.array(
+      z.object({
+        etasjeplan: z.string().min(1),
+        etasje: z.string().min(1),
+        antallBoenheter: z.string().min(1),
+        bruksarealBolig: z.string().min(1),
+        bruksarealAnnet: z.string().min(1),
+        bruksarealTotalt: z.string().min(1),
+        bruttoarealBolig: z.string().min(1),
+        bruttoarealAnnet: z.string().min(1),
+        bruttoarealTotalt: z.string().min(1),
+      }),
+    ),
+    kulturminner: z.array(kulturminneSchema),
   })
   .meta({ id: "BruksenhetEndringDetalj" })
 
 const bruksenhetDetaljSchema = z
   .object({
     id: z.string().min(1),
-    nummer: z.string().min(1),
+    nummer: z.string().min(1).nullable(),
     typeChip: z.string().min(1).nullable(),
     seksjon: z.string().nullable(),
-    bruksenhetstype: z.string().min(1),
-    adresse: z.string().min(1),
-    etasje: z.string().min(1),
+    bruksenhetstype: z.string().min(1).nullable(),
+    adresse: z.string().min(1).nullable(),
+    etasje: z.string().min(1).nullable(),
     bruksareal: z.string().min(1),
     antallRom: z.string().min(1),
-    kjokken: z.string().min(1),
+    kjokken: z.string().min(1).nullable(),
     antallBad: z.string().min(1),
     antallWc: z.string().min(1),
-    hjemmelshavere: z.array(bruksenhetHjemmelshaverDetaljSchema),
+    arealfordeling: bruksenhetArealfordelingSchema,
+    hjemmelshavere: z.array(hjemmelshaverSchema),
+    kontaktpersoner: z.array(kontaktpersonSchema),
     endringer: z.array(bruksenhetEndringDetaljSchema),
   })
   .meta({ id: "BruksenhetDetalj" })

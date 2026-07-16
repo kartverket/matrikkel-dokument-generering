@@ -1,18 +1,12 @@
 import { Fragment } from "react"
 import { renderToStaticMarkup } from "react-dom/server"
 import { I18nextProvider } from "react-i18next"
-import ArealFordeling from "./components/ArealFordeling.tsx"
 import { createI18n } from "./lib/i18n/createI18n"
 import type { ByggRapport } from "./lib/schema/byggRapportSchema"
 import Bruksenheter from "./sections/Bruksenheter.tsx"
 import Byggoversikt from "./sections/Byggoversikt.tsx"
 import { Bygningslinje } from "./sections/Bygningslinje.tsx"
-import { EtasjerSection } from "./sections/Etasjer.tsx"
-import { Hjemmelshavere } from "./sections/Hjemmelshavere.tsx"
-import { KontaktPersoner } from "./sections/KontaktPersoner.tsx"
 import { Metadata } from "./sections/Metadata.tsx"
-import RegistrerteVedtak from "./sections/RegistrerteVedtak.tsx"
-import { Tiltakshavere } from "./sections/Tiltakshavere.tsx"
 import { Utvalgskriterier } from "./sections/Utvalgskriterier.tsx"
 
 export function DocumentComponent({ data }: { data: ByggRapport }) {
@@ -24,30 +18,11 @@ export function DocumentComponent({ data }: { data: ByggRapport }) {
         <Fragment key={bygning.id}>
           <Bygningslinje index={2} bygning={bygning} />
           <Byggoversikt index={3} bygning={bygning} />
-          <EtasjerSection index={3} etasjeEndringer={bygning.endringer} />
-          <Bruksenheter index={4} bruksenheter={bygning.bruksenheter} />
-
-          {bygning.endringer.map((endring) => (
-            <Fragment key={endring.id}>
-              <ArealFordeling index={5} endring={endring} />
-              {endring.bruksenheter.length > 0 && (
-                <>
-                  <RegistrerteVedtak index={6} datoer={endring.datoer} />
-                  <KontaktPersoner
-                    index={7}
-                    kontaktpersoner={endring.kontaktpersoner}
-                  />
-                  <Hjemmelshavere
-                    index={8}
-                    hjemmelshavere={endring.hjemmelshavere}
-                  />
-                </>
-              )}
-              {data.utvalgskriterier.subrapporter.tiltakshavere && (
-                <Tiltakshavere index={9} endring={endring} />
-              )}
-            </Fragment>
-          ))}
+          <Bruksenheter
+            index={4}
+            bruksenheter={bygning.bruksenheter}
+            endringer={bygning.endringer}
+          />
         </Fragment>
       ))}
     </>
