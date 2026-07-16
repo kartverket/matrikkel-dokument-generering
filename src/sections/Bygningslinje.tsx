@@ -14,6 +14,7 @@ interface Props {
 
 export function Bygningslinje({ index, bygning }: Props) {
   const { t } = useTranslation()
+  const tom = t("tom")
 
   if (bygning.endringer.length === 0) return null
 
@@ -56,22 +57,22 @@ export function Bygningslinje({ index, bygning }: Props) {
             <Table.Row key={endring.id}>
               <Table.Cell>{bygning.bygningsnr}</Table.Cell>
               <Table.Cell>{endring.lopenr}</Table.Cell>
-              <Table.Cell>{endring.endringskode ?? "-"}</Table.Cell>
+              <Table.Cell>{endring.endringskode ?? tom}</Table.Cell>
               <Table.Cell>{endring.bygningsstatus.navn}</Table.Cell>
-              <Table.Cell>{endring.bygningsstatus.kode ?? "-"}</Table.Cell>
+              <Table.Cell>{endring.bygningsstatus.kode ?? tom}</Table.Cell>
               <Table.Cell>{bygning.bygningstype.navn}</Table.Cell>
               <Table.Cell>{bygning.bygningstype.kode}</Table.Cell>
               <Table.Cell>{bygning.naeringsgruppe}</Table.Cell>
-              <Table.Cell>{endring.datoer.rammetillatelse ?? "-"}</Table.Cell>
+              <Table.Cell>{endring.datoer.rammetillatelse ?? tom}</Table.Cell>
               <Table.Cell>
-                {endring.datoer.igangsettingstillatelse ?? "-"}
+                {endring.datoer.igangsettingstillatelse ?? tom}
               </Table.Cell>
               <Table.Cell>
-                {endring.datoer.midlertidigBrukstillatelse ?? "-"}
+                {endring.datoer.midlertidigBrukstillatelse ?? tom}
               </Table.Cell>
-              <Table.Cell>{endring.datoer.ferdigattest ?? "-"}</Table.Cell>
-              <Table.Cell>{endring.datoer.tattIBruk ?? "-"}</Table.Cell>
-              <Table.Cell>{endring.datoer.utgaattRevet ?? "-"}</Table.Cell>
+              <Table.Cell>{endring.datoer.ferdigattest ?? tom}</Table.Cell>
+              <Table.Cell>{endring.datoer.tattIBruk ?? tom}</Table.Cell>
+              <Table.Cell>{endring.datoer.utgaattRevet ?? tom}</Table.Cell>
               <Table.Cell>{arealLinje(endring.bruksareal)}</Table.Cell>
               <Table.Cell>{arealLinje(endring.bruttoareal)}</Table.Cell>
               <Table.Cell>{endring.antallBoenheter}</Table.Cell>

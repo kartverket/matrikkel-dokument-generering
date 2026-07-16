@@ -2,6 +2,7 @@ import { shared } from "./resources.shared"
 
 export const nb = {
   ...shared,
+  tom: "tom",
   rapport: {
     BYG0011: {
       title: "Bygning {{bygningsnr}} – {{bygningstype}}",
@@ -86,7 +87,6 @@ export const nb = {
       bruksenheter: {
         title: "Bruksenheter",
         description: "Detaljer og endringer per bruksenhet",
-        tom: "tom",
         ingenOppgittBruksenhet: "Ingen oppgitt bruksenhet",
         seksjon: "Seksjon",
         bruksenhetstype: "Bruksenhetstype",

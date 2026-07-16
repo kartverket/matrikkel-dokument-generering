@@ -46,7 +46,7 @@ function detaljFelter(bruksenhet: BruksenhetDetalj): DetaljFelt[] {
 export default function Bruksenheter({ index, bruksenheter }: Props) {
   const { t } = useTranslation()
   const i18n = "rapport.BYG0011.bruksenheter"
-  const tom = t(`${i18n}.tom`)
+  const tom = t("tom")
   const ingenOppgittBruksenhet = t(`${i18n}.ingenOppgittBruksenhet`)
   const harBruksenheter = bruksenheter.length > 0
 

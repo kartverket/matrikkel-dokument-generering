@@ -9,6 +9,7 @@ interface Props {
 
 export function Hjemmelshavere({ hjemmelshavere }: Props) {
   const { t } = useTranslation()
+  const tom = t("tom")
   const translationKey = "rapport.BYG0011.hjemmelshavere"
 
   return (
@@ -17,9 +18,7 @@ export function Hjemmelshavere({ hjemmelshavere }: Props) {
         {t(`${translationKey}.title`)}
       </Heading>
       {hjemmelshavere.length === 0 ? (
-        <Paragraph className="text-kv-subtle text-sm">
-          {t("rapport.BYG0011.bruksenheter.tom")}
-        </Paragraph>
+        <Paragraph className="text-kv-subtle text-sm">{tom}</Paragraph>
       ) : (
         <div className="grid grid-cols-2 gap-3">
           {hjemmelshavere.map((hjemmelshaver) => {
@@ -32,7 +31,7 @@ export function Hjemmelshavere({ hjemmelshavere }: Props) {
                   <Tag data-color="success" variant="outline">
                     {hjemmelshaver.eierErUtgatt
                       ? t(`${translationKey}.utgatt`)
-                      : (hjemmelshaver.statuskode ?? "-")}
+                      : (hjemmelshaver.statuskode ?? tom)}
                   </Tag>
                 </div>
 
@@ -54,7 +53,7 @@ export function Hjemmelshavere({ hjemmelshavere }: Props) {
                       hjemmelshaver.andelTeller !== null &&
                       hjemmelshaver.andelNevner !== null
                         ? `${hjemmelshaver.andelTeller}/${hjemmelshaver.andelNevner}`
-                        : "-"}
+                        : tom}
                     </dd>
                   </div>
                   <div className="col-span-2">
@@ -70,9 +69,11 @@ export function Hjemmelshavere({ hjemmelshavere }: Props) {
                           joinStrings(
                             [hjemmelshaver.postnummer, hjemmelshaver.poststed],
                             " ",
+                            tom,
                           ),
                         ],
                         ", ",
+                        tom,
                       )}
                     </dd>
                   </div>
@@ -81,7 +82,7 @@ export function Hjemmelshavere({ hjemmelshavere }: Props) {
                       {t(`${translationKey}.land`)}
                     </dt>
                     <dd className="mt-1 font-medium">
-                      {hjemmelshaver.land ?? "-"}
+                      {hjemmelshaver.land ?? tom}
                     </dd>
                   </div>
                   <div>
@@ -89,7 +90,7 @@ export function Hjemmelshavere({ hjemmelshavere }: Props) {
                       {t(`${translationKey}.gyldigFra`)}
                     </dt>
                     <dd className="mt-1 font-medium">
-                      {hjemmelshaver.datofra ?? "-"}
+                      {hjemmelshaver.datofra ?? tom}
                     </dd>
                   </div>
                   <div>
@@ -97,7 +98,7 @@ export function Hjemmelshavere({ hjemmelshavere }: Props) {
                       {t(`${translationKey}.gyldigTil`)}
                     </dt>
                     <dd className="mt-1 font-medium">
-                      {hjemmelshaver.datotil ?? "-"}
+                      {hjemmelshaver.datotil ?? tom}
                     </dd>
                   </div>
                   <div>
@@ -105,7 +106,7 @@ export function Hjemmelshavere({ hjemmelshavere }: Props) {
                       {t(`${translationKey}.kategori`)}
                     </dt>
                     <dd className="mt-1 font-medium">
-                      {hjemmelshaver.kategorikode ?? "-"}
+                      {hjemmelshaver.kategorikode ?? tom}
                     </dd>
                   </div>
                 </dl>

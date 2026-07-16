@@ -9,6 +9,7 @@ interface Props {
 
 function getAdresseLinjer(
   kontaktperson: BruksenhetDetalj["kontaktpersoner"][number],
+  tom: string,
 ) {
   return joinStrings(
     [
@@ -18,14 +19,17 @@ function getAdresseLinjer(
       joinStrings(
         [kontaktperson.postnummeromradenr, kontaktperson.postnummeromradenavn],
         " ",
+        tom,
       ),
     ],
     ", ",
+    tom,
   )
 }
 
 export function Kontaktpersoner({ kontaktpersoner }: Props) {
   const { t } = useTranslation()
+  const tom = t("tom")
   const translationKey = "rapport.BYG0011.kontaktpersoner"
 
   return (
@@ -35,13 +39,11 @@ export function Kontaktpersoner({ kontaktpersoner }: Props) {
       </Heading>
 
       {kontaktpersoner.length === 0 ? (
-        <Paragraph className="text-kv-subtle text-sm">
-          {t("rapport.BYG0011.bruksenheter.tom")}
-        </Paragraph>
+        <Paragraph className="text-kv-subtle text-sm">{tom}</Paragraph>
       ) : (
         <div className="flex flex-col gap-3">
           {kontaktpersoner.map((kontaktperson) => {
-            const adresselinjer = getAdresseLinjer(kontaktperson)
+            const adresselinjer = getAdresseLinjer(kontaktperson, tom)
             return (
               <div
                 key={kontaktperson.eierIdent}
@@ -59,7 +61,7 @@ export function Kontaktpersoner({ kontaktpersoner }: Props) {
                   >
                     {kontaktperson.eierErUtgatt
                       ? t(`${translationKey}.utgatt`)
-                      : (kontaktperson.statuskode ?? "-")}
+                      : (kontaktperson.statuskode ?? tom)}
                   </Tag>
                 </div>
 
@@ -89,6 +91,7 @@ export function Kontaktpersoner({ kontaktpersoner }: Props) {
                           kontaktperson.kontaktpersonKode,
                         ],
                         " / ",
+                        tom,
                       )}
                     </dd>
                   </div>
@@ -103,7 +106,7 @@ export function Kontaktpersoner({ kontaktpersoner }: Props) {
                       {t(`${translationKey}.land`)}
                     </dt>
                     <dd className="mt-1 font-medium">
-                      {kontaktperson.land ?? "-"}
+                      {kontaktperson.land ?? tom}
                     </dd>
                   </div>
                   <div>
@@ -111,7 +114,7 @@ export function Kontaktpersoner({ kontaktpersoner }: Props) {
                       {t(`${translationKey}.gyldigFra`)}
                     </dt>
                     <dd className="mt-1 font-medium">
-                      {kontaktperson.datofra ?? "-"}
+                      {kontaktperson.datofra ?? tom}
                     </dd>
                   </div>
                 </dl>

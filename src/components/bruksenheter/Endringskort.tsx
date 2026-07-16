@@ -11,7 +11,7 @@ interface Props {
 export function Endringskort({ endring }: Props) {
   const { t } = useTranslation()
   const translationKey = "rapport.BYG0011.bruksenheter"
-  const tom = t(`${translationKey}.tom`)
+  const tom = t("tom")
 
   return (
     <Card

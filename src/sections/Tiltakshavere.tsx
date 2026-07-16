@@ -12,6 +12,7 @@ interface Props {
 
 export function Tiltakshavere({ index, endring }: Props) {
   const { t } = useTranslation()
+  const tom = t("tom")
   const tiltakshavere = endring.tiltakshavere
 
   // Vises kun når bygget IKKE er ferdigstilt.
@@ -50,27 +51,30 @@ export function Tiltakshavere({ index, endring }: Props) {
                     person.adresselinje3,
                   ],
                   ", ",
+                  tom,
                 )}
               </Table.Cell>
               <Table.Cell>
                 {joinStrings(
                   [person.postnummeromradenr, person.postnummeromradenavn],
                   " ",
+                  tom,
                 )}
               </Table.Cell>
-              <Table.Cell>{person.land ?? "-"}</Table.Cell>
-              <Table.Cell>{person.bruksenhetsnr ?? "-"}</Table.Cell>
-              <Table.Cell>{person.datofra ?? "-"}</Table.Cell>
+              <Table.Cell>{person.land ?? tom}</Table.Cell>
+              <Table.Cell>{person.bruksenhetsnr ?? tom}</Table.Cell>
+              <Table.Cell>{person.datofra ?? tom}</Table.Cell>
               <Table.Cell>
                 {joinStrings(
                   [person.kategorikode, person.kontaktpersonKode],
                   " / ",
+                  tom,
                 )}
               </Table.Cell>
               <Table.Cell>
                 {person.eierErUtgatt
                   ? t(`${th}.utgatt`)
-                  : (person.statuskode ?? "-")}
+                  : (person.statuskode ?? tom)}
               </Table.Cell>
             </Table.Row>
           ))}
