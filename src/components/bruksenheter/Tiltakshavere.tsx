@@ -32,7 +32,6 @@ function getTiltakshaverDetaljfelter(tiltakshaver: Tiltakshaver, tom: string) {
         ],
         tom,
       ),
-      { className: "col-span-2" },
     ),
     tiltakshaverFelt(
       "poststed",

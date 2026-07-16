@@ -42,7 +42,6 @@ function getKontaktpersonDetaljfelter(
         kontaktperson.postnummeromradenavn,
         tom,
       ),
-      { className: "col-span-2" },
     ),
     kontaktpersonFelt("land", kontaktperson.land),
     kontaktpersonFelt("gyldigFra", kontaktperson.datofra),

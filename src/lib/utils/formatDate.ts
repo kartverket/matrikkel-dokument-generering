@@ -1,52 +1,79 @@
-import type { TFunction } from "i18next"
+import type { i18n as I18n } from "i18next"
 
 const defaultOptions: Intl.DateTimeFormatOptions = {
   dateStyle: "long",
 }
 
-function parseDate(value: string | number | Date): Date | null {
-  if (value instanceof Date) {
-    return Number.isNaN(value.getTime()) ? null : value
-  }
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+}
 
-  if (typeof value === "string") {
-    const norwegianDate = /^(\d{1,2})\.(\d{1,2})\.(\d{4})$/.exec(value.trim())
-
-    if (norwegianDate) {
-      const [, dayString, monthString, yearString] = norwegianDate
-      const day = Number(dayString)
-      const month = Number(monthString)
-      const year = Number(yearString)
-      const date = new Date(Date.UTC(year, month - 1, day))
-
-      if (
-        date.getUTCFullYear() !== year ||
-        date.getUTCMonth() !== month - 1 ||
-        date.getUTCDate() !== day
-      ) {
-        return null
+function parseLocalizedDate(
+  value: string,
+  locale: string,
+): Date | null | undefined {
+  const pattern = new Intl.DateTimeFormat(locale, {
+    day: "numeric",
+    month: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  })
+    .formatToParts(new Date(Date.UTC(2006, 10, 22)))
+    .map((part) => {
+      switch (part.type) {
+        case "day":
+          return "(?<day>\\d{1,2})"
+        case "month":
+          return "(?<month>\\d{1,2})"
+        case "year":
+          return "(?<year>\\d{4})"
+        default:
+          return escapeRegExp(part.value)
       }
+    })
+    .join("")
 
-      return date
-    }
+  const match = new RegExp(`^${pattern}$`).exec(value.trim())
+  if (!match?.groups) return undefined
+
+  const day = Number(match.groups.day)
+  const month = Number(match.groups.month)
+  const year = Number(match.groups.year)
+  const date = new Date(Date.UTC(year, month - 1, day))
+
+  if (
+    date.getUTCFullYear() !== year ||
+    date.getUTCMonth() !== month - 1 ||
+    date.getUTCDate() !== day
+  ) {
+    return null
   }
 
-  const date = new Date(value)
+  return date
+}
+
+function parseDate(value: string | number | Date, locale: string): Date | null {
+  if (typeof value === "string") {
+    const localizedDate = parseLocalizedDate(value, locale)
+    if (localizedDate !== undefined) return localizedDate
+  }
+
+  const date = value instanceof Date ? value : new Date(value)
   return Number.isNaN(date.getTime()) ? null : date
 }
 
 export function formatDate(
-  t: TFunction,
+  i18n: Pick<I18n, "language" | "t">,
   value: string | number | Date | null | undefined,
   fallback: string,
   options: Intl.DateTimeFormatOptions = defaultOptions,
 ): string {
   if (value == null) return fallback
 
-  const date = parseDate(value)
+  const date = parseDate(value, i18n.language)
   if (date === null) return fallback
 
-  return t("formats.date", {
+  return i18n.t("formats.date", {
     val: date,
     formatParams: {
       val: {

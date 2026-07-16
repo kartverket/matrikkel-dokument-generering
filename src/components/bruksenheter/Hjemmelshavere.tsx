@@ -41,7 +41,6 @@ const getHjemmelshaverDetaljfelter = (
         hjemmelshaver.poststed,
         tom,
       ),
-      { className: "col-span-2" },
     ),
     hjemmelshaverFelt("land", hjemmelshaver.land),
     hjemmelshaverFelt("gyldigFra", hjemmelshaver.datofra),
@@ -56,11 +55,7 @@ export function Hjemmelshavere({ hjemmelshavere }: Props) {
   const translationKey = "rapport.BYG0011.hjemmelshavere"
 
   return (
-    <PersonGrid
-      title={t(`${translationKey}.title`)}
-      tom={tom}
-      className="grid-cols-2"
-    >
+    <PersonGrid title={t(`${translationKey}.title`)} tom={tom}>
       {hjemmelshavere.map((hjemmelshaver) => (
         <PersonCard
           key={hjemmelshaver.eierIdent}

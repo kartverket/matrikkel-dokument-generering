@@ -15,7 +15,8 @@ interface Props {
 const groenneStatuser = new Set(["FA", "TB"])
 
 export default function Historikk({ endringer }: Props) {
-  const { t } = useTranslation()
+  const { i18n, t } = useTranslation()
+  const tom = t("tom")
   const h = "rapport.BYG0011.byggoversikt.historikk"
 
   if (endringer.length === 0) return null
@@ -59,7 +60,7 @@ export default function Historikk({ endringer }: Props) {
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
                   <span className="font-semibold">
-                    {formatDate(t, dato, "—", { dateStyle: "short" })}
+                    {formatDate(i18n, dato, tom, { dateStyle: "short" })}
                   </span>
                   {endring.endringskode && (
                     <Tag data-color="success" variant="outline">

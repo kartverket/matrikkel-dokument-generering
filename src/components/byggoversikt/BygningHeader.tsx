@@ -13,7 +13,7 @@ interface Props {
 }
 
 export default function BygningHeader({ bygning, endring }: Props) {
-  const { t } = useTranslation()
+  const { i18n, t } = useTranslation()
   const key = "rapport.BYG0011.byggoversikt.header"
 
   return (
@@ -42,7 +42,7 @@ export default function BygningHeader({ bygning, endring }: Props) {
         {endring.datoer.ferdigattest && (
           <Paragraph className="text-kv-subtle" data-size="sm">
             {t(`${key}.ferdigattest`, {
-              dato: formatDate(t, endring.datoer.ferdigattest, "—", {
+              dato: formatDate(i18n, endring.datoer.ferdigattest, "—", {
                 dateStyle: "short",
               }),
             })}

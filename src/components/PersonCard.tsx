@@ -20,9 +20,11 @@ export function PersonCard({
   tom,
 }: Props) {
   return (
-    <Card className="pdf-keep-together">
+    <Card className="min-w-0 pdf-keep-together">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <Paragraph className="font-semibold">{navn}</Paragraph>
+        <Paragraph className="min-w-0 wrap-break-word font-semibold">
+          {navn}
+        </Paragraph>
         <PersonStatusTag
           erUtgatt={erUtgatt}
           statuskode={statuskode}
@@ -31,7 +33,11 @@ export function PersonCard({
         />
       </div>
 
-      <Detaljgrid felter={felter} tom={tom} />
+      <Detaljgrid
+        className="grid-cols-1 *:min-w-0 [&_dd]:wrap-anywhere sm:grid-cols-2 xl:grid-cols-3"
+        felter={felter}
+        tom={tom}
+      />
     </Card>
   )
 }
