@@ -12,12 +12,14 @@ import { Section } from "../components/Section.tsx"
 import type {
   BruksenhetDetalj,
   Bygningsendring,
+  Tiltakshaver,
 } from "../lib/schema/byggRapportSchema.ts"
 import { isFerdigstilt } from "../lib/utils/isFerdigstilt.ts"
 
 interface Props {
   index: number
   bruksenheter: BruksenhetDetalj[]
+  gjeldende: Bygningsendring
   endringer: Bygningsendring[]
 }
 
@@ -39,32 +41,53 @@ function getTiltaksHavere(
   endringer: Bygningsendring[],
   bruksenhet: BruksenhetDetalj,
 ) {
-  return endringer.flatMap((endring) =>
-    isFerdigstilt(endring)
-      ? []
-      : endring.tiltakshavere
-          .filter(({ bruksenhetsnr }) => bruksenhetsnr === bruksenhet.nummer)
-          .map((tiltakshaver) => ({
-            endringId: endring.id,
-            tiltakshaver,
-          })),
-  )
+  const unikeTiltakshavere = new Map<
+    string,
+    { endringId: number; tiltakshaver: Tiltakshaver }
+  >()
+
+  for (const endring of endringer.toSorted((a, b) => b.lopenr - a.lopenr)) {
+    if (isFerdigstilt(endring)) continue
+
+    for (const tiltakshaver of endring.tiltakshavere) {
+      if (tiltakshaver.bruksenhetsnr !== bruksenhet.nummer) continue
+
+      const nokkel = JSON.stringify([
+        tiltakshaver.eierIdent,
+        tiltakshaver.rolle,
+        tiltakshaver.bruksenhetsnr,
+        tiltakshaver.datofra,
+        tiltakshaver.kategorikode,
+        tiltakshaver.kontaktpersonKode,
+      ])
+
+      if (!unikeTiltakshavere.has(nokkel)) {
+        unikeTiltakshavere.set(nokkel, {
+          endringId: endring.id,
+          tiltakshaver,
+        })
+      }
+    }
+  }
+
+  return [...unikeTiltakshavere.values()]
 }
 
-function getEndringerForBruksenhet(
-  endringer: Bygningsendring[],
+function getGjeldendeEndringForBruksenhet(
+  gjeldende: Bygningsendring,
   bruksenhet: BruksenhetDetalj,
 ) {
-  return endringer.filter((endring) =>
-    endring.bruksenheter.some(
-      ({ bruksenhetsnr }) => bruksenhetsnr === bruksenhet.nummer,
-    ),
+  return gjeldende.bruksenheter.some(
+    ({ bruksenhetsnr }) => bruksenhetsnr === bruksenhet.nummer,
   )
+    ? gjeldende
+    : undefined
 }
 
 export default function Bruksenheter({
   index,
   bruksenheter,
+  gjeldende,
   endringer,
 }: Props) {
   const { t } = useTranslation()
@@ -83,10 +106,8 @@ export default function Bruksenheter({
       <div className="flex flex-col gap-5">
         {bruksenheter.map((bruksenhet) => {
           const harEndringer = bruksenhet.endringer.length > 0
-          const endringerForBruksenhet = getEndringerForBruksenhet(
-            endringer,
-            bruksenhet,
-          )
+          const gjeldendeEndringForBruksenhet =
+            getGjeldendeEndringForBruksenhet(gjeldende, bruksenhet)
           const tiltakshavere = getTiltaksHavere(endringer, bruksenhet)
 
           return (
@@ -110,7 +131,7 @@ export default function Bruksenheter({
                 />
 
                 <Divider className="my-6" />
-                <RegistrerteVedtak endringer={endringerForBruksenhet} />
+                <RegistrerteVedtak endring={gjeldendeEndringForBruksenhet} />
 
                 <Divider className="my-6" />
                 <Tiltakshavere tiltakshavere={tiltakshavere} />

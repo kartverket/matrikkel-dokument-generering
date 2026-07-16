@@ -1,10 +1,10 @@
-import { Heading, Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { BruksenhetDetalj } from "../../lib/schema/byggRapportSchema"
 import { formatAdresse } from "../../lib/utils/formatAdresse"
 import { joinStrings } from "../../lib/utils/joinStrings"
-import { Detaljgrid, lagDetaljfeltBuilder } from "../Detaljfelt"
-import { PersonStatusTag } from "./PersonStatusTag"
+import { lagDetaljfeltBuilder } from "../Detaljfelt"
+import { PersonCard } from "../PersonCard"
+import { PersonGrid } from "../PersonGrid"
 
 interface Props {
   kontaktpersoner: BruksenhetDetalj["kontaktpersoner"]
@@ -55,39 +55,18 @@ export function Kontaktpersoner({ kontaktpersoner }: Props) {
   const translationKey = "rapport.BYG0011.kontaktpersoner"
 
   return (
-    <div>
-      <Heading level={4} data-size="xs" className="mb-4">
-        {t(`${translationKey}.title`)}
-      </Heading>
-
-      {kontaktpersoner.length === 0 ? (
-        <Paragraph className="text-kv-subtle text-sm">{tom}</Paragraph>
-      ) : (
-        <div className="flex flex-col gap-3">
-          {kontaktpersoner.map((kontaktperson) => (
-            <div
-              key={kontaktperson.eierIdent}
-              className="rounded-md border border-kv-border bg-kv-gray p-4"
-            >
-              <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-                <Paragraph className="font-semibold">
-                  {kontaktperson.navn}
-                </Paragraph>
-                <PersonStatusTag
-                  erUtgatt={kontaktperson.eierErUtgatt}
-                  statuskode={kontaktperson.statuskode}
-                  utgattLabel={t(`${translationKey}.utgatt`)}
-                  tom={tom}
-                />
-              </div>
-              <Detaljgrid
-                felter={getKontaktpersonDetaljfelter(kontaktperson, tom)}
-                tom={tom}
-              />
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
+    <PersonGrid title={t(`${translationKey}.title`)} tom={tom}>
+      {kontaktpersoner.map((kontaktperson) => (
+        <PersonCard
+          key={kontaktperson.eierIdent}
+          navn={kontaktperson.navn}
+          erUtgatt={kontaktperson.eierErUtgatt}
+          statuskode={kontaktperson.statuskode}
+          utgattLabel={t(`${translationKey}.utgatt`)}
+          felter={getKontaktpersonDetaljfelter(kontaktperson, tom)}
+          tom={tom}
+        />
+      ))}
+    </PersonGrid>
   )
 }

@@ -101,7 +101,6 @@ export const nb = {
         hjemmelshaverEier: "HJEMMELSHAVER (EIER)",
         ingenEndringer: "Ingen registrerte endringer på bruksenheten.",
         endringerPaBruksenheten: "ENDRINGER PÅ BRUKSENHETEN",
-        bygningsendring: "Bygningsendring {{nr}} · {{type}}",
         grunnopplysninger: "GRUNNOPPLYSNINGER",
         lopenr: "Løpenummer",
         endringskode: "Endringskode",

@@ -242,7 +242,7 @@ const gjeldendeEndring: Bygningsendring = {
     {
       rolle: "Tiltakshaver",
       eierIdent: "01019012345",
-      navn: "Ola Nordmann",
+      navn: "Fredrik Nordmann",
       adresselinje1: "Storgata 1",
       adresselinje2: null,
       adresselinje3: null,
