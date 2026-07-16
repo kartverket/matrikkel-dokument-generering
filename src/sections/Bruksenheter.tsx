@@ -25,10 +25,7 @@ const bruksenhetFelt = lagDetaljfeltBuilder("rapport.BYG0011.bruksenheter")
 
 function getBruksenhetDetaljfelter(bruksenhet: BruksenhetDetalj) {
   return [
-    bruksenhetFelt("bruksenhetstype", bruksenhet.bruksenhetstype),
-    bruksenhetFelt("adresse", bruksenhet.adresse, {
-      className: "col-span-2",
-    }),
+    bruksenhetFelt("adresse", bruksenhet.adresse),
     bruksenhetFelt("etasje", bruksenhet.etasje),
     bruksenhetFelt("bruksareal", bruksenhet.bruksareal),
     bruksenhetFelt("antallRom", bruksenhet.antallRom),
