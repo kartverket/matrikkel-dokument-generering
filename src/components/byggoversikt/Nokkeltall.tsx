@@ -2,7 +2,7 @@ import { Card } from "@digdir/designsystemet-react"
 import { Label, Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { Bygningsendring } from "../../lib/schema/byggRapportSchema"
-import { formatArea } from "../../lib/utils/format"
+import { formatArea } from "../../lib/utils/formatArea"
 
 interface Props {
   endring: Bygningsendring
@@ -38,7 +38,7 @@ export default function Nokkeltall({ endring }: Props) {
       {kort.map(({ id, areal, label, beskrivelse }) => (
         <li key={id}>
           <Card>
-            <Paragraph className="text-3xl">{formatArea(t, areal)}</Paragraph>
+            <Paragraph className="text-3xl">{formatArea(areal)}</Paragraph>
             <Label>{label}</Label>
             <Paragraph data-size="sm">{beskrivelse}</Paragraph>
           </Card>

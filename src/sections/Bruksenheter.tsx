@@ -1,155 +1,149 @@
-import { Card, Divider, Heading, Paragraph, Tag } from "@kv-designsystem/react"
+import { Card, Divider, Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
+import ArealFordeling from "../components/ArealFordeling.tsx"
+import { BruksenhetHeader } from "../components/bruksenheter/BruksenhetHeader.tsx"
 import { Endringskort } from "../components/bruksenheter/Endringskort.tsx"
+import { Hjemmelshavere } from "../components/bruksenheter/Hjemmelshavere.tsx"
+import { Kontaktpersoner } from "../components/bruksenheter/Kontaktpersoner.tsx"
+import { RegistrerteVedtak } from "../components/bruksenheter/RegistrerteVedtak.tsx"
+import { Tiltakshavere } from "../components/bruksenheter/Tiltakshavere.tsx"
+import { Detaljgrid, lagDetaljfeltBuilder } from "../components/Detaljfelt.tsx"
 import { Section } from "../components/Section.tsx"
-import type { BruksenhetDetalj } from "../lib/schema/byggRapportSchema.ts"
+import type {
+  BruksenhetDetalj,
+  Bygningsendring,
+} from "../lib/schema/byggRapportSchema.ts"
+import { isFerdigstilt } from "../lib/utils/isFerdigstilt.ts"
 
 interface Props {
   index: number
   bruksenheter: BruksenhetDetalj[]
+  endringer: Bygningsendring[]
 }
 
-export default function Bruksenheter({ index, bruksenheter }: Props) {
+const bruksenhetFelt = lagDetaljfeltBuilder("rapport.BYG0011.bruksenheter")
+
+function getBruksenhetDetaljfelter(bruksenhet: BruksenhetDetalj) {
+  return [
+    bruksenhetFelt("adresse", bruksenhet.adresse),
+    bruksenhetFelt("etasje", bruksenhet.etasje),
+    bruksenhetFelt("bruksareal", bruksenhet.bruksareal),
+    bruksenhetFelt("antallRom", bruksenhet.antallRom),
+    bruksenhetFelt("kjokken", bruksenhet.kjokken),
+    bruksenhetFelt("antallBad", bruksenhet.antallBad),
+    bruksenhetFelt("antallWc", bruksenhet.antallWc),
+  ]
+}
+
+function getTiltaksHavere(
+  endringer: Bygningsendring[],
+  bruksenhet: BruksenhetDetalj,
+) {
+  return endringer.flatMap((endring) =>
+    isFerdigstilt(endring)
+      ? []
+      : endring.tiltakshavere
+          .filter(({ bruksenhetsnr }) => bruksenhetsnr === bruksenhet.nummer)
+          .map((tiltakshaver) => ({
+            endringId: endring.id,
+            tiltakshaver,
+          })),
+  )
+}
+
+function getEndringerForBruksenhet(
+  endringer: Bygningsendring[],
+  bruksenhet: BruksenhetDetalj,
+) {
+  return endringer.filter((endring) =>
+    endring.bruksenheter.some(
+      ({ bruksenhetsnr }) => bruksenhetsnr === bruksenhet.nummer,
+    ),
+  )
+}
+
+export default function Bruksenheter({
+  index,
+  bruksenheter,
+  endringer,
+}: Props) {
   const { t } = useTranslation()
-  const translationKey = "rapport.BYG0011.bruksenheter"
+  const i18n = "rapport.BYG0011.bruksenheter"
+  const tom = t("tom")
+  const ingenOppgittBruksenhet = t(`${i18n}.ingenOppgittBruksenhet`)
 
   if (bruksenheter.length === 0) return null
 
   return (
     <Section
-      title={t(`${translationKey}.title`)}
+      title={t(`${i18n}.title`)}
       index={index}
-      description={t(`${translationKey}.description`)}
+      description={t(`${i18n}.description`)}
     >
       <div className="flex flex-col gap-5">
-        {bruksenheter.map((bruksenhet) => (
-          <Card
-            key={bruksenhet.id}
-            data-bruksenhet={bruksenhet.nummer}
-            className="break-inside-avoid border border-kv-border"
-          >
-            <Card.Block className="p-7">
-              <div className="mb-6 flex items-start justify-between gap-4">
-                <div className="flex flex-wrap items-center gap-3">
-                  <Heading level={3} data-size="sm">
-                    {bruksenhet.nummer}
-                  </Heading>
-                  {bruksenhet.typeChip && (
-                    <Tag data-color="accent" variant="outline">
-                      {bruksenhet.typeChip}
-                    </Tag>
+        {bruksenheter.map((bruksenhet) => {
+          const harEndringer = bruksenhet.endringer.length > 0
+          const endringerForBruksenhet = getEndringerForBruksenhet(
+            endringer,
+            bruksenhet,
+          )
+          const tiltakshavere = getTiltaksHavere(endringer, bruksenhet)
+
+          return (
+            <Card
+              key={bruksenhet.id}
+              data-bruksenhet={bruksenhet.nummer ?? ingenOppgittBruksenhet}
+              className="break-inside-avoid border border-kv-border"
+            >
+              <Card.Block className="p-7">
+                <BruksenhetHeader
+                  bruksenhetNummer={bruksenhet.nummer}
+                  bruksenhetTypeChip={bruksenhet.typeChip}
+                  bruksenhetSeksjon={bruksenhet.seksjon}
+                  ingenOppgittBruksenhet={ingenOppgittBruksenhet}
+                />
+
+                <Detaljgrid
+                  felter={getBruksenhetDetaljfelter(bruksenhet)}
+                  tom={tom}
+                  className="gap-x-8 gap-y-5"
+                />
+
+                <Divider className="my-6" />
+                <RegistrerteVedtak endringer={endringerForBruksenhet} />
+
+                <Divider className="my-6" />
+                <Tiltakshavere tiltakshavere={tiltakshavere} />
+
+                <Divider className="my-6" />
+                <ArealFordeling arealfordeling={bruksenhet.arealfordeling} />
+
+                <Divider className="my-6" />
+                <Hjemmelshavere hjemmelshavere={bruksenhet.hjemmelshavere} />
+
+                <Divider className="my-6" />
+                <Kontaktpersoner kontaktpersoner={bruksenhet.kontaktpersoner} />
+
+                <Divider className="my-6" />
+
+                <div>
+                  <Paragraph className="mb-3 font-bold text-kv-subtle text-xs tracking-wide">
+                    {harEndringer
+                      ? t(`${i18n}.endringerPaBruksenheten`)
+                      : t(`${i18n}.ingenEndringer`)}
+                  </Paragraph>
+                  {harEndringer && (
+                    <div className="flex flex-col gap-3">
+                      {bruksenhet.endringer.map((endring) => (
+                        <Endringskort key={endring.id} endring={endring} />
+                      ))}
+                    </div>
                   )}
                 </div>
-                {bruksenhet.seksjon && (
-                  <Paragraph className="text-kv-subtle text-sm">
-                    {bruksenhet.seksjon}
-                  </Paragraph>
-                )}
-              </div>
-
-              <dl className="grid grid-cols-3 gap-x-8 gap-y-5">
-                <div>
-                  <dt className="text-kv-subtle text-sm">
-                    {t(`${translationKey}.bruksenhetstype`)}
-                  </dt>
-                  <dd className="mt-1 font-medium">
-                    {bruksenhet.bruksenhetstype}
-                  </dd>
-                </div>
-                <div className="col-span-2">
-                  <dt className="text-kv-subtle text-sm">
-                    {t(`${translationKey}.adresse`)}
-                  </dt>
-                  <dd className="mt-1 font-medium">{bruksenhet.adresse}</dd>
-                </div>
-                <div>
-                  <dt className="text-kv-subtle text-sm">
-                    {t(`${translationKey}.etasje`)}
-                  </dt>
-                  <dd className="mt-1 font-medium">{bruksenhet.etasje}</dd>
-                </div>
-                <div>
-                  <dt className="text-kv-subtle text-sm">
-                    {t(`${translationKey}.bruksareal`)}
-                  </dt>
-                  <dd className="mt-1 font-medium">{bruksenhet.bruksareal}</dd>
-                </div>
-                <div>
-                  <dt className="text-kv-subtle text-sm">
-                    {t(`${translationKey}.antallRom`)}
-                  </dt>
-                  <dd className="mt-1 font-medium">{bruksenhet.antallRom}</dd>
-                </div>
-                <div>
-                  <dt className="text-kv-subtle text-sm">
-                    {t(`${translationKey}.kjokken`)}
-                  </dt>
-                  <dd className="mt-1 font-medium">{bruksenhet.kjokken}</dd>
-                </div>
-                <div>
-                  <dt className="text-kv-subtle text-sm">
-                    {t(`${translationKey}.antallBad`)}
-                  </dt>
-                  <dd className="mt-1 font-medium">{bruksenhet.antallBad}</dd>
-                </div>
-                <div>
-                  <dt className="text-kv-subtle text-sm">
-                    {t(`${translationKey}.antallWc`)}
-                  </dt>
-                  <dd className="mt-1 font-medium">{bruksenhet.antallWc}</dd>
-                </div>
-              </dl>
-
-              {bruksenhet.seksjon && (
-                <>
-                  <Divider className="my-6" />
-                  <Paragraph className="mb-3 font-bold text-kv-subtle text-xs tracking-wide">
-                    {t(`${translationKey}.hjemmelshaverEier`)}
-                  </Paragraph>
-                  <div className="flex flex-col gap-3">
-                    {bruksenhet.hjemmelshavere.length > 0 ? (
-                      bruksenhet.hjemmelshavere.map((eier) => (
-                        <div
-                          key={eier.id}
-                          className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1"
-                        >
-                          <Paragraph className="font-semibold">
-                            {eier.navn}
-                          </Paragraph>
-                          <Paragraph className="text-kv-subtle text-sm">
-                            {eier.meta}
-                          </Paragraph>
-                        </div>
-                      ))
-                    ) : (
-                      <Paragraph className="font-semibold">
-                        {t(`${translationKey}.tom`)}
-                      </Paragraph>
-                    )}
-                  </div>
-                </>
-              )}
-
-              <Divider className="my-6" />
-              {bruksenhet.endringer.length === 0 ? (
-                <Paragraph className="text-kv-subtle text-sm">
-                  {t(`${translationKey}.ingenEndringer`)}
-                </Paragraph>
-              ) : (
-                <div>
-                  <Paragraph className="mb-3 font-bold text-kv-subtle text-xs tracking-wide">
-                    {t(`${translationKey}.endringerPaBruksenheten`)}
-                  </Paragraph>
-                  <div className="flex flex-col gap-3">
-                    {bruksenhet.endringer.map((endring) => (
-                      <Endringskort key={endring.id} endring={endring} />
-                    ))}
-                  </div>
-                </div>
-              )}
-            </Card.Block>
-          </Card>
-        ))}
+              </Card.Block>
+            </Card>
+          )
+        })}
       </div>
     </Section>
   )

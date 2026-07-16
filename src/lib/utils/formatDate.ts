@@ -2,7 +2,6 @@ import type { TFunction } from "i18next"
 
 const defaultOptions: Intl.DateTimeFormatOptions = {
   dateStyle: "long",
-  timeZone: "Europe/Oslo",
 }
 
 export function formatDate(
@@ -14,6 +13,11 @@ export function formatDate(
   if (value == null) return fallback
   return t("formats.date", {
     val: value instanceof Date ? value : new Date(value),
-    formatParams: { val: options },
+    formatParams: {
+      val: {
+        ...options,
+        timeZone: "Europe/Oslo",
+      },
+    },
   })
 }

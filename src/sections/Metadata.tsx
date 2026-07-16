@@ -1,7 +1,7 @@
 import { Heading, Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { ByggRapport } from "../lib/schema/byggRapportSchema"
-import { formatDateTime } from "../lib/utils/format"
+import { formatDate } from "../lib/utils/formatDate"
 
 interface Props {
   data: Pick<
@@ -10,7 +10,6 @@ interface Props {
     | "rapportType"
     | "kommune"
     | "generertTidspunkt"
-    | "locale"
     | "koordinatsystem"
   >
 }
@@ -30,7 +29,10 @@ export function Metadata({ data }: Props) {
         </div>
         <div>
           <Paragraph>
-            {formatDateTime(data.generertTidspunkt, data.locale)}
+            {formatDate(t, data.generertTidspunkt, "", {
+              dateStyle: "long",
+              timeStyle: "short",
+            })}
           </Paragraph>
           <Paragraph>
             {t(`rapport.BYG0011.metadata.koordinatsystem`)}:{" "}
