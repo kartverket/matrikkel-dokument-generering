@@ -2,6 +2,7 @@ import { Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import { Section } from "../components/Section.tsx"
 import type { Bygningsendring } from "../lib/schema/byggRapportSchema"
+import { formatAdresselinjer, formatPoststed } from "../lib/utils/formatAdresse"
 import { isFerdigstilt } from "../lib/utils/isFerdigstilt"
 import { joinStrings } from "../lib/utils/joinStrings"
 
@@ -44,20 +45,19 @@ export function Tiltakshavere({ index, endring }: Props) {
               <Table.Cell>{person.eierIdent}</Table.Cell>
               <Table.Cell>{person.navn}</Table.Cell>
               <Table.Cell>
-                {joinStrings(
+                {formatAdresselinjer(
                   [
                     person.adresselinje1,
                     person.adresselinje2,
                     person.adresselinje3,
                   ],
-                  ", ",
                   tom,
                 )}
               </Table.Cell>
               <Table.Cell>
-                {joinStrings(
-                  [person.postnummeromradenr, person.postnummeromradenavn],
-                  " ",
+                {formatPoststed(
+                  person.postnummeromradenr,
+                  person.postnummeromradenavn,
                   tom,
                 )}
               </Table.Cell>

@@ -3,14 +3,36 @@ import { Fragment } from "react"
 import { useTranslation } from "react-i18next"
 import type { BruksenhetDetalj } from "../lib/schema/byggRapportSchema"
 import { formatArea } from "../lib/utils/format"
+import { Detaljgrid, lagDetaljfeltBuilder } from "./Detaljfelt"
 
 interface Props {
   arealfordeling: BruksenhetDetalj["arealfordeling"]
 }
 
+const arealFelt = lagDetaljfeltBuilder("rapport.BYG0011.arealfordeling")
+
+function getArealDetaljfelter(arealfordeling: Props["arealfordeling"]) {
+  const valueClassName = "tabular-nums"
+
+  return [
+    arealFelt("bebygdAreal", formatArea(arealfordeling.bebygdAreal), {
+      valueClassName,
+    }),
+    arealFelt("bruksareal", formatArea(arealfordeling.bruksareal.totalt), {
+      valueClassName,
+    }),
+    arealFelt(
+      "koordinater",
+      `${arealfordeling.koordinat.nord} / ${arealfordeling.koordinat.ost}`,
+      { valueClassName },
+    ),
+  ]
+}
+
 export default function Arealfordeling({ arealfordeling }: Props) {
   const { t } = useTranslation()
   const af = "rapport.BYG0011.arealfordeling"
+  const tom = t("tom")
 
   return (
     <div>
@@ -18,26 +40,11 @@ export default function Arealfordeling({ arealfordeling }: Props) {
         {t(`${af}.title`)}
       </Heading>
       <div className="flex flex-col gap-6">
-        <dl className="grid grid-cols-3 gap-x-8 gap-y-5">
-          <div>
-            <dt className="text-kv-subtle text-sm">{t(`${af}.bebygdAreal`)}</dt>
-            <dd className="mt-1 font-medium tabular-nums">
-              {formatArea(arealfordeling.bebygdAreal)}
-            </dd>
-          </div>
-          <div>
-            <dt className="text-kv-subtle text-sm">{t(`${af}.bruksareal`)}</dt>
-            <dd className="mt-1 font-medium tabular-nums">
-              {formatArea(arealfordeling.bruksareal.totalt)}
-            </dd>
-          </div>
-          <div>
-            <dt className="text-kv-subtle text-sm">{t(`${af}.koordinater`)}</dt>
-            <dd className="mt-1 font-medium tabular-nums">
-              {arealfordeling.koordinat.nord} / {arealfordeling.koordinat.ost}
-            </dd>
-          </div>
-        </dl>
+        <Detaljgrid
+          felter={getArealDetaljfelter(arealfordeling)}
+          tom={tom}
+          className="gap-x-8 gap-y-5"
+        />
 
         <Table border className="w-full table-fixed">
           <Table.Head>

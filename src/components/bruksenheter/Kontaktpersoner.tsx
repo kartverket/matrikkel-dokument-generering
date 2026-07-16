@@ -1,30 +1,52 @@
-import { Heading, Paragraph, Tag } from "@kv-designsystem/react"
+import { Heading, Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { BruksenhetDetalj } from "../../lib/schema/byggRapportSchema"
+import { formatAdresse } from "../../lib/utils/formatAdresse"
 import { joinStrings } from "../../lib/utils/joinStrings"
+import { Detaljgrid, lagDetaljfeltBuilder } from "../Detaljfelt"
+import { PersonStatusTag } from "./PersonStatusTag"
 
 interface Props {
   kontaktpersoner: BruksenhetDetalj["kontaktpersoner"]
 }
 
-function getAdresseLinjer(
-  kontaktperson: BruksenhetDetalj["kontaktpersoner"][number],
+type Kontaktperson = Props["kontaktpersoner"][number]
+const kontaktpersonFelt = lagDetaljfeltBuilder(
+  "rapport.BYG0011.kontaktpersoner",
+)
+
+function getKontaktpersonDetaljfelter(
+  kontaktperson: Kontaktperson,
   tom: string,
 ) {
-  return joinStrings(
-    [
-      kontaktperson.adresselinje1,
-      kontaktperson.adresselinje2,
-      kontaktperson.adresselinje3,
+  return [
+    kontaktpersonFelt("rolle", kontaktperson.rolle),
+    kontaktpersonFelt("eierIdent", kontaktperson.eierIdent),
+    kontaktpersonFelt(
+      "kategori",
       joinStrings(
-        [kontaktperson.postnummeromradenr, kontaktperson.postnummeromradenavn],
-        " ",
+        [kontaktperson.kategorikode, kontaktperson.kontaktpersonKode],
+        " / ",
         tom,
       ),
-    ],
-    ", ",
-    tom,
-  )
+    ),
+    kontaktpersonFelt(
+      "adresselinjer",
+      formatAdresse(
+        [
+          kontaktperson.adresselinje1,
+          kontaktperson.adresselinje2,
+          kontaktperson.adresselinje3,
+        ],
+        kontaktperson.postnummeromradenr,
+        kontaktperson.postnummeromradenavn,
+        tom,
+      ),
+      { className: "col-span-2" },
+    ),
+    kontaktpersonFelt("land", kontaktperson.land),
+    kontaktpersonFelt("gyldigFra", kontaktperson.datofra),
+  ]
 }
 
 export function Kontaktpersoner({ kontaktpersoner }: Props) {
@@ -42,85 +64,28 @@ export function Kontaktpersoner({ kontaktpersoner }: Props) {
         <Paragraph className="text-kv-subtle text-sm">{tom}</Paragraph>
       ) : (
         <div className="flex flex-col gap-3">
-          {kontaktpersoner.map((kontaktperson) => {
-            const adresselinjer = getAdresseLinjer(kontaktperson, tom)
-            return (
-              <div
-                key={kontaktperson.eierIdent}
-                className="rounded-md border border-kv-border bg-kv-gray p-4"
-              >
-                <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-                  <Paragraph className="font-semibold">
-                    {kontaktperson.navn}
-                  </Paragraph>
-                  <Tag
-                    data-color={
-                      kontaktperson.eierErUtgatt ? "danger" : "success"
-                    }
-                    variant="outline"
-                  >
-                    {kontaktperson.eierErUtgatt
-                      ? t(`${translationKey}.utgatt`)
-                      : (kontaktperson.statuskode ?? tom)}
-                  </Tag>
-                </div>
-
-                <dl className="grid grid-cols-3 gap-x-7 gap-y-4">
-                  <div>
-                    <dt className="text-kv-subtle text-sm">
-                      {t(`${translationKey}.rolle`)}
-                    </dt>
-                    <dd className="mt-1 font-medium">{kontaktperson.rolle}</dd>
-                  </div>
-                  <div>
-                    <dt className="text-kv-subtle text-sm">
-                      {t(`${translationKey}.eierIdent`)}
-                    </dt>
-                    <dd className="mt-1 font-medium">
-                      {kontaktperson.eierIdent}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt className="text-kv-subtle text-sm">
-                      {t(`${translationKey}.kategori`)}
-                    </dt>
-                    <dd className="mt-1 font-medium">
-                      {joinStrings(
-                        [
-                          kontaktperson.kategorikode,
-                          kontaktperson.kontaktpersonKode,
-                        ],
-                        " / ",
-                        tom,
-                      )}
-                    </dd>
-                  </div>
-                  <div className="col-span-2">
-                    <dt className="text-kv-subtle text-sm">
-                      {t(`${translationKey}.adresselinjer`)}
-                    </dt>
-                    <dd className="mt-1 font-medium">{adresselinjer}</dd>
-                  </div>
-                  <div>
-                    <dt className="text-kv-subtle text-sm">
-                      {t(`${translationKey}.land`)}
-                    </dt>
-                    <dd className="mt-1 font-medium">
-                      {kontaktperson.land ?? tom}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt className="text-kv-subtle text-sm">
-                      {t(`${translationKey}.gyldigFra`)}
-                    </dt>
-                    <dd className="mt-1 font-medium">
-                      {kontaktperson.datofra ?? tom}
-                    </dd>
-                  </div>
-                </dl>
+          {kontaktpersoner.map((kontaktperson) => (
+            <div
+              key={kontaktperson.eierIdent}
+              className="rounded-md border border-kv-border bg-kv-gray p-4"
+            >
+              <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+                <Paragraph className="font-semibold">
+                  {kontaktperson.navn}
+                </Paragraph>
+                <PersonStatusTag
+                  erUtgatt={kontaktperson.eierErUtgatt}
+                  statuskode={kontaktperson.statuskode}
+                  utgattLabel={t(`${translationKey}.utgatt`)}
+                  tom={tom}
+                />
               </div>
-            )
-          })}
+              <Detaljgrid
+                felter={getKontaktpersonDetaljfelter(kontaktperson, tom)}
+                tom={tom}
+              />
+            </div>
+          ))}
         </div>
       )}
     </div>

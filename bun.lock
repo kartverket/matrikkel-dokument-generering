@@ -11,13 +11,15 @@
         "@kv-designsystem/react": "^1.0.0-alpha.2",
         "@navikt/aksel-icons": "^8.15.0",
         "@tailwindcss/cli": "^4.3.2",
+        "clsx": "^2.1.1",
         "hono": "^4.12.30",
         "i18next": "^26.3.6",
         "prom-client": "^15.1.3",
         "react": "^19.2.6",
         "react-dom": "^19.2.6",
         "react-i18next": "^17.0.9",
-        "zod": "^4.4.3",
+        "tailwind-merge": "^3.6.0",
+        "zod": "^4.4.3"
       },
       "devDependencies": {
         "@babel/core": "^8.0.1",
@@ -35,9 +37,9 @@
         "husky": "^9.1.7",
         "tailwindcss": "^4.3.2",
         "typescript": "~6.0.2",
-        "vite": "^8.1.4",
-      },
-    },
+        "vite": "^8.1.4"
+      }
+    }
   },
   "packages": {
     "@asteasolutions/zod-to-openapi": ["@asteasolutions/zod-to-openapi@8.5.0", "", { "dependencies": { "openapi3-ts": "^4.1.2" }, "peerDependencies": { "zod": "^4.0.0" } }, "sha512-SABbKiObg5dLRiTFnqiW1WWwGcg1BJfmHtT2asIBnBHg6Smy/Ms2KHc650+JI4Hw7lSkdiNebEGXpwoxfben8Q=="],
@@ -435,6 +437,8 @@
     "supports-color": ["supports-color@10.2.2", "", {}, "sha512-SS+jx45GF1QjgEXQx4NJZV9ImqmO2NPz5FNsIHrsDjh2YsHnawpan7SNQ1o8NuhrbHZy9AZhIoCUiCeaW/C80g=="],
 
     "tabbable": ["tabbable@6.5.0", "", {}, "sha512-wieBHXygIm7OyQOu5hQlkk62/WyCFYGlWg7L6/ZCUZwx0o398Zkn4pVmMyfYhfMG8kGrj/Krt8eIk6UKC6VzwA=="],
+
+    "tailwind-merge": ["tailwind-merge@3.6.0", "", {}, "sha512-uxL7qAVQriqRQPAyK3pj66VqskWqoZ37PW94jwOTwNfq/z9oyu1V+eqrZqtR2+fCiXdYOZe/Modt8GtvqNzu+w=="],
 
     "tailwindcss": ["tailwindcss@4.3.2", "", {}, "sha512-WtctNNSH8A9jlMIqxzuYumOHU5uGZyRv0Q5svQl+oEPy5w84YpBxdb7MdqyiSPQge5jTJ6zFQLq0PFygdccSBA=="],
 

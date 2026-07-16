@@ -1,10 +1,53 @@
-import { Card, Heading, Paragraph, Tag } from "@kv-designsystem/react"
+import { Card, Heading, Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { BruksenhetDetalj } from "../../lib/schema/byggRapportSchema"
-import { joinStrings } from "../../lib/utils/joinStrings"
+import { formatAdresse } from "../../lib/utils/formatAdresse"
+import { Detaljgrid, lagDetaljfeltBuilder } from "../Detaljfelt"
+import { PersonStatusTag } from "./PersonStatusTag"
 
 interface Props {
   hjemmelshavere: BruksenhetDetalj["hjemmelshavere"]
+}
+
+const hjemmelshaverFelt = lagDetaljfeltBuilder("rapport.BYG0011.hjemmelshavere")
+
+const getAndel = (hjemmelshaver: Props["hjemmelshavere"][number]) => {
+  if (
+    hjemmelshaver.harAndel &&
+    hjemmelshaver.andelTeller !== null &&
+    hjemmelshaver.andelNevner !== null
+  ) {
+    return `${hjemmelshaver.andelTeller}/${hjemmelshaver.andelNevner}`
+  }
+  return null
+}
+
+const getHjemmelshaverDetaljfelter = (
+  hjemmelshaver: Props["hjemmelshavere"][number],
+  tom: string,
+) => {
+  return [
+    hjemmelshaverFelt("eierIdent", hjemmelshaver.eierIdent),
+    hjemmelshaverFelt("andel", getAndel(hjemmelshaver)),
+    hjemmelshaverFelt(
+      "adresselinjer",
+      formatAdresse(
+        [
+          hjemmelshaver.adresselinje1,
+          hjemmelshaver.adresselinje2,
+          hjemmelshaver.adresselinje3,
+        ],
+        hjemmelshaver.postnummer,
+        hjemmelshaver.poststed,
+        tom,
+      ),
+      { className: "col-span-2" },
+    ),
+    hjemmelshaverFelt("land", hjemmelshaver.land),
+    hjemmelshaverFelt("gyldigFra", hjemmelshaver.datofra),
+    hjemmelshaverFelt("gyldigTil", hjemmelshaver.datotil),
+    hjemmelshaverFelt("kategori", hjemmelshaver.kategorikode),
+  ]
 }
 
 export function Hjemmelshavere({ hjemmelshavere }: Props) {
@@ -21,98 +64,26 @@ export function Hjemmelshavere({ hjemmelshavere }: Props) {
         <Paragraph className="text-kv-subtle text-sm">{tom}</Paragraph>
       ) : (
         <div className="grid grid-cols-2 gap-3">
-          {hjemmelshavere.map((hjemmelshaver) => {
-            return (
-              <Card key={hjemmelshaver.eierIdent}>
-                <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-                  <Paragraph className="font-semibold">
-                    {hjemmelshaver.navn}
-                  </Paragraph>
-                  <Tag data-color="success" variant="outline">
-                    {hjemmelshaver.eierErUtgatt
-                      ? t(`${translationKey}.utgatt`)
-                      : (hjemmelshaver.statuskode ?? tom)}
-                  </Tag>
-                </div>
+          {hjemmelshavere.map((hjemmelshaver) => (
+            <Card key={hjemmelshaver.eierIdent}>
+              <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+                <Paragraph className="font-semibold">
+                  {hjemmelshaver.navn}
+                </Paragraph>
+                <PersonStatusTag
+                  erUtgatt={hjemmelshaver.eierErUtgatt}
+                  statuskode={hjemmelshaver.statuskode}
+                  utgattLabel={t(`${translationKey}.utgatt`)}
+                  tom={tom}
+                />
+              </div>
 
-                <dl className="grid grid-cols-3 gap-x-7 gap-y-4">
-                  <div>
-                    <dt className="text-kv-subtle text-sm">
-                      {t(`${translationKey}.eierIdent`)}
-                    </dt>
-                    <dd className="mt-1 font-medium">
-                      {hjemmelshaver.eierIdent}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt className="text-kv-subtle text-sm">
-                      {t(`${translationKey}.andel`)}
-                    </dt>
-                    <dd className="mt-1 font-medium">
-                      {hjemmelshaver.harAndel &&
-                      hjemmelshaver.andelTeller !== null &&
-                      hjemmelshaver.andelNevner !== null
-                        ? `${hjemmelshaver.andelTeller}/${hjemmelshaver.andelNevner}`
-                        : tom}
-                    </dd>
-                  </div>
-                  <div className="col-span-2">
-                    <dt className="text-kv-subtle text-sm">
-                      {t(`${translationKey}.adresselinjer`)}
-                    </dt>
-                    <dd className="mt-1 font-medium">
-                      {joinStrings(
-                        [
-                          hjemmelshaver.adresselinje1,
-                          hjemmelshaver.adresselinje2,
-                          hjemmelshaver.adresselinje3,
-                          joinStrings(
-                            [hjemmelshaver.postnummer, hjemmelshaver.poststed],
-                            " ",
-                            tom,
-                          ),
-                        ],
-                        ", ",
-                        tom,
-                      )}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt className="text-kv-subtle text-sm">
-                      {t(`${translationKey}.land`)}
-                    </dt>
-                    <dd className="mt-1 font-medium">
-                      {hjemmelshaver.land ?? tom}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt className="text-kv-subtle text-sm">
-                      {t(`${translationKey}.gyldigFra`)}
-                    </dt>
-                    <dd className="mt-1 font-medium">
-                      {hjemmelshaver.datofra ?? tom}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt className="text-kv-subtle text-sm">
-                      {t(`${translationKey}.gyldigTil`)}
-                    </dt>
-                    <dd className="mt-1 font-medium">
-                      {hjemmelshaver.datotil ?? tom}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt className="text-kv-subtle text-sm">
-                      {t(`${translationKey}.kategori`)}
-                    </dt>
-                    <dd className="mt-1 font-medium">
-                      {hjemmelshaver.kategorikode ?? tom}
-                    </dd>
-                  </div>
-                </dl>
-              </Card>
-            )
-          })}
+              <Detaljgrid
+                felter={getHjemmelshaverDetaljfelter(hjemmelshaver, tom)}
+                tom={tom}
+              />
+            </Card>
+          ))}
         </div>
       )}
     </div>

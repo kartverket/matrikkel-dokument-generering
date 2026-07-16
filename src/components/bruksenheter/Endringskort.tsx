@@ -1,17 +1,110 @@
 import { Card, Divider, Heading, Paragraph, Tag } from "@kv-designsystem/react"
+import { Fragment } from "react"
 import { useTranslation } from "react-i18next"
 import type { BruksenhetDetalj } from "../../lib/schema/byggRapportSchema"
-import { getDetaljVerdi } from "../../lib/utils/getDetaljVerdi"
-import { EndringsDetalje } from "./EndringsDetalje"
+import {
+  type DetaljfeltData,
+  Detaljgrid,
+  lagDetaljfeltBuilder,
+} from "../Detaljfelt"
 
-interface Props {
-  endring: BruksenhetDetalj["endringer"][number]
-}
+type Endring = BruksenhetDetalj["endringer"][number]
+const bruksenhetFelt = lagDetaljfeltBuilder("rapport.BYG0011.bruksenheter")
+const etasjefelt = lagDetaljfeltBuilder("rapport.BYG0011.etasjer")
 
-export function Endringskort({ endring }: Props) {
+export function Endringskort({ endring }: { endring: Endring }) {
   const { t } = useTranslation()
-  const translationKey = "rapport.BYG0011.bruksenheter"
   const tom = t("tom")
+  const grupper = [
+    {
+      title: t("rapport.BYG0011.bruksenheter.grunnopplysninger"),
+      felter: [
+        bruksenhetFelt("endringsId", endring.id),
+        bruksenhetFelt("bygningsId", endring.bygningId),
+        bruksenhetFelt("lopenr", endring.lopenr),
+        bruksenhetFelt("endringskode", endring.endringskode),
+        bruksenhetFelt("bygningstype", endring.bygningstype),
+        bruksenhetFelt("bestaaende", endring.bestaaende),
+        bruksenhetFelt("bygningsstatus", endring.bygningsstatus),
+        bruksenhetFelt("bygningsstatuskode", endring.bygningsstatuskode),
+        bruksenhetFelt(
+          "bygningsstatusKortkode",
+          endring.bygningsstatusKortkode,
+        ),
+        bruksenhetFelt("endringsbeskrivelse", endring.beskrivelse, {
+          className: "col-span-3",
+        }),
+      ],
+    },
+    {
+      title: t("rapport.BYG0011.bruksenheter.arealOgPlassering"),
+      felter: [
+        bruksenhetFelt("antallBoenheter", endring.antallBoenheter),
+        bruksenhetFelt("bruksarealEndring", endring.bruksareal),
+        bruksenhetFelt("bruttoarealEndring", endring.bruttoareal),
+        bruksenhetFelt("bebygdArealEndring", endring.bebygdAreal),
+        bruksenhetFelt("koordinater", endring.koordinater, {
+          className: "col-span-2",
+        }),
+      ],
+    },
+    {
+      title: t("rapport.BYG0011.bruksenheter.vedtakOgDatoer"),
+      felter: [
+        bruksenhetFelt("rammetillatelse", endring.rammetillatelse),
+        bruksenhetFelt(
+          "igangsettingstillatelse",
+          endring.igangsettingstillatelse,
+        ),
+        bruksenhetFelt(
+          "midlertidigBrukstillatelse",
+          endring.midlertidigBrukstillatelse,
+        ),
+        bruksenhetFelt("ferdigattest", endring.ferdigattest),
+        bruksenhetFelt("tattIBruk", endring.tattIBruk),
+        bruksenhetFelt("utgaattRevet", endring.utgaattRevet),
+      ],
+    },
+  ] satisfies Array<{ title: string; felter: DetaljfeltData[] }>
+  const lister = [
+    {
+      title: t("rapport.BYG0011.bruksenheter.etasjerIEndringen"),
+      emptyText: t("rapport.BYG0011.bruksenheter.ingenEtasjer"),
+      elementer: endring.etasjer.map((etasje) => ({
+        key: `${etasje.etasjeplan}-${etasje.etasje}`,
+        felter: [
+          etasjefelt("etasjeplan", etasje.etasjeplan),
+          etasjefelt("etasje", etasje.etasje),
+          etasjefelt("antallBoenheter", etasje.antallBoenheter),
+          etasjefelt("bruksarealBolig", etasje.bruksarealBolig),
+          etasjefelt("bruksarealAnnet", etasje.bruksarealAnnet),
+          etasjefelt("bruksarealTotalt", etasje.bruksarealTotalt),
+          etasjefelt("bruttoarealBolig", etasje.bruttoarealBolig),
+          etasjefelt("bruttoarealAnnet", etasje.bruttoarealAnnet),
+          etasjefelt("bruttoarealTotalt", etasje.bruttoarealTotalt),
+        ],
+      })),
+    },
+    {
+      title: t("rapport.BYG0011.bruksenheter.kulturminnerIEndringen"),
+      emptyText: t("rapport.BYG0011.bruksenheter.ingenKulturminner"),
+      elementer: endring.kulturminner.map((kulturminne) => ({
+        key: kulturminne.id,
+        felter: [
+          bruksenhetFelt("kulturminneId", kulturminne.id),
+          bruksenhetFelt("kulturminneNavn", kulturminne.navn),
+          bruksenhetFelt("kulturminneStatus", kulturminne.status),
+          bruksenhetFelt("kulturminneKategori", kulturminne.kategori, {
+            className: "col-span-3",
+          }),
+        ],
+      })),
+    },
+  ] satisfies Array<{
+    title: string
+    emptyText: string
+    elementer: Array<{ key: string; felter: DetaljfeltData[] }>
+  }>
 
   return (
     <Card
@@ -29,204 +122,40 @@ export function Endringskort({ endring }: Props) {
           </Tag>
         </div>
 
-        <Paragraph className="mb-3 font-bold text-kv-subtle text-xs tracking-wide">
-          {t(`${translationKey}.grunnopplysninger`)}
-        </Paragraph>
-        <dl className="grid grid-cols-3 gap-x-7 gap-y-4">
-          <EndringsDetalje
-            label={t(`${translationKey}.endringsId`)}
-            value={endring.id}
-          />
-          <EndringsDetalje
-            label={t(`${translationKey}.bygningsId`)}
-            value={endring.bygningId}
-          />
-          <EndringsDetalje
-            label={t(`${translationKey}.lopenr`)}
-            value={endring.lopenr}
-          />
-          <EndringsDetalje
-            label={t(`${translationKey}.endringskode`)}
-            {...getDetaljVerdi(endring.endringskode, tom)}
-          />
-          <EndringsDetalje
-            label={t(`${translationKey}.bygningstype`)}
-            value={endring.bygningstype}
-          />
-          <EndringsDetalje
-            label={t(`${translationKey}.bestaaende`)}
-            value={endring.bestaaende}
-          />
-          <EndringsDetalje
-            label={t(`${translationKey}.bygningsstatus`)}
-            value={endring.bygningsstatus}
-          />
-          <EndringsDetalje
-            label={t(`${translationKey}.bygningsstatuskode`)}
-            value={endring.bygningsstatuskode}
-          />
-          <EndringsDetalje
-            label={t(`${translationKey}.bygningsstatusKortkode`)}
-            value={endring.bygningsstatusKortkode}
-          />
-          <EndringsDetalje
-            label={t(`${translationKey}.endringsbeskrivelse`)}
-            {...getDetaljVerdi(endring.beskrivelse, tom)}
-            className="col-span-3"
-          />
-        </dl>
+        {grupper.map(({ title, felter }, index) => (
+          <Fragment key={title}>
+            {index > 0 && <Divider className="my-5" />}
+            <Paragraph className="mb-3 font-bold text-kv-subtle text-xs tracking-wide">
+              {title}
+            </Paragraph>
+            <Detaljgrid felter={felter} tom={tom} />
+          </Fragment>
+        ))}
 
-        <Divider className="my-5" />
-        <Paragraph className="mb-3 font-bold text-kv-subtle text-xs tracking-wide">
-          {t(`${translationKey}.arealOgPlassering`)}
-        </Paragraph>
-        <dl className="grid grid-cols-3 gap-x-7 gap-y-4">
-          <EndringsDetalje
-            label={t(`${translationKey}.antallBoenheter`)}
-            value={endring.antallBoenheter}
-          />
-          <EndringsDetalje
-            label={t(`${translationKey}.bruksarealEndring`)}
-            value={endring.bruksareal}
-          />
-          <EndringsDetalje
-            label={t(`${translationKey}.bruttoarealEndring`)}
-            value={endring.bruttoareal}
-          />
-          <EndringsDetalje
-            label={t(`${translationKey}.bebygdArealEndring`)}
-            value={endring.bebygdAreal}
-          />
-          <EndringsDetalje
-            label={t(`${translationKey}.koordinater`)}
-            value={endring.koordinater}
-            className="col-span-2"
-          />
-        </dl>
-
-        <Divider className="my-5" />
-        <Paragraph className="mb-3 font-bold text-kv-subtle text-xs tracking-wide">
-          {t(`${translationKey}.vedtakOgDatoer`)}
-        </Paragraph>
-        <dl className="grid grid-cols-3 gap-x-7 gap-y-4">
-          <EndringsDetalje
-            label={t(`${translationKey}.rammetillatelse`)}
-            {...getDetaljVerdi(endring.rammetillatelse, tom)}
-          />
-          <EndringsDetalje
-            label={t(`${translationKey}.igangsettingstillatelse`)}
-            {...getDetaljVerdi(endring.igangsettingstillatelse, tom)}
-          />
-          <EndringsDetalje
-            label={t(`${translationKey}.midlertidigBrukstillatelse`)}
-            {...getDetaljVerdi(endring.midlertidigBrukstillatelse, tom)}
-          />
-          <EndringsDetalje
-            label={t(`${translationKey}.ferdigattest`)}
-            {...getDetaljVerdi(endring.ferdigattest, tom)}
-          />
-          <EndringsDetalje
-            label={t(`${translationKey}.tattIBruk`)}
-            {...getDetaljVerdi(endring.tattIBruk, tom)}
-          />
-          <EndringsDetalje
-            label={t(`${translationKey}.utgaattRevet`)}
-            {...getDetaljVerdi(endring.utgaattRevet, tom)}
-          />
-        </dl>
-
-        <Divider className="my-5" />
-        <Paragraph className="mb-3 font-bold text-kv-subtle text-xs tracking-wide">
-          {t(`${translationKey}.etasjerIEndringen`)}
-        </Paragraph>
-        {endring.etasjer.length === 0 ? (
-          <Paragraph className="text-kv-subtle text-sm">
-            {t(`${translationKey}.ingenEtasjer`)}
-          </Paragraph>
-        ) : (
-          <div className="divide-y divide-kv-border">
-            {endring.etasjer.map((etasje) => (
-              <dl
-                key={`${etasje.etasjeplan}-${etasje.etasje}`}
-                className="grid break-inside-avoid grid-cols-3 gap-x-7 gap-y-4 py-4 first:pt-0 last:pb-0"
-              >
-                <EndringsDetalje
-                  label={t("rapport.BYG0011.etasjer.etasjeplan")}
-                  value={etasje.etasjeplan}
-                />
-                <EndringsDetalje
-                  label={t("rapport.BYG0011.etasjer.etasje")}
-                  value={etasje.etasje}
-                />
-                <EndringsDetalje
-                  label={t("rapport.BYG0011.etasjer.antallBoenheter")}
-                  value={etasje.antallBoenheter}
-                />
-                <EndringsDetalje
-                  label={t("rapport.BYG0011.etasjer.bruksarealBolig")}
-                  value={etasje.bruksarealBolig}
-                />
-                <EndringsDetalje
-                  label={t("rapport.BYG0011.etasjer.bruksarealAnnet")}
-                  value={etasje.bruksarealAnnet}
-                />
-                <EndringsDetalje
-                  label={t("rapport.BYG0011.etasjer.bruksarealTotalt")}
-                  value={etasje.bruksarealTotalt}
-                />
-                <EndringsDetalje
-                  label={t("rapport.BYG0011.etasjer.bruttoarealBolig")}
-                  value={etasje.bruttoarealBolig}
-                />
-                <EndringsDetalje
-                  label={t("rapport.BYG0011.etasjer.bruttoarealAnnet")}
-                  value={etasje.bruttoarealAnnet}
-                />
-                <EndringsDetalje
-                  label={t("rapport.BYG0011.etasjer.bruttoarealTotalt")}
-                  value={etasje.bruttoarealTotalt}
-                />
-              </dl>
-            ))}
-          </div>
-        )}
-
-        <Divider className="my-5" />
-        <Paragraph className="mb-3 font-bold text-kv-subtle text-xs tracking-wide">
-          {t(`${translationKey}.kulturminnerIEndringen`)}
-        </Paragraph>
-        {endring.kulturminner.length === 0 ? (
-          <Paragraph className="text-kv-subtle text-sm">
-            {t(`${translationKey}.ingenKulturminner`)}
-          </Paragraph>
-        ) : (
-          <div className="divide-y divide-kv-border">
-            {endring.kulturminner.map((kulturminne) => (
-              <dl
-                key={kulturminne.id}
-                className="grid break-inside-avoid grid-cols-3 gap-x-7 gap-y-4 py-4 first:pt-0 last:pb-0"
-              >
-                <EndringsDetalje
-                  label={t(`${translationKey}.kulturminneId`)}
-                  value={kulturminne.id}
-                />
-                <EndringsDetalje
-                  label={t(`${translationKey}.kulturminneNavn`)}
-                  value={kulturminne.navn}
-                />
-                <EndringsDetalje
-                  label={t(`${translationKey}.kulturminneStatus`)}
-                  value={kulturminne.status}
-                />
-                <EndringsDetalje
-                  label={t(`${translationKey}.kulturminneKategori`)}
-                  value={kulturminne.kategori}
-                  className="col-span-3"
-                />
-              </dl>
-            ))}
-          </div>
-        )}
+        {lister.map((liste) => (
+          <Fragment key={liste.title}>
+            <Divider className="my-5" />
+            <Paragraph className="mb-3 font-bold text-kv-subtle text-xs tracking-wide">
+              {liste.title}
+            </Paragraph>
+            {liste.elementer.length === 0 ? (
+              <Paragraph className="text-kv-subtle text-sm">
+                {liste.emptyText}
+              </Paragraph>
+            ) : (
+              <div className="divide-y divide-kv-border">
+                {liste.elementer.map(({ key, felter }) => (
+                  <Detaljgrid
+                    key={key}
+                    felter={felter}
+                    tom={tom}
+                    className="break-inside-avoid py-4 first:pt-0 last:pb-0"
+                  />
+                ))}
+              </div>
+            )}
+          </Fragment>
+        ))}
       </Card.Block>
     </Card>
   )
