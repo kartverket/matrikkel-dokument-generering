@@ -2,6 +2,7 @@ import { shared } from "./resources.shared"
 
 export const nb = {
   ...shared,
+  tom: "tom",
   rapport: {
     BYG0011: {
       title: "Bygning {{bygningsnr}} – {{bygningstype}}",
