@@ -12,12 +12,12 @@ spec:
 
   accessPolicy:
     outbound:
-      external:
-        - host: "pdf-generator.atkv3-dev.kartverket-intern.cloud"
+      rules:
+        - application: pdf-generator
 
   env:
     - name: GOTENBERG_URL
-      value: "http://pdf-generator.atkv3-dev.kartverket-intern.cloud"
+      value: "http://pdf-generator.matrikkel-main:8089"
 
   resources:
     requests:
