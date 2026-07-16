@@ -5,6 +5,7 @@ export const nn = {
   tom: "tom",
   rapport: {
     BYG0011: {
+      rapportTittel: "Bygg Rapport",
       title: "Bygning {{bygningsnr}} – {{bygningstype}}",
       utvalgskriterier: {
         title: "Utvalskriterier",
@@ -101,6 +102,7 @@ export const nn = {
         hjemmelshaverEier: "HEIMELSHAVAR (EIGAR)",
         ingenEndringer: "Ingen registrerte endringar på brukseininga.",
         endringerPaBruksenheten: "ENDRINGAR PÅ BRUKSEININGA",
+        endringTittel: "Bygningsendring {{lopenr}}",
         grunnopplysninger: "GRUNNOPPLYSNINGAR",
         lopenr: "Løpenummer",
         endringskode: "Endringskode",

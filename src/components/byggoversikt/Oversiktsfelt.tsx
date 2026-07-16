@@ -8,9 +8,14 @@ import type {
 interface Props {
   bygning: Bygning
   endring: Bygningsendring
+  koordinatsystem: string
 }
 
-export default function Oversiktsfelt({ bygning, endring }: Props) {
+export default function Oversiktsfelt({
+  bygning,
+  endring,
+  koordinatsystem,
+}: Props) {
   const { t } = useTranslation()
   const key = "rapport.BYG0011.byggoversikt"
 
@@ -21,7 +26,7 @@ export default function Oversiktsfelt({ bygning, endring }: Props) {
     antallBoenheter: endring.antallBoenheter,
     naeringsgruppe: bygning.naeringsgruppe,
     koordinater: `${endring.koordinat.nord} N / ${endring.koordinat.ost} Ø`,
-    koordinatsystem: endring.koordinatsystem,
+    koordinatsystem,
     etasjer: endring.etasjeplan
       .map((e) => `${e.etasjeplan} (${e.etasje})`)
       .join(", "),

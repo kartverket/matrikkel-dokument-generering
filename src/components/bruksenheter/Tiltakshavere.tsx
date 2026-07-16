@@ -10,10 +10,7 @@ import { PersonCard } from "../PersonCard"
 import { PersonGrid } from "../PersonGrid"
 
 interface Props {
-  tiltakshavere: Array<{
-    endringId: number
-    tiltakshaver: Tiltakshaver
-  }>
+  tiltakshavere: Tiltakshaver[]
 }
 
 const tiltakshaverFelt = lagDetaljfeltBuilder("rapport.BYG0011.tiltakshavere")
@@ -62,7 +59,7 @@ export function Tiltakshavere({ tiltakshavere }: Props) {
 
   return (
     <PersonGrid title={t(`${translationKey}.title`)} tom={tom}>
-      {tiltakshavere.map(({ tiltakshaver }, index) => (
+      {tiltakshavere.map((tiltakshaver, index) => (
         <PersonCard
           key={String(index)}
           navn={tiltakshaver.navn}

@@ -15,13 +15,12 @@ export function DocumentComponent({ data }: { data: ByggRapport }) {
       <Utvalgskriterier index={1} kriterier={data.utvalgskriterier} />
       {data.bygninger.map((bygning) => (
         <Fragment key={bygning.id}>
-          <Byggoversikt index={2} bygning={bygning} />
-          <Bruksenheter
-            index={3}
-            bruksenheter={bygning.bruksenheter}
-            gjeldende={bygning.gjeldende}
-            endringer={bygning.endringer}
+          <Byggoversikt
+            index={2}
+            bygning={bygning}
+            koordinatsystem={data.koordinatsystem}
           />
+          <Bruksenheter index={3} bygning={bygning} />
         </Fragment>
       ))}
     </>

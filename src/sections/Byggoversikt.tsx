@@ -7,20 +7,21 @@ import Nokkeltall from "../components/byggoversikt/Nokkeltall"
 import Oversiktsfelt from "../components/byggoversikt/Oversiktsfelt"
 import { Section } from "../components/Section"
 import type { Bygning } from "../lib/schema/byggRapportSchema"
-import { isFerdigstilt } from "../lib/utils/isFerdigstilt"
+import { finnGjeldendeBygningsendring } from "../lib/utils/isFerdigstilt"
 
 interface Props {
   index: number
   bygning: Bygning
+  koordinatsystem: string
 }
 
-export default function Byggoversikt({ bygning, index }: Props) {
+export default function Byggoversikt({
+  bygning,
+  index,
+  koordinatsystem,
+}: Props) {
   const { t } = useTranslation()
-
-  const gjeldende =
-    bygning.endringer
-      .filter(isFerdigstilt)
-      .toSorted((a, b) => b.lopenr - a.lopenr)[0] ?? bygning.gjeldende
+  const gjeldende = finnGjeldendeBygningsendring(bygning.endringer)
 
   return (
     <Section index={index} title={t("rapport.BYG0011.byggoversikt.title")}>
@@ -28,7 +29,11 @@ export default function Byggoversikt({ bygning, index }: Props) {
         <BygningHeader bygning={bygning} endring={gjeldende} />
         <Divider />
         <Nokkeltall endring={gjeldende} />
-        <Oversiktsfelt bygning={bygning} endring={gjeldende} />
+        <Oversiktsfelt
+          bygning={bygning}
+          endring={gjeldende}
+          koordinatsystem={koordinatsystem}
+        />
         <ArealFordeling endring={gjeldende} />
         <Historikk endringer={bygning.endringer} />
       </div>
