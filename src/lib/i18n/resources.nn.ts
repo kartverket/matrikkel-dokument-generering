@@ -206,6 +206,15 @@ export const nn = {
         erFerdigstilt: "Ferdigstilt",
         minner: "SEFRAK / enkeltminne",
       },
+      registrerteVedtak: {
+        title: "Registrerte vedtak",
+        rammetillatelse: "Rammeløyve",
+        igangsettingstillatelse: "Igangsetjingsløyve",
+        midlertidigBrukstillatelse: "Mellombels bruksløyve",
+        ferdigattest: "Ferdigattest",
+        tattIBruk: "Teke i bruk",
+        utgaattRevet: "Utgått / rive",
+      },
       tiltakshavere: {
         title: "Tiltakshavarar",
         rolle: "Rolle i tiltaket",

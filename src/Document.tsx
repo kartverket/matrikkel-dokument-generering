@@ -7,8 +7,6 @@ import Bruksenheter from "./sections/Bruksenheter.tsx"
 import Byggoversikt from "./sections/Byggoversikt.tsx"
 import { Bygningslinje } from "./sections/Bygningslinje.tsx"
 import { Metadata } from "./sections/Metadata.tsx"
-import RegistrerteVedtak from "./sections/RegistrerteVedtak.tsx"
-import { Tiltakshavere } from "./sections/Tiltakshavere.tsx"
 import { Utvalgskriterier } from "./sections/Utvalgskriterier.tsx"
 
 export function DocumentComponent({ data }: { data: ByggRapport }) {
@@ -20,18 +18,11 @@ export function DocumentComponent({ data }: { data: ByggRapport }) {
         <Fragment key={bygning.id}>
           <Bygningslinje index={2} bygning={bygning} />
           <Byggoversikt index={3} bygning={bygning} />
-          <Bruksenheter index={4} bruksenheter={bygning.bruksenheter} />
-
-          {bygning.endringer.map((endring) => (
-            <Fragment key={endring.id}>
-              {endring.bruksenheter.length > 0 && (
-                <RegistrerteVedtak index={5} datoer={endring.datoer} />
-              )}
-              {data.utvalgskriterier.subrapporter.tiltakshavere && (
-                <Tiltakshavere index={6} endring={endring} />
-              )}
-            </Fragment>
-          ))}
+          <Bruksenheter
+            index={4}
+            bruksenheter={bygning.bruksenheter}
+            endringer={bygning.endringer}
+          />
         </Fragment>
       ))}
     </>
