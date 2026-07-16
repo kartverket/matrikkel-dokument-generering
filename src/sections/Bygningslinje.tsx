@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next"
 import { Section } from "../components/Section.tsx"
 import type { Bygning } from "../lib/schema/byggRapportSchema"
 import { arealLinje } from "../lib/utils/arealLinje"
-import { formatArea } from "../lib/utils/format"
+import { formatArea } from "../lib/utils/formatArea.ts"
 import { getKulturMinner } from "../lib/utils/getKulturMinner"
 import { isFerdigstilt } from "../lib/utils/isFerdigstilt"
 

@@ -2,7 +2,7 @@ import { Heading, Table } from "@kv-designsystem/react"
 import { Fragment } from "react"
 import { useTranslation } from "react-i18next"
 import type { BruksenhetDetalj } from "../lib/schema/byggRapportSchema"
-import { formatArea } from "../lib/utils/format"
+import { formatArea } from "../lib/utils/formatArea"
 import { Detaljgrid, lagDetaljfeltBuilder } from "./Detaljfelt"
 
 interface Props {

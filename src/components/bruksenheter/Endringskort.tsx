@@ -19,8 +19,6 @@ export function Endringskort({ endring }: { endring: Endring }) {
     {
       title: t("rapport.BYG0011.bruksenheter.grunnopplysninger"),
       felter: [
-        bruksenhetFelt("endringsId", endring.id),
-        bruksenhetFelt("bygningsId", endring.bygningId),
         bruksenhetFelt("lopenr", endring.lopenr),
         bruksenhetFelt("endringskode", endring.endringskode),
         bruksenhetFelt("bygningstype", endring.bygningstype),
@@ -91,7 +89,6 @@ export function Endringskort({ endring }: { endring: Endring }) {
       elementer: endring.kulturminner.map((kulturminne) => ({
         key: kulturminne.id,
         felter: [
-          bruksenhetFelt("kulturminneId", kulturminne.id),
           bruksenhetFelt("kulturminneNavn", kulturminne.navn),
           bruksenhetFelt("kulturminneStatus", kulturminne.status),
           bruksenhetFelt("kulturminneKategori", kulturminne.kategori, {
