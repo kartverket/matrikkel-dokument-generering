@@ -38,7 +38,7 @@ export default function Nokkeltall({ endring }: Props) {
       {kort.map(({ id, areal, label, beskrivelse }) => (
         <li key={id}>
           <Card>
-            <Paragraph className="text-3xl">{formatArea(areal)}</Paragraph>
+            <Paragraph className="text-3xl">{formatArea(t, areal)}</Paragraph>
             <Label>{label}</Label>
             <Paragraph data-size="sm">{beskrivelse}</Paragraph>
           </Card>

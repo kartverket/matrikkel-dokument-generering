@@ -75,7 +75,7 @@ export function Bygningslinje({ index, bygning }: Props) {
               <Table.Cell>{arealLinje(endring.bruksareal)}</Table.Cell>
               <Table.Cell>{arealLinje(endring.bruttoareal)}</Table.Cell>
               <Table.Cell>{endring.antallBoenheter}</Table.Cell>
-              <Table.Cell>{formatArea(endring.bebygdAreal)}</Table.Cell>
+              <Table.Cell>{formatArea(t, endring.bebygdAreal)}</Table.Cell>
               <Table.Cell>
                 {endring.koordinat.nord}, {endring.koordinat.ost}
               </Table.Cell>

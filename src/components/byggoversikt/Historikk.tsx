@@ -1,8 +1,12 @@
 import { Heading, Paragraph, Tag } from "@kv-designsystem/react"
+import { Activity } from "react"
 import { useTranslation } from "react-i18next"
 import type { Bygningsendring } from "../../lib/schema/byggRapportSchema"
-import { describeChange } from "../../lib/utils/describeChange"
 import { formatDate } from "../../lib/utils/formatDate"
+import {
+  lagHistorikkbeskrivelseForBygningsendring,
+  sorterBygningsendringerKronologisk,
+} from "./byggHistorikk"
 
 interface Props {
   endringer: Bygningsendring[]
@@ -10,38 +14,23 @@ interface Props {
 
 const groenneStatuser = new Set(["FA", "TB"])
 
-function primaerDato({ datoer, bygningsstatus }: Bygningsendring) {
-  return (
-    {
-      FA: datoer.ferdigattest,
-      MB: datoer.midlertidigBrukstillatelse,
-      IG: datoer.igangsettingstillatelse,
-      RA: datoer.rammetillatelse,
-      TB: datoer.tattIBruk,
-      BR: datoer.utgaattRevet,
-    }[bygningsstatus.kortkode] ?? null
-  )
-}
-
 export default function Historikk({ endringer }: Props) {
   const { t } = useTranslation()
   const h = "rapport.BYG0011.byggoversikt.historikk"
 
   if (endringer.length === 0) return null
 
-  const stigende = endringer
-    .map((endring) => ({ endring, dato: primaerDato(endring) }))
-    .toSorted((a, b) => {
-      if (a.dato && b.dato) return a.dato.localeCompare(b.dato)
-      if (a.dato) return 1
-      if (b.dato) return -1
-      return a.endring.lopenr - b.endring.lopenr
-    })
+  const kronologiskeEndringer = sorterBygningsendringerKronologisk(endringer)
 
-  const rader = stigende
+  const rader = kronologiskeEndringer
     .map((rad, i) => ({
       ...rad,
-      beskrivelse: describeChange(t, rad.endring, stigende[i - 1]?.endring),
+      beskrivelse: lagHistorikkbeskrivelseForBygningsendring(
+        t,
+        h,
+        rad.endring,
+        kronologiskeEndringer[i - 1]?.endring,
+      ),
     }))
     .toReversed()
 
@@ -58,9 +47,9 @@ export default function Historikk({ endringer }: Props) {
 
       <ul className="space-y-8 border-kv-green border-l-3 pl-6">
         {rader.map(({ endring, dato, beskrivelse }) => {
-          const bruksenhetsnr = endring.bruksenheter
-            .map((b) => b.bruksenhetsnr)
-            .filter((v): v is string => Boolean(v))
+          const beroerteBruksenhetsnumre = endring.bruksenheter.flatMap(
+            ({ bruksenhetsnr }) => bruksenhetsnr ?? [],
+          )
           const erGroennStatus = groenneStatuser.has(
             endring.bygningsstatus.kortkode,
           )
@@ -86,13 +75,17 @@ export default function Historikk({ endringer }: Props) {
                 </Tag>
               </div>
               {beskrivelse && <Paragraph>{beskrivelse}</Paragraph>}
-              {bruksenhetsnr.length > 0 && (
+              <Activity
+                mode={
+                  beroerteBruksenhetsnumre.length > 0 ? "visible" : "hidden"
+                }
+              >
                 <Paragraph data-size="sm" className="text-kv-subtle">
                   {t(`${h}.beroerer`, {
-                    bruksenheter: bruksenhetsnr.join(" "),
+                    bruksenheter: beroerteBruksenhetsnumre.join(" "),
                   })}
                 </Paragraph>
-              )}
+              </Activity>
             </li>
           )
         })}

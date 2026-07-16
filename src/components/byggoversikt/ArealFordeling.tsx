@@ -43,19 +43,19 @@ export default function ArealFordeling({ endring }: Props) {
             <Table.Row key={`${e.etasjeplan}-${e.etasje}`}>
               <Table.Cell>{e.etasjeplan}</Table.Cell>
               <Table.Cell>{e.antallBoenheter}</Table.Cell>
-              <Table.Cell>{formatArea(e.bruksareal.bolig)}</Table.Cell>
-              <Table.Cell>{formatArea(e.bruksareal.annet)}</Table.Cell>
-              <Table.Cell>{formatArea(e.bruksareal.totalt)}</Table.Cell>
-              <Table.Cell>{formatArea(e.bruttoareal.totalt)}</Table.Cell>
+              <Table.Cell>{formatArea(t, e.bruksareal.bolig)}</Table.Cell>
+              <Table.Cell>{formatArea(t, e.bruksareal.annet)}</Table.Cell>
+              <Table.Cell>{formatArea(t, e.bruksareal.totalt)}</Table.Cell>
+              <Table.Cell>{formatArea(t, e.bruttoareal.totalt)}</Table.Cell>
             </Table.Row>
           ))}
           <Table.Row className="font-semibold">
             <Table.HeaderCell scope="row">{t(`${af}.sum`)}</Table.HeaderCell>
             <Table.Cell>{sum.antallBoenheter}</Table.Cell>
-            <Table.Cell>{formatArea(sum.bolig)}</Table.Cell>
-            <Table.Cell>{formatArea(sum.annet)}</Table.Cell>
-            <Table.Cell>{formatArea(sum.bra)}</Table.Cell>
-            <Table.Cell>{formatArea(sum.bta)}</Table.Cell>
+            <Table.Cell>{formatArea(t, sum.bolig)}</Table.Cell>
+            <Table.Cell>{formatArea(t, sum.annet)}</Table.Cell>
+            <Table.Cell>{formatArea(t, sum.bra)}</Table.Cell>
+            <Table.Cell>{formatArea(t, sum.bta)}</Table.Cell>
           </Table.Row>
         </Table.Body>
       </Table>

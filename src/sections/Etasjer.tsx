@@ -68,12 +68,12 @@ export function EtasjerSection({ index, etasjeEndringer }: Props) {
               <Table.Cell>{e.etasjeplan}</Table.Cell>
               <Table.Cell>{e.etasje}</Table.Cell>
               <Table.Cell>{e.antallBoenheter}</Table.Cell>
-              <Table.Cell>{formatArea(e.bruksareal.bolig)}</Table.Cell>
-              <Table.Cell>{formatArea(e.bruksareal.annet)}</Table.Cell>
-              <Table.Cell>{formatArea(e.bruksareal.totalt)}</Table.Cell>
-              <Table.Cell>{formatArea(e.bruttoareal.bolig)}</Table.Cell>
-              <Table.Cell>{formatArea(e.bruttoareal.annet)}</Table.Cell>
-              <Table.Cell>{formatArea(e.bruttoareal.totalt)}</Table.Cell>
+              <Table.Cell>{formatArea(t, e.bruksareal.bolig)}</Table.Cell>
+              <Table.Cell>{formatArea(t, e.bruksareal.annet)}</Table.Cell>
+              <Table.Cell>{formatArea(t, e.bruksareal.totalt)}</Table.Cell>
+              <Table.Cell>{formatArea(t, e.bruttoareal.bolig)}</Table.Cell>
+              <Table.Cell>{formatArea(t, e.bruttoareal.annet)}</Table.Cell>
+              <Table.Cell>{formatArea(t, e.bruttoareal.totalt)}</Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>
