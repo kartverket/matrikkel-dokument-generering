@@ -17,9 +17,10 @@ interface Props {
 export default function Byggoversikt({ bygning, index }: Props) {
   const { t } = useTranslation()
 
-  const gjeldende = bygning.endringer
-    .filter(isFerdigstilt)
-    .toSorted((a, b) => b.lopenr - a.lopenr)[0]
+  const gjeldende =
+    bygning.endringer
+      .filter(isFerdigstilt)
+      .toSorted((a, b) => b.lopenr - a.lopenr)[0] ?? bygning.gjeldende
 
   return (
     <Section index={index} title={t("rapport.BYG0011.byggoversikt.title")}>
