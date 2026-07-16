@@ -19,7 +19,7 @@ export function PersonGrid({ title, tom, children }: Props) {
       {personkort.length === 0 ? (
         <Paragraph className="text-kv-subtle text-sm">{tom}</Paragraph>
       ) : (
-        <div className="grid gap-3 grid-cols-2">{personkort}</div>
+        <div className="grid grid-cols-2 gap-3">{personkort}</div>
       )}
     </div>
   )
