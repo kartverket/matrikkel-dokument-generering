@@ -10,6 +10,11 @@ spec:
     - matrikkel-dokument-generering.atkv3-dev.kartverket-intern.cloud
   replicas: 1
 
+  accessPolicy:
+    outbound:
+      external:
+        - host: "pdf-generator.atkv3-dev.kartverket-intern.cloud"
+
   env:
     - name: GOTENBERG_URL
       value: "http://pdf-generator.atkv3-dev.kartverket-intern.cloud"
