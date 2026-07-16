@@ -180,7 +180,7 @@ export const nn = {
         gyldigFra: "Gyldig frå",
         kategori: "Kategori / kontakttype",
         status: "Status",
-        utgatt: "Død",
+        utgatt: "Avdød",
       },
       bygningslinje: {
         title: "Bygningsliner",
