@@ -8,7 +8,7 @@ interface Props {
 }
 
 export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {
-  const { t } = useTranslation()
+  const { i18n, t } = useTranslation()
   const uk = "rapport.BYG0011.utvalgskriterier"
 
   const ikkeAngitt = t(`${uk}.ikkeAngitt`)
@@ -61,7 +61,7 @@ export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {
               {t(`${uk}.felt.periodeFra`)}
             </Table.HeaderCell>
             <Table.Cell>
-              {formatDate(t, bygningsstatusKriterier.periodeFra, ikkeAngitt)}
+              {formatDate(i18n, bygningsstatusKriterier.periodeFra, ikkeAngitt)}
             </Table.Cell>
           </Table.Row>
           <Table.Row>
@@ -69,7 +69,7 @@ export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {
               {t(`${uk}.felt.periodeTil`)}
             </Table.HeaderCell>
             <Table.Cell>
-              {formatDate(t, bygningsstatusKriterier.periodeTil, ikkeAngitt)}
+              {formatDate(i18n, bygningsstatusKriterier.periodeTil, ikkeAngitt)}
             </Table.Cell>
           </Table.Row>
         </Table.Body>

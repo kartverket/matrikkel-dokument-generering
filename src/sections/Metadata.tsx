@@ -15,7 +15,7 @@ interface Props {
 }
 
 export function Metadata({ data }: Props) {
-  const { t } = useTranslation()
+  const { i18n, t } = useTranslation()
 
   return (
     <header className="bg-kv-blue-subtle p-4">
@@ -29,7 +29,7 @@ export function Metadata({ data }: Props) {
         </div>
         <div>
           <Paragraph>
-            {formatDate(t, data.generertTidspunkt, "", {
+            {formatDate(i18n, data.generertTidspunkt, "", {
               dateStyle: "long",
               timeStyle: "short",
             })}

@@ -1,4 +1,3 @@
-import { Card, Heading, Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { Tiltakshaver } from "../../lib/schema/byggRapportSchema"
 import {
@@ -6,8 +5,9 @@ import {
   formatPoststed,
 } from "../../lib/utils/formatAdresse"
 import { joinStrings } from "../../lib/utils/joinStrings"
-import { Detaljgrid, lagDetaljfeltBuilder } from "../Detaljfelt"
-import { PersonStatusTag } from "./PersonStatusTag"
+import { lagDetaljfeltBuilder } from "../Detaljfelt"
+import { PersonCard } from "../PersonCard"
+import { PersonGrid } from "../PersonGrid"
 
 interface Props {
   tiltakshavere: Array<{
@@ -32,7 +32,6 @@ function getTiltakshaverDetaljfelter(tiltakshaver: Tiltakshaver, tom: string) {
         ],
         tom,
       ),
-      { className: "col-span-2" },
     ),
     tiltakshaverFelt(
       "poststed",
@@ -60,38 +59,20 @@ export function Tiltakshavere({ tiltakshavere }: Props) {
   const { t } = useTranslation()
   const tom = t("tom")
   const translationKey = "rapport.BYG0011.tiltakshavere"
-  const harTiltakshavere = tiltakshavere.length > 0
 
   return (
-    <div>
-      <Heading level={4} data-size="xs" className="mb-4">
-        {t(`${translationKey}.title`)}
-      </Heading>
-      {harTiltakshavere ? (
-        <div className="grid grid-cols-2 gap-3">
-          {tiltakshavere.map(({ endringId, tiltakshaver }) => (
-            <Card key={`${endringId}-${tiltakshaver.eierIdent}`}>
-              <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-                <Paragraph className="font-semibold">
-                  {tiltakshaver.navn}
-                </Paragraph>
-                <PersonStatusTag
-                  erUtgatt={tiltakshaver.eierErUtgatt}
-                  statuskode={tiltakshaver.statuskode}
-                  utgattLabel={t(`${translationKey}.utgatt`)}
-                  tom={tom}
-                />
-              </div>
-              <Detaljgrid
-                felter={getTiltakshaverDetaljfelter(tiltakshaver, tom)}
-                tom={tom}
-              />
-            </Card>
-          ))}
-        </div>
-      ) : (
-        <Paragraph className="text-kv-subtle text-sm">{tom}</Paragraph>
-      )}
-    </div>
+    <PersonGrid title={t(`${translationKey}.title`)} tom={tom}>
+      {tiltakshavere.map(({ tiltakshaver }, index) => (
+        <PersonCard
+          key={String(index)}
+          navn={tiltakshaver.navn}
+          erUtgatt={tiltakshaver.eierErUtgatt}
+          statuskode={tiltakshaver.statuskode}
+          utgattLabel={t(`${translationKey}.utgatt`)}
+          felter={getTiltakshaverDetaljfelter(tiltakshaver, tom)}
+          tom={tom}
+        />
+      ))}
+    </PersonGrid>
   )
 }
