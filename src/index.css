@@ -30,6 +30,6 @@ body {
  */
 @media print {
   :root {
-    font-size: calc(8px);
+    font-size: calc(10px);
   }
 }
