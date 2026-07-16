@@ -6,7 +6,6 @@ import type { ByggRapport } from "./lib/schema/byggRapportSchema"
 import Bruksenheter from "./sections/Bruksenheter.tsx"
 import Byggoversikt from "./sections/Byggoversikt.tsx"
 import { Bygningslinje } from "./sections/Bygningslinje.tsx"
-import { EtasjerSection } from "./sections/Etasjer.tsx"
 import { Metadata } from "./sections/Metadata.tsx"
 import RegistrerteVedtak from "./sections/RegistrerteVedtak.tsx"
 import { Tiltakshavere } from "./sections/Tiltakshavere.tsx"
@@ -21,7 +20,6 @@ export function DocumentComponent({ data }: { data: ByggRapport }) {
         <Fragment key={bygning.id}>
           <Bygningslinje index={2} bygning={bygning} />
           <Byggoversikt index={3} bygning={bygning} />
-          <EtasjerSection index={3} etasjeEndringer={bygning.endringer} />
           <Bruksenheter index={4} bruksenheter={bygning.bruksenheter} />
 
           {bygning.endringer.map((endring) => (

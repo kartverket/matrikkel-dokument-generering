@@ -14,19 +14,47 @@ interface Props {
   bruksenheter: BruksenhetDetalj[]
 }
 
+type DetaljFeltKey =
+  | "bruksenhetstype"
+  | "adresse"
+  | "etasje"
+  | "bruksareal"
+  | "antallRom"
+  | "kjokken"
+  | "antallBad"
+  | "antallWc"
+
+interface DetaljFelt {
+  key: DetaljFeltKey
+  value: BruksenhetDetalj[DetaljFeltKey]
+  className?: string
+}
+
+function detaljFelter(bruksenhet: BruksenhetDetalj): DetaljFelt[] {
+  return [
+    { key: "bruksenhetstype", value: bruksenhet.bruksenhetstype },
+    { key: "adresse", value: bruksenhet.adresse, className: "col-span-2" },
+    { key: "etasje", value: bruksenhet.etasje },
+    { key: "bruksareal", value: bruksenhet.bruksareal },
+    { key: "antallRom", value: bruksenhet.antallRom },
+    { key: "kjokken", value: bruksenhet.kjokken },
+    { key: "antallBad", value: bruksenhet.antallBad },
+    { key: "antallWc", value: bruksenhet.antallWc },
+  ]
+}
+
 export default function Bruksenheter({ index, bruksenheter }: Props) {
   const { t } = useTranslation()
-  const translationKey = "rapport.BYG0011.bruksenheter"
-  const tom = t(`${translationKey}.tom`)
-  const ingenOppgittBruksenhet = t(`${translationKey}.ingenOppgittBruksenhet`)
-
-  if (bruksenheter.length === 0) return null
+  const i18n = "rapport.BYG0011.bruksenheter"
+  const tom = t(`${i18n}.tom`)
+  const ingenOppgittBruksenhet = t(`${i18n}.ingenOppgittBruksenhet`)
+  const harBruksenheter = bruksenheter.length > 0
 
   return (
     <Section
-      title={t(`${translationKey}.title`)}
+      title={t(`${i18n}.title`)}
       index={index}
-      description={t(`${translationKey}.description`)}
+      description={t(`${i18n}.description`)}
     >
       <div className="flex flex-col gap-5">
         {bruksenheter.map((bruksenhet) => (
@@ -63,39 +91,14 @@ export default function Bruksenheter({ index, bruksenheter }: Props) {
               </div>
 
               <dl className="grid grid-cols-3 gap-x-8 gap-y-5">
-                <EndringsDetalje
-                  label={t(`${translationKey}.bruksenhetstype`)}
-                  {...getDetaljVerdi(bruksenhet.bruksenhetstype, tom)}
-                />
-                <EndringsDetalje
-                  label={t(`${translationKey}.adresse`)}
-                  {...getDetaljVerdi(bruksenhet.adresse, tom)}
-                  className="col-span-2"
-                />
-                <EndringsDetalje
-                  label={t(`${translationKey}.etasje`)}
-                  {...getDetaljVerdi(bruksenhet.etasje, tom)}
-                />
-                <EndringsDetalje
-                  label={t(`${translationKey}.bruksareal`)}
-                  value={bruksenhet.bruksareal}
-                />
-                <EndringsDetalje
-                  label={t(`${translationKey}.antallRom`)}
-                  value={bruksenhet.antallRom}
-                />
-                <EndringsDetalje
-                  label={t(`${translationKey}.kjokken`)}
-                  {...getDetaljVerdi(bruksenhet.kjokken, tom)}
-                />
-                <EndringsDetalje
-                  label={t(`${translationKey}.antallBad`)}
-                  value={bruksenhet.antallBad}
-                />
-                <EndringsDetalje
-                  label={t(`${translationKey}.antallWc`)}
-                  value={bruksenhet.antallWc}
-                />
+                {detaljFelter(bruksenhet).map(({ key, value, className }) => (
+                  <EndringsDetalje
+                    key={key}
+                    label={t(`${i18n}.${key}`)}
+                    className={className}
+                    {...getDetaljVerdi(value, tom)}
+                  />
+                ))}
               </dl>
 
               <Divider className="my-6" />
@@ -108,22 +111,21 @@ export default function Bruksenheter({ index, bruksenheter }: Props) {
               <Kontaktpersoner kontaktpersoner={bruksenhet.kontaktpersoner} />
 
               <Divider className="my-6" />
-              {bruksenhet.endringer.length === 0 ? (
-                <Paragraph className="text-kv-subtle text-sm">
-                  {t(`${translationKey}.ingenEndringer`)}
+
+              <div>
+                <Paragraph className="mb-3 font-bold text-kv-subtle text-xs tracking-wide">
+                  {harBruksenheter
+                    ? t(`${i18n}.endringerPaBruksenheten`)
+                    : t(`${i18n}.ingenEndringer`)}
                 </Paragraph>
-              ) : (
-                <div>
-                  <Paragraph className="mb-3 font-bold text-kv-subtle text-xs tracking-wide">
-                    {t(`${translationKey}.endringerPaBruksenheten`)}
-                  </Paragraph>
+                {harBruksenheter && (
                   <div className="flex flex-col gap-3">
                     {bruksenhet.endringer.map((endring) => (
                       <Endringskort key={endring.id} endring={endring} />
                     ))}
                   </div>
-                </div>
-              )}
+                )}
+              </div>
             </Card.Block>
           </Card>
         ))}
