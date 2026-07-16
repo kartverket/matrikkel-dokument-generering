@@ -19,3 +19,17 @@ body {
   font-optical-sizing: auto;
   font-feature-settings: "cv05" 1;
 }
+
+/*
+ * PDF-skalering: Gotenberg/Chromium bruker print-emulering ved konvertering,
+ * så alt inne i @media print treffer kun PDF-rendringen — ikke web-preview.
+ 
+ * Ved å justere rot-`font-size` skaleres alle rem-baserte størrelser
+ * (tekst, padding, margin, gap) proporsjonalt både i Tailwind og KV
+ * designsystem.
+ */
+@media print {
+  :root {
+    font-size: calc(8px);
+  }
+}
