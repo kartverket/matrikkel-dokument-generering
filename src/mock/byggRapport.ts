@@ -2,12 +2,12 @@ import type {
   Bruksenhet,
   ByggRapport,
   Bygningsendring,
-} from "../lib/schema/byggRapportSchema";
+} from "../lib/schema/byggRapportSchema"
 
-type Bygningsstatus = Bygningsendring["bygningsstatus"];
-type Bygningsdatoer = Bygningsendring["datoer"];
-type Hjemmelshaver = Bruksenhet["hjemmelshavere"][number];
-type Kontaktperson = Bruksenhet["kontaktpersoner"][number];
+type Bygningsstatus = Bygningsendring["bygningsstatus"]
+type Bygningsdatoer = Bygningsendring["datoer"]
+type Hjemmelshaver = Bruksenhet["hjemmelshavere"][number]
+type Kontaktperson = Bruksenhet["kontaktpersoner"][number]
 
 const statuser = {
   RA: { kode: 1, kortkode: "RA", navn: "Rammetillatelse", bestaaende: false },
@@ -25,7 +25,7 @@ const statuser = {
   },
   TB: { kode: 4, kortkode: "TB", navn: "Tatt i bruk", bestaaende: true },
   FA: { kode: 5, kortkode: "FA", navn: "Ferdigattestert", bestaaende: true },
-} satisfies Record<string, Bygningsstatus>;
+} satisfies Record<string, Bygningsstatus>
 
 function datoer(overrides: Partial<Bygningsdatoer>): Bygningsdatoer {
   return {
@@ -36,11 +36,11 @@ function datoer(overrides: Partial<Bygningsdatoer>): Bygningsdatoer {
     tattIBruk: null,
     utgaattRevet: null,
     ...overrides,
-  };
+  }
 }
 
 function refBruksenhet(bruksenhetsnr: string) {
-  return { bruksenhetsnr };
+  return { bruksenhetsnr }
 }
 
 const olaNordmann: Hjemmelshaver = {
@@ -60,20 +60,20 @@ const olaNordmann: Hjemmelshaver = {
   datotil: null,
   kategorikode: "FYSISK_PERSON",
   harAndel: true,
-};
+}
 
 const kariNordmann: Hjemmelshaver = {
   ...olaNordmann,
   eierIdent: "03111980",
   navn: "Kari Nordmann",
-};
+}
 
 const perHansen: Hjemmelshaver = {
   ...olaNordmann,
   eierIdent: "22071965",
   navn: "Per Hansen",
   andelNevner: 1,
-};
+}
 
 const byggmesterBob: Kontaktperson = {
   rolle: "Kontaktperson",
@@ -90,7 +90,7 @@ const byggmesterBob: Kontaktperson = {
   kontaktpersonKode: "ANSVARLIG_SOKER",
   statuskode: "AKTIV",
   eierErUtgatt: false,
-};
+}
 
 const gjeldendeEndring: Bygningsendring = {
   id: 1001,
@@ -153,7 +153,7 @@ const gjeldendeEndring: Bygningsendring = {
       kategori: "SEFRAK-registrert bygning",
     },
   ],
-};
+}
 
 const historiskeEndringer: Bygningsendring[] = [
   {
@@ -213,7 +213,7 @@ const historiskeEndringer: Bygningsendring[] = [
     datoer: datoer({ tattIBruk: "1998-06-18" }),
     bruksenheter: [refBruksenhet("H0101"), refBruksenhet("H0102")],
   },
-];
+]
 
 const mockByggRapport: ByggRapport = {
   rapportType: "BYG0011",
@@ -369,6 +369,6 @@ const mockByggRapport: ByggRapport = {
       endringer: [gjeldendeEndring, ...historiskeEndringer],
     },
   ],
-};
+}
 
-export default mockByggRapport;
+export default mockByggRapport
