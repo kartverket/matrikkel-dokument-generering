@@ -1,12 +1,12 @@
 import { useTranslation } from "react-i18next"
-import type { BruksenhetDetalj } from "../../lib/schema/byggRapportSchema"
+import type { Bruksenhet } from "../../lib/schema/byggRapportSchema"
 import { formatAdresse } from "../../lib/utils/formatAdresse"
 import { lagDetaljfeltBuilder } from "../Detaljfelt"
 import { PersonCard } from "../PersonCard"
 import { PersonGrid } from "../PersonGrid"
 
 interface Props {
-  hjemmelshavere: BruksenhetDetalj["hjemmelshavere"]
+  hjemmelshavere: Bruksenhet["hjemmelshavere"]
 }
 
 const hjemmelshaverFelt = lagDetaljfeltBuilder("rapport.BYG0011.hjemmelshavere")

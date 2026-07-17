@@ -4,7 +4,16 @@ export const nb = {
   ...shared,
   tom: "tom",
   rapport: {
+    metaData: {
+      rapportType: "Rapporttype",
+      rapportNr: "Rapportnr",
+      kommune: "Kommune",
+      kommuneNr: "Kommunenr",
+      koordinatsystem: "Koordinatsystem",
+      generertTidspunkt: "Generert tidspunkt",
+    },
     BYG0011: {
+      rapportTittel: "Bygg Rapport",
       title: "Bygning {{bygningsnr}} – {{bygningstype}}",
       utvalgskriterier: {
         title: "Utvalgskriterier",
@@ -60,14 +69,6 @@ export const nb = {
           kulturminner: "Kulturminner",
         },
       },
-      metadata: {
-        rapportType: "Rapporttype",
-        rapportNr: "Rapportnr",
-        kommune: "Kommune",
-        kommuneNr: "Kommunenr",
-        koordinatsystem: "Koordinatsystem",
-        generertTidspunkt: "Generert tidspunkt",
-      },
       matrikkelenhet: "Matrikkelenhet",
       naeringsgruppe: "Næringsgruppe",
       arealfordeling: {
@@ -101,6 +102,7 @@ export const nb = {
         hjemmelshaverEier: "HJEMMELSHAVER (EIER)",
         ingenEndringer: "Ingen registrerte endringer på bruksenheten.",
         endringerPaBruksenheten: "ENDRINGER PÅ BRUKSENHETEN",
+        endringTittel: "Bygningsendring {{lopenr}}",
         grunnopplysninger: "GRUNNOPPLYSNINGER",
         lopenr: "Løpenummer",
         endringskode: "Endringskode",

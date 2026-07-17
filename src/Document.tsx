@@ -3,25 +3,32 @@ import { renderToStaticMarkup } from "react-dom/server"
 import { I18nextProvider } from "react-i18next"
 import { createI18n } from "./lib/i18n/createI18n"
 import type { ByggRapport } from "./lib/schema/byggRapportSchema"
+import type { RapportMeta } from "./lib/schema/rapportSchema"
 import Bruksenheter from "./sections/Bruksenheter.tsx"
 import Byggoversikt from "./sections/Byggoversikt.tsx"
 import { Metadata } from "./sections/Metadata.tsx"
 import { Utvalgskriterier } from "./sections/Utvalgskriterier.tsx"
 
 export function DocumentComponent({ data }: { data: ByggRapport }) {
+  const metadata: RapportMeta = {
+    rapportType: data.rapportType,
+    kommune: data.kommune,
+    koordinatsystem: data.koordinatsystem,
+    generertTidspunkt: data.generertTidspunkt,
+  }
+
   return (
     <>
-      <Metadata data={data} />
+      <Metadata metadata={metadata} />
       <Utvalgskriterier index={1} kriterier={data.utvalgskriterier} />
       {data.bygninger.map((bygning) => (
         <Fragment key={bygning.id}>
-          <Byggoversikt index={2} bygning={bygning} />
-          <Bruksenheter
-            index={3}
-            bruksenheter={bygning.bruksenheter}
-            gjeldende={bygning.gjeldende}
-            endringer={bygning.endringer}
+          <Byggoversikt
+            index={2}
+            bygning={bygning}
+            koordinatsystem={data.koordinatsystem}
           />
+          <Bruksenheter index={3} bygning={bygning} />
         </Fragment>
       ))}
     </>

@@ -1,4 +1,5 @@
 import { Card, Divider, Paragraph } from "@kv-designsystem/react"
+import type { TFunction } from "i18next"
 import { useTranslation } from "react-i18next"
 import ArealFordeling from "../components/ArealFordeling.tsx"
 import { BruksenhetHeader } from "../components/bruksenheter/BruksenhetHeader.tsx"
@@ -10,41 +11,53 @@ import { Tiltakshavere } from "../components/bruksenheter/Tiltakshavere.tsx"
 import { Detaljgrid, lagDetaljfeltBuilder } from "../components/Detaljfelt.tsx"
 import { Section } from "../components/Section.tsx"
 import type {
-  BruksenhetDetalj,
+  Bruksenhet,
+  Bygning,
   Bygningsendring,
   Tiltakshaver,
 } from "../lib/schema/byggRapportSchema.ts"
-import { isFerdigstilt } from "../lib/utils/isFerdigstilt.ts"
+import { summerAreal } from "../lib/utils/arealLinje.ts"
+import { formatArea } from "../lib/utils/formatArea.ts"
+import {
+  finnGjeldendeBygningsendring,
+  isFerdigstilt,
+} from "../lib/utils/isFerdigstilt.ts"
+import { sorterBruksenheterEtterNummer } from "../lib/utils/sorterBruksenheter.ts"
 
 interface Props {
   index: number
-  bruksenheter: BruksenhetDetalj[]
-  gjeldende: Bygningsendring
-  endringer: Bygningsendring[]
+  bygning: Bygning
 }
 
 const bruksenhetFelt = lagDetaljfeltBuilder("rapport.BYG0011.bruksenheter")
 
-function getBruksenhetDetaljfelter(bruksenhet: BruksenhetDetalj) {
+function getBruksenhetDetaljfelter(bruksenhet: Bruksenhet, t: TFunction) {
+  const kjokkentilgang =
+    bruksenhet.kjokkentilgang === null
+      ? null
+      : t(
+          `rapport.BYG0011.bruksenheter.${bruksenhet.kjokkentilgang ? "jaMedAntall" : "neiMedAntall"}`,
+        )
+
   return [
     bruksenhetFelt("adresse", bruksenhet.adresse),
     bruksenhetFelt("etasje", bruksenhet.etasje),
-    bruksenhetFelt("bruksareal", bruksenhet.bruksareal),
-    bruksenhetFelt("antallRom", bruksenhet.antallRom),
-    bruksenhetFelt("kjokken", bruksenhet.kjokken),
-    bruksenhetFelt("antallBad", bruksenhet.antallBad),
-    bruksenhetFelt("antallWc", bruksenhet.antallWc),
+    bruksenhetFelt(
+      "bruksareal",
+      formatArea(summerAreal(bruksenhet.arealfordeling.bruksareal)),
+    ),
+    bruksenhetFelt("antallRom", String(bruksenhet.antallRom)),
+    bruksenhetFelt("kjokkentilgang", kjokkentilgang),
+    bruksenhetFelt("antallBad", String(bruksenhet.antallBad)),
+    bruksenhetFelt("antallWc", String(bruksenhet.antallWc)),
   ]
 }
 
-function getTiltaksHavere(
+function getTiltakshavere(
   endringer: Bygningsendring[],
-  bruksenhet: BruksenhetDetalj,
-) {
-  const unikeTiltakshavere = new Map<
-    string,
-    { endringId: number; tiltakshaver: Tiltakshaver }
-  >()
+  bruksenhet: Bruksenhet,
+): Tiltakshaver[] {
+  const unikeTiltakshavere = new Map<string, Tiltakshaver>()
 
   for (const endring of endringer.toSorted((a, b) => b.lopenr - a.lopenr)) {
     if (isFerdigstilt(endring)) continue
@@ -62,10 +75,7 @@ function getTiltaksHavere(
       ])
 
       if (!unikeTiltakshavere.has(nokkel)) {
-        unikeTiltakshavere.set(nokkel, {
-          endringId: endring.id,
-          tiltakshaver,
-        })
+        unikeTiltakshavere.set(nokkel, tiltakshaver)
       }
     }
   }
@@ -73,29 +83,26 @@ function getTiltaksHavere(
   return [...unikeTiltakshavere.values()]
 }
 
-function getGjeldendeEndringForBruksenhet(
-  gjeldende: Bygningsendring,
-  bruksenhet: BruksenhetDetalj,
-) {
-  return gjeldende.bruksenheter.some(
-    ({ bruksenhetsnr }) => bruksenhetsnr === bruksenhet.nummer,
+function berorerBruksenhet(endring: Bygningsendring, bruksenhet: Bruksenhet) {
+  return (
+    bruksenhet.nummer !== null &&
+    endring.bruksenheter.some(
+      ({ bruksenhetsnr }) => bruksenhetsnr === bruksenhet.nummer,
+    )
   )
-    ? gjeldende
-    : undefined
 }
 
-export default function Bruksenheter({
-  index,
-  bruksenheter,
-  gjeldende,
-  endringer,
-}: Props) {
+export default function Bruksenheter({ index, bygning }: Props) {
   const { t } = useTranslation()
   const i18n = "rapport.BYG0011.bruksenheter"
   const tom = t("tom")
   const ingenOppgittBruksenhet = t(`${i18n}.ingenOppgittBruksenhet`)
+  const gjeldende = finnGjeldendeBygningsendring(bygning.endringer)
+  const sorterteBruksenheter = sorterBruksenheterEtterNummer(
+    bygning.bruksenheter,
+  )
 
-  if (bruksenheter.length === 0) return null
+  if (bygning.bruksenheter.length === 0) return null
 
   return (
     <Section
@@ -104,11 +111,17 @@ export default function Bruksenheter({
       description={t(`${i18n}.description`)}
     >
       <div className="flex flex-col gap-5">
-        {bruksenheter.map((bruksenhet) => {
-          const harEndringer = bruksenhet.endringer.length > 0
-          const gjeldendeEndringForBruksenhet =
-            getGjeldendeEndringForBruksenhet(gjeldende, bruksenhet)
-          const tiltakshavere = getTiltaksHavere(endringer, bruksenhet)
+        {sorterteBruksenheter.map((bruksenhet) => {
+          const endringer = bygning.endringer.filter((endring) =>
+            berorerBruksenhet(endring, bruksenhet),
+          )
+          const gjeldendeEndringForBruksenhet = berorerBruksenhet(
+            gjeldende,
+            bruksenhet,
+          )
+            ? gjeldende
+            : undefined
+          const tiltakshavere = getTiltakshavere(bygning.endringer, bruksenhet)
 
           return (
             <Card
@@ -119,13 +132,13 @@ export default function Bruksenheter({
               <Card.Block className="p-7">
                 <BruksenhetHeader
                   bruksenhetNummer={bruksenhet.nummer}
-                  bruksenhetTypeChip={bruksenhet.typeChip}
+                  bruksenhetTypeChip={bruksenhet.type}
                   bruksenhetSeksjon={bruksenhet.seksjon}
                   ingenOppgittBruksenhet={ingenOppgittBruksenhet}
                 />
 
                 <Detaljgrid
-                  felter={getBruksenhetDetaljfelter(bruksenhet)}
+                  felter={getBruksenhetDetaljfelter(bruksenhet, t)}
                   tom={tom}
                   className="gap-x-8 gap-y-5"
                 />
@@ -149,14 +162,18 @@ export default function Bruksenheter({
 
                 <div>
                   <Paragraph className="mb-3 font-bold text-kv-subtle text-xs tracking-wide">
-                    {harEndringer
+                    {endringer.length > 0
                       ? t(`${i18n}.endringerPaBruksenheten`)
                       : t(`${i18n}.ingenEndringer`)}
                   </Paragraph>
-                  {harEndringer && (
+                  {endringer.length > 0 && (
                     <div className="flex flex-col gap-3">
-                      {bruksenhet.endringer.map((endring) => (
-                        <Endringskort key={endring.id} endring={endring} />
+                      {endringer.map((endring) => (
+                        <Endringskort
+                          key={endring.id}
+                          endring={endring}
+                          bygning={bygning}
+                        />
                       ))}
                     </div>
                   )}
