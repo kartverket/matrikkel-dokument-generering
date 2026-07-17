@@ -22,6 +22,7 @@ import {
   finnGjeldendeBygningsendring,
   isFerdigstilt,
 } from "../lib/utils/isFerdigstilt.ts"
+import { sorterBruksenheterEtterNummer } from "../lib/utils/sorterBruksenheter.ts"
 
 interface Props {
   index: number
@@ -97,6 +98,9 @@ export default function Bruksenheter({ index, bygning }: Props) {
   const tom = t("tom")
   const ingenOppgittBruksenhet = t(`${i18n}.ingenOppgittBruksenhet`)
   const gjeldende = finnGjeldendeBygningsendring(bygning.endringer)
+  const sorterteBruksenheter = sorterBruksenheterEtterNummer(
+    bygning.bruksenheter,
+  )
 
   if (bygning.bruksenheter.length === 0) return null
 
@@ -107,7 +111,7 @@ export default function Bruksenheter({ index, bygning }: Props) {
       description={t(`${i18n}.description`)}
     >
       <div className="flex flex-col gap-5">
-        {bygning.bruksenheter.map((bruksenhet) => {
+        {sorterteBruksenheter.map((bruksenhet) => {
           const endringer = bygning.endringer.filter((endring) =>
             berorerBruksenhet(endring, bruksenhet),
           )
