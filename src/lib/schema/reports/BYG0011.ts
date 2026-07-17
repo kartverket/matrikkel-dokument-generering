@@ -1,4 +1,5 @@
 import { z } from "@hono/zod-openapi"
+import { bygningstypeSchema } from "../bygningstypeSchema"
 import { byggUtvalgsKriterierSchema } from "../byggUtvalgsKriterier"
 import { rapportSchema } from "../rapportSchema"
 
@@ -26,13 +27,6 @@ const koordinatSchema = z
     ost: z.number(),
   })
   .meta({ id: "Koordinat" })
-
-export const bygningstypeSchema = z
-  .object({
-    kode: z.number().optional(),
-    navn: z.string().optional(),
-  })
-  .meta({ id: "Bygningstype" })
 
 const bygningsstatusSchema = z
   .object({
@@ -210,4 +204,5 @@ export type Kontaktperson = z.infer<typeof kontaktpersonSchema>
 export type Tiltakshaver = z.infer<typeof tiltakshaverSchema>
 export type Bruksenhet = z.infer<typeof bruksenhetSchema>
 export type Hjemmelshaver = z.infer<typeof hjemmelshaverSchema>
+export type Utvalgskriterier = z.infer<typeof byggUtvalgsKriterierSchema>
 export type BygningsDatoerSchema = z.infer<typeof bygningsdatoerSchema>
