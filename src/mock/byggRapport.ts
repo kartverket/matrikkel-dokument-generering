@@ -223,10 +223,10 @@ const mockByggRapport: ByggRapport = {
   generertTidspunkt: "2026-07-17T10:00:00Z",
   utvalgskriterier: {
     omfang: {
-      bestaaendeBygg: true,
-      utgaatteBygg: false,
-      bygninger: true,
-      bygningsendringer: true,
+      inkluderBestaaendeBygg: true,
+      inkluderUtgaatteBygg: false,
+      inkluderBygninger: true,
+      inkluderBygningsendringer: true,
       inkluderFrededeBygninger: true,
     },
     bygning: {
@@ -255,12 +255,12 @@ const mockByggRapport: ByggRapport = {
       ovreHoeyre: { nord: 6642200, ost: 597500 },
     },
     subrapporter: {
-      etasjer: true,
-      bruksenheter: true,
-      tiltakshavere: true,
-      kontaktpersoner: true,
-      hjemmelshavere: true,
-      kulturminner: true,
+      inkluderEtasjer: true,
+      inkluderBruksenheter: true,
+      inkluderTiltakshavere: true,
+      inkluderKontaktpersoner: true,
+      inkluderHjemmelshavere: true,
+      inkluderKulturminner: true,
     },
   },
   bygninger: [

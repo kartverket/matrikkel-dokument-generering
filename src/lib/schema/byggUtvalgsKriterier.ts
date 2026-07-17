@@ -5,8 +5,8 @@ const matrikkelenhetSchema = z
   .object({
     gnr: z.number().nonnegative().optional().meta({ example: 208 }),
     bnr: z.number().nonnegative().optional().meta({ example: 12 }),
-    fnr: z.number().nonnegative().nullable().meta({ example: null }),
-    snr: z.number().nonnegative().nullable().meta({ example: null }),
+    fnr: z.number().nonnegative().optional().meta({ example: null }),
+    snr: z.number().nonnegative().optional().meta({ example: null }),
   })
   .optional()
   .meta({ id: "Matrikkelenhet" })
@@ -31,16 +31,16 @@ export const byggUtvalgsKriterierSchema = z
   .object({
     omfang: z
       .object({
-        bestaaendeBygg: z.boolean().optional().default(false).meta({
+        inkluderBestaaendeBygg: z.boolean().optional().default(false).meta({
           description: "Skal rapporten inkludere bestående bygg?",
         }),
-        utgaatteBygg: z.boolean().optional().default(false).meta({
+        inkluderUtgaatteBygg: z.boolean().optional().default(false).meta({
           description: "Skal rapporten inkludere utgåtte bygg?",
         }),
-        bygninger: z.boolean().optional().default(false).meta({
+        inkluderBygninger: z.boolean().optional().default(false).meta({
           description: "Skal rapporten inkludere bygninger?",
         }),
-        bygningsendringer: z.boolean().optional().default(false).meta({
+        inkluderBygningsendringer: z.boolean().optional().default(false).meta({
           description: "Skal rapporten inkludere bygningsendringer?",
         }),
         inkluderFrededeBygninger: z.boolean().optional().default(false).meta({
@@ -105,24 +105,23 @@ export const byggUtvalgsKriterierSchema = z
       .optional(),
     sokevindu: z
       .object({
-        nedreVenstre: z.object({
-          nord: z.number().optional().meta({ example: 6642000 }),
-          ost: z.number().optional().meta({ example: 597300 }),
-        }),
-        ovreHoeyre: z.object({
-          nord: z.number().optional().meta({ example: 6642200 }),
-          ost: z.number().optional().meta({ example: 597500 }),
-        }),
+        nord: z.number().meta({ example: 6642000 }),
+        ost: z.number().meta({ example: 597300 }),
+        vest: z.number().meta({ example: 597300 }),
+        syd: z.number().meta({ example: 6642000 }),
       })
-      .optional(),
+      .optional()
+      .meta({
+        description: "Koordinater for søkevinduet som rapporten skal omfatte.",
+      }),
     subrapporter: z
       .object({
-        etasjer: z.boolean().optional().default(false),
-        bruksenheter: z.boolean().optional().default(false),
-        tiltakshavere: z.boolean().optional().default(false),
-        kontaktpersoner: z.boolean().optional().default(false),
-        hjemmelshavere: z.boolean().optional().default(false),
-        kulturminner: z.boolean().optional().default(false),
+        inkluderEtasjer: z.boolean().optional().default(false),
+        inkluderBruksenheter: z.boolean().optional().default(false),
+        inkluderTiltakshavere: z.boolean().optional().default(false),
+        inkluderKontaktpersoner: z.boolean().optional().default(false),
+        inkluderHjemmelshavere: z.boolean().optional().default(false),
+        inkluderKulturminner: z.boolean().optional().default(false),
       })
       .optional(),
   })
@@ -130,10 +129,10 @@ export const byggUtvalgsKriterierSchema = z
     id: "Utvalgskriterier",
     example: {
       omfang: {
-        bestaaendeBygg: true,
-        utgaatteBygg: false,
-        bygninger: true,
-        bygningsendringer: true,
+        inkluderBestaaendeBygg: true,
+        inkluderUtgaatteBygg: false,
+        inkluderBygninger: true,
+        inkluderBygningsendringer: true,
         inkluderFrededeBygninger: true,
       },
       bygning: {
@@ -167,12 +166,12 @@ export const byggUtvalgsKriterierSchema = z
         ovreHoeyre: { nord: 6642200, ost: 597500 },
       },
       subrapporter: {
-        etasjer: true,
-        bruksenheter: true,
-        tiltakshavere: true,
-        kontaktpersoner: true,
-        hjemmelshavere: true,
-        kulturminner: true,
+        inkluderEtasjer: true,
+        inkluderBruksenheter: true,
+        inkluderTiltakshavere: true,
+        inkluderKontaktpersoner: true,
+        inkluderHjemmelshavere: true,
+        inkluderKulturminner: true,
       },
     },
   })
