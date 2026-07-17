@@ -1,10 +1,7 @@
 import { Card, Divider, Heading, Paragraph, Tag } from "@kv-designsystem/react"
 import { Fragment } from "react"
 import { useTranslation } from "react-i18next"
-import type {
-  Bygning,
-  Bygningsendring,
-} from "../../lib/schema/byggRapportSchema"
+import type { Bygning, Bygningsendring } from "../../lib/schema/reports/BYG0011"
 import { arealLinje, summerAreal } from "../../lib/utils/arealLinje"
 import { formatArea } from "../../lib/utils/formatArea"
 import { formatDate } from "../../lib/utils/formatDate"

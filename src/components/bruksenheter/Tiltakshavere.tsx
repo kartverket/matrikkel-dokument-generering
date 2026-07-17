@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next"
-import type { Tiltakshaver } from "../../lib/schema/byggRapportSchema"
+import type { Tiltakshaver } from "../../lib/schema/reports/BYG0011"
 import {
   formatAdresselinjer,
   formatPoststed,
@@ -64,7 +64,7 @@ export function Tiltakshavere({ tiltakshavere }: Props) {
           key={String(index)}
           navn={tiltakshaver.navn}
           erUtgatt={tiltakshaver.eierErUtgatt}
-          statuskode={tiltakshaver.statuskode}
+          statuskode={tiltakshaver.statuskode ?? null}
           utgattLabel={t(`${translationKey}.utgatt`)}
           felter={getTiltakshaverDetaljfelter(tiltakshaver, tom)}
           tom={tom}

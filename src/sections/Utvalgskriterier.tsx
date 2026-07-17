@@ -8,7 +8,7 @@ import { MatrikkelenhetKriterier } from "../components/utvalgskriterier/Matrikke
 import { RapportutvalgKriterier } from "../components/utvalgskriterier/RapportutvalgKriterier"
 import { SokevinduKriterier } from "../components/utvalgskriterier/SokevinduKriterier"
 import { SubrapporterKriterier } from "../components/utvalgskriterier/SubrapporterKriterier"
-import type { Utvalgskriterier as UtvalgskriterierType } from "../lib/schema/byggRapportSchema"
+import type { Utvalgskriterier as UtvalgskriterierType } from "../lib/schema/reports/BYG0011"
 
 interface Props {
   index: number

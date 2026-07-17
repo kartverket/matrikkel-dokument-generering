@@ -1,6 +1,6 @@
 import { Heading, Table, Tag } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import type { Utvalgskriterier } from "../../lib/schema/byggRapportSchema"
+import type { Utvalgskriterier } from "../../lib/schema/reports/BYG0011"
 import { formatDate } from "../../lib/utils/formatDate"
 
 interface Props {

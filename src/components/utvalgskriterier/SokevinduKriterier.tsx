@@ -1,6 +1,6 @@
 import { Card, Heading } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import type { Utvalgskriterier } from "../../lib/schema/byggRapportSchema"
+import type { Utvalgskriterier } from "../../lib/schema/reports/BYG0011"
 
 const numberFormatter = new Intl.NumberFormat("nb-NO", {
   maximumFractionDigits: 2,
@@ -13,6 +13,8 @@ interface Props {
 export function SokevinduKriterier({ sokevinduKriterier }: Props) {
   const { t } = useTranslation()
   const uk = "rapport.BYG0011.utvalgskriterier"
+
+  if (!sokevinduKriterier) return null
 
   return (
     <section className="break-inside-avoid">

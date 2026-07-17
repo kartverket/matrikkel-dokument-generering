@@ -2,7 +2,7 @@ import type {
   Bruksenhet,
   ByggRapport,
   Bygningsendring,
-} from "../lib/schema/byggRapportSchema"
+} from "../lib/schema/reports/BYG0011"
 
 type Bygningsstatus = Bygningsendring["bygningsstatus"]
 type Bygningsdatoer = Bygningsendring["datoer"]
@@ -227,25 +227,21 @@ const mockByggRapport: ByggRapport = {
       utgaatteBygg: false,
       bygninger: true,
       bygningsendringer: true,
-      frededeBygninger: "Inkluder",
+      inkluderFrededeBygninger: true,
     },
     bygning: {
       bygningsnr: "12345678",
       bygningstyper: [{ kode: 111, navn: "Enebolig" }],
-      lopenr: null,
     },
     adresse: {
       adressekode: "1000",
       bruksenhetsnr: "H0101",
       adressenavn: "Storgata",
       nr: 1,
-      bokstav: null,
       utenBokstav: true,
-      tilleggsnavn: null,
     },
     matrikkelenhet: { gnr: 208, bnr: 12, fnr: null, snr: null },
     hjemmelshaver: {
-      foedselsEllerOrgnr: null,
       etternavn: "Nordmann",
       fornavn: "Ola",
     },
@@ -253,7 +249,6 @@ const mockByggRapport: ByggRapport = {
       naavaerende: ["Tatt i bruk"],
       tidligere: [],
       periodeFra: "2019-01-01",
-      periodeTil: null,
     },
     sokevindu: {
       nedreVenstre: { nord: 6642000, ost: 597300 },

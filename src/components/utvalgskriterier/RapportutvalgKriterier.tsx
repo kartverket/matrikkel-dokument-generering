@@ -1,6 +1,6 @@
 import { Heading, Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import type { Utvalgskriterier } from "../../lib/schema/byggRapportSchema"
+import type { Utvalgskriterier } from "../../lib/schema/reports/BYG0011"
 
 interface Props {
   omfangsKriterier: Utvalgskriterier["omfang"]
@@ -53,7 +53,11 @@ export function RapportutvalgKriterier({ omfangsKriterier }: Props) {
             <Table.HeaderCell scope="row">
               {t(`${uk}.felt.frededeBygninger`)}
             </Table.HeaderCell>
-            <Table.Cell>{omfangsKriterier.frededeBygninger}</Table.Cell>
+            <Table.Cell>
+              {t(
+                `${uk}.${omfangsKriterier.inkluderFrededeBygninger ? "ja" : "nei"}`,
+              )}
+            </Table.Cell>
           </Table.Row>
         </Table.Body>
       </Table>

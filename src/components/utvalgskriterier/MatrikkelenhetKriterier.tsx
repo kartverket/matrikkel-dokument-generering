@@ -1,6 +1,6 @@
 import { Card, Heading } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import type { Utvalgskriterier } from "../../lib/schema/byggRapportSchema"
+import type { Utvalgskriterier } from "../../lib/schema/reports/BYG0011"
 
 interface Props {
   matrikkelenhetKriterier: Utvalgskriterier["matrikkelenhet"]

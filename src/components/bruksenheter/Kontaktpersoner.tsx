@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next"
-import type { Bruksenhet } from "../../lib/schema/byggRapportSchema"
+import type { Bruksenhet } from "../../lib/schema/reports/BYG0011"
 import { formatAdresse } from "../../lib/utils/formatAdresse"
 import { joinStrings } from "../../lib/utils/joinStrings"
 import { lagDetaljfeltBuilder } from "../Detaljfelt"
@@ -60,7 +60,7 @@ export function Kontaktpersoner({ kontaktpersoner }: Props) {
           key={kontaktperson.eierIdent}
           navn={kontaktperson.navn}
           erUtgatt={kontaktperson.eierErUtgatt}
-          statuskode={kontaktperson.statuskode}
+          statuskode={kontaktperson.statuskode ?? null}
           utgattLabel={t(`${translationKey}.utgatt`)}
           felter={getKontaktpersonDetaljfelter(kontaktperson, tom)}
           tom={tom}

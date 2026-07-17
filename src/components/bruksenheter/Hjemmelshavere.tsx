@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next"
-import type { Bruksenhet } from "../../lib/schema/byggRapportSchema"
+import type { Bruksenhet } from "../../lib/schema/reports/BYG0011"
 import { formatAdresse } from "../../lib/utils/formatAdresse"
 import { lagDetaljfeltBuilder } from "../Detaljfelt"
 import { PersonCard } from "../PersonCard"
@@ -61,7 +61,7 @@ export function Hjemmelshavere({ hjemmelshavere }: Props) {
           key={hjemmelshaver.eierIdent}
           navn={hjemmelshaver.navn}
           erUtgatt={hjemmelshaver.eierErUtgatt}
-          statuskode={hjemmelshaver.statuskode}
+          statuskode={hjemmelshaver.statuskode ?? null}
           utgattLabel={t(`${translationKey}.utgatt`)}
           felter={getHjemmelshaverDetaljfelter(hjemmelshaver, tom)}
           tom={tom}

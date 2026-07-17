@@ -15,7 +15,7 @@ import type {
   Bygning,
   Bygningsendring,
   Tiltakshaver,
-} from "../lib/schema/byggRapportSchema.ts"
+} from "../lib/schema/reports/BYG0011.ts"
 import { summerAreal } from "../lib/utils/arealLinje.ts"
 import { formatArea } from "../lib/utils/formatArea.ts"
 import {
@@ -131,9 +131,9 @@ export default function Bruksenheter({ index, bygning }: Props) {
             >
               <Card.Block className="p-7">
                 <BruksenhetHeader
-                  bruksenhetNummer={bruksenhet.nummer}
-                  bruksenhetTypeChip={bruksenhet.type}
-                  bruksenhetSeksjon={bruksenhet.seksjon}
+                  bruksenhetNummer={bruksenhet.nummer ?? null}
+                  bruksenhetTypeChip={bruksenhet.type ?? null}
+                  bruksenhetSeksjon={bruksenhet.seksjon ?? null}
                   ingenOppgittBruksenhet={ingenOppgittBruksenhet}
                 />
 
