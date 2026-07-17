@@ -2,22 +2,35 @@ import { z } from "@hono/zod-openapi"
 import {
   bygningstypeSchema,
   heltallSchema,
+  koordinatSchema,
   matrikkelenhetSchema,
   tekstSchema,
-} from "./commonSchemas"
-import { koordinatSchema } from "./shared/koordinatSchema"
+} from "./shared/commonSchemas"
 
-export const utvalgskriterierSchema = z
+export const byggUtvalgsKriterierSchema = z
   .object({
     omfang: z.object({
-      bestaaendeBygg: z.boolean().optional().default(false),
-      utgaatteBygg: z.boolean().optional().default(false),
-      bygninger: z.boolean().optional().default(false),
-      bygningsendringer: z.boolean().optional().default(false),
-      inkluderFrededeBygninger: z.boolean().optional().default(false),
+      bestaaendeBygg: z.boolean().optional().default(false).meta({
+        description: "Skal rapporten inkludere bestående bygg?",
+      }),
+      utgaatteBygg: z.boolean().optional().default(false).meta({
+        description: "Skal rapporten inkludere utgåtte bygg?",
+      }),
+      bygninger: z.boolean().optional().default(false).meta({
+        description: "Skal rapporten inkludere bygninger?",
+      }),
+      bygningsendringer: z.boolean().optional().default(false).meta({
+        description: "Skal rapporten inkludere bygningsendringer?",
+      }),
+      inkluderFrededeBygninger: z.boolean().optional().default(false).meta({
+        description: "Skal rapporten inkludere fredede bygninger?",
+      }),
     }),
     bygning: z.object({
-      bygningsnr: z.string().optional(),
+      bygningsnr: z.string().optional().meta({
+        example: "12345678",
+        description: "Bygningsnummeret til bygget som rapporten skal omfatte.",
+      }),
       bygningstyper: z.array(bygningstypeSchema).optional().default([]),
       lopenr: z.number().optional(),
     }),
@@ -61,4 +74,4 @@ export const utvalgskriterierSchema = z
   })
   .meta({ id: "Utvalgskriterier" })
 
-export type Utvalgskriterier = z.infer<typeof utvalgskriterierSchema>
+export type ByggUtvalgsKriterier = z.infer<typeof byggUtvalgsKriterierSchema>

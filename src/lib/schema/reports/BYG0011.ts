@@ -3,13 +3,13 @@ import {
   arealSchema,
   bygningstypeSchema,
   heltallSchema,
+  koordinatSchema,
   tekstSchema,
   valgfriDatoSchema,
   valgfriTekstSchema,
-} from "../commonSchemas"
+} from "../shared/commonSchemas"
 import { rapportSchema } from "../rapportSchema"
-import { koordinatSchema } from "../shared/koordinatSchema"
-import { utvalgskriterierSchema } from "../utvalgsKriterierSchema"
+import { byggUtvalgsKriterierSchema } from "../byggUtvalgsKriterier"
 
 const arealFordelingSchema = z
   .object({
@@ -183,7 +183,7 @@ const bygningSchema = z
 export const byggRapportSchema = rapportSchema
   .extend({
     rapportType: z.literal("BYG0011").meta({}),
-    utvalgskriterier: utvalgskriterierSchema,
+    utvalgskriterier: byggUtvalgsKriterierSchema,
     bygninger: z.array(bygningSchema),
   })
   .openapi("ByggRapport", {
@@ -198,5 +198,4 @@ export type Kontaktperson = z.infer<typeof kontaktpersonSchema>
 export type Tiltakshaver = z.infer<typeof tiltakshaverSchema>
 export type Bruksenhet = z.infer<typeof bruksenhetSchema>
 export type Hjemmelshaver = z.infer<typeof hjemmelshaverSchema>
-export type Utvalgskriterier = z.infer<typeof utvalgskriterierSchema>
 export type BygningsDatoerSchema = z.infer<typeof bygningsdatoerSchema>
