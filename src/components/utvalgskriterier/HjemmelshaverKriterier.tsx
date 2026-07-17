@@ -23,19 +23,19 @@ export function HjemmelshaverKriterier({ hjemmelshaverKriterier }: Props) {
               {t(`${uk}.felt.foedselsEllerOrgnr`)}
             </dt>
             <dd className="mt-1 font-medium">
-              {hjemmelshaverKriterier.foedselsEllerOrgnr ?? ikkeAngitt}
+              {hjemmelshaverKriterier?.foedselsEllerOrgnr ?? ikkeAngitt}
             </dd>
           </div>
           <div>
             <dt className="text-kv-subtle">{t(`${uk}.felt.etternavn`)}</dt>
             <dd className="mt-1 font-medium">
-              {hjemmelshaverKriterier.etternavn ?? ikkeAngitt}
+              {hjemmelshaverKriterier?.etternavn ?? ikkeAngitt}
             </dd>
           </div>
           <div>
             <dt className="text-kv-subtle">{t(`${uk}.felt.fornavn`)}</dt>
             <dd className="mt-1 font-medium">
-              {hjemmelshaverKriterier.fornavn ?? ikkeAngitt}
+              {hjemmelshaverKriterier?.fornavn ?? ikkeAngitt}
             </dd>
           </div>
         </dl>

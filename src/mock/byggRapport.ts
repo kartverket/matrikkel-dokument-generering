@@ -240,7 +240,7 @@ const mockByggRapport: ByggRapport = {
       nr: 1,
       utenBokstav: true,
     },
-    matrikkelenhet: { gnr: 208, bnr: 12, fnr: null, snr: null },
+    matrikkelenhet: { gnr: 208, bnr: 12 },
     hjemmelshaver: {
       etternavn: "Nordmann",
       fornavn: "Ola",
@@ -251,8 +251,10 @@ const mockByggRapport: ByggRapport = {
       periodeFra: "2019-01-01",
     },
     sokevindu: {
-      nedreVenstre: { nord: 6642000, ost: 597300 },
-      ovreHoeyre: { nord: 6642200, ost: 597500 },
+      nord: 6642000,
+      ost: 597300,
+      syd: 6642200,
+      vest: 597500,
     },
     subrapporter: {
       inkluderEtasjer: true,

@@ -23,7 +23,7 @@ export function SubrapporterKriterier({ subrapporterKriterier }: Props) {
             </Table.HeaderCell>
             <Table.Cell>
               {t(
-                `${uk}.${subrapporterKriterier.inkluderEtasjer ? "ja" : "nei"}`,
+                `${uk}.${subrapporterKriterier?.inkluderEtasjer ? "ja" : "nei"}`,
               )}
             </Table.Cell>
           </Table.Row>
@@ -33,7 +33,7 @@ export function SubrapporterKriterier({ subrapporterKriterier }: Props) {
             </Table.HeaderCell>
             <Table.Cell>
               {t(
-                `${uk}.${subrapporterKriterier.inkluderBruksenheter ? "ja" : "nei"}`,
+                `${uk}.${subrapporterKriterier?.inkluderBruksenheter ? "ja" : "nei"}`,
               )}
             </Table.Cell>
           </Table.Row>
@@ -43,7 +43,7 @@ export function SubrapporterKriterier({ subrapporterKriterier }: Props) {
             </Table.HeaderCell>
             <Table.Cell>
               {t(
-                `${uk}.${subrapporterKriterier.inkluderTiltakshavere ? "ja" : "nei"}`,
+                `${uk}.${subrapporterKriterier?.inkluderTiltakshavere ? "ja" : "nei"}`,
               )}
             </Table.Cell>
           </Table.Row>
@@ -53,7 +53,7 @@ export function SubrapporterKriterier({ subrapporterKriterier }: Props) {
             </Table.HeaderCell>
             <Table.Cell>
               {t(
-                `${uk}.${subrapporterKriterier.inkluderKontaktpersoner ? "ja" : "nei"}`,
+                `${uk}.${subrapporterKriterier?.inkluderKontaktpersoner ? "ja" : "nei"}`,
               )}
             </Table.Cell>
           </Table.Row>
@@ -63,7 +63,7 @@ export function SubrapporterKriterier({ subrapporterKriterier }: Props) {
             </Table.HeaderCell>
             <Table.Cell>
               {t(
-                `${uk}.${subrapporterKriterier.inkluderHjemmelshavere ? "ja" : "nei"}`,
+                `${uk}.${subrapporterKriterier?.inkluderHjemmelshavere ? "ja" : "nei"}`,
               )}
             </Table.Cell>
           </Table.Row>
@@ -73,7 +73,7 @@ export function SubrapporterKriterier({ subrapporterKriterier }: Props) {
             </Table.HeaderCell>
             <Table.Cell>
               {t(
-                `${uk}.${subrapporterKriterier.inkluderKulturminner ? "ja" : "nei"}`,
+                `${uk}.${subrapporterKriterier?.inkluderKulturminner ? "ja" : "nei"}`,
               )}
             </Table.Cell>
           </Table.Row>

@@ -25,9 +25,10 @@ export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {
               {t(`${uk}.felt.naavaerende`)}
             </Table.HeaderCell>
             <Table.Cell>
-              {bygningsstatusKriterier.naavaerende.length > 0 ? (
+              {bygningsstatusKriterier?.naavaerende &&
+              bygningsstatusKriterier.naavaerende.length > 0 ? (
                 <span className="flex flex-wrap gap-2">
-                  {bygningsstatusKriterier.naavaerende.map((status) => (
+                  {bygningsstatusKriterier?.naavaerende?.map((status) => (
                     <Tag key={status} data-color="success" variant="outline">
                       {status}
                     </Tag>
@@ -43,9 +44,10 @@ export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {
               {t(`${uk}.felt.tidligere`)}
             </Table.HeaderCell>
             <Table.Cell>
-              {bygningsstatusKriterier.tidligere.length > 0 ? (
+              {bygningsstatusKriterier?.tidligere &&
+              bygningsstatusKriterier.tidligere.length > 0 ? (
                 <span className="flex flex-wrap gap-2">
-                  {bygningsstatusKriterier.tidligere.map((status) => (
+                  {bygningsstatusKriterier?.tidligere?.map((status) => (
                     <Tag key={status} data-color="accent" variant="outline">
                       {status}
                     </Tag>
@@ -61,7 +63,11 @@ export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {
               {t(`${uk}.felt.periodeFra`)}
             </Table.HeaderCell>
             <Table.Cell>
-              {formatDate(i18n, bygningsstatusKriterier.periodeFra, ikkeAngitt)}
+              {formatDate(
+                i18n,
+                bygningsstatusKriterier?.periodeFra,
+                ikkeAngitt,
+              )}
             </Table.Cell>
           </Table.Row>
           <Table.Row>
@@ -69,7 +75,11 @@ export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {
               {t(`${uk}.felt.periodeTil`)}
             </Table.HeaderCell>
             <Table.Cell>
-              {formatDate(i18n, bygningsstatusKriterier.periodeTil, ikkeAngitt)}
+              {formatDate(
+                i18n,
+                bygningsstatusKriterier?.periodeTil,
+                ikkeAngitt,
+              )}
             </Table.Cell>
           </Table.Row>
         </Table.Body>

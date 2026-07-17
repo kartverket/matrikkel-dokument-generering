@@ -22,22 +22,25 @@ export function BygningKriterier({ bygningKriterier }: Props) {
             <Table.HeaderCell scope="row" className="w-1/3">
               {t(`${uk}.felt.bygningsnr`)}
             </Table.HeaderCell>
-            <Table.Cell>{bygningKriterier.bygningsnr ?? ikkeAngitt}</Table.Cell>
+            <Table.Cell>
+              {bygningKriterier?.bygningsnr ?? ikkeAngitt}
+            </Table.Cell>
           </Table.Row>
           <Table.Row>
             <Table.HeaderCell scope="row">
               {t(`${uk}.felt.lopenr`)}
             </Table.HeaderCell>
-            <Table.Cell>{bygningKriterier.lopenr ?? ikkeAngitt}</Table.Cell>
+            <Table.Cell>{bygningKriterier?.lopenr ?? ikkeAngitt}</Table.Cell>
           </Table.Row>
           <Table.Row>
             <Table.HeaderCell scope="row">
               {t(`${uk}.felt.bygningstyper`)}
             </Table.HeaderCell>
             <Table.Cell>
-              {bygningKriterier.bygningstyper.length > 0 ? (
+              {bygningKriterier?.bygningstyper &&
+              bygningKriterier.bygningstyper.length > 0 ? (
                 <span className="flex flex-wrap gap-2">
-                  {bygningKriterier.bygningstyper.map(({ kode, navn }) => (
+                  {bygningKriterier?.bygningstyper.map(({ kode, navn }) => (
                     <Tag key={kode} data-color="accent" variant="outline">
                       {kode} – {navn}
                     </Tag>

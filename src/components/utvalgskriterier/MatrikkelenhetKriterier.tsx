@@ -20,22 +20,22 @@ export function MatrikkelenhetKriterier({ matrikkelenhetKriterier }: Props) {
         <dl className="grid grid-cols-2 gap-x-6 gap-y-5">
           <div>
             <dt className="text-kv-subtle">{t(`${uk}.felt.gnr`)}</dt>
-            <dd className="mt-1 font-medium">{matrikkelenhetKriterier.gnr}</dd>
+            <dd className="mt-1 font-medium">{matrikkelenhetKriterier?.gnr}</dd>
           </div>
           <div>
             <dt className="text-kv-subtle">{t(`${uk}.felt.bnr`)}</dt>
-            <dd className="mt-1 font-medium">{matrikkelenhetKriterier.bnr}</dd>
+            <dd className="mt-1 font-medium">{matrikkelenhetKriterier?.bnr}</dd>
           </div>
           <div>
             <dt className="text-kv-subtle">{t(`${uk}.felt.fnr`)}</dt>
             <dd className="mt-1 font-medium">
-              {matrikkelenhetKriterier.fnr ?? ikkeAngitt}
+              {matrikkelenhetKriterier?.fnr ?? ikkeAngitt}
             </dd>
           </div>
           <div>
             <dt className="text-kv-subtle">{t(`${uk}.felt.snr`)}</dt>
             <dd className="mt-1 font-medium">
-              {matrikkelenhetKriterier.snr ?? ikkeAngitt}
+              {matrikkelenhetKriterier?.snr ?? ikkeAngitt}
             </dd>
           </div>
         </dl>
