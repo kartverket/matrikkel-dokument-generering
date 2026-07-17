@@ -37,7 +37,7 @@ export const rapportSchema = z
       description: "Koordinatsystemet som gjelder for alle koordinater.",
     }),
     locale: localeSchema,
-    generertTidspunkt: z.date().meta({
+    generertTidspunkt: z.iso.datetime({ offset: true }).meta({
       description: "Tidspunkt for når rapporten ble generert.",
     }),
   })
