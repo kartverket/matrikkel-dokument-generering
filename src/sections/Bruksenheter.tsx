@@ -131,9 +131,11 @@ export default function Bruksenheter({ index, bygning }: Props) {
             >
               <Card.Block className="p-7">
                 <BruksenhetHeader
-                  bruksenhetNummer={bruksenhet.nummer}
-                  bruksenhetTypeChip={bruksenhet.type}
-                  bruksenhetSeksjon={bruksenhet.seksjon}
+                  bruksenhetNummer={bruksenhet.nummer ?? ingenOppgittBruksenhet}
+                  bruksenhetTypeChip={bruksenhet.type ?? ingenOppgittBruksenhet}
+                  bruksenhetSeksjon={
+                    bruksenhet.seksjon ?? ingenOppgittBruksenhet
+                  }
                   ingenOppgittBruksenhet={ingenOppgittBruksenhet}
                 />
 
