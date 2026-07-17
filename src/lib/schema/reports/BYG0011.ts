@@ -1,15 +1,13 @@
 import { z } from "@hono/zod-openapi"
-import {
-  arealSchema,
-  bygningstypeSchema,
-  heltallSchema,
-  koordinatSchema,
-  tekstSchema,
-  valgfriDatoSchema,
-  valgfriTekstSchema,
-} from "../shared/commonSchemas"
-import { rapportSchema } from "../rapportSchema"
 import { byggUtvalgsKriterierSchema } from "../byggUtvalgsKriterier"
+import { rapportSchema } from "../rapportSchema"
+
+const tekstSchema = z.string().min(1)
+const valgfriTekstSchema = tekstSchema.nullable().optional()
+const heltallSchema = z.number().int().nonnegative()
+const arealSchema = z.number().nonnegative()
+const datoSchema = z.iso.date()
+const valgfriDatoSchema = datoSchema.nullable()
 
 const arealFordelingSchema = z
   .object({
@@ -21,6 +19,20 @@ const arealFordelingSchema = z
     description:
       "Areal i kvadratmeter. Totalt areal beregnes som summen av bolig og annet.",
   })
+
+const koordinatSchema = z
+  .object({
+    nord: z.number(),
+    ost: z.number(),
+  })
+  .meta({ id: "Koordinat" })
+
+export const bygningstypeSchema = z
+  .object({
+    kode: z.number().optional(),
+    navn: z.string().optional(),
+  })
+  .meta({ id: "Bygningstype" })
 
 const bygningsstatusSchema = z
   .object({

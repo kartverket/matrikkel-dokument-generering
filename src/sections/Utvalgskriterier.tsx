@@ -1,5 +1,4 @@
 import { useTranslation } from "react-i18next"
-import type { ByggUtvalgsKriterier } from "../lib/schema/byggUtvalgsKriterier"
 import { Section } from "../components/Section.tsx"
 import { AdresseKriterier } from "../components/utvalgskriterier/AdresseKriterier"
 import { BygningKriterier } from "../components/utvalgskriterier/BygningKriterier"
@@ -9,6 +8,7 @@ import { MatrikkelenhetKriterier } from "../components/utvalgskriterier/Matrikke
 import { RapportutvalgKriterier } from "../components/utvalgskriterier/RapportutvalgKriterier"
 import { SokevinduKriterier } from "../components/utvalgskriterier/SokevinduKriterier"
 import { SubrapporterKriterier } from "../components/utvalgskriterier/SubrapporterKriterier"
+import type { ByggUtvalgsKriterier } from "../lib/schema/byggUtvalgsKriterier"
 
 interface Props {
   index: number
