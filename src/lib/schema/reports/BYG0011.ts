@@ -8,8 +8,8 @@ import {
   valgfriTekstSchema,
 } from "../commonSchemas"
 import { rapportSchema } from "../rapportSchema"
-import { utvalgskriterierSchema } from "../utvalgsKriterierSchema"
 import { koordinatSchema } from "../shared/koordinatSchema"
+import { utvalgskriterierSchema } from "../utvalgsKriterierSchema"
 
 const arealFordelingSchema = z
   .object({
