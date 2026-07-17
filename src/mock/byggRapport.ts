@@ -220,6 +220,7 @@ const mockByggRapport: ByggRapport = {
   kommune: { nr: "3201", navn: "Bærum" },
   koordinatsystem: "EUREF89 UTM sone 32",
   locale: "nb",
+  generertTidspunkt: new Date("2026-07-17T10:00:00Z"),
   utvalgskriterier: {
     omfang: {
       bestaaendeBygg: true,

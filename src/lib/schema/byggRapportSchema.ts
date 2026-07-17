@@ -2,7 +2,7 @@ import { z } from "@hono/zod-openapi"
 import { rapportSchema } from "./rapportSchema"
 
 const tekstSchema = z.string().min(1)
-const valgfriTekstSchema = tekstSchema.nullable()
+const valgfriTekstSchema = tekstSchema.nullable().optional()
 const heltallSchema = z.number().int().nonnegative()
 const arealSchema = z.number().nonnegative()
 const datoSchema = z.iso.date()
@@ -252,15 +252,12 @@ const bygningSchema = z
 
 export const byggRapportSchema = rapportSchema
   .extend({
-    rapportType: z.literal("BYG0011").meta({
-      description:
-        "Rapportkode. Koden bestemmer blant annet rapporttittel og oppsett.",
-    }),
+    rapportType: z.literal("BYG0011").meta({}),
     utvalgskriterier: utvalgskriterierSchema,
     bygninger: z.array(bygningSchema),
   })
   .openapi("ByggRapport", {
-    description: "Datagrunnlag for PDF-rapporten BYG0011 (Bygg Rapport).",
+    description: "Datagrunnlag for rapporten BYG0011.",
   })
 
 export type ByggRapport = z.infer<typeof byggRapportSchema>

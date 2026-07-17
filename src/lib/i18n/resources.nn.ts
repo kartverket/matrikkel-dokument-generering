@@ -4,6 +4,14 @@ export const nn = {
   ...shared,
   tom: "tom",
   rapport: {
+    metaData: {
+      rapportType: "Rapporttype",
+      rapportNr: "Rapportnr",
+      kommune: "Kommune",
+      kommuneNr: "Kommunenr",
+      koordinatsystem: "Koordinatsystem",
+      generertTidspunkt: "Generert tidspunkt",
+    },
     BYG0011: {
       rapportTittel: "Bygg Rapport",
       title: "Bygning {{bygningsnr}} – {{bygningstype}}",
@@ -60,14 +68,6 @@ export const nn = {
           hjemmelshavere: "Heimelshavarar",
           kulturminner: "Kulturminne",
         },
-      },
-      metadata: {
-        rapportType: "Rapporttype",
-        rapportNr: "Rapportnr",
-        kommune: "Kommune",
-        kommuneNr: "Kommunenr",
-        koordinatsystem: "Koordinatsystem",
-        generertTidspunkt: "Generert tidspunkt",
       },
       matrikkelenhet: "Matrikkeleining",
       naeringsgruppe: "Næringsgruppe",
