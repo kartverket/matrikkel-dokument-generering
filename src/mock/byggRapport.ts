@@ -1,14 +1,13 @@
 import type {
   Bruksenhet,
-  BruksenhetDetalj,
   ByggRapport,
   Bygningsendring,
 } from "../lib/schema/byggRapportSchema"
 
 type Bygningsstatus = Bygningsendring["bygningsstatus"]
 type Bygningsdatoer = Bygningsendring["datoer"]
-type Hjemmelshaver = BruksenhetDetalj["hjemmelshavere"][number]
-type Kontaktperson = BruksenhetDetalj["kontaktpersoner"][number]
+type Hjemmelshaver = Bruksenhet["hjemmelshavere"][number]
+type Kontaktperson = Bruksenhet["kontaktpersoner"][number]
 
 const statuser = {
   RA: { kode: 1, kortkode: "RA", navn: "Rammetillatelse", bestaaende: false },
@@ -40,25 +39,8 @@ function datoer(overrides: Partial<Bygningsdatoer>): Bygningsdatoer {
   }
 }
 
-function refBruksenhet(
-  bruksenhetsnr: string,
-  etasjeplankode: "H" | "L" | "U" | "K",
-  etasjenummer: number,
-): Bruksenhet {
-  return {
-    bruksenhetsnr,
-    type: "Bolig",
-    matrikkelenhet: { gnr: 94, bnr: 309, fnr: null, snr: null },
-    etasjeplankode,
-    etasjenummer,
-    bruksareal: 0,
-    antallRom: 0,
-    kjokkentilgang: null,
-    antallBad: 0,
-    antallWc: 0,
-    adresse: null,
-    egenregistrert: null,
-  }
+function refBruksenhet(bruksenhetsnr: string) {
+  return { bruksenhetsnr }
 }
 
 const olaNordmann: Hjemmelshaver = {
@@ -77,10 +59,7 @@ const olaNordmann: Hjemmelshaver = {
   datofra: "2019-01-10",
   datotil: null,
   kategorikode: "FYSISK_PERSON",
-  bruksenhetsnr: "H0101",
   harAndel: true,
-  erSelveier: true,
-  matrikkelenhet: { gnr: 94, bnr: 309, fnr: null, snr: 1 },
 }
 
 const kariNordmann: Hjemmelshaver = {
@@ -94,8 +73,6 @@ const perHansen: Hjemmelshaver = {
   eierIdent: "22071965",
   navn: "Per Hansen",
   andelNevner: 1,
-  bruksenhetsnr: "H0102",
-  matrikkelenhet: { gnr: 94, bnr: 309, fnr: null, snr: 2 },
 }
 
 const byggmesterBob: Kontaktperson = {
@@ -108,10 +85,7 @@ const byggmesterBob: Kontaktperson = {
   postnummeromradenr: "0666",
   postnummeromradenavn: "Oslo",
   land: "Norge",
-  bruksenhetsnr: "H0101",
   datofra: "2019-05-01",
-  datofraSOSI: "20190501",
-  harDatofra: true,
   kategorikode: "JURIDISK_PERSON",
   kontaktpersonKode: "ANSVARLIG_SOKER",
   statuskode: "AKTIV",
@@ -120,17 +94,15 @@ const byggmesterBob: Kontaktperson = {
 
 const gjeldendeEndring: Bygningsendring = {
   id: 1001,
-  bygningId: 1,
   lopenr: 5,
   endringskode: null,
   beskrivelse: null,
   bygningsstatus: statuser.TB,
   antallBoenheter: 1,
-  bruksareal: { bolig: 140, annet: 35, totalt: 175 },
-  bruttoareal: { bolig: 158, annet: 44, totalt: 202 },
+  bruksareal: { bolig: 140, annet: 35 },
+  bruttoareal: { bolig: 158, annet: 44 },
   bebygdAreal: 95,
   koordinat: { nord: 6642100, ost: 597400 },
-  koordinatsystem: "EUREF89 UTM sone 32",
   datoer: datoer({
     rammetillatelse: "2019-03-15",
     igangsettingstillatelse: "2019-05-01",
@@ -142,102 +114,18 @@ const gjeldendeEndring: Bygningsendring = {
       etasjeplan: "Hovedetasje",
       etasje: 1,
       antallBoenheter: 1,
-      bruksareal: { bolig: 80, annet: 10, totalt: 90 },
-      bruttoareal: { bolig: 90, annet: 12, totalt: 102 },
+      bruksareal: { bolig: 80, annet: 10 },
+      bruttoareal: { bolig: 90, annet: 12 },
     },
     {
       etasjeplan: "Annenetasje",
       etasje: 2,
       antallBoenheter: 0,
-      bruksareal: { bolig: 60, annet: 10, totalt: 70 },
-      bruttoareal: { bolig: 68, annet: 12, totalt: 80 },
+      bruksareal: { bolig: 60, annet: 10 },
+      bruttoareal: { bolig: 68, annet: 12 },
     },
   ],
-  bruksenheter: [
-    {
-      bruksenhetsnr: "H0101",
-      type: "Bolig",
-      matrikkelenhet: {
-        gnr: 94,
-        bnr: 309,
-        fnr: null,
-        snr: 1,
-      },
-      etasjeplankode: "H",
-      etasjenummer: 1,
-      bruksareal: 74,
-      antallRom: 3,
-      kjokkentilgang: true,
-      antallBad: 1,
-      antallWc: 1,
-      adresse: "Belsetveien 114 H0101, 1348 Rykkinn",
-      egenregistrert: {
-        byggeaar: 2020,
-        vannforsyning: {
-          data: "Tilknyttet offentlig vannverk",
-          erGjeldende: true,
-          gyldighetsperiode: { gyldigFra: null, gyldigTil: null },
-        },
-        avlop: {
-          data: "Tilknyttet offentlig avløpsnett",
-          erGjeldende: true,
-          gyldighetsperiode: { gyldigFra: null, gyldigTil: null },
-        },
-        energikilder: [
-          {
-            data: "Elektrisitet",
-            erGjeldende: true,
-            gyldighetsperiode: { gyldigFra: null, gyldigTil: null },
-          },
-        ],
-        oppvarming: [
-          {
-            data: "Varmepumpe",
-            erGjeldende: true,
-            gyldighetsperiode: { gyldigFra: null, gyldigTil: null },
-          },
-        ],
-      },
-    },
-    {
-      bruksenhetsnr: null,
-      type: "Annet",
-      matrikkelenhet: {
-        gnr: 208,
-        bnr: 12,
-        fnr: null,
-        snr: null,
-      },
-      etasjeplankode: null,
-      etasjenummer: null,
-      bruksareal: 20,
-      antallRom: 0,
-      kjokkentilgang: null,
-      antallBad: 0,
-      antallWc: 0,
-      adresse: null,
-      egenregistrert: null,
-    },
-    {
-      bruksenhetsnr: null,
-      type: "Unummerert bruksenhet",
-      matrikkelenhet: {
-        gnr: 208,
-        bnr: 12,
-        fnr: null,
-        snr: null,
-      },
-      etasjeplankode: null,
-      etasjenummer: null,
-      bruksareal: 10,
-      antallRom: 1,
-      kjokkentilgang: false,
-      antallBad: 0,
-      antallWc: 0,
-      adresse: "Bakgården, Storgata 1, 0155 Oslo",
-      egenregistrert: null,
-    },
-  ],
+  bruksenheter: [refBruksenhet("H0101")],
   tiltakshavere: [
     {
       rolle: "Tiltakshaver",
@@ -251,8 +139,6 @@ const gjeldendeEndring: Bygningsendring = {
       land: "Norge",
       bruksenhetsnr: "H0101",
       datofra: "2019-03-15",
-      datofraSOSI: "20190315",
-      harDatofra: true,
       kategorikode: "FYSISK_PERSON",
       kontaktpersonKode: null,
       statuskode: "AKTIV",
@@ -276,13 +162,13 @@ const historiskeEndringer: Bygningsendring[] = [
     lopenr: 4,
     endringskode: "Tilbygg",
     bygningsstatus: statuser.FA,
-    bruksareal: { bolig: 121, annet: 74, totalt: 195 },
+    bruksareal: { bolig: 121, annet: 74 },
     datoer: datoer({
       rammetillatelse: "2016-09-12",
       igangsettingstillatelse: "2017-03-06",
       ferdigattest: "2020-01-22",
     }),
-    bruksenheter: [refBruksenhet("H0103", "K", 1)],
+    bruksenheter: [refBruksenhet("H0103")],
   },
   {
     ...gjeldendeEndring,
@@ -290,12 +176,12 @@ const historiskeEndringer: Bygningsendring[] = [
     lopenr: 3,
     endringskode: "Påbygg",
     bygningsstatus: statuser.IG,
-    bruksareal: { bolig: 121, annet: 60, totalt: 181 },
+    bruksareal: { bolig: 121, annet: 60 },
     datoer: datoer({
       rammetillatelse: "2016-09-12",
       igangsettingstillatelse: "2017-03-06",
     }),
-    bruksenheter: [refBruksenhet("H0103", "K", 1)],
+    bruksenheter: [refBruksenhet("H0103")],
   },
   {
     ...gjeldendeEndring,
@@ -303,9 +189,9 @@ const historiskeEndringer: Bygningsendring[] = [
     lopenr: 2,
     endringskode: "Underbygg",
     bygningsstatus: statuser.RA,
-    bruksareal: { bolig: 102, annet: 60, totalt: 162 },
+    bruksareal: { bolig: 102, annet: 60 },
     datoer: datoer({ rammetillatelse: "2016-09-12" }),
-    bruksenheter: [refBruksenhet("H0104", "K", 1)],
+    bruksenheter: [refBruksenhet("H0104")],
   },
   {
     ...gjeldendeEndring,
@@ -314,31 +200,27 @@ const historiskeEndringer: Bygningsendring[] = [
     endringskode: "Ombygging",
     beskrivelse: "Midlertidig tillatelse er gitt.",
     bygningsstatus: statuser.MB,
-    bruksareal: { bolig: 102, annet: 0, totalt: 102 },
+    bruksareal: { bolig: 102, annet: 0 },
     datoer: datoer({ midlertidigBrukstillatelse: "2008-09-12" }),
-    bruksenheter: [refBruksenhet("H0103", "K", 1)],
+    bruksenheter: [refBruksenhet("H0103")],
   },
   {
     ...gjeldendeEndring,
     id: 1006,
     lopenr: 0,
     bygningsstatus: statuser.TB,
-    bruksareal: { bolig: 102, annet: 0, totalt: 102 },
+    bruksareal: { bolig: 102, annet: 0 },
     datoer: datoer({ tattIBruk: "1998-06-18" }),
-    bruksenheter: [
-      refBruksenhet("H0101", "H", 1),
-      refBruksenhet("H0102", "L", 1),
-    ],
+    bruksenheter: [refBruksenhet("H0101"), refBruksenhet("H0102")],
   },
 ]
 
 const mockByggRapport: ByggRapport = {
   rapportType: "BYG0011",
-  tittel: "Bygningsrapport – Belsetveien 114",
   kommune: { nr: "3201", navn: "Bærum" },
   koordinatsystem: "EUREF89 UTM sone 32",
   locale: "nb",
-  generertTidspunkt: "2026-07-14T12:00:00Z",
+  generertTidspunkt: new Date("2026-07-17T10:00:00Z"),
   utvalgskriterier: {
     omfang: {
       bestaaendeBygg: true,
@@ -391,96 +273,87 @@ const mockByggRapport: ByggRapport = {
       id: 1,
       bygningsnr: "12345678",
       bygningstype: { kode: 111, navn: "Enebolig" },
-      adresseverdig: true,
       naeringsgruppe: "Bolig",
       matrikkelenhet: "208/12",
       bruksenheter: [
         {
           id: "H0101",
           nummer: "H0101",
-          typeChip: "Bolig",
+          type: "Bolig",
           seksjon: "Seksjon 3201-94/309/0/1",
-          bruksenhetstype: "Bolig",
           adresse: "Belsetveien 114 H0101, 1348 Rykkinn",
           etasje: "Hovedetasje (H01)",
-          bruksareal: "74 m²",
-          antallRom: "3",
-          kjokken: "Ja (1)",
-          antallBad: "1",
-          antallWc: "1",
+          antallRom: 3,
+          kjokkentilgang: true,
+          antallBad: 1,
+          antallWc: 1,
           arealfordeling: {
             bebygdAreal: 74,
-            bruksareal: { bolig: 74, annet: 0, totalt: 74 },
+            bruksareal: { bolig: 74, annet: 0 },
             koordinat: { nord: 6642100, ost: 597400 },
             etasjeplan: [
               {
                 etasjeplan: "Hovedetasje",
                 etasje: 1,
                 antallBoenheter: 1,
-                bruksareal: { bolig: 74, annet: 0, totalt: 74 },
-                bruttoareal: { bolig: 80, annet: 0, totalt: 80 },
+                bruksareal: { bolig: 74, annet: 0 },
+                bruttoareal: { bolig: 80, annet: 0 },
               },
             ],
           },
           hjemmelshavere: [olaNordmann, kariNordmann],
           kontaktpersoner: [byggmesterBob],
-          endringer: [],
         },
         {
           id: "H0102",
           nummer: "H0102",
-          typeChip: "Bolig",
+          type: "Bolig",
           seksjon: "Seksjon 3201-94/309/0/2",
-          bruksenhetstype: "Bolig",
           adresse: "Belsetveien 114 H0102, 1348 Rykkinn",
           etasje: "Loft (L01)",
-          bruksareal: "28 m²",
-          antallRom: "2",
-          kjokken: "Ja (1)",
-          antallBad: "1",
-          antallWc: "1",
+          antallRom: 2,
+          kjokkentilgang: true,
+          antallBad: 1,
+          antallWc: 1,
           arealfordeling: {
             bebygdAreal: 28,
-            bruksareal: { bolig: 28, annet: 0, totalt: 28 },
+            bruksareal: { bolig: 28, annet: 0 },
             koordinat: { nord: 6642100, ost: 597400 },
             etasjeplan: [
               {
                 etasjeplan: "Loft",
                 etasje: 1,
                 antallBoenheter: 1,
-                bruksareal: { bolig: 28, annet: 0, totalt: 28 },
-                bruttoareal: { bolig: 31, annet: 0, totalt: 31 },
+                bruksareal: { bolig: 28, annet: 0 },
+                bruttoareal: { bolig: 31, annet: 0 },
               },
             ],
           },
           hjemmelshavere: [perHansen],
           kontaktpersoner: [],
-          endringer: [],
         },
         {
           id: "H0103",
           nummer: "H0103",
-          typeChip: "Bolig",
+          type: "Bolig",
           seksjon: "Seksjon 3201-94/309/0/3",
-          bruksenhetstype: "Bolig",
           adresse: "Belsetveien 114 H0103, 1348 Rykkinn",
           etasje: "Kjeller (K01)",
-          bruksareal: "40 m²",
-          antallRom: "2",
-          kjokken: "Ja (1)",
-          antallBad: "1",
-          antallWc: "1",
+          antallRom: 2,
+          kjokkentilgang: true,
+          antallBad: 1,
+          antallWc: 1,
           arealfordeling: {
             bebygdAreal: 40,
-            bruksareal: { bolig: 40, annet: 0, totalt: 40 },
+            bruksareal: { bolig: 40, annet: 0 },
             koordinat: { nord: 6644118, ost: 254384 },
             etasjeplan: [
               {
                 etasjeplan: "Kjeller",
                 etasje: 1,
                 antallBoenheter: 1,
-                bruksareal: { bolig: 40, annet: 0, totalt: 40 },
-                bruttoareal: { bolig: 44, annet: 0, totalt: 44 },
+                bruksareal: { bolig: 40, annet: 0 },
+                bruttoareal: { bolig: 44, annet: 0 },
               },
             ],
           },
@@ -488,62 +361,11 @@ const mockByggRapport: ByggRapport = {
             {
               ...olaNordmann,
               andelNevner: 1,
-              bruksenhetsnr: "H0103",
-              matrikkelenhet: { gnr: 94, bnr: 309, fnr: null, snr: 3 },
             },
           ],
           kontaktpersoner: [],
-          endringer: [
-            {
-              id: "1002",
-              bygningId: "1",
-              lopenr: "1",
-              tittel: "Bygningsendring 1 · Tilbygg",
-              status: "Ferdigattestert",
-              bygningsstatus: "Ferdigattest",
-              bygningsstatuskode: "5",
-              bygningsstatusKortkode: "FA",
-              bestaaende: "Ja",
-              endringskode: "Tilbygg",
-              beskrivelse: "14 m² bruksareal (annet) lagt til",
-              bygningstype: "161 Fritidsbygg",
-              antallBoenheter: "1",
-              bruksareal: "0 / 14 / 14 m²",
-              bruttoareal: "0 / 15 / 15 m²",
-              bebygdAreal: "14 m²",
-              rammetillatelse: "12.09.2016",
-              igangsettingstillatelse: "06.03.2017",
-              midlertidigBrukstillatelse: null,
-              ferdigattest: "22.01.2020",
-              tattIBruk: "22.01.2020",
-              utgaattRevet: null,
-              koordinater: "6 644 118 N / 254 384 Ø",
-              etasjer: [
-                {
-                  etasjeplan: "Kjeller",
-                  etasje: "1",
-                  antallBoenheter: "1",
-                  bruksarealBolig: "0 m²",
-                  bruksarealAnnet: "14 m²",
-                  bruksarealTotalt: "14 m²",
-                  bruttoarealBolig: "0 m²",
-                  bruttoarealAnnet: "15 m²",
-                  bruttoarealTotalt: "15 m²",
-                },
-              ],
-              kulturminner: [
-                {
-                  id: "KM-12345",
-                  navn: "Belsetveien 114",
-                  status: "Regulert",
-                  kategori: "SEFRAK-registrert bygning",
-                },
-              ],
-            },
-          ],
         },
       ],
-      gjeldende: gjeldendeEndring,
       endringer: [gjeldendeEndring, ...historiskeEndringer],
     },
   ],

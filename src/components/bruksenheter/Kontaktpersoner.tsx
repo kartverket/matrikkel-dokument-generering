@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next"
-import type { BruksenhetDetalj } from "../../lib/schema/byggRapportSchema"
+import type { Bruksenhet } from "../../lib/schema/byggRapportSchema"
 import { formatAdresse } from "../../lib/utils/formatAdresse"
 import { joinStrings } from "../../lib/utils/joinStrings"
 import { lagDetaljfeltBuilder } from "../Detaljfelt"
@@ -7,7 +7,7 @@ import { PersonCard } from "../PersonCard"
 import { PersonGrid } from "../PersonGrid"
 
 interface Props {
-  kontaktpersoner: BruksenhetDetalj["kontaktpersoner"]
+  kontaktpersoner: Bruksenhet["kontaktpersoner"]
 }
 
 type Kontaktperson = Props["kontaktpersoner"][number]

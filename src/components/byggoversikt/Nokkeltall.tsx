@@ -2,6 +2,7 @@ import { Card } from "@digdir/designsystemet-react"
 import { Label, Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { Bygningsendring } from "../../lib/schema/byggRapportSchema"
+import { summerAreal } from "../../lib/utils/arealLinje"
 import { formatArea } from "../../lib/utils/formatArea"
 
 interface Props {
@@ -15,13 +16,13 @@ export default function Nokkeltall({ endring }: Props) {
   const kort = [
     {
       id: "bra",
-      areal: endring.bruksareal.totalt,
+      areal: summerAreal(endring.bruksareal),
       label: t(`${key}.bra`),
       beskrivelse: t(`${key}.nokkeltall.braBeskrivelse`),
     },
     {
       id: "bta",
-      areal: endring.bruttoareal.totalt,
+      areal: summerAreal(endring.bruttoareal),
       label: t(`${key}.bta`),
       beskrivelse: t(`${key}.nokkeltall.btaBeskrivelse`),
     },

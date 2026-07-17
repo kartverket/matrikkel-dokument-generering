@@ -1,5 +1,6 @@
-import { SEFRAK_KATEGORI } from "../constants"
 import type { Bygningsendring } from "../schema/byggRapportSchema"
+
+const SEFRAK_KATEGORI = "SEFRAK-registrert bygning"
 
 export function getKulturMinner(endring: Bygningsendring): string {
   const hasKulturMinnerSefrak = endring.kulturminner.some(
