@@ -3,13 +3,13 @@ import {
   arealSchema,
   bygningstypeSchema,
   heltallSchema,
-  koordinatSchema,
   tekstSchema,
   valgfriDatoSchema,
   valgfriTekstSchema,
 } from "../commonSchemas"
 import { rapportSchema } from "../rapportSchema"
 import { utvalgskriterierSchema } from "../utvalgsKriterierSchema"
+import { koordinatSchema } from "../shared/koordinatSchema"
 
 const arealFordelingSchema = z
   .object({

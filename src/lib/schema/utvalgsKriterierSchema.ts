@@ -2,10 +2,10 @@ import { z } from "@hono/zod-openapi"
 import {
   bygningstypeSchema,
   heltallSchema,
-  koordinatSchema,
   matrikkelenhetSchema,
   tekstSchema,
 } from "./commonSchemas"
+import { koordinatSchema } from "./shared/koordinatSchema"
 
 export const utvalgskriterierSchema = z
   .object({

@@ -7,13 +7,6 @@ export const arealSchema = z.number().nonnegative()
 export const datoSchema = z.iso.date()
 export const valgfriDatoSchema = datoSchema.nullable()
 
-export const koordinatSchema = z
-  .object({
-    nord: z.number(),
-    ost: z.number(),
-  })
-  .meta({ id: "Koordinat" })
-
 export const bygningstypeSchema = z
   .object({
     kode: heltallSchema,
