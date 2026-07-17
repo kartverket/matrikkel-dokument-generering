@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi"
-import { bygningstypeSchema } from "../bygningstypeSchema"
 import { byggUtvalgsKriterierSchema } from "../byggUtvalgsKriterier"
+import { bygningstypeSchema } from "../bygningstypeSchema"
 import { rapportSchema } from "../rapportSchema"
 
 const tekstSchema = z.string().min(1)
