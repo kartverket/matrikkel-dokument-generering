@@ -69,7 +69,7 @@ export const byggUtvalgsKriterierSchema = z
           .optional()
           .default([])
           .meta({ example: [{ kode: 111, navn: "Enebolig" }] }),
-        lopenr: z.number().nullable().optional().meta({ example: 1 }),
+        lopenr: valgfriNummer.meta({ example: 1 }),
       })
       .optional(),
     adresse: z
