@@ -1,7 +1,7 @@
 import { I18nextProvider } from "react-i18next"
 import { DocumentComponent } from "./Document.tsx"
 import { createI18n } from "./lib/i18n/createI18n.ts"
-import type { Byg0011Rapport as ByggRapport } from "./lib/schema/reports/bygg/byg0011/byg0011.schema.ts"
+import type { Byg0011Rapport as ByggRapport } from "./lib/schema/reports/bygg/byg0011.schema.ts"
 import "./index.css"
 
 const mockModules = import.meta.glob<{ default: ByggRapport }>("./mock/*.ts", {

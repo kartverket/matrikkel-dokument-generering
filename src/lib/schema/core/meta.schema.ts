@@ -1,7 +1,9 @@
 import { z } from "@hono/zod-openapi"
+import { rapportTypeSchema } from "../registry"
 import { kommuneSchema } from "./kommune.schema"
 
 export const rapportMetadataSchema = z.object({
+  rapportType: rapportTypeSchema,
   kommune: kommuneSchema,
   koordinatsystem: z.string().min(1).meta({
     example: "EUREF89 UTM sone 32",
@@ -13,4 +15,4 @@ export const rapportMetadataSchema = z.object({
   }),
 })
 
-export type RapportMetadata = z.infer<typeof rapportMetadataSchema>
+export type RapportMeta = z.infer<typeof rapportMetadataSchema>

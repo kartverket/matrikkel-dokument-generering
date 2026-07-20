@@ -1,8 +1,8 @@
 import { createRoute, type OpenAPIHono, z } from "@hono/zod-openapi"
+import { renderDocument } from "../../Document.tsx"
 import { htmlToPdf } from "../../lib/pdf/gotenberg.ts"
 import { getDocumentCss } from "../../lib/pdf/styles.ts"
-import { reportRegistry } from "../../reporting/registry.ts"
-import { reportRequestSchema } from "../../reporting/report-request.schema.ts"
+import { byg0011Schema } from "../../lib/schema/reports/bygg/byg0011.schema.ts"
 import {
   pdfErrorResponseSchema,
   validationErrorResponseSchema,
@@ -20,7 +20,7 @@ const createDocumentRoute = createRoute({
     body: {
       required: true,
       content: {
-        "application/json": { schema: reportRequestSchema },
+        "application/json": { schema: byg0011Schema },
       },
     },
   },
@@ -54,7 +54,7 @@ export function registerDocumentRoutes(app: OpenAPIHono) {
 
     try {
       const css = await getDocumentCss()
-      const html = reportRegistry.render(data, css)
+      const html = renderDocument(data, css)
       const pdf = await htmlToPdf(html)
       return c.body(pdf, 200, { "Content-Type": "application/pdf" })
     } catch (error) {

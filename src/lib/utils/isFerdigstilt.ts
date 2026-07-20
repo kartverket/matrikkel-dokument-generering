@@ -1,4 +1,4 @@
-import type { Bygningsendring } from "../schema/reports/bygg/byg0011/schema/bygningsendring.schema"
+import type { Bygningsendring } from "../schema/reports/bygg/byg0011/bygningsendring.schema"
 
 export function isFerdigstilt(endring: Bygningsendring): boolean {
   return endring.datoer.ferdigattest != null || endring.datoer.tattIBruk != null

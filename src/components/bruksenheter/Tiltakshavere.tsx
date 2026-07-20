@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next"
-import type { Tiltakshaver } from "../../lib/schema/reports/bygg/byg0011/schema/person.schema"
+import type { Tiltakshaver } from "../../lib/schema/reports/bygg/byg0011/person.schema"
 import {
   formatAdresselinjer,
   formatPoststed,

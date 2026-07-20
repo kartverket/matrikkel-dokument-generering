@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi"
-import { bygningstypeSchema } from "../../shared/bygningstype.schema"
+import { bygningstypeSchema } from "../shared/bygningstype.schema"
 import { bruksenhetSchema } from "./bruksenhet.schema"
 import { bygningsendringSchema } from "./bygningsendring.schema"
 

@@ -1,6 +1,6 @@
 import { Heading, Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import type { Bygningsendring } from "../../lib/schema/reports/bygg/byg0011/schema/bygningsendring.schema"
+import type { Bygningsendring } from "../../lib/schema/reports/bygg/byg0011/bygningsendring.schema"
 import { summerAreal } from "../../lib/utils/arealLinje"
 import { formatArea } from "../../lib/utils/formatArea"
 

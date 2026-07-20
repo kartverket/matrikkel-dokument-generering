@@ -1,6 +1,6 @@
-import type { Byg0011Rapport as ByggRapport } from "../lib/schema/reports/bygg/byg0011/byg0011.schema"
-import type { Bruksenhet } from "../lib/schema/reports/bygg/byg0011/schema/bruksenhet.schema"
-import type { Bygningsendring } from "../lib/schema/reports/bygg/byg0011/schema/bygningsendring.schema"
+import type { Bruksenhet } from "../lib/schema/reports/bygg/byg0011/bruksenhet.schema"
+import type { Bygningsendring } from "../lib/schema/reports/bygg/byg0011/bygningsendring.schema"
+import type { Byg0011Rapport as ByggRapport } from "../lib/schema/reports/bygg/byg0011.schema"
 
 type Bygningsstatus = Bygningsendring["bygningsstatus"]
 type Bygningsdatoer = Bygningsendring["datoer"]
@@ -235,7 +235,7 @@ const mockByggRapport: ByggRapport = {
     },
     bygning: {
       bygningsnr: "12345678",
-      bygningstyper: [{ kode: 111, navn: "Enebolig" }],
+      bygningstyper: [{ kode: "111", navn: "Enebolig" }],
     },
     adresse: {
       adressekode: "1000",
@@ -273,7 +273,7 @@ const mockByggRapport: ByggRapport = {
     {
       id: 1,
       bygningsnr: "12345678",
-      bygningstype: { kode: 111, navn: "Enebolig" },
+      bygningstype: { kode: "111", navn: "Enebolig" },
       naeringsgruppe: "Bolig",
       matrikkelenhet: "208/12",
       bruksenheter: [

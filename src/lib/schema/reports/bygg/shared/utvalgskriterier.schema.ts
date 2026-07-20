@@ -153,7 +153,7 @@ export const byggUtvalgskriterierSchema = z
       },
       bygning: {
         bygningsnr: "123456789",
-        bygningstyper: [{ kode: 111, navn: "Enebolig" }],
+        bygningstyper: [{ kode: "111", navn: "Enebolig" }],
         lopenr: 1,
       },
       adresse: {

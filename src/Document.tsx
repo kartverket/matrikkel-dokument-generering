@@ -2,14 +2,14 @@ import { Fragment } from "react"
 import { renderToStaticMarkup } from "react-dom/server"
 import { I18nextProvider } from "react-i18next"
 import { createI18n } from "./lib/i18n/createI18n"
-import type { Byg0011Rapport as ByggRapport } from "./lib/schema/reports/bygg/byg0011/byg0011.schema.ts"
-import type { RapportMeta } from "./reporting/registry.ts"
+import type { RapportMeta } from "./lib/schema/core/meta.schema.ts"
+import type { Byg0011Rapport } from "./lib/schema/reports/bygg/byg0011.schema.ts"
 import Bruksenheter from "./sections/Bruksenheter.tsx"
 import Byggoversikt from "./sections/Byggoversikt.tsx"
 import { Metadata } from "./sections/Metadata.tsx"
 import { Utvalgskriterier } from "./sections/Utvalgskriterier.tsx"
 
-export function DocumentComponent({ data }: { data: ByggRapport }) {
+export function DocumentComponent({ data }: { data: Byg0011Rapport }) {
   const metadata: RapportMeta = {
     rapportType: data.rapportType,
     kommune: data.kommune,
@@ -35,7 +35,7 @@ export function DocumentComponent({ data }: { data: ByggRapport }) {
   )
 }
 
-export function renderDocument(data: ByggRapport, css = ""): string {
+export function renderDocument(data: Byg0011Rapport, css = ""): string {
   const i18n = createI18n(data.locale)
   const body = renderToStaticMarkup(
     <I18nextProvider i18n={i18n}>

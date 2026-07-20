@@ -1,9 +1,9 @@
 import { z } from "@hono/zod-openapi"
-import { rapportContextSchema } from "../../../core/rapport-context.schema"
-import { byggUtvalgskriterierSchema } from "../shared/utvalgskriterier.schema"
-import { bygningSchema } from "./schema/bygning.schema"
+import { rapportSchema } from "../../core/rapport.schema"
+import { bygningSchema } from "./byg0011/bygning.schema"
+import { byggUtvalgskriterierSchema } from "./shared/utvalgskriterier.schema"
 
-export const byg0011Schema = rapportContextSchema
+export const byg0011Schema = rapportSchema
   .extend({
     rapportType: z.literal("BYG0011").meta({ example: "BYG0011" }),
     utvalgskriterier: byggUtvalgskriterierSchema,
