@@ -62,11 +62,13 @@ export const byggEndringSchema = z
 
     koordinat: {
       nord: z.number().meta({
-        description: "Koordinatverdien for nord gitt valgt koordinatSystem",
+        description:
+          "Koordinatverdien for nord gitt valgt koordinatSystem (se KoordinatSystemKode for mer beskrivelse)",
         example: 123456789,
       }),
       ost: z.number().meta({
-        description: "Koordinatverdien for øst gitt valgt koordinatSystem",
+        description:
+          "Koordinatverdien for øst gitt valgt koordinatSystem (se KoordinatSystemKode for mer beskrivelse)",
         example: 123456789,
       }),
     },

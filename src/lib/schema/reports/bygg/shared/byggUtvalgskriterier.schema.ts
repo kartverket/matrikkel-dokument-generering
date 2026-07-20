@@ -57,12 +57,67 @@ export const byggUtvalgskriterierSchema = valgfriObjekt({
     lopenr: valgfriHeltall.meta({ example: 1 }),
   }),
   adresse: valgfriObjekt({
-    adressekode: valgfriString.meta({ example: "1000" }),
-    bruksenhetsnr: valgfriString.meta({ example: "H0101" }),
-    adressenavn: valgfriString.meta({ example: "Storgata" }),
-    nr: valgfriHeltall.meta({ example: 1, title: "Gatenummer" }),
-    bokstav: valgfriString.meta({ example: "A" }),
-    tilleggsnavn: valgfriString.meta({ example: "Solgløtt" }),
+    adresseKode: valgfriString.meta({
+      example: "1000",
+      description:
+        "Adressekode (tidligere gatekode) er et nummer som entydig identifiserer adresserbare\n" +
+        "gater, veger, stier, plasser og områder som er ført i matrikkelen.",
+    }),
+    adresseNavn: valgfriString.meta({
+      example: "Storgata",
+      description:
+        "Adressenavn er definert i matrikkelforskriften § 2 bokstav e som navn på gate, veg, sti,\n" +
+        "plass eller område, brukt som del av den offisielle adressen. Et adressenavn skal være\n" +
+        "entydig innenfor samme kommune. To gater kan således ikke ha samme navn i samme\n" +
+        "kommune. Dersom to eller flere kommuner har et felles adresseringsområde skal navnet\n" +
+        "være entydig innenfor alle de aktuelle kommunene. Dersom navnet er på flere enn 22\n" +
+        "posisjoner, skal det i tillegg tildeles en offisiell forkortelse for navnet. Nærmere regler om\n" +
+        "tildeling av adressenavn framgår av matrikkelforskriften § 51.",
+    }),
+    adresseNr: valgfriHeltall.meta({
+      example: 1,
+      description:
+        "Adressenummer er definert i matrikkelforskriften § 2 bokstav f, som et nummer og en\n" +
+        "eventuell bokstav som entydig identifiserer matrikkelenheter, anlegg, bygninger eller\n" +
+        "innganger til bygninger innenfor en adresserbar gate, veg, sti, plass eller område.\n" +
+        "Adressenummeret kan peke til områder, plasser og objekter hvor det ikke finnes noe bygg.",
+    }),
+    adresseTilleggsNavn: valgfriString.meta({
+      example: "Solgløtt",
+      description:
+        "Etter matrikkelforskriften § 54 er det åpnet for at vegadresser kan ha et tilleggsnavn,\n" +
+        "adressetilleggsnavn, som inngår i den offisielle adressen. Bakgrunnen for dette er et ønske\n" +
+        "om å kunne ta vare på bruksnavn av kulturhistorisk verdi, slik at disse kan komme i vanlig\n" +
+        "bruk som en del av den offisielle adressen. Dersom matrikkeladresser ikke har et\n" +
+        "adressetilleggsnavn kan de tildeles matrikkeladressenavn.",
+    }),
+
+    adresseBokstav: valgfriString.meta({
+      example: "A",
+      description:
+        "En eventuell bokstav etter adressenummeret. Eksempel: A i «Storgata 15A",
+    }),
+
+    bruksenhetsNr: valgfriString.meta({
+      example: "H0101",
+      description:
+        "Nummeret som identifiserer en bestemt leilighet eller annen bruksenhet når flere enheter har samme gateadresse" +
+        "Eksempelvis betyr H0203 normalt hovedetasje, etasje 2, bruksenhet 03.",
+    }),
+
+    utenBokstav: z
+      .boolean()
+      .nullable()
+      .optional()
+      .default(null)
+      .meta({
+        description:
+          "Betyr at søket skal omfatte adresser som bare har nummer, uten bokstav.\n" +
+          "true: Bare adresser uten bokstav, for eksempel Storgata 15" +
+          "false: Bare adresser med bokstav, for eksempel Storgata 15A" +
+          "null: Både adresser med og uten bokstav tas med" +
+          "Eksempel: «Storgata 15», men ikke «Storgata 15A».",
+      }),
   }),
   matrikkelenhet: valgfriObjekt({
     gnr: valgfriHeltall.meta({
@@ -76,12 +131,12 @@ export const byggUtvalgskriterierSchema = valgfriObjekt({
     fnr: valgfriHeltall.meta({
       title: "Festenummer",
       description:
-        "Brukes når tomten er festet, altså leid på lang tid, i stedet for eid som egen grunneiendom.",
+        "Nummeret brukes når tomten er festet, altså leid på lang tid, i stedet for eid som egen grunneiendom.",
     }),
     snr: valgfriHeltall.meta({
       title: "Seksjonsnummer",
       description:
-        "Brukes når eiendommen er seksjonert, for eksempel en eierleilighet eller næringsseksjon i et sameie.",
+        "Nummeret brukes når eiendommen er seksjonert, for eksempel en eierleilighet eller næringsseksjon i et sameie.",
     }),
   }),
   hjemmelshaver: valgfriObjekt({
@@ -109,10 +164,13 @@ export const byggUtvalgskriterierSchema = valgfriObjekt({
     vest: valgfriNummer.meta({ example: 597500 }),
     syd: valgfriNummer.meta({ example: 6642200 }),
   }).meta({
-    description: "Koordinater for søkevinduet som rapporten skal omfatte.",
+    description:
+      "Koordinater for søkevinduet som rapporten skal omfatte. Oppgis i format av valgt koordinatSystemKode.",
   }),
   subrapporter: valgfriObjekt({
-    inkluderEtasjer: valgfriBool,
+    inkluderEtasjer: valgfriBool.meta({
+      description: "Skal rapporten inneholde etasjer?",
+    }),
     inkluderBruksenheter: valgfriBool,
     inkluderTiltakshavere: valgfriBool,
     inkluderKontaktpersoner: valgfriBool,

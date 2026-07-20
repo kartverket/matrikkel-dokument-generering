@@ -5,5 +5,5 @@ export const rapportSchema = rapportMetadataSchema
   .extend({ locale: localeSchema })
   .openapi("Rapportgrunnlag", {
     title: "Rapport",
-    description: "Felles datagrunnlag for alle rapporttyper.",
+    description: "Felles schema for alle type rapporter.",
   })
