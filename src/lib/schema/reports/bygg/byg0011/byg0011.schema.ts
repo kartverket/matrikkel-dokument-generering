@@ -1,8 +1,8 @@
 import { z } from "@hono/zod-openapi"
 import { rapportSchema } from "../../../core/rapport.schema"
-import { valgfriNummer } from "../../../core/zodUtils.ts"
+import { valgfriNummer } from "../../shared/zodUtils.ts"
 import { byggUtvalgskriterierSchema } from "../shared/byggUtvalgskriterier.schema.ts"
-import { arealFordelingSchema } from "./arealFordeling.schema"
+import { arealFordelingSchema } from "../shared/common.schema.ts"
 import { bruksenhetSchema } from "./bruksenhet.schema"
 import { byggEndringSchema } from "./byggEndring.schema.ts"
 

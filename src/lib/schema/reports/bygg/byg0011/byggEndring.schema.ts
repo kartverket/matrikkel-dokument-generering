@@ -4,9 +4,9 @@ import {
   valgfriHeltall,
   valgfriNummer,
   valgfriString,
-} from "../../../core/zodUtils.ts"
+} from "../../shared/zodUtils.ts"
 import { bygningsTypeSchema } from "../shared/bygningsType.schema.ts"
-import { arealFordelingSchema } from "./arealFordeling.schema"
+import { arealFordelingSchema } from "../shared/common.schema.ts"
 import { koordinatSchema } from "./koordinat.schema"
 import { tiltakshaverSchema } from "./person.schema"
 

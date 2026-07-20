@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi"
-import { arealFordelingSchema } from "./arealFordeling.schema"
+import { arealFordelingSchema } from "../shared/common.schema.ts"
 import { koordinatSchema } from "./koordinat.schema"
 import { hjemmelshaverSchema, kontaktpersonSchema } from "./person.schema"
 

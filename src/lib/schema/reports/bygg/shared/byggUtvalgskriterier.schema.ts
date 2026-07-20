@@ -6,7 +6,7 @@ import {
   valgfriNummer,
   valgfriObjekt,
   valgfriString,
-} from "../../../core/zodUtils.ts"
+} from "../../shared/zodUtils.ts"
 import { bygningsTypeSchema } from "./bygningsType.schema"
 
 const bygningsstatuser = [
@@ -59,9 +59,8 @@ export const byggUtvalgskriterierSchema = valgfriObjekt({
     adressekode: valgfriString.meta({ example: "1000" }),
     bruksenhetsnr: valgfriString.meta({ example: "H0101" }),
     adressenavn: valgfriString.meta({ example: "Storgata" }),
-    nr: valgfriHeltall.meta({ example: 1 }),
+    nr: valgfriHeltall.meta({ example: 1, title: "Gatenummer" }),
     bokstav: valgfriString.meta({ example: "A" }),
-    utenBokstav: valgfriBool.meta({ example: false }),
     tilleggsnavn: valgfriString.meta({ example: "Solgløtt" }),
   }),
   matrikkelenhet: valgfriObjekt({
