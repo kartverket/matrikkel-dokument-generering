@@ -7,7 +7,7 @@ const tekstSchema = z.string().min(1)
 const valgfriTekstSchema = tekstSchema.nullable().optional()
 const heltallSchema = z.number().int().nonnegative()
 const arealSchema = z.number().nonnegative()
-const datoSchema = z.iso.date()
+const datoSchema = z.iso.datetime()
 const valgfriDatoSchema = datoSchema.nullable()
 
 const arealFordelingSchema = z

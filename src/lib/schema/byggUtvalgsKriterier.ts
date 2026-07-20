@@ -99,8 +99,8 @@ export const byggUtvalgsKriterierSchema = z
           .optional()
           .default([])
           .meta({ example: byggningsStatuser }),
-        periodeFra: z.iso.date().optional().meta({ example: "2019-01-01" }),
-        periodeTil: z.iso.date().optional().meta({ example: "2026-07-17" }),
+        periodeFra: z.iso.datetime().optional().meta({ example: "2019-01-01" }),
+        periodeTil: z.iso.datetime().optional().meta({ example: "2026-07-17" }),
       })
       .optional(),
     sokevindu: z
