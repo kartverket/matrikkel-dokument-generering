@@ -33,7 +33,7 @@ export function sorterBygningsendringerKronologisk(
       if (a.dato && b.dato) return a.dato.localeCompare(b.dato)
       if (a.dato) return 1
       if (b.dato) return -1
-      return (a.endring?.lopenr ?? 0) - (b.endring?.lopenr ?? 0)
+      return (a.endring?.lopeNr ?? 0) - (b.endring?.lopeNr ?? 0)
     })
 }
 

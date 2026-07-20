@@ -1,8 +1,8 @@
 import { Card, Divider, Heading, Paragraph, Tag } from "@kv-designsystem/react"
 import { Fragment } from "react"
 import { useTranslation } from "react-i18next"
-import type { Bygning } from "../../lib/schema/reports/bygg/byg0011/byg0011.schema"
 import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
+import type { Bygning } from "../../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 import { getBygningstype } from "../../lib/schema/reports/bygg/shared/bygningsType.schema"
 import { arealLinje } from "../../lib/utils/arealLinje"
 import { formatArea } from "../../lib/utils/formatArea"
@@ -30,7 +30,7 @@ export function Endringskort({ endring, bygning }: Props) {
     dato == null ? null : formatDate(i18n, dato, "", kortDato)
   const formatertTittel = [
     t("rapport.BYG0011.bruksenheter.endringTittel", {
-      lopenr: endring.lopenr,
+      lopenr: endring.lopeNr,
     }),
     endring.endringskode,
   ]
@@ -41,7 +41,7 @@ export function Endringskort({ endring, bygning }: Props) {
     {
       title: t("rapport.BYG0011.bruksenheter.grunnopplysninger"),
       felter: [
-        bruksenhetFelt("lopenr", String(endring.lopenr)),
+        bruksenhetFelt("lopenr", String(endring.lopeNr)),
         bruksenhetFelt("endringskode", endring.endringskode),
         bruksenhetFelt(
           "bygningstype",
@@ -107,7 +107,7 @@ export function Endringskort({ endring, bygning }: Props) {
 
   return (
     <Card
-      data-endring-id={endring.lopenr}
+      data-endring-id={endring.lopeNr}
       variant="default"
       className="border border-kv-border bg-kv-gray"
     >

@@ -1,6 +1,6 @@
 import type { Bruksenhet } from "../lib/schema/reports/bygg/byg0011/bruksenhet.schema"
-import type { Byg0011Rapport as ByggRapport } from "../lib/schema/reports/bygg/byg0011/byg0011.schema"
 import type { BygningsEndring } from "../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
+import type { Byg0011Rapport as ByggRapport } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 
 type Bygningsstatus = BygningsEndring["bygningsstatus"]
 type Bygningsdatoer = BygningsEndring["datoer"]
@@ -95,7 +95,7 @@ const byggmesterBob: Kontaktperson = {
 }
 
 const gjeldendeEndring: BygningsEndring = {
-  lopenr: 5,
+  lopeNr: 5,
   endringskode: null,
   beskrivelse: null,
   bygningsstatus: statuser.TB,
@@ -144,7 +144,7 @@ const gjeldendeEndring: BygningsEndring = {
 const historiskeEndringer: BygningsEndring[] = [
   {
     ...gjeldendeEndring,
-    lopenr: 4,
+    lopeNr: 4,
     endringskode: "Tilbygg",
     bygningsstatus: statuser.FA,
     bruksareal: { bolig: 121, annet: 74, totalt: 195 },
@@ -157,7 +157,7 @@ const historiskeEndringer: BygningsEndring[] = [
   },
   {
     ...gjeldendeEndring,
-    lopenr: 3,
+    lopeNr: 3,
     endringskode: "Påbygg",
     bygningsstatus: statuser.IG,
     bruksareal: { bolig: 121, annet: 60, totalt: 181 },
@@ -169,7 +169,7 @@ const historiskeEndringer: BygningsEndring[] = [
   },
   {
     ...gjeldendeEndring,
-    lopenr: 2,
+    lopeNr: 2,
     endringskode: "Underbygg",
     bygningsstatus: statuser.RA,
     bruksareal: { bolig: 102, annet: 60, totalt: 162 },
@@ -178,7 +178,7 @@ const historiskeEndringer: BygningsEndring[] = [
   },
   {
     ...gjeldendeEndring,
-    lopenr: 1,
+    lopeNr: 1,
     endringskode: "Ombygging",
     beskrivelse: "Midlertidig tillatelse er gitt.",
     bygningsstatus: statuser.MB,
@@ -190,7 +190,7 @@ const historiskeEndringer: BygningsEndring[] = [
   },
   {
     ...gjeldendeEndring,
-    lopenr: 0,
+    lopeNr: 0,
     bygningsstatus: statuser.TB,
     bruksareal: { bolig: 102, annet: 0, totalt: 102 },
     datoer: datoer({ tattIBruk: isoDatetime("1998-06-18") }),
@@ -201,7 +201,7 @@ const historiskeEndringer: BygningsEndring[] = [
 const mockByggRapport: ByggRapport = {
   rapportType: "BYG0011",
   kommune: { nr: "3201", navn: "Bærum" },
-  koordinatsystem: "EUREF89 UTM sone 32",
+  koordinatSystem: "EUREF89 UTM sone 32",
   locale: "nb",
   generertTidspunkt: "2026-07-17T10:00:00Z",
   utvalgskriterier: {

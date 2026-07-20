@@ -3,16 +3,16 @@ import { valgfriNummer } from "../../shared/zodUtils.ts"
 
 export const arealFordelingSchema = z
   .object({
-    bolig: valgfriNummer.meta({
+    boligAreal: valgfriNummer.meta({
       description: "Areal som er registrert brukt til boligformål",
       example: 123.4,
     }),
-    annet: valgfriNummer.meta({
+    annetAreal: valgfriNummer.meta({
       description:
         "Areal brukt til andre formål, for eksempel hotell, kontor, butikk",
       example: 10,
     }),
-    totalt: valgfriNummer.meta({
+    totaltAreal: valgfriNummer.meta({
       description: "Summen av Bolig + Annet",
       example: 133.4,
     }),

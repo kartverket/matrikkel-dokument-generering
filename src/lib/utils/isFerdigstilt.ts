@@ -8,7 +8,7 @@ export function finnGjeldendeBygningsendring(
   endringer: BygningsEndring[],
 ): BygningsEndring {
   const nyesteFoerst = endringer.toSorted(
-    (a, b) => (b.lopenr ?? 0) - (a.lopenr ?? 0),
+    (a, b) => (b.lopeNr ?? 0) - (a.lopeNr ?? 0),
   )
   return nyesteFoerst.find(isFerdigstilt) ?? nyesteFoerst[0]
 }

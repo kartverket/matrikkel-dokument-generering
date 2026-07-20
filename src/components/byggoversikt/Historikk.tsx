@@ -57,7 +57,7 @@ export default function Historikk({ byggEndringer }: Props) {
           )
 
           return (
-            <li key={endring.lopenr} className="space-y-1">
+            <li key={endring.lopeNr} className="space-y-1">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
                   <span className="font-semibold">

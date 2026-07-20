@@ -1,7 +1,7 @@
 import { Heading } from "@digdir/designsystemet-react"
 import { Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import type { Bygning } from "../../lib/schema/reports/bygg/byg0011/byg0011.schema"
+import type { Bygning } from "../../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 import { getBygningstype } from "../../lib/schema/reports/bygg/shared/bygningsType.schema"
 
 interface Props {

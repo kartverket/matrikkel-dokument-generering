@@ -11,8 +11,8 @@ import { Tiltakshavere } from "../components/bruksenheter/Tiltakshavere.tsx"
 import { Detaljgrid, lagDetaljfeltBuilder } from "../components/Detaljfelt.tsx"
 import { Section } from "../components/Section.tsx"
 import type { Bruksenhet } from "../lib/schema/reports/bygg/byg0011/bruksenhet.schema.ts"
-import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byg0011.schema.ts"
 import type { BygningsEndring } from "../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
+import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 import type { Tiltakshaver } from "../lib/schema/reports/bygg/byg0011/person.schema.ts"
 import { formatArea } from "../lib/utils/formatArea.ts"
 import {
@@ -57,7 +57,7 @@ function getTiltakshavere(
   const unikeTiltakshavere = new Map<string, Tiltakshaver>()
 
   for (const endring of endringer.toSorted(
-    (a, b) => (b?.lopenr ?? 0) - (a?.lopenr ?? 0),
+    (a, b) => (b?.lopeNr ?? 0) - (a?.lopeNr ?? 0),
   )) {
     if (isFerdigstilt(endring)) continue
 
@@ -169,7 +169,7 @@ export default function Bruksenheter({ index, bygning }: Props) {
                     <div className="flex flex-col gap-3">
                       {endringer.map((endring) => (
                         <Endringskort
-                          key={endring.lopenr}
+                          key={endring.lopeNr}
                           endring={endring}
                           bygning={bygning}
                         />

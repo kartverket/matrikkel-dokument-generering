@@ -25,6 +25,7 @@ const bygningsstatuser = [
   "Fritatt for søknadsplikt",
 ] as const
 
+// Felles utvalgskriterier for all bygg rapporter (BYGXXXX)
 export const byggUtvalgskriterierSchema = valgfriObjekt({
   omfang: z.object({
     inkluderBestaaendeBygg: valgfriBool.meta({

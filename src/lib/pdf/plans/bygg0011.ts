@@ -1,5 +1,5 @@
 import type { TFunction } from "i18next"
-import type { Byg0011Rapport } from "../../schema/reports/bygg/byg0011/byg0011.schema"
+import type { Byg0011Rapport } from "../../schema/reports/bygg/byg0011/byggRapport.schema.ts"
 import { type PageDef, type PagePlan, pageCounterContent } from "../pagePlan"
 
 // BYG0011-spesifikk oversettelse fra rapport-data til en `PagePlan`.

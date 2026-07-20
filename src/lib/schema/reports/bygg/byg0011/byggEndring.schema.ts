@@ -3,11 +3,11 @@ import {
   valgfriDato,
   valgfriHeltall,
   valgfriNummer,
+  valgfriObjekt,
   valgfriString,
 } from "../../shared/zodUtils.ts"
+import { arealFordelingSchema } from "../shared/arealFordeling.schema.ts"
 import { bygningsTypeSchema } from "../shared/bygningsType.schema.ts"
-import { arealFordelingSchema } from "../shared/common.schema.ts"
-import { koordinatSchema } from "./koordinat.schema"
 import { tiltakshaverSchema } from "./person.schema"
 
 export const bygningsdatoerSchema = z
@@ -33,24 +33,43 @@ const bruksenhetReferanseSchema = z
 
 export const byggEndringSchema = z
   .object({
-    lopenr: valgfriHeltall.meta({
-      description: "Løpenummer for endringen.",
+    // Unik ID for en bygg-endring
+    lopeNr: valgfriNummer.default(0).meta({
+      description:
+        "Ved tilbygg/endringer av eksisterende bygning registreres nytt løpenummer for hver\n" +
+        "endring. Nummeret er unikt per byggning. Løpenummer=0 tilsir grunnregistrering for bygget",
       example: 1,
     }),
-    endringsKode: valgfriString,
-    bygningsStatus: valgfriString,
-    bygningsType: bygningsTypeSchema,
-    naeringsgruppe: valgfriString.meta({
-      example: "Bolig",
+
+    byggMetaEndring: valgfriObjekt({
+      endringsKode: valgfriString,
+      bygningsStatus: valgfriString,
+      bygningsType: bygningsTypeSchema,
+      antallBoenheter: valgfriHeltall,
+      naeringsgruppe: valgfriString.meta({
+        example: "Bolig",
+      }),
     }),
-    antallBoenheter: valgfriHeltall,
-    bruksArealBolig: arealFordelingSchema,
-    bruttoArealBolig: arealFordelingSchema,
-    bebygdAreal: valgfriNummer.meta({
-      description: "Bebygd areal i kvadratmeter.",
-      example: 123,
+
+    byggArealEndring: valgfriObjekt({
+      bruksarealBolig: arealFordelingSchema, // bolig/annet/totalt
+      bruttoarealBolig: arealFordelingSchema, //bolig/annet/totalt
+      bebygdAreal: valgfriNummer.meta({
+        description: "Bebygd areal i kvadratmeter.",
+        example: 123,
+      }),
     }),
-    koordinat: koordinatSchema,
+
+    koordinat: {
+      nord: z.number().meta({
+        description: "Koordinatverdien for nord gitt valgt koordinatSystem",
+        example: 123456789,
+      }),
+      ost: z.number().meta({
+        description: "Koordinatverdien for øst gitt valgt koordinatSystem",
+        example: 123456789,
+      }),
+    },
     datoer: bygningsdatoerSchema,
 
     // TODO fjerne tiltakshavere, inngår som en rolle i Hjemmelshaver/aktuell eier/kontaktinstans

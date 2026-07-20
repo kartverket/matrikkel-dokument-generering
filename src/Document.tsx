@@ -5,7 +5,7 @@ import { createI18n } from "./lib/i18n/createI18n"
 import { buildPageCss } from "./lib/pdf/buildPageCss"
 import { buildByggPagePlan } from "./lib/pdf/plans/bygg0011"
 import type { RapportMeta } from "./lib/schema/core/meta.schema.ts"
-import type { Byg0011Rapport } from "./lib/schema/reports/bygg/byg0011/byg0011.schema.ts"
+import type { Byg0011Rapport } from "./lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 import { formatDate } from "./lib/utils/formatDate"
 import Bruksenheter from "./sections/Bruksenheter.tsx"
 import Byggoversikt from "./sections/Byggoversikt.tsx"
@@ -16,7 +16,7 @@ export function DocumentComponent({ data }: { data: Byg0011Rapport }) {
   const metadata: RapportMeta = {
     rapportType: data.rapportType,
     kommune: data.kommune,
-    koordinatsystem: data.koordinatsystem,
+    koordinatSystem: data.koordinatSystem,
     generertTidspunkt: data.generertTidspunkt,
   }
 

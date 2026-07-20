@@ -1,8 +1,8 @@
 import { z } from "@hono/zod-openapi"
 import { rapportSchema } from "../../../core/rapport.schema"
 import { valgfriNummer } from "../../shared/zodUtils.ts"
+import { arealFordelingSchema } from "../shared/arealFordeling.schema.ts"
 import { byggUtvalgskriterierSchema } from "../shared/byggUtvalgskriterier.schema.ts"
-import { arealFordelingSchema } from "../shared/common.schema.ts"
 import { bruksenhetSchema } from "./bruksenhet.schema"
 import { byggEndringSchema } from "./byggEndring.schema.ts"
 
@@ -44,7 +44,7 @@ const bygningSchema = z
   })
   .meta({ id: "BYG0011Bygning" })
 
-export const byg0011Schema = rapportSchema
+export const byggRapportSchema = rapportSchema
   .extend({
     rapportType: z.literal("BYG0011").meta({ example: "BYG0011" }),
     utvalgskriterier: byggUtvalgskriterierSchema,
@@ -56,4 +56,4 @@ export const byg0011Schema = rapportSchema
 
 export type Bygning = z.infer<typeof bygningSchema>
 export type EtasjePlan = z.infer<typeof etasjePlanSchema>
-export type Byg0011Rapport = z.infer<typeof byg0011Schema>
+export type Byg0011Rapport = z.infer<typeof byggRapportSchema>

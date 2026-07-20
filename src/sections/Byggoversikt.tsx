@@ -6,7 +6,7 @@ import Historikk from "../components/byggoversikt/Historikk"
 import Nokkeltall from "../components/byggoversikt/Nokkeltall"
 import Oversiktsfelt from "../components/byggoversikt/Oversiktsfelt"
 import { Section } from "../components/Section"
-import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byg0011.schema"
+import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 import { finnGjeldendeBygningsendring } from "../lib/utils/isFerdigstilt"
 
 interface Props {

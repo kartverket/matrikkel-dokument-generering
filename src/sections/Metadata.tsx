@@ -38,7 +38,7 @@ export function Metadata({ metadata }: MetadataProps) {
             })}
           </Paragraph>
           <Paragraph>
-            {t(`${tMeta}.koordinatsystem`)}: {metadata.koordinatsystem}
+            {t(`${tMeta}.koordinatsystem`)}: {metadata.koordinatSystem}
           </Paragraph>
         </div>
       </div>

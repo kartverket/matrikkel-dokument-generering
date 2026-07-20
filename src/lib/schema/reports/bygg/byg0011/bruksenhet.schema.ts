@@ -1,6 +1,5 @@
 import { z } from "@hono/zod-openapi"
-import { arealFordelingSchema } from "../shared/common.schema.ts"
-import { koordinatSchema } from "./koordinat.schema"
+import { arealFordelingSchema } from "../shared/arealFordeling.schema.ts"
 import { hjemmelshaverSchema, kontaktpersonSchema } from "./person.schema"
 
 export const bruksenhetSchema = z
@@ -20,7 +19,6 @@ export const bruksenhetSchema = z
     arealfordeling: z.object({
       bebygdAreal: z.number().nonnegative(),
       bruksareal: arealFordelingSchema,
-      koordinat: koordinatSchema,
       etasjeplan: z.array(
         z.object({
           etasjeplan: z.string().min(1).meta({

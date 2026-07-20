@@ -5,7 +5,7 @@ import { kommuneSchema } from "./kommune.schema"
 export const rapportMetadataSchema = z.object({
   rapportKode: rapportKodeSchema,
   kommune: kommuneSchema,
-  koordinatsystem: z.string().min(1).meta({
+  koordinatSystem: z.string().min(1).meta({
     example: "EUREF89 UTM sone 32",
     description:
       "Koordinatsystemet som gjelder for alle koordinater brukt i rapporten.",
