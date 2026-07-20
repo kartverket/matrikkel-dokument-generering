@@ -9,33 +9,8 @@ import {
   valgfriSchema,
   valgfriString,
 } from "../../shared/zodUtils.ts"
-import { bygningsTypeSchema } from "./bygningsType.schema"
-
-const bygningstatusKodeSchema = z
-  .enum([
-    "RA", // Rammetillatelse
-    "IG", // Igangsettingstillatelse
-    "MB", // Midlertidig brukstillatelse
-    "FA", // Ferdigattest
-    "TB", // Tatt i bruk
-    "MT", // Meldingssak: registrer tiltak
-    "MF", // Meldingssak: tiltak fullført
-    "IP", // Ikke pliktig registrert
-    "GR", // Bygning godkjent for revet/brent
-    "BR", // Bygning revet/brent
-    "BA", // Bygging avlyst
-    "BF", // Bygning flyttet
-    "BU", // Bygningsnummer utgått
-    "FS", // Fritatt for søknadsplikt
-    "EB", // Endre bygningsdata
-    "TE", // Tilbygg opprettet som egen bygning
-    "TA", // Bygg etablert som tilbygg på annen bygning
-    "SB", // Splitt bygning
-    "DO", // Data fra bygningsendring overført
-  ])
-  .meta({
-    description: "B",
-  })
+import { byggningsStatusKodeSchema } from "../koder/byggningsStatusKode.schema.ts"
+import { bygningsTypeKodeSchema } from "../koder/bygningsTypeKodeSchema.ts"
 
 // Felles utvalgskriterier for all bygg rapporter (BYGXXXX)
 export const byggUtvalgskriterierSchema = valgfriObjekt({
@@ -81,7 +56,7 @@ export const byggUtvalgskriterierSchema = valgfriObjekt({
         "En entydig identifikasjon av bygningen som er unik på landsbasis og tildeles automatisk.",
     }),
     bygningstyper: z
-      .array(bygningsTypeSchema)
+      .array(bygningsTypeKodeSchema)
       .optional()
       .default([])
       .meta({
@@ -187,7 +162,7 @@ export const byggUtvalgskriterierSchema = valgfriObjekt({
 
   // Aktør filter-kriterier
   aktoer: valgfriObjekt({
-    foedselsEllerOrgnr: valgfriString.meta({
+    identifikasjonsNr: valgfriString.meta({
       title: "Fødsels- eller organisasjonsnummer",
       description:
         "Fødselsnummer eller organisasjonsnummer til hjemmelshaveren eller kontaktpersonen det skal søkes etter.",
@@ -212,10 +187,10 @@ export const byggUtvalgskriterierSchema = valgfriObjekt({
 
   // Byggningsstatus filter-kriterier
   bygningsstatus: valgfriObjekt({
-    naavaerende: valgfriListe(valgfriSchema(bygningstatusKodeSchema)).meta({
+    naavaerende: valgfriListe(valgfriSchema(byggningsStatusKodeSchema)).meta({
       description: "Én eller flere statuser som bygningen skal ha nå.",
     }),
-    tidligere: valgfriSchema(bygningstatusKodeSchema).meta({
+    tidligere: valgfriSchema(byggningsStatusKodeSchema).meta({
       description:
         "Én eller flere tidligere statuser som skal finnes i bygningens statushistorikk. ",
     }),

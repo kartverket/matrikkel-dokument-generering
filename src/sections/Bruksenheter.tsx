@@ -10,10 +10,10 @@ import { RegistrerteVedtak } from "../components/bruksenheter/RegistrerteVedtak.
 import { Tiltakshavere } from "../components/bruksenheter/Tiltakshavere.tsx"
 import { Detaljgrid, lagDetaljfeltBuilder } from "../components/Detaljfelt.tsx"
 import { Section } from "../components/Section.tsx"
+import type { Tiltakshaver } from "../lib/schema/reports/bygg/byg0011/aktoer.schema.ts"
 import type { Bruksenhet } from "../lib/schema/reports/bygg/byg0011/bruksenhet.schema.ts"
 import type { BygningsEndring } from "../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
-import type { Tiltakshaver } from "../lib/schema/reports/bygg/byg0011/person.schema.ts"
 import { formatArea } from "../lib/utils/formatArea.ts"
 import {
   finnGjeldendeBygningsendring,
@@ -65,7 +65,7 @@ function getTiltakshavere(
       if (tiltakshaver.bruksenhetsnr !== bruksenhet.nummer) continue
 
       const nokkel = JSON.stringify([
-        tiltakshaver.eierIdent,
+        tiltakshaver.identifikasjonsNr,
         tiltakshaver.rolle,
         tiltakshaver.bruksenhetsnr,
         tiltakshaver.datofra,

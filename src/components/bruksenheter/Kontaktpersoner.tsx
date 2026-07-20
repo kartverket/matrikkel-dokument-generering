@@ -21,7 +21,7 @@ function getKontaktpersonDetaljfelter(
 ) {
   return [
     kontaktpersonFelt("rolle", kontaktperson.rolle),
-    kontaktpersonFelt("eierIdent", kontaktperson.eierIdent),
+    kontaktpersonFelt("identifikasjonsNr", kontaktperson.identifikasjonsNr),
     kontaktpersonFelt(
       "kategori",
       joinStrings(
@@ -57,7 +57,7 @@ export function Kontaktpersoner({ kontaktpersoner }: Props) {
     <PersonGrid title={t(`${translationKey}.title`)} tom={tom}>
       {kontaktpersoner.map((kontaktperson) => (
         <PersonCard
-          key={kontaktperson.eierIdent}
+          key={kontaktperson.identifikasjonsNr}
           navn={kontaktperson.navn}
           erUtgatt={kontaktperson.eierErUtgatt}
           statuskode={kontaktperson.statuskode ?? null}

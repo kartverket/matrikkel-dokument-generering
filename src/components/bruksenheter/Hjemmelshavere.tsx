@@ -27,7 +27,7 @@ const getHjemmelshaverDetaljfelter = (
   tom: string,
 ) => {
   return [
-    hjemmelshaverFelt("eierIdent", hjemmelshaver.eierIdent),
+    hjemmelshaverFelt("identifikasjonsNr", hjemmelshaver.identifikasjonsNr),
     hjemmelshaverFelt("andel", getAndel(hjemmelshaver)),
     hjemmelshaverFelt(
       "adresselinjer",
@@ -58,7 +58,7 @@ export function Hjemmelshavere({ hjemmelshavere }: Props) {
     <PersonGrid title={t(`${translationKey}.title`)} tom={tom}>
       {hjemmelshavere.map((hjemmelshaver) => (
         <PersonCard
-          key={hjemmelshaver.eierIdent}
+          key={hjemmelshaver.identifikasjonsNr}
           navn={hjemmelshaver.navn}
           erUtgatt={hjemmelshaver.eierErUtgatt}
           statuskode={hjemmelshaver.statuskode ?? null}

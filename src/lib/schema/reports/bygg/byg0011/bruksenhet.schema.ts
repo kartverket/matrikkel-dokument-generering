@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi"
 import { arealFordelingSchema } from "../shared/arealFordeling.schema.ts"
-import { hjemmelshaverSchema, kontaktpersonSchema } from "./person.schema"
+import { hjemmelshaverSchema, kontaktpersonSchema } from "./aktoer.schema.ts"
 
 export const bruksenhetSchema = z
   .object({

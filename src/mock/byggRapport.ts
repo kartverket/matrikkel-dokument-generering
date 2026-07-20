@@ -46,7 +46,7 @@ function isoDatetime(date: string) {
 }
 
 const olaNordmann: Hjemmelshaver = {
-  eierIdent: "12051978",
+  identifikasjonsNr: "12051978",
   navn: "Ola Nordmann",
   andelTeller: 1,
   andelNevner: 2,
@@ -66,20 +66,20 @@ const olaNordmann: Hjemmelshaver = {
 
 const kariNordmann: Hjemmelshaver = {
   ...olaNordmann,
-  eierIdent: "03111980",
+  identifikasjonsNr: "03111980",
   navn: "Kari Nordmann",
 }
 
 const perHansen: Hjemmelshaver = {
   ...olaNordmann,
-  eierIdent: "22071965",
+  identifikasjonsNr: "22071965",
   navn: "Per Hansen",
   andelNevner: 1,
 }
 
 const byggmesterBob: Kontaktperson = {
   rolle: "Kontaktperson",
-  eierIdent: "987654321",
+  identifikasjonsNr: "987654321",
   navn: "Byggmester Bob AS",
   adresselinje1: "Håndverkerveien 5",
   adresselinje2: null,
@@ -115,7 +115,7 @@ const gjeldendeEndring: BygningsEndring = {
   tiltakshavere: [
     {
       rolle: "Tiltakshaver",
-      eierIdent: "01019012345",
+      identifikasjonsNr: "01019012345",
       navn: "Fredrik Nordmann",
       adresselinje1: "Storgata 1",
       adresselinje2: null,

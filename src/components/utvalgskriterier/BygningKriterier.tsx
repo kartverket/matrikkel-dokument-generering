@@ -1,7 +1,7 @@
 import { Heading, Table, Tag } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
+import { getBygningstype } from "../../lib/schema/reports/bygg/koder/bygningsTypeKodeSchema.ts"
 import type { ByggUtvalgskriterier as Utvalgskriterier } from "../../lib/schema/reports/bygg/shared/byggUtvalgskriterier.schema.ts"
-import { getBygningstype } from "../../lib/schema/reports/bygg/shared/bygningsType.schema"
 
 interface Props {
   bygningKriterier: NonNullable<Utvalgskriterier>["bygning"]

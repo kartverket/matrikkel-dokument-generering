@@ -1,4 +1,4 @@
-import { getBygningstypeNavn } from "../schema/reports/bygg/shared/bygningsType.schema"
+import { getBygningstypeNavn } from "../schema/reports/bygg/koder/bygningsTypeKodeSchema.ts"
 import { shared } from "./resources.shared"
 
 export const nb = {
@@ -181,7 +181,7 @@ export const nb = {
       kontaktpersoner: {
         title: "Kontaktpersoner",
         rolle: "Rolle",
-        eierIdent: "Fødsels-/org.nr",
+        identifikasjonsNr: "Fødsels-/org.nr",
         navn: "Navn",
         adresselinjer: "Adresselinjer",
         poststed: "Postnr og poststed",
@@ -228,7 +228,7 @@ export const nb = {
       tiltakshavere: {
         title: "Tiltakshavere",
         rolle: "Rolle i tiltaket",
-        eierIdent: "Fødsels-/org.nr",
+        identifikasjonsNr: "Fødsels-/org.nr",
         navn: "Navn",
         adresselinjer: "Adresselinjer",
         poststed: "Postnr og poststed",
@@ -241,7 +241,7 @@ export const nb = {
       },
       hjemmelshavere: {
         title: "Hjemmelshavere",
-        eierIdent: "Fødselsnr/orgnr",
+        identifikasjonsNr: "Fødselsnr/orgnr",
         navn: "Navn",
         andel: "Andel",
         bruksenhetsnr: "Tilknyttet bruksenhet",

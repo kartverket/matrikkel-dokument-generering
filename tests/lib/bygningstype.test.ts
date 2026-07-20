@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test"
 import { createI18n } from "../../src/lib/i18n/createI18n"
-import { getBygningstype } from "../../src/lib/schema/reports/bygg/shared/bygningsType.schema.ts"
+import { getBygningstype } from "../../src/lib/schema/reports/bygg/koder/bygningsTypeKodeSchema.ts"
 
 describe("getBygningstype", () => {
   test.each([

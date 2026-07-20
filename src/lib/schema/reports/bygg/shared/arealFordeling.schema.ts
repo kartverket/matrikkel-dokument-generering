@@ -19,7 +19,8 @@ export const arealFordelingSchema = z
   })
   .meta({
     id: "ArealFordeling",
-    description: "Alle verdier oppgitt i kvadratmeter.",
+    description:
+      "Alle verdier oppgitt i kvadratmeter. En verdi kan være enten negativ eller positiv.",
   })
 
 export type ArealFordeling = z.infer<typeof arealFordelingSchema>

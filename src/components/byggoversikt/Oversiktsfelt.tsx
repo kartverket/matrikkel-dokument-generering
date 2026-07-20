@@ -2,7 +2,7 @@ import { Label, Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 import type { Bygning } from "../../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
-import { getBygningstype } from "../../lib/schema/reports/bygg/shared/bygningsType.schema"
+import { getBygningstype } from "../../lib/schema/reports/bygg/koder/bygningsTypeKodeSchema.ts"
 
 interface Props {
   bygning: Bygning

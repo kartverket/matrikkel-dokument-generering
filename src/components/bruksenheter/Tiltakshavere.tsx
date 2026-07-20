@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next"
-import type { Tiltakshaver } from "../../lib/schema/reports/bygg/byg0011/person.schema"
+import type { Tiltakshaver } from "../../lib/schema/reports/bygg/byg0011/aktoer.schema.ts"
 import {
   formatAdresselinjer,
   formatPoststed,
@@ -18,7 +18,7 @@ const tiltakshaverFelt = lagDetaljfeltBuilder("rapport.BYG0011.tiltakshavere")
 function getTiltakshaverDetaljfelter(tiltakshaver: Tiltakshaver, tom: string) {
   return [
     tiltakshaverFelt("rolle", tiltakshaver.rolle),
-    tiltakshaverFelt("eierIdent", tiltakshaver.eierIdent),
+    tiltakshaverFelt("identifikasjonsNr", tiltakshaver.identifikasjonsNr),
     tiltakshaverFelt(
       "adresselinjer",
       formatAdresselinjer(
