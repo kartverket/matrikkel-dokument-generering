@@ -5,6 +5,16 @@ export const nb = {
   ...shared,
   tom: "tom",
   bygningstyper: getBygningstypeNavn("nb"),
+  pdf: {
+    header: {
+      bygg: "Bygningsnr. {{bygningsnr}} · Bygg {{nr}} av {{total}}",
+    },
+    footer: {
+      side: "Side",
+      av: "av",
+      rapportGenerert: "Rapport {{type}} · Generert {{dato}}",
+    },
+  },
   rapport: {
     metaData: {
       rapportType: "Rapporttype",

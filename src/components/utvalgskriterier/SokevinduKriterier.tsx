@@ -7,14 +7,18 @@ const numberFormatter = new Intl.NumberFormat("nb-NO", {
 })
 
 interface Props {
-  sokevinduKriterier: Utvalgskriterier["sokevindu"]
+  sokevinduKriterier: NonNullable<Utvalgskriterier>["sokevindu"]
 }
 
 export function SokevinduKriterier({ sokevinduKriterier }: Props) {
   const { t } = useTranslation()
   const uk = "rapport.BYG0011.utvalgskriterier"
+  const ikkeAngitt = t(`${uk}.ikkeAngitt`)
 
   if (!sokevinduKriterier) return null
+
+  const formatCoordinate = (value: number | null) =>
+    value === null ? ikkeAngitt : numberFormatter.format(value)
 
   return (
     <section className="break-inside-avoid">
@@ -29,13 +33,13 @@ export function SokevinduKriterier({ sokevinduKriterier }: Props) {
                 {t(`${uk}.felt.ost`)}
               </dt>
               <dd className="mt-3 flex items-center gap-3 font-medium tabular-nums">
-                <span>{numberFormatter.format(sokevinduKriterier.ost)}</span>
+                <span>{formatCoordinate(sokevinduKriterier.ost)}</span>
                 <span className="flex flex-1 items-center" aria-hidden="true">
                   <span className="size-2 rounded-full bg-kv-blue" />
                   <span className="h-0.5 flex-1 bg-kv-blue" />
                   <span className="size-2 rounded-full bg-kv-blue" />
                 </span>
-                <span>{numberFormatter.format(sokevinduKriterier.vest)}</span>
+                <span>{formatCoordinate(sokevinduKriterier.vest)}</span>
               </dd>
             </div>
             <div>
@@ -43,13 +47,13 @@ export function SokevinduKriterier({ sokevinduKriterier }: Props) {
                 {t(`${uk}.felt.nord`)}
               </dt>
               <dd className="mt-3 flex items-center gap-3 font-medium tabular-nums">
-                <span>{numberFormatter.format(sokevinduKriterier.nord)}</span>
+                <span>{formatCoordinate(sokevinduKriterier.nord)}</span>
                 <span className="flex flex-1 items-center" aria-hidden="true">
                   <span className="size-2 rounded-full bg-kv-blue" />
                   <span className="h-0.5 flex-1 bg-kv-blue" />
                   <span className="size-2 rounded-full bg-kv-blue" />
                 </span>
-                <span>{numberFormatter.format(sokevinduKriterier.syd)}</span>
+                <span>{formatCoordinate(sokevinduKriterier.syd)}</span>
               </dd>
             </div>
           </dl>

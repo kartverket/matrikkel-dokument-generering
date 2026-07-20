@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next"
 import type { ByggUtvalgskriterier as Utvalgskriterier } from "../../lib/schema/reports/bygg/shared/utvalgskriterier.schema"
 
 interface Props {
-  subrapporterKriterier: Utvalgskriterier["subrapporter"]
+  subrapporterKriterier: NonNullable<Utvalgskriterier>["subrapporter"]
 }
 
 export function SubrapporterKriterier({ subrapporterKriterier }: Props) {

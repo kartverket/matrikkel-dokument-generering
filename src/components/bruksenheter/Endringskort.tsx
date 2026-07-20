@@ -153,7 +153,7 @@ export function Endringskort({ endring, bygning }: Props) {
 
   return (
     <Card
-      data-endring-id={endring.id}
+      data-endring-id={endring.lopenr}
       variant="default"
       className="border border-kv-border bg-kv-gray"
     >

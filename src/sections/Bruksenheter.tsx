@@ -168,7 +168,7 @@ export default function Bruksenheter({ index, bygning }: Props) {
                     <div className="flex flex-col gap-3">
                       {endringer.map((endring) => (
                         <Endringskort
-                          key={endring.id}
+                          key={endring.lopenr}
                           endring={endring}
                           bygning={bygning}
                         />

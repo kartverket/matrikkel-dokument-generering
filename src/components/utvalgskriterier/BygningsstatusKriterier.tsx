@@ -4,7 +4,7 @@ import type { ByggUtvalgskriterier as Utvalgskriterier } from "../../lib/schema/
 import { formatDate } from "../../lib/utils/formatDate"
 
 interface Props {
-  bygningsstatusKriterier: Utvalgskriterier["bygningsstatus"]
+  bygningsstatusKriterier: NonNullable<Utvalgskriterier>["bygningsstatus"]
 }
 
 export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {

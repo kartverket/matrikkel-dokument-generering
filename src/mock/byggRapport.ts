@@ -95,14 +95,13 @@ const byggmesterBob: Kontaktperson = {
 }
 
 const gjeldendeEndring: Bygningsendring = {
-  id: 1001,
   lopenr: 5,
   endringskode: null,
   beskrivelse: null,
   bygningsstatus: statuser.TB,
   antallBoenheter: 1,
-  bruksareal: { bolig: 140, annet: 35 },
-  bruttoareal: { bolig: 158, annet: 44 },
+  bruksareal: { bolig: 140, annet: 35, totalt: 175 },
+  bruttoareal: { bolig: 158, annet: 44, totalt: 202 },
   bebygdAreal: 95,
   koordinat: { nord: 6642100, ost: 597400 },
   datoer: datoer({
@@ -116,15 +115,15 @@ const gjeldendeEndring: Bygningsendring = {
       etasjeplan: "Hovedetasje",
       etasje: 1,
       antallBoenheter: 1,
-      bruksareal: { bolig: 80, annet: 10 },
-      bruttoareal: { bolig: 90, annet: 12 },
+      bruksareal: { bolig: 80, annet: 10, totalt: 90 },
+      bruttoareal: { bolig: 90, annet: 12, totalt: 102 },
     },
     {
       etasjeplan: "Annenetasje",
       etasje: 2,
       antallBoenheter: 0,
-      bruksareal: { bolig: 60, annet: 10 },
-      bruttoareal: { bolig: 68, annet: 12 },
+      bruksareal: { bolig: 60, annet: 10, totalt: 70 },
+      bruttoareal: { bolig: 68, annet: 12, totalt: 80 },
     },
   ],
   bruksenheter: [refBruksenhet("H0101")],
@@ -160,11 +159,10 @@ const gjeldendeEndring: Bygningsendring = {
 const historiskeEndringer: Bygningsendring[] = [
   {
     ...gjeldendeEndring,
-    id: 1002,
     lopenr: 4,
     endringskode: "Tilbygg",
     bygningsstatus: statuser.FA,
-    bruksareal: { bolig: 121, annet: 74 },
+    bruksareal: { bolig: 121, annet: 74, totalt: 195 },
     datoer: datoer({
       rammetillatelse: isoDatetime("2016-09-12"),
       igangsettingstillatelse: isoDatetime("2017-03-06"),
@@ -174,11 +172,10 @@ const historiskeEndringer: Bygningsendring[] = [
   },
   {
     ...gjeldendeEndring,
-    id: 1003,
     lopenr: 3,
     endringskode: "Påbygg",
     bygningsstatus: statuser.IG,
-    bruksareal: { bolig: 121, annet: 60 },
+    bruksareal: { bolig: 121, annet: 60, totalt: 181 },
     datoer: datoer({
       rammetillatelse: isoDatetime("2016-09-12"),
       igangsettingstillatelse: isoDatetime("2017-03-06"),
@@ -187,22 +184,20 @@ const historiskeEndringer: Bygningsendring[] = [
   },
   {
     ...gjeldendeEndring,
-    id: 1004,
     lopenr: 2,
     endringskode: "Underbygg",
     bygningsstatus: statuser.RA,
-    bruksareal: { bolig: 102, annet: 60 },
+    bruksareal: { bolig: 102, annet: 60, totalt: 162 },
     datoer: datoer({ rammetillatelse: isoDatetime("2016-09-12") }),
     bruksenheter: [refBruksenhet("H0104")],
   },
   {
     ...gjeldendeEndring,
-    id: 1005,
     lopenr: 1,
     endringskode: "Ombygging",
     beskrivelse: "Midlertidig tillatelse er gitt.",
     bygningsstatus: statuser.MB,
-    bruksareal: { bolig: 102, annet: 0 },
+    bruksareal: { bolig: 102, annet: 0, totalt: 102 },
     datoer: datoer({
       midlertidigBrukstillatelse: isoDatetime("2008-09-12"),
     }),
@@ -210,10 +205,9 @@ const historiskeEndringer: Bygningsendring[] = [
   },
   {
     ...gjeldendeEndring,
-    id: 1006,
     lopenr: 0,
     bygningsstatus: statuser.TB,
-    bruksareal: { bolig: 102, annet: 0 },
+    bruksareal: { bolig: 102, annet: 0, totalt: 102 },
     datoer: datoer({ tattIBruk: isoDatetime("1998-06-18") }),
     bruksenheter: [refBruksenhet("H0101"), refBruksenhet("H0102")],
   },
@@ -236,16 +230,20 @@ const mockByggRapport: ByggRapport = {
     bygning: {
       bygningsnr: "12345678",
       bygningstyper: [{ kode: "111" }],
+      lopenr: null,
     },
     adresse: {
       adressekode: "1000",
       bruksenhetsnr: "H0101",
       adressenavn: "Storgata",
       nr: 1,
+      bokstav: null,
       utenBokstav: true,
+      tilleggsnavn: null,
     },
-    matrikkelenhet: { gnr: 208, bnr: 12 },
+    matrikkelenhet: { gnr: 208, bnr: 12, fnr: null, snr: null },
     hjemmelshaver: {
+      foedselsEllerOrgnr: null,
       etternavn: "Nordmann",
       fornavn: "Ola",
     },
@@ -253,6 +251,7 @@ const mockByggRapport: ByggRapport = {
       naavaerende: ["Tatt i bruk"],
       tidligere: [],
       periodeFra: isoDatetime("2019-01-01"),
+      periodeTil: null,
     },
     sokevindu: {
       nord: 6642000,
@@ -271,7 +270,6 @@ const mockByggRapport: ByggRapport = {
   },
   bygninger: [
     {
-      id: 1,
       bygningsnr: "12345678",
       bygningstype: { kode: "111" },
       naeringsgruppe: "Bolig",
@@ -290,15 +288,15 @@ const mockByggRapport: ByggRapport = {
           antallWc: 1,
           arealfordeling: {
             bebygdAreal: 74,
-            bruksareal: { bolig: 74, annet: 0 },
+            bruksareal: { bolig: 74, annet: 0, totalt: 74 },
             koordinat: { nord: 6642100, ost: 597400 },
             etasjeplan: [
               {
                 etasjeplan: "Hovedetasje",
                 etasje: 1,
                 antallBoenheter: 1,
-                bruksareal: { bolig: 74, annet: 0 },
-                bruttoareal: { bolig: 80, annet: 0 },
+                bruksareal: { bolig: 74, annet: 0, totalt: 74 },
+                bruttoareal: { bolig: 80, annet: 0, totalt: 80 },
               },
             ],
           },
@@ -318,15 +316,15 @@ const mockByggRapport: ByggRapport = {
           antallWc: 1,
           arealfordeling: {
             bebygdAreal: 28,
-            bruksareal: { bolig: 28, annet: 0 },
+            bruksareal: { bolig: 28, annet: 0, totalt: 28 },
             koordinat: { nord: 6642100, ost: 597400 },
             etasjeplan: [
               {
                 etasjeplan: "Loft",
                 etasje: 1,
                 antallBoenheter: 1,
-                bruksareal: { bolig: 28, annet: 0 },
-                bruttoareal: { bolig: 31, annet: 0 },
+                bruksareal: { bolig: 28, annet: 0, totalt: 28 },
+                bruttoareal: { bolig: 31, annet: 0, totalt: 31 },
               },
             ],
           },
@@ -346,15 +344,15 @@ const mockByggRapport: ByggRapport = {
           antallWc: 1,
           arealfordeling: {
             bebygdAreal: 40,
-            bruksareal: { bolig: 40, annet: 0 },
+            bruksareal: { bolig: 40, annet: 0, totalt: 40 },
             koordinat: { nord: 6644118, ost: 254384 },
             etasjeplan: [
               {
                 etasjeplan: "Kjeller",
                 etasje: 1,
                 antallBoenheter: 1,
-                bruksareal: { bolig: 40, annet: 0 },
-                bruttoareal: { bolig: 44, annet: 0 },
+                bruksareal: { bolig: 40, annet: 0, totalt: 40 },
+                bruttoareal: { bolig: 44, annet: 0, totalt: 44 },
               },
             ],
           },
