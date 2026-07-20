@@ -24,14 +24,14 @@ export function BygningKriterier({ bygningKriterier }: Props) {
               {t(`${uk}.felt.bygningsnr`)}
             </Table.HeaderCell>
             <Table.Cell>
-              {bygningKriterier?.bygningsnr ?? ikkeAngitt}
+              {bygningKriterier?.bygningsNr ?? ikkeAngitt}
             </Table.Cell>
           </Table.Row>
           <Table.Row>
             <Table.HeaderCell scope="row">
               {t(`${uk}.felt.lopenr`)}
             </Table.HeaderCell>
-            <Table.Cell>{bygningKriterier?.lopenr ?? ikkeAngitt}</Table.Cell>
+            <Table.Cell>{bygningKriterier?.lopeNr ?? ikkeAngitt}</Table.Cell>
           </Table.Row>
           <Table.Row>
             <Table.HeaderCell scope="row">

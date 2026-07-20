@@ -3,59 +3,102 @@ import {
   valgfriBool,
   valgfriDato,
   valgfriHeltall,
+  valgfriListe,
   valgfriNummer,
   valgfriObjekt,
+  valgfriSchema,
   valgfriString,
 } from "../../shared/zodUtils.ts"
 import { bygningsTypeSchema } from "./bygningsType.schema"
 
-const bygningsstatuser = [
-  "Rammetillatelse",
-  "Igangsettingstillatelse",
-  "Midlertidig brukstillatelse",
-  "Ferdigattest",
-  "Tatt i bruk",
-  "Meldingssak registrer tiltak",
-  "Meldingssak tiltak fullført",
-  "Tiltak unntatt fra byggesaksbehandling",
-  "Bygning revet/brent",
-  "Bygging avlyst",
-  "Bygning flyttet",
-  "Bygningsnummer utgått",
-  "Fritatt for søknadsplikt",
-] as const
+const bygningstatusKodeSchema = z
+  .enum([
+    "RA", // Rammetillatelse
+    "IG", // Igangsettingstillatelse
+    "MB", // Midlertidig brukstillatelse
+    "FA", // Ferdigattest
+    "TB", // Tatt i bruk
+    "MT", // Meldingssak: registrer tiltak
+    "MF", // Meldingssak: tiltak fullført
+    "IP", // Ikke pliktig registrert
+    "GR", // Bygning godkjent for revet/brent
+    "BR", // Bygning revet/brent
+    "BA", // Bygging avlyst
+    "BF", // Bygning flyttet
+    "BU", // Bygningsnummer utgått
+    "FS", // Fritatt for søknadsplikt
+    "EB", // Endre bygningsdata
+    "TE", // Tilbygg opprettet som egen bygning
+    "TA", // Bygg etablert som tilbygg på annen bygning
+    "SB", // Splitt bygning
+    "DO", // Data fra bygningsendring overført
+  ])
+  .meta({
+    description: "B",
+  })
 
 // Felles utvalgskriterier for all bygg rapporter (BYGXXXX)
 export const byggUtvalgskriterierSchema = valgfriObjekt({
-  omfang: z.object({
-    inkluderBestaaendeBygg: valgfriBool.meta({
-      description: "Skal rapporten inkludere bestående bygg?",
+  // Omfang filter-kriterier
+  omfang: z
+    .object({
+      inkluderBestaaendeBygg: valgfriBool.meta({
+        title: "Inkluder bestående bygg",
+        description:
+          "Angir om rapporten skal inkludere bygg som ikke er registrert som utgått.",
+      }),
+      inkluderUtgaatteBygg: valgfriBool.meta({
+        title: "Inkluder utgåtte bygg",
+        description:
+          "Angir om rapporten skal inkludere bygg som er registrert som utgått, for eksempel revet eller brent.",
+      }),
+      inkluderBygninger: valgfriBool.meta({
+        title: "Inkluder bygninger",
+        description:
+          "Angir om rapporten skal inkludere selve bygningene (løpenummer er ikke angitt).",
+      }),
+      inkluderBygningsendringer: valgfriBool.meta({
+        title: "Inkluder bygningsendringer",
+        description:
+          "Angir om rapporten skal inkludere registrerte endringer på bygninger, for eksempel tilbygg eller påbygg.",
+      }),
+      inkluderFrededeBygninger: valgfriBool.meta({
+        title: "Inkluder fredede bygninger",
+        description:
+          "Angir om rapporten skal inkludere bygninger som er registrert som fredet.",
+      }),
+    })
+    .meta({
+      title: "Omfang",
+      description: "Angir hvilke hovedkategorier rapporten skal omfatte.",
     }),
-    inkluderUtgaatteBygg: valgfriBool.meta({
-      description: "Skal rapporten inkludere utgåtte bygg?",
-    }),
-    inkluderBygninger: valgfriBool.meta({
-      description: "Skal rapporten inkludere bygninger?",
-    }),
-    inkluderBygningsendringer: valgfriBool.meta({
-      description: "Skal rapporten inkludere bygningsendringer?",
-    }),
-    inkluderFrededeBygninger: valgfriBool.meta({
-      description: "Skal rapporten inkludere fredede bygninger?",
-    }),
-  }),
+
+  //Bygg filter-kriterier
   bygning: valgfriObjekt({
-    bygningsnr: valgfriString.meta({
+    bygningsNr: valgfriString.meta({
       example: "123456789",
-      description: "Bygningsnummeret til bygget som rapporten skal omfatte.",
+      description:
+        "En entydig identifikasjon av bygningen som er unik på landsbasis og tildeles automatisk.",
     }),
     bygningstyper: z
       .array(bygningsTypeSchema)
       .optional()
       .default([])
-      .meta({ example: [{ kode: "111" }] }),
-    lopenr: valgfriHeltall.meta({ example: 1 }),
+      .meta({
+        title: "Bygningstyper",
+        description:
+          "Bygningstypene som skal inkluderes i rapporten. Hver type oppgis med kode fra Matrikkelens bygningsklassifikasjon.",
+        example: [{ kode: "111" }],
+      }),
+    lopeNr: valgfriHeltall.meta({
+      title: "Løpenummer",
+      description:
+        "Løpenummeret til en bygningsendring under et bygningsnummer. Utelates for selve bygningen.",
+      example: 1,
+    }),
   }),
+
+  // Adresse filter-kriterier
   adresse: valgfriObjekt({
     adresseKode: valgfriString.meta({
       example: "1000",
@@ -119,6 +162,8 @@ export const byggUtvalgskriterierSchema = valgfriObjekt({
           "Eksempel: «Storgata 15», men ikke «Storgata 15A».",
       }),
   }),
+
+  // Matrikkelenhet filter-kriterier
   matrikkelenhet: valgfriObjekt({
     gnr: valgfriHeltall.meta({
       title: "Gårdsnummer",
@@ -139,95 +184,139 @@ export const byggUtvalgskriterierSchema = valgfriObjekt({
         "Nummeret brukes når eiendommen er seksjonert, for eksempel en eierleilighet eller næringsseksjon i et sameie.",
     }),
   }),
-  hjemmelshaver: valgfriObjekt({
-    foedselsEllerOrgnr: valgfriString.meta({ example: "999999999" }),
-    etternavn: valgfriString.meta({ example: "Nordmann" }),
-    fornavn: valgfriString.meta({ example: "Ola" }),
-  }),
-  bygningsstatus: valgfriObjekt({
-    naavaerende: z
-      .array(z.string())
-      .optional()
-      .default([])
-      .meta({ example: bygningsstatuser }),
-    tidligere: z
-      .array(z.string())
-      .optional()
-      .default([])
-      .meta({ example: bygningsstatuser }),
-    periodeFra: valgfriDato.meta({ example: "2019-01-01T00:00:00Z" }),
-    periodeTil: valgfriDato.meta({ example: "2026-07-17T00:00:00Z" }),
-  }),
-  sokevindu: valgfriObjekt({
-    nord: valgfriNummer.meta({ example: 6642000 }),
-    ost: valgfriNummer.meta({ example: 597300 }),
-    vest: valgfriNummer.meta({ example: 597500 }),
-    syd: valgfriNummer.meta({ example: 6642200 }),
+
+  // Aktør filter-kriterier
+  aktoer: valgfriObjekt({
+    foedselsEllerOrgnr: valgfriString.meta({
+      title: "Fødsels- eller organisasjonsnummer",
+      description:
+        "Fødselsnummer eller organisasjonsnummer til hjemmelshaveren eller kontaktpersonen det skal søkes etter.",
+      example: "999999999",
+    }),
+    etternavn: valgfriString.meta({
+      title: "Etternavn eller foretaksnavn",
+      description:
+        "Etternavn til personen, eller navn på foretaket, det skal søkes etter.",
+      example: "Nordmann",
+    }),
+    fornavn: valgfriString.meta({
+      title: "Fornavn",
+      description: "Fornavn til personen det skal søkes etter.",
+      example: "Ola",
+    }),
   }).meta({
+    title: "Aktør",
     description:
-      "Koordinater for søkevinduet som rapporten skal omfatte. Oppgis i format av valgt koordinatSystemKode.",
+      "En aktør kan være en person eller virksomhet og opptre i én eller flere roller, som hjemmelshaver, kontaktperson eller tiltakshaver.",
   }),
+
+  // Byggningsstatus filter-kriterier
+  bygningsstatus: valgfriObjekt({
+    naavaerende: valgfriListe(valgfriSchema(bygningstatusKodeSchema)).meta({
+      description: "Én eller flere statuser som bygningen skal ha nå.",
+    }),
+    tidligere: valgfriSchema(bygningstatusKodeSchema).meta({
+      description:
+        "Én eller flere tidligere statuser som skal finnes i bygningens statushistorikk. ",
+    }),
+    periodeFra: valgfriDato.meta({
+      title: "Statusperiode fra",
+      description:
+        "Starttidspunkt for perioden som søket i bygningens statushistorikk skal avgrenses til.",
+    }),
+    periodeTil: valgfriDato.meta({
+      title: "Statusperiode til",
+      description:
+        "Sluttidspunkt for perioden som søket i bygningens statushistorikk skal avgrenses til.",
+      example: "2026-07-17T00:00:00Z",
+    }),
+  }),
+
+  // Søkevindu filter-kriterier
+  sokevindu: valgfriObjekt({
+    nord: valgfriNummer.meta({
+      title: "Nordlig grense",
+      description:
+        "Nordlig grense for søkevinduet (største nordkoordinat/Y-verdi).",
+      example: 6642200,
+    }),
+    ost: valgfriNummer.meta({
+      title: "Østlig grense",
+      description:
+        "Østlig grense for søkevinduet (største østkoordinat/X-verdi).",
+      example: 597500,
+    }),
+    vest: valgfriNummer.meta({
+      title: "Vestlig grense",
+      description:
+        "Vestlig grense for søkevinduet (minste østkoordinat/X-verdi).",
+      example: 597300,
+    }),
+    syd: valgfriNummer.meta({
+      title: "Sørlig grense",
+      description:
+        "Sørlig grense for søkevinduet (minste nordkoordinat/Y-verdi).",
+      example: 6642000,
+    }),
+  }).meta({
+    title: "Søkevindu",
+    description:
+      "Rektangulært geografisk område som rapporten skal omfatte. Koordinatene oppgis i koordinatsystemet valgt for rapporten; vest må være mindre enn øst, og syd må være mindre enn nord.",
+    example: {
+      nord: 6642200,
+      ost: 597500,
+      vest: 597300,
+      syd: 6642000,
+    },
+  }),
+
+  // Subrapporter filter-kriterier
   subrapporter: valgfriObjekt({
     inkluderEtasjer: valgfriBool.meta({
-      description: "Skal rapporten inneholde etasjer?",
+      title: "Inkluder etasjer",
+      description:
+        "Angir om rapporten skal vise registrerte etasjer med blant annet etasjeplan og arealopplysninger.",
+      example: true,
     }),
-    inkluderBruksenheter: valgfriBool,
-    inkluderTiltakshavere: valgfriBool,
-    inkluderKontaktpersoner: valgfriBool,
-    inkluderHjemmelshavere: valgfriBool,
-    inkluderKulturminner: valgfriBool,
+    inkluderBruksenheter: valgfriBool.meta({
+      title: "Inkluder bruksenheter",
+      description:
+        "Angir om rapporten skal vise registrerte bruksenheter, for eksempel boliger og næringsenheter.",
+      example: true,
+    }),
+    inkluderTiltakshavere: valgfriBool.meta({
+      title: "Inkluder tiltakshavere",
+      description:
+        "Angir om rapporten skal vise registrerte tiltakshavere for bygningsendringer.",
+      example: true,
+    }),
+    inkluderKontaktpersoner: valgfriBool.meta({
+      title: "Inkluder kontaktpersoner",
+      description:
+        "Angir om rapporten skal vise registrerte kontaktpersoner eller kontaktinstanser.",
+      example: true,
+    }),
+    inkluderHjemmelshavere: valgfriBool.meta({
+      title: "Inkluder hjemmelshavere",
+      description:
+        "Angir om rapporten skal vise registrerte hjemmelshavere eller aktuelle eiere.",
+      example: true,
+    }),
+    inkluderKulturminner: valgfriBool.meta({
+      title: "Inkluder kulturminner",
+      description:
+        "Angir om rapporten skal vise registrerte kulturminneopplysninger, for eksempel SEFRAK-identifikatorer.",
+      example: true,
+    }),
+  }).meta({
+    title: "Subrapporter",
+    description:
+      "Angir hvilke detaljerte opplysninger som skal tas med for hvert bygg i rapporten.",
   }),
 }).meta({
   id: "ByggUtvalgskriterier",
-  example: {
-    omfang: {
-      inkluderBestaaendeBygg: true,
-      inkluderUtgaatteBygg: false,
-      inkluderBygninger: true,
-      inkluderBygningsendringer: true,
-      inkluderFrededeBygninger: true,
-    },
-    bygning: {
-      bygningsnr: "123456789",
-      bygningstyper: [{ kode: "111" }],
-      lopenr: 1,
-    },
-    adresse: {
-      adressekode: "1000",
-      bruksenhetsnr: "H0101",
-      adressenavn: "Storgata",
-      nr: 1,
-      bokstav: "A",
-      utenBokstav: false,
-      tilleggsnavn: "Solgløtt",
-    },
-    matrikkelenhet: { gnr: 208, bnr: 12, fnr: null, snr: null },
-    hjemmelshaver: {
-      foedselsEllerOrgnr: "999999999",
-      etternavn: "Nordmann",
-      fornavn: "Ola",
-    },
-    bygningsstatus: {
-      naavaerende: ["Tatt i bruk"],
-      tidligere: ["Rammetillatelse"],
-      periodeFra: "2019-01-01T00:00:00Z",
-      periodeTil: "2026-07-17T00:00:00Z",
-    },
-    sokevindu: {
-      nord: 6642000,
-      ost: 597300,
-      vest: 597500,
-      syd: 6642200,
-    },
-    subrapporter: {
-      inkluderEtasjer: true,
-      inkluderBruksenheter: true,
-      inkluderTiltakshavere: true,
-      inkluderKontaktpersoner: true,
-      inkluderHjemmelshavere: true,
-      inkluderKulturminner: true,
-    },
-  },
+  description:
+    "Felles utvalgskriterier for byggrapporter (BYGXXXX). Kun ppgitte kriterier brukes til å avgrense rapporten.",
 })
 
 export type ByggUtvalgskriterier = z.infer<typeof byggUtvalgskriterierSchema>

@@ -4,22 +4,35 @@ import {
   valgfriHeltall,
   valgfriNummer,
   valgfriObjekt,
+  valgfriSchema,
   valgfriString,
 } from "../../shared/zodUtils.ts"
 import { arealFordelingSchema } from "../shared/arealFordeling.schema.ts"
 import { bygningsTypeSchema } from "../shared/bygningsType.schema.ts"
-import { tiltakshaverSchema } from "./person.schema"
 
-export const bygningsdatoerSchema = z
-  .object({
-    rammetillatelse: valgfriDato,
-    igangsettingstillatelse: valgfriDato,
-    midlertidigBrukstillatelse: valgfriDato,
-    ferdigattest: valgfriDato,
-    tattIBruk: valgfriDato,
-    utgaattRevet: valgfriDato,
+// ref: KontaktpersonKodeId.java
+const kontaktPersonKodeSchema = z.union([
+  z.literal(1), // Tiltakshaver
+  z.literal(2), // Kontaktperson
+])
+
+const endringsKodeSchema = z
+  .union([
+    z.literal(1), // Tilbygg
+    z.literal(2), // Påbygg
+    z.literal(3), // Underbygg
+    z.literal(4), // Ombygging
+    z.literal(5), // Ukjent
+  ])
+  .meta({
+    description:
+      "Beskriver endring i bygning. Koder: \n" +
+      "1: Tilbygg \n" +
+      "2: Påbygg \n" +
+      "3: Underbygg \n" +
+      "4: Ombygging \n" +
+      "5: Ukjent \n",
   })
-  .meta({ id: "BYG0011Bygningsdatoer" })
 
 const bruksenhetReferanseSchema = z
   .object({
@@ -42,8 +55,7 @@ export const byggEndringSchema = z
     }),
 
     byggMetaEndring: valgfriObjekt({
-      endringsKode: valgfriString,
-      bygningsStatus: valgfriString,
+      endringsKode: valgfriSchema(endringsKodeSchema),
       bygningsType: bygningsTypeSchema,
       antallBoenheter: valgfriHeltall,
       naeringsgruppe: valgfriString.meta({
@@ -60,7 +72,7 @@ export const byggEndringSchema = z
       }),
     }),
 
-    koordinat: {
+    byggKoordinatEndringer: {
       nord: z.number().meta({
         description:
           "Koordinatverdien for nord gitt valgt koordinatSystem (se KoordinatSystemKode for mer beskrivelse)",
@@ -72,14 +84,29 @@ export const byggEndringSchema = z
         example: 123456789,
       }),
     },
-    datoer: bygningsdatoerSchema,
+    byggDatoEndringer: valgfriObjekt({
+      rammetillatelse: valgfriDato,
+      igangsettingstillatelse: valgfriDato,
+      midlertidigBrukstillatelse: valgfriDato,
+      ferdigattest: valgfriDato,
+      tattIBruk: valgfriDato,
+      utgaattRevet: valgfriDato,
+    }),
 
     // TODO fjerne tiltakshavere, inngår som en rolle i Hjemmelshaver/aktuell eier/kontaktinstans
-    tiltakshavere: z.array(tiltakshaverSchema).optional().default([]),
-
+    byggRegistrerteEndringer: valgfriObjekt({
+      kontaktPersonKode: kontaktPersonKodeSchema.optional().meta({
+        description:
+          "Rollen til tiltakshaver. Koder: \n" +
+          "1: Tiltakshaver \n" +
+          "2: Kontaktperson \n",
+      }),
+    }),
     bruksenheter: z.array(bruksenhetReferanseSchema),
   })
   .meta({ id: "BYG0011Bygningsendring" })
 
-export type ByggEndringsDatoer = z.infer<typeof bygningsdatoerSchema>
+export type ByggEndringsDatoer = z.infer<
+  typeof byggEndringSchema.shape.byggDatoEndringer
+>
 export type BygningsEndring = z.infer<typeof byggEndringSchema>

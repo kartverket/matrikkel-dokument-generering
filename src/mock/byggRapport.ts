@@ -213,7 +213,7 @@ const mockByggRapport: ByggRapport = {
       inkluderFrededeBygninger: true,
     },
     bygning: {
-      bygningsnr: "12345678",
+      bygningsNr: "12345678",
       bygningstyper: [{ kode: "111" }],
     },
     adresse: {
@@ -250,7 +250,7 @@ const mockByggRapport: ByggRapport = {
   },
   bygninger: [
     {
-      bygningsnr: "12345678",
+      bygningsNr: "12345678",
       bygningsType: { kode: "111" },
       naeringsgruppe: "Bolig",
       antallBoenheter: 1,

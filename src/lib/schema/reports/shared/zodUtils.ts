@@ -5,6 +5,12 @@ export const valgfriHeltall = z.number().int().nonnegative().optional()
 export const valgfriBool = z.boolean().optional()
 export const valgfriString = z.string().optional()
 
+export const valgfriListe = <T extends z.ZodType>(elementSchema: T) =>
+  z.array(elementSchema).optional().default([])
+
+export const valgfriSchema = <T extends z.ZodType>(schema: T) =>
+  schema.optional()
+
 export const valgfriDato = z.iso
   .datetime({ offset: true })
   .optional()
