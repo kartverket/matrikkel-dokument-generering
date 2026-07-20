@@ -10,6 +10,7 @@ export async function htmlToPdf(html: string): Promise<ArrayBuffer> {
   const form = new FormData()
   form.append("files", new Blob([html], { type: "text/html" }), "index.html")
   form.append("printBackground", "true")
+  form.append("preferCssPageSize", "true")
 
   const response = await fetch(`${config.gotenbergUrl}${CONVERT_PATH}`, {
     method: "POST",
