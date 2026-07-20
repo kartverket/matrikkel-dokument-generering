@@ -1,12 +1,21 @@
 import { z } from "@hono/zod-openapi"
 import { bygningstypeSchema } from "./bygningstyper.schema"
 
+const valgfriNummer = z
+  .number()
+  .nonnegative()
+  .nullable()
+  .optional()
+  .default(null)
+const valgfriBool = z.boolean().nullable().optional().default(false)
+const valgfriString = z.string().nullable().optional().default(null)
+
 const matrikkelenhetSchema = z
   .object({
-    gnr: z.number().nonnegative().optional().meta({ example: 208 }),
-    bnr: z.number().nonnegative().optional().meta({ example: 12 }),
-    fnr: z.number().nonnegative().optional().meta({ example: null }),
-    snr: z.number().nonnegative().optional().meta({ example: null }),
+    gnr: valgfriNummer.meta({ example: 208 }),
+    bnr: valgfriNummer.meta({ example: 12 }),
+    fnr: valgfriNummer.meta({ example: null }),
+    snr: valgfriNummer.meta({ example: null }),
   })
   .optional()
   .meta({ id: "Matrikkelenhet" })
@@ -31,26 +40,26 @@ export const byggUtvalgsKriterierSchema = z
   .object({
     omfang: z
       .object({
-        inkluderBestaaendeBygg: z.boolean().optional().default(false).meta({
+        inkluderBestaaendeBygg: valgfriBool.meta({
           description: "Skal rapporten inkludere bestående bygg?",
         }),
-        inkluderUtgaatteBygg: z.boolean().optional().default(false).meta({
+        inkluderUtgaatteBygg: valgfriBool.meta({
           description: "Skal rapporten inkludere utgåtte bygg?",
         }),
-        inkluderBygninger: z.boolean().optional().default(false).meta({
+        inkluderBygninger: valgfriBool.meta({
           description: "Skal rapporten inkludere bygninger?",
         }),
-        inkluderBygningsendringer: z.boolean().optional().default(false).meta({
+        inkluderBygningsendringer: valgfriBool.meta({
           description: "Skal rapporten inkludere bygningsendringer?",
         }),
-        inkluderFrededeBygninger: z.boolean().optional().default(false).meta({
+        inkluderFrededeBygninger: valgfriBool.meta({
           description: "Skal rapporten inkludere fredede bygninger?",
         }),
       })
       .optional(),
     bygning: z
       .object({
-        bygningsnr: z.string().optional().meta({
+        bygningsnr: valgfriString.meta({
           example: "123456789",
           description:
             "Bygningsnummeret til bygget som rapporten skal omfatte.",
@@ -60,33 +69,39 @@ export const byggUtvalgsKriterierSchema = z
           .optional()
           .default([])
           .meta({ example: [{ kode: 111, navn: "Enebolig" }] }),
-        lopenr: z.number().optional().meta({ example: 1 }),
+        lopenr: z.number().nullable().optional().meta({ example: 1 }),
       })
       .optional(),
     adresse: z
       .object({
-        adressekode: z.string().optional().meta({ example: "1000" }),
-        bruksenhetsnr: z.string().optional().meta({
+        adressekode: valgfriString.meta({ example: "1000" }),
+        bruksenhetsnr: valgfriString.meta({
           example: "H0101",
         }),
-        adressenavn: z.string().optional().meta({ example: "Storgata" }),
-        nr: z.number().nonnegative().optional().meta({ example: 1 }),
-        bokstav: z.string().optional().meta({ example: "A" }),
-        utenBokstav: z.boolean().optional(),
-        tilleggsnavn: z.string().optional().meta({ example: "Solgløtt" }),
+        adressenavn: z
+          .string()
+          .nullable()
+          .optional()
+          .default(null)
+          .meta({ example: "Storgata" }),
+        nr: valgfriNummer.meta({ example: 1 }),
+        bokstav: valgfriString.meta({ example: "A" }),
+        utenBokstav: valgfriBool.meta({ example: false }),
+        tilleggsnavn: valgfriString.meta({ example: "Solgløtt" }),
       })
-      .optional(),
+      .nullable()
+      .optional()
+      .default(null),
     matrikkelenhet: matrikkelenhetSchema,
     hjemmelshaver: z
       .object({
-        foedselsEllerOrgnr: z
-          .string()
-          .optional()
-          .meta({ example: "999999999" }),
-        etternavn: z.string().optional().meta({ example: "Nordmann" }),
-        fornavn: z.string().optional().meta({ example: "Ola" }),
+        foedselsEllerOrgnr: valgfriString.meta({ example: "999999999" }),
+        etternavn: valgfriString.meta({ example: "Nordmann" }),
+        fornavn: valgfriString.meta({ example: "Ola" }),
       })
-      .optional(),
+      .nullable()
+      .optional()
+      .default(null),
     bygningsstatus: z
       .object({
         naavaerende: z
@@ -108,15 +123,19 @@ export const byggUtvalgsKriterierSchema = z
           .optional()
           .meta({ example: "2026-07-17T00:00:00Z" }),
       })
-      .optional(),
+      .nullable()
+      .optional()
+      .default(null),
     sokevindu: z
       .object({
-        nord: z.number().meta({ example: 6642000 }),
-        ost: z.number().meta({ example: 597300 }),
-        vest: z.number().meta({ example: 597300 }),
-        syd: z.number().meta({ example: 6642000 }),
+        nord: valgfriNummer.meta({ example: 6642000 }),
+        ost: valgfriNummer.meta({ example: 597300 }),
+        vest: valgfriNummer.meta({ example: 597300 }),
+        syd: valgfriNummer.meta({ example: 6642000 }),
       })
+      .nullable()
       .optional()
+      .default(null)
       .meta({
         description: "Koordinater for søkevinduet som rapporten skal omfatte.",
       }),
@@ -129,7 +148,9 @@ export const byggUtvalgsKriterierSchema = z
         inkluderHjemmelshavere: z.boolean().optional().default(false),
         inkluderKulturminner: z.boolean().optional().default(false),
       })
-      .optional(),
+      .nullable()
+      .optional()
+      .default(null),
   })
   .meta({
     id: "Utvalgskriterier",
