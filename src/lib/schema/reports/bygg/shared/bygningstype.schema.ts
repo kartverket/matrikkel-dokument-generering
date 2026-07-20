@@ -250,7 +250,7 @@ export const bygningstypekoder = bygningstyper.map(([kode]) => kode) as [
   ...Bygningstypekode[],
 ]
 
-export function getBygningstypeResource(
+export function getBygningstypeNavn(
   locale: RapportLocale,
 ): Record<Bygningstypekode, string> {
   return Object.fromEntries(
