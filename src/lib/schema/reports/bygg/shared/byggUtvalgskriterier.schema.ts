@@ -9,6 +9,9 @@ const valgfriNummer = z
   .default(null)
 const valgfriBool = z.boolean().nullable().optional().default(false)
 const valgfriString = z.string().nullable().optional().default(null)
+const valgfriDato = z.iso.datetime().nullable().optional().default(null).meta({
+  example: "2023-01-01T00:00:00Z",
+})
 
 const matrikkelenhetSchema = z
   .object({
@@ -114,14 +117,8 @@ export const byggUtvalgsKriterierSchema = z
           .optional()
           .default([])
           .meta({ example: byggningsStatuser }),
-        periodeFra: z.iso
-          .datetime()
-          .optional()
-          .meta({ example: "2019-01-01T00:00:00Z" }),
-        periodeTil: z.iso
-          .datetime()
-          .optional()
-          .meta({ example: "2026-07-17T00:00:00Z" }),
+        periodeFra: valgfriDato,
+        periodeTil: valgfriDato,
       })
       .nullable()
       .optional()
@@ -141,12 +138,12 @@ export const byggUtvalgsKriterierSchema = z
       }),
     subrapporter: z
       .object({
-        inkluderEtasjer: z.boolean().optional().default(false),
-        inkluderBruksenheter: z.boolean().optional().default(false),
-        inkluderTiltakshavere: z.boolean().optional().default(false),
-        inkluderKontaktpersoner: z.boolean().optional().default(false),
-        inkluderHjemmelshavere: z.boolean().optional().default(false),
-        inkluderKulturminner: z.boolean().optional().default(false),
+        inkluderEtasjer: valgfriBool,
+        inkluderBruksenheter: valgfriBool,
+        inkluderTiltakshavere: valgfriBool,
+        inkluderKontaktpersoner: valgfriBool,
+        inkluderHjemmelshavere: valgfriBool,
+        inkluderKulturminner: valgfriBool,
       })
       .nullable()
       .optional()
