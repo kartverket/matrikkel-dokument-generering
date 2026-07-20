@@ -1,6 +1,9 @@
 import { Label, Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import type { Bygning, Bygningsendring } from "../../lib/schema/reports/bygg/bygg0011/index"
+import type {
+  Bygning,
+  Bygningsendring,
+} from "../../lib/schema/reports/bygg/bygg0011/index"
 
 interface Props {
   bygning: Bygning
