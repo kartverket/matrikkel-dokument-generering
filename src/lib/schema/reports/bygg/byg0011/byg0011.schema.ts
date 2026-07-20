@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi"
-import { rapportSchema } from "../../core/rapport.schema"
-import { bygningSchema } from "./byg0011/bygning.schema"
-import { byggUtvalgskriterierSchema } from "./shared/utvalgskriterier.schema"
+import { rapportSchema } from "../../../core/rapport.schema"
+import { byggUtvalgskriterierSchema } from "../shared/utvalgskriterier.schema"
+import { bygningSchema } from "./bygning.schema"
 
 export const byg0011Schema = rapportSchema
   .extend({

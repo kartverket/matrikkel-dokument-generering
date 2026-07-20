@@ -3,6 +3,7 @@ import { Fragment } from "react"
 import { useTranslation } from "react-i18next"
 import type { Bygning } from "../../lib/schema/reports/bygg/byg0011/bygning.schema"
 import type { Bygningsendring } from "../../lib/schema/reports/bygg/byg0011/bygningsendring.schema"
+import { getBygningstype } from "../../lib/schema/reports/bygg/shared/bygningstype.schema"
 import { arealLinje, summerAreal } from "../../lib/utils/arealLinje"
 import { formatArea } from "../../lib/utils/formatArea"
 import { formatDate } from "../../lib/utils/formatDate"
@@ -45,7 +46,7 @@ export function Endringskort({ endring, bygning }: Props) {
         bruksenhetFelt("endringskode", endring.endringskode),
         bruksenhetFelt(
           "bygningstype",
-          `${bygning.bygningstype.kode} ${bygning.bygningstype.navn}`,
+          `${bygning.bygningstype.kode} ${getBygningstype(bygning.bygningstype.kode, t)}`,
         ),
         byggFelt("naeringsgruppe", bygning.naeringsgruppe),
         byggFelt("matrikkelenhet", bygning.matrikkelenhet),

@@ -2,6 +2,7 @@ import { Label, Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { Bygning } from "../../lib/schema/reports/bygg/byg0011/bygning.schema"
 import type { Bygningsendring } from "../../lib/schema/reports/bygg/byg0011/bygningsendring.schema"
+import { getBygningstype } from "../../lib/schema/reports/bygg/shared/bygningstype.schema"
 
 interface Props {
   bygning: Bygning
@@ -19,7 +20,7 @@ export default function Oversiktsfelt({
 
   const oversikt = {
     bygningsstatus: endring.bygningsstatus.navn,
-    bygningstype: `${bygning.bygningstype.kode} ${bygning.bygningstype.navn}`,
+    bygningstype: `${bygning.bygningstype.kode} ${getBygningstype(bygning.bygningstype.kode, t)}`,
     antallBruksenheter: endring.bruksenheter.length,
     antallBoenheter: endring.antallBoenheter,
     naeringsgruppe: bygning.naeringsgruppe,

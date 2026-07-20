@@ -9,7 +9,9 @@ export const bygningSchema = z
     bygningsnr: z.string().min(1),
     bygningstype: bygningstypeSchema,
     naeringsgruppe: z.string().min(1),
-    matrikkelenhet: z.string().min(1),
+    matrikkelenhet: z.string().min(1).meta({
+      example: "12/345/0/67",
+    }),
     bruksenheter: z.array(bruksenhetSchema),
     endringer: z.array(bygningsendringSchema).min(1),
   })

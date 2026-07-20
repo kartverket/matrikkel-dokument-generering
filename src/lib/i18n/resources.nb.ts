@@ -1,8 +1,10 @@
 import { shared } from "./resources.shared"
+import { bygningstyperNb } from "./resources.bygningstyper"
 
 export const nb = {
   ...shared,
   tom: "tom",
+  bygningstyper: bygningstyperNb,
   rapport: {
     metaData: {
       rapportType: "Rapporttype",

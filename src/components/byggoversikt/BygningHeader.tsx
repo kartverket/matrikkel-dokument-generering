@@ -3,6 +3,7 @@ import { Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { Bygning } from "../../lib/schema/reports/bygg/byg0011/bygning.schema"
 import type { Bygningsendring } from "../../lib/schema/reports/bygg/byg0011/bygningsendring.schema"
+import { getBygningstype } from "../../lib/schema/reports/bygg/shared/bygningstype.schema"
 import { formatDate } from "../../lib/utils/formatDate"
 
 interface Props {
@@ -22,7 +23,8 @@ export default function BygningHeader({ bygning, endring }: Props) {
             {t(`${key}.bygg`, { lopenr: endring.lopenr })}
           </Heading>
           <Paragraph className="text-kv-subtle" data-size="sm">
-            {bygning.bygningstype.kode} {bygning.bygningstype.navn}
+            {bygning.bygningstype.kode}{" "}
+            {getBygningstype(bygning.bygningstype.kode, t)}
           </Paragraph>
         </div>
         <Paragraph className="text-kv-subtle" data-size="sm">

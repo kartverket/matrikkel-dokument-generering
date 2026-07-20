@@ -1,5 +1,6 @@
 import { Heading, Table, Tag } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
+import { getBygningstype } from "../../lib/schema/reports/bygg/shared/bygningstype.schema"
 import type { ByggUtvalgskriterier as Utvalgskriterier } from "../../lib/schema/reports/bygg/shared/utvalgskriterier.schema"
 
 interface Props {
@@ -40,9 +41,9 @@ export function BygningKriterier({ bygningKriterier }: Props) {
               {bygningKriterier?.bygningstyper &&
               bygningKriterier.bygningstyper.length > 0 ? (
                 <span className="flex flex-wrap gap-2">
-                  {bygningKriterier?.bygningstyper.map(({ kode, navn }) => (
+                  {bygningKriterier?.bygningstyper.map(({ kode }) => (
                     <Tag key={kode} data-color="accent" variant="outline">
-                      {kode} – {navn}
+                      {kode} – {getBygningstype(kode, t)}
                     </Tag>
                   ))}
                 </span>

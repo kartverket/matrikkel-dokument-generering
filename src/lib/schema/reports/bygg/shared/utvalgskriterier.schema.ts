@@ -71,7 +71,7 @@ export const byggUtvalgskriterierSchema = z
           .array(bygningstypeSchema)
           .optional()
           .default([])
-          .meta({ example: [{ kode: 111, navn: "Enebolig" }] }),
+          .meta({ example: [{ kode: "111" }] }),
         lopenr: z.number().int().nonnegative().optional().meta({ example: 1 }),
       })
       .optional(),
@@ -153,7 +153,7 @@ export const byggUtvalgskriterierSchema = z
       },
       bygning: {
         bygningsnr: "123456789",
-        bygningstyper: [{ kode: "111", navn: "Enebolig" }],
+        bygningstyper: [{ kode: "111" }],
         lopenr: 1,
       },
       adresse: {
