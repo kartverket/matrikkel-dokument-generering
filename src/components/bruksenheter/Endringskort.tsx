@@ -7,8 +7,7 @@ import {
 } from "../../lib/i18n/koder/oversettKode.ts"
 import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 import type { Bygning } from "../../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
-import { arealLinje } from "../../lib/utils/arealLinje"
-import { formatArea } from "../../lib/utils/formatArea"
+import { arealLinje, formatArea } from "../../lib/utils/formatArea"
 import { formatDate } from "../../lib/utils/formatDate"
 import {
   type DetaljfeltData,
