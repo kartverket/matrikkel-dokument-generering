@@ -1,10 +1,10 @@
+import { getBygningstypeResource } from "../schema/reports/bygg/shared/bygningstype.schema"
 import { shared } from "./resources.shared"
-import { bygningstyperNn } from "./resources.bygningstyper"
 
 export const nn = {
   ...shared,
   tom: "tom",
-  bygningstyper: bygningstyperNn,
+  bygningstyper: getBygningstypeResource("nn"),
   rapport: {
     metaData: {
       rapportType: "Rapporttype",
