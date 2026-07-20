@@ -1,117 +1,170 @@
-import { Heading, Table } from "@kv-designsystem/react"
+import { Table } from "@kv-designsystem/react"
 import { Fragment } from "react"
 import { useTranslation } from "react-i18next"
-import type { Bruksenhet } from "../lib/schema/reports/bygg/bygg0011/index"
+import type {
+  Bruksenhet,
+  Bygningsendring,
+  Etasjeplan,
+} from "../lib/schema/reports/bygg/bygg0011/index"
 import { summerAreal } from "../lib/utils/arealLinje"
 import { formatArea } from "../lib/utils/formatArea"
-import { Detaljgrid, lagDetaljfeltBuilder } from "./Detaljfelt"
+import { KategoriSeksjon } from "./bruksenheter/KategoriSeksjon"
 
 interface Props {
   arealfordeling: Bruksenhet["arealfordeling"]
+  endringer: Bygningsendring[]
 }
 
-const arealFelt = lagDetaljfeltBuilder("rapport.BYG0011.arealfordeling")
-
-function getArealDetaljfelter(arealfordeling: Props["arealfordeling"]) {
-  const valueClassName = "tabular-nums"
-
-  return [
-    arealFelt("bebygdAreal", formatArea(arealfordeling.bebygdAreal), {
-      valueClassName,
-    }),
-    arealFelt(
-      "bruksareal",
-      formatArea(summerAreal(arealfordeling.bruksareal)),
-      { valueClassName },
-    ),
-    arealFelt(
-      "koordinater",
-      `${arealfordeling.koordinat.nord} / ${arealfordeling.koordinat.ost}`,
-      { valueClassName },
-    ),
-  ]
+interface Gruppe {
+  key: string
+  radeLabel: string
+  etasjer: Etasjeplan[]
+  erGjeldende?: boolean
 }
 
-export default function Arealfordeling({ arealfordeling }: Props) {
+function byggGrupper(
+  arealfordeling: Bruksenhet["arealfordeling"],
+  endringer: Bygningsendring[],
+  endringLabel: (lopenr: number) => string,
+  gjeldendeLabel: string,
+): Gruppe[] {
+  const grupper: Gruppe[] = endringer
+    .toSorted((a, b) => b.lopenr - a.lopenr)
+    .map((endring) => ({
+      key: `endring-${endring.id}`,
+      radeLabel: endringLabel(endring.lopenr),
+      etasjer: endring.etasjeplan,
+    }))
+
+  grupper.push({
+    key: "gjeldende",
+    radeLabel: gjeldendeLabel,
+    etasjer: arealfordeling.etasjeplan,
+    erGjeldende: true,
+  })
+
+  return grupper
+}
+
+export default function Arealfordeling({ arealfordeling, endringer }: Props) {
   const { t } = useTranslation()
   const af = "rapport.BYG0011.arealfordeling"
-  const tom = t("tom")
+  const bruksenhetKey = "rapport.BYG0011.bruksenheter"
+  const etasjerKey = "rapport.BYG0011.etasjer"
+
+  const grupper = byggGrupper(
+    arealfordeling,
+    endringer,
+    (lopenr) => t(`${bruksenhetKey}.endringKort`, { lopenr }),
+    t(`${bruksenhetKey}.gjeldende`),
+  )
+
+  const antallRader = grupper.reduce(
+    (sum, g) => sum + Math.max(g.etasjer.length, 1),
+    0,
+  )
 
   return (
-    <div>
-      <Heading level={4} data-size="xs" className="mb-4">
-        {t(`${af}.title`)}
-      </Heading>
-      <div className="flex flex-col gap-6">
-        <Detaljgrid
-          felter={getArealDetaljfelter(arealfordeling)}
-          tom={tom}
-          className="gap-x-8 gap-y-5"
-        />
-
-        <Table border className="w-full table-fixed">
-          <Table.Head>
-            <Table.Row>
-              <Table.HeaderCell className="w-2/5">
-                {t(`${af}.etasje`)}
-              </Table.HeaderCell>
-              <Table.HeaderCell className="w-1/4">
-                {t(`${af}.arealtype`)}
-              </Table.HeaderCell>
-              <Table.HeaderCell className="w-[17.5%] text-right">
-                {t(`${af}.bolig`)}
-              </Table.HeaderCell>
-              <Table.HeaderCell className="w-[17.5%] text-right">
-                {t(`${af}.annet`)}
-              </Table.HeaderCell>
-            </Table.Row>
-          </Table.Head>
-          <Table.Body>
-            {arealfordeling.etasjeplan.map((etasje) => (
-              <Fragment key={`${etasje.etasjeplan}-${etasje.etasje}`}>
-                <Table.Row>
-                  <Table.HeaderCell
-                    rowSpan={2}
-                    scope="rowgroup"
-                    className="border-r border-b-0 bg-kv-gray align-top text-kv-default"
-                  >
-                    <span className="flex flex-col gap-1">
-                      <span className="font-semibold">{etasje.etasjeplan}</span>
-                      <span className="font-normal text-kv-subtle text-sm">
-                        {t(`${af}.nr`, { nr: etasje.etasje })}
-                        <span aria-hidden="true"> · </span>
-                        {t(`${af}.boenheter`, {
-                          antall: etasje.antallBoenheter,
-                        })}
-                      </span>
-                    </span>
-                  </Table.HeaderCell>
-                  <Table.HeaderCell scope="row" className="text-kv-default">
-                    {t(`${af}.bruksarealRad`)}
-                  </Table.HeaderCell>
-                  <Table.Cell className="text-right tabular-nums">
-                    {etasje.bruksareal.bolig}
-                  </Table.Cell>
-                  <Table.Cell className="text-right tabular-nums">
-                    {etasje.bruksareal.annet}
-                  </Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.HeaderCell scope="row" className="text-kv-default">
-                    {t(`${af}.bruttoarealRad`)}
-                  </Table.HeaderCell>
-                  <Table.Cell className="text-right tabular-nums">
-                    {etasje.bruttoareal.bolig}
-                  </Table.Cell>
-                  <Table.Cell className="text-right tabular-nums">
-                    {etasje.bruttoareal.annet}
-                  </Table.Cell>
-                </Table.Row>
+    <KategoriSeksjon
+      title={t(`${af}.title`)}
+      emptyText={t(`${bruksenhetKey}.ingenEndringer`)}
+      isEmpty={antallRader === 0}
+    >
+      <Table className="w-full">
+        <Table.Head>
+          <Table.Row>
+            <Table.HeaderCell className="w-32">
+              {t(`${bruksenhetKey}.endring`)}
+            </Table.HeaderCell>
+            <Table.HeaderCell>{t(`${af}.etasje`)}</Table.HeaderCell>
+            <Table.HeaderCell className="text-right">
+              {t(`${etasjerKey}.antallBoenheter`)}
+            </Table.HeaderCell>
+            <Table.HeaderCell className="text-right">
+              {t(`${etasjerKey}.bruksarealBolig`)}
+            </Table.HeaderCell>
+            <Table.HeaderCell className="text-right">
+              {t(`${etasjerKey}.bruksarealAnnet`)}
+            </Table.HeaderCell>
+            <Table.HeaderCell className="text-right">
+              {t(`${etasjerKey}.bruksarealTotalt`)}
+            </Table.HeaderCell>
+            <Table.HeaderCell className="text-right">
+              {t(`${etasjerKey}.bruttoarealBolig`)}
+            </Table.HeaderCell>
+            <Table.HeaderCell className="text-right">
+              {t(`${etasjerKey}.bruttoarealAnnet`)}
+            </Table.HeaderCell>
+            <Table.HeaderCell className="text-right">
+              {t(`${etasjerKey}.bruttoarealTotalt`)}
+            </Table.HeaderCell>
+          </Table.Row>
+        </Table.Head>
+        <Table.Body>
+          {grupper.map((gruppe) => {
+            const rader: (Etasjeplan | null)[] =
+              gruppe.etasjer.length > 0 ? gruppe.etasjer : [null]
+            return (
+              <Fragment key={gruppe.key}>
+                {rader.map((etasje, index) => {
+                  const cellKlasse = gruppe.erGjeldende
+                    ? "text-right tabular-nums font-semibold"
+                    : "text-right tabular-nums"
+                  return (
+                    <Table.Row
+                      key={
+                        etasje
+                          ? `${gruppe.key}-${etasje.etasjeplan}-${etasje.etasje}`
+                          : `${gruppe.key}-empty`
+                      }
+                    >
+                      {index === 0 && (
+                        <Table.HeaderCell
+                          scope="rowgroup"
+                          rowSpan={rader.length}
+                          className="align-top text-kv-default"
+                        >
+                          {gruppe.radeLabel}
+                        </Table.HeaderCell>
+                      )}
+                      {etasje === null ? (
+                        <Table.Cell colSpan={8} className="text-kv-subtle">
+                          –
+                        </Table.Cell>
+                      ) : (
+                        <>
+                          <Table.Cell>{etasje.etasjeplan}</Table.Cell>
+                          <Table.Cell className={cellKlasse}>
+                            {etasje.antallBoenheter}
+                          </Table.Cell>
+                          <Table.Cell className={cellKlasse}>
+                            {formatArea(etasje.bruksareal.bolig)}
+                          </Table.Cell>
+                          <Table.Cell className={cellKlasse}>
+                            {formatArea(etasje.bruksareal.annet)}
+                          </Table.Cell>
+                          <Table.Cell className={cellKlasse}>
+                            {formatArea(summerAreal(etasje.bruksareal))}
+                          </Table.Cell>
+                          <Table.Cell className={cellKlasse}>
+                            {formatArea(etasje.bruttoareal.bolig)}
+                          </Table.Cell>
+                          <Table.Cell className={cellKlasse}>
+                            {formatArea(etasje.bruttoareal.annet)}
+                          </Table.Cell>
+                          <Table.Cell className={cellKlasse}>
+                            {formatArea(summerAreal(etasje.bruttoareal))}
+                          </Table.Cell>
+                        </>
+                      )}
+                    </Table.Row>
+                  )
+                })}
               </Fragment>
-            ))}
-          </Table.Body>
-        </Table>
-      </div>
-    </div>
+            )
+          })}
+        </Table.Body>
+      </Table>
+    </KategoriSeksjon>
   )
 }

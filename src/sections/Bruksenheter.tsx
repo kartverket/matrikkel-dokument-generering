@@ -1,9 +1,8 @@
-import { Card, Divider, Paragraph } from "@kv-designsystem/react"
+import { Card, Divider } from "@kv-designsystem/react"
 import type { TFunction } from "i18next"
 import { useTranslation } from "react-i18next"
 import ArealFordeling from "../components/ArealFordeling.tsx"
 import { BruksenhetHeader } from "../components/bruksenheter/BruksenhetHeader.tsx"
-import { Endringskort } from "../components/bruksenheter/Endringskort.tsx"
 import { Hjemmelshavere } from "../components/bruksenheter/Hjemmelshavere.tsx"
 import { Kontaktpersoner } from "../components/bruksenheter/Kontaktpersoner.tsx"
 import { RegistrerteVedtak } from "../components/bruksenheter/RegistrerteVedtak.tsx"
@@ -14,14 +13,9 @@ import type {
   Bruksenhet,
   Bygning,
   Bygningsendring,
-  Tiltakshaver,
 } from "../lib/schema/reports/bygg/bygg0011/index.ts"
 import { summerAreal } from "../lib/utils/arealLinje.ts"
 import { formatArea } from "../lib/utils/formatArea.ts"
-import {
-  finnGjeldendeBygningsendring,
-  isFerdigstilt,
-} from "../lib/utils/isFerdigstilt.ts"
 import { sorterBruksenheterEtterNummer } from "../lib/utils/sorterBruksenheter.ts"
 
 interface Props {
@@ -53,36 +47,6 @@ function getBruksenhetDetaljfelter(bruksenhet: Bruksenhet, t: TFunction) {
   ]
 }
 
-function getTiltakshavere(
-  endringer: Bygningsendring[],
-  bruksenhet: Bruksenhet,
-): Tiltakshaver[] {
-  const unikeTiltakshavere = new Map<string, Tiltakshaver>()
-
-  for (const endring of endringer.toSorted((a, b) => b.lopenr - a.lopenr)) {
-    if (isFerdigstilt(endring)) continue
-
-    for (const tiltakshaver of endring.tiltakshavere) {
-      if (tiltakshaver.bruksenhetsnr !== bruksenhet.nummer) continue
-
-      const nokkel = JSON.stringify([
-        tiltakshaver.eierIdent,
-        tiltakshaver.rolle,
-        tiltakshaver.bruksenhetsnr,
-        tiltakshaver.datofra,
-        tiltakshaver.kategorikode,
-        tiltakshaver.kontaktpersonKode,
-      ])
-
-      if (!unikeTiltakshavere.has(nokkel)) {
-        unikeTiltakshavere.set(nokkel, tiltakshaver)
-      }
-    }
-  }
-
-  return [...unikeTiltakshavere.values()]
-}
-
 function berorerBruksenhet(endring: Bygningsendring, bruksenhet: Bruksenhet) {
   return (
     bruksenhet.nummer !== null &&
@@ -97,7 +61,6 @@ export default function Bruksenheter({ index, bygning }: Props) {
   const i18n = "rapport.BYG0011.bruksenheter"
   const tom = t("tom")
   const ingenOppgittBruksenhet = t(`${i18n}.ingenOppgittBruksenhet`)
-  const gjeldende = finnGjeldendeBygningsendring(bygning.endringer)
   const sorterteBruksenheter = sorterBruksenheterEtterNummer(
     bygning.bruksenheter,
   )
@@ -115,71 +78,42 @@ export default function Bruksenheter({ index, bygning }: Props) {
           const endringer = bygning.endringer.filter((endring) =>
             berorerBruksenhet(endring, bruksenhet),
           )
-          const gjeldendeEndringForBruksenhet = berorerBruksenhet(
-            gjeldende,
-            bruksenhet,
-          )
-            ? gjeldende
-            : undefined
-          const tiltakshavere = getTiltakshavere(bygning.endringer, bruksenhet)
 
           return (
-            <Card
+            <div
               key={bruksenhet.id}
               data-bruksenhet={bruksenhet.nummer ?? ingenOppgittBruksenhet}
-              className="break-inside-avoid border border-kv-border"
+              className="space-y-8 p-4 border-t border-kv-blue-subtle"
             >
-              <Card.Block className="p-7">
-                <BruksenhetHeader
-                  bruksenhetNummer={bruksenhet.nummer ?? null}
-                  bruksenhetTypeChip={bruksenhet.type ?? null}
-                  bruksenhetSeksjon={bruksenhet.seksjon ?? null}
-                  ingenOppgittBruksenhet={ingenOppgittBruksenhet}
-                />
+              <BruksenhetHeader
+                bruksenhetNummer={bruksenhet.nummer ?? null}
+                bruksenhetTypeChip={bruksenhet.type ?? null}
+                bruksenhetSeksjon={bruksenhet.seksjon ?? null}
+                ingenOppgittBruksenhet={ingenOppgittBruksenhet}
+              />
 
-                <Detaljgrid
-                  felter={getBruksenhetDetaljfelter(bruksenhet, t)}
-                  tom={tom}
-                  className="gap-x-8 gap-y-5"
-                />
+              <Detaljgrid
+                felter={getBruksenhetDetaljfelter(bruksenhet, t)}
+                tom={tom}
+                className="gap-x-8 gap-y-5"
+              />
 
-                <Divider className="my-6" />
-                <RegistrerteVedtak endring={gjeldendeEndringForBruksenhet} />
+              <Hjemmelshavere hjemmelshavere={bruksenhet.hjemmelshavere} />
 
-                <Divider className="my-6" />
-                <Tiltakshavere tiltakshavere={tiltakshavere} />
+              <RegistrerteVedtak endringer={endringer} />
 
-                <Divider className="my-6" />
-                <ArealFordeling arealfordeling={bruksenhet.arealfordeling} />
+              <ArealFordeling
+                arealfordeling={bruksenhet.arealfordeling}
+                endringer={endringer}
+              />
 
-                <Divider className="my-6" />
-                <Hjemmelshavere hjemmelshavere={bruksenhet.hjemmelshavere} />
+              <Tiltakshavere
+                endringer={endringer}
+                bruksenhetsnr={bruksenhet.nummer ?? null}
+              />
 
-                <Divider className="my-6" />
-                <Kontaktpersoner kontaktpersoner={bruksenhet.kontaktpersoner} />
-
-                <Divider className="my-6" />
-
-                <div>
-                  <Paragraph className="mb-3 font-bold text-kv-subtle text-xs tracking-wide">
-                    {endringer.length > 0
-                      ? t(`${i18n}.endringerPaBruksenheten`)
-                      : t(`${i18n}.ingenEndringer`)}
-                  </Paragraph>
-                  {endringer.length > 0 && (
-                    <div className="flex flex-col gap-3">
-                      {endringer.map((endring) => (
-                        <Endringskort
-                          key={endring.id}
-                          endring={endring}
-                          bygning={bygning}
-                        />
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </Card.Block>
-            </Card>
+              <Kontaktpersoner kontaktpersoner={bruksenhet.kontaktpersoner} />
+            </div>
           )
         })}
       </div>
