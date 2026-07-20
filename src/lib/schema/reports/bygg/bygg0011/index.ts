@@ -3,17 +3,10 @@ import { rapportSchema } from "../../../core"
 import { byggUtvalgsKriterierSchema } from "../shared/byggUtvalgskriterier.schema"
 import { bygningstypeSchema } from "../shared/bygningstyper.schema"
 
-const tekstSchema = z.string().min(1)
-const valgfriTekstSchema = tekstSchema.nullable().optional()
-const heltallSchema = z.number().int().nonnegative()
-const arealSchema = z.number().nonnegative()
-const datoSchema = z.iso.datetime()
-const valgfriDatoSchema = datoSchema.nullable()
-
 const arealFordelingSchema = z
   .object({
-    bolig: arealSchema,
-    annet: arealSchema,
+    bolig: z.number().nonnegative(),
+    annet: z.number().nonnegative(),
   })
   .meta({
     id: "ArealFordeling",
@@ -30,75 +23,87 @@ const koordinatSchema = z
 
 const bygningsstatusSchema = z
   .object({
-    kode: heltallSchema,
-    kortkode: tekstSchema,
-    navn: tekstSchema,
+    kode: z.number().int().nonnegative(),
+    kortkode: z.string().min(1),
+    navn: z.string().min(1),
     bestaaende: z.boolean(),
   })
   .meta({ id: "Bygningsstatus" })
 
 const personBasisShape = {
-  eierIdent: tekstSchema,
-  navn: tekstSchema,
-  adresselinje1: valgfriTekstSchema,
-  adresselinje2: valgfriTekstSchema,
-  adresselinje3: valgfriTekstSchema,
-  land: valgfriTekstSchema,
-  statuskode: valgfriTekstSchema,
+  eierIdent: z.string().min(1),
+  navn: z.string().min(1),
+  adresselinje1: z.string().min(1).nullable().optional(),
+  adresselinje2: z.string().min(1).nullable().optional(),
+  adresselinje3: z.string().min(1).nullable().optional(),
+  land: z.string().min(1).nullable().optional(),
+  statuskode: z.string().min(1).nullable().optional(),
   eierErUtgatt: z.boolean().optional().default(false),
 }
 
 const tiltakshaverSchema = z
   .object({
     ...personBasisShape,
-    rolle: tekstSchema,
-    postnummeromradenr: valgfriTekstSchema,
-    postnummeromradenavn: valgfriTekstSchema,
-    bruksenhetsnr: valgfriTekstSchema,
-    datofra: valgfriDatoSchema,
-    kategorikode: valgfriTekstSchema,
-    kontaktpersonKode: valgfriTekstSchema,
+    rolle: z.string().min(1),
+    postnummeromradenr: z.string().min(1).nullable().optional(),
+    postnummeromradenavn: z.string().min(1).nullable().optional(),
+    bruksenhetsnr: z.string().min(1).nullable().optional(),
+    datofra: z.iso
+      .datetime()
+      .optional()
+      .meta({ example: "2026-07-17T00:00:00Z" }),
+    kategorikode: z.string().min(1).nullable().optional(),
+    kontaktpersonKode: z.string().min(1).nullable().optional(),
   })
   .meta({ id: "Tiltakshaver" })
 
 const kontaktpersonSchema = z
   .object({
     ...personBasisShape,
-    rolle: tekstSchema,
-    postnummeromradenr: valgfriTekstSchema,
-    postnummeromradenavn: valgfriTekstSchema,
-    datofra: valgfriDatoSchema,
-    kategorikode: valgfriTekstSchema,
-    kontaktpersonKode: valgfriTekstSchema,
+    rolle: z.string().min(1),
+    postnummeromradenr: z.string().min(1).nullable().optional(),
+    postnummeromradenavn: z.string().min(1).nullable().optional(),
+    datofra: z.iso
+      .datetime()
+      .optional()
+      .meta({ example: "2026-07-17T00:00:00Z" }),
+    kategorikode: z.string().min(1).nullable().optional(),
+    kontaktpersonKode: z.string().min(1).nullable().optional(),
   })
   .meta({ id: "Kontaktperson" })
 
 const hjemmelshaverSchema = z
   .object({
     ...personBasisShape,
-    andelTeller: heltallSchema.nullable(),
-    andelNevner: heltallSchema.nullable(),
-    postnummer: valgfriTekstSchema,
-    poststed: valgfriTekstSchema,
-    datofra: valgfriDatoSchema,
-    datotil: valgfriDatoSchema,
-    kategorikode: valgfriTekstSchema,
+    andelTeller: z.number().int().nonnegative().nullable(),
+    andelNevner: z.number().int().nonnegative().nullable(),
+    postnummer: z.string().min(1).nullable().optional(),
+    poststed: z.string().min(1).nullable().optional(),
+    datofra: z.iso
+      .datetime()
+      .optional()
+      .meta({ example: "2026-07-17T00:00:00Z" }),
+    datotil: z.iso
+      .datetime()
+      .optional()
+      .meta({ example: "2026-07-17T00:00:00Z" }),
+    kategorikode: z.string().min(1).nullable().optional(),
     harAndel: z.boolean().nullable(),
   })
   .meta({ id: "Hjemmelshaver" })
 
 const kulturminneSchema = z
   .object({
-    id: tekstSchema,
-    navn: tekstSchema,
-    status: tekstSchema,
-    kategori: tekstSchema,
+    id: z.string().min(1),
+    navn: z.string().min(1),
+    status: z.string().min(1),
+    kategori: z.string().min(1),
   })
   .meta({ id: "Kulturminne" })
 
 const bruksenhetReferanseSchema = z
   .object({
-    bruksenhetsnr: valgfriTekstSchema,
+    bruksenhetsnr: z.string().min(1).nullable().optional(),
   })
   .meta({
     id: "BruksenhetReferanse",
@@ -108,20 +113,38 @@ const bruksenhetReferanseSchema = z
 
 const bygningsdatoerSchema = z
   .object({
-    rammetillatelse: valgfriDatoSchema,
-    igangsettingstillatelse: valgfriDatoSchema,
-    midlertidigBrukstillatelse: valgfriDatoSchema,
-    ferdigattest: valgfriDatoSchema,
-    tattIBruk: valgfriDatoSchema,
-    utgaattRevet: valgfriDatoSchema,
+    rammetillatelse: z.iso
+      .datetime()
+      .optional()
+      .meta({ example: "2026-07-17T00:00:00Z" }),
+    igangsettingstillatelse: z.iso
+      .datetime()
+      .optional()
+      .meta({ example: "2026-07-17T00:00:00Z" }),
+    midlertidigBrukstillatelse: z.iso
+      .datetime()
+      .optional()
+      .meta({ example: "2026-07-17T00:00:00Z" }),
+    ferdigattest: z.iso
+      .datetime()
+      .optional()
+      .meta({ example: "2026-07-17T00:00:00Z" }),
+    tattIBruk: z.iso
+      .datetime()
+      .optional()
+      .meta({ example: "2026-07-17T00:00:00Z" }),
+    utgaattRevet: z.iso
+      .datetime()
+      .optional()
+      .meta({ example: "2026-07-17T00:00:00Z" }),
   })
   .meta({ id: "Bygningsdatoer" })
 
 const bygningsetasjeSchema = z
   .object({
-    etasjeplan: tekstSchema,
-    etasje: heltallSchema,
-    antallBoenheter: heltallSchema,
+    etasjeplan: z.string().min(1),
+    etasje: z.number().int().nonnegative(),
+    antallBoenheter: z.number().int().nonnegative(),
     bruksareal: arealFordelingSchema,
     bruttoareal: arealFordelingSchema,
   })
@@ -129,15 +152,21 @@ const bygningsetasjeSchema = z
 
 const bygningsendringSchema = z
   .object({
-    id: heltallSchema,
-    lopenr: heltallSchema,
-    endringskode: valgfriTekstSchema,
-    beskrivelse: valgfriTekstSchema.optional().default(null),
+    id: z.number().int().nonnegative(),
+    lopenr: z.number().int().nonnegative(),
+    endringskode: z.string().min(1).nullable().optional(),
+    beskrivelse: z
+      .string()
+      .min(1)
+      .nullable()
+      .optional()
+      .optional()
+      .default(null),
     bygningsstatus: bygningsstatusSchema,
-    antallBoenheter: heltallSchema,
+    antallBoenheter: z.number().int().nonnegative(),
     bruksareal: arealFordelingSchema,
     bruttoareal: arealFordelingSchema,
-    bebygdAreal: arealSchema,
+    bebygdAreal: z.number().nonnegative(),
     koordinat: koordinatSchema,
     datoer: bygningsdatoerSchema,
     etasjeplan: z.array(bygningsetasjeSchema),
@@ -149,7 +178,7 @@ const bygningsendringSchema = z
 
 const bruksenhetArealfordelingSchema = z
   .object({
-    bebygdAreal: arealSchema,
+    bebygdAreal: z.number().nonnegative(),
     bruksareal: arealFordelingSchema,
     koordinat: koordinatSchema,
     etasjeplan: z.array(bygningsetasjeSchema),
@@ -158,16 +187,16 @@ const bruksenhetArealfordelingSchema = z
 
 const bruksenhetSchema = z
   .object({
-    id: tekstSchema,
-    nummer: valgfriTekstSchema,
-    type: valgfriTekstSchema,
-    seksjon: valgfriTekstSchema,
-    adresse: valgfriTekstSchema,
-    etasje: valgfriTekstSchema,
-    antallRom: heltallSchema,
+    id: z.string().min(1),
+    nummer: z.string().min(1).nullable().optional(),
+    type: z.string().min(1).nullable().optional(),
+    seksjon: z.string().min(1).nullable().optional(),
+    adresse: z.string().min(1).nullable().optional(),
+    etasje: z.string().min(1).nullable().optional(),
+    antallRom: z.number().int().nonnegative(),
     kjokkentilgang: z.boolean().nullable(),
-    antallBad: heltallSchema,
-    antallWc: heltallSchema,
+    antallBad: z.number().int().nonnegative(),
+    antallWc: z.number().int().nonnegative(),
     arealfordeling: bruksenhetArealfordelingSchema,
     hjemmelshavere: z.array(hjemmelshaverSchema),
     kontaktpersoner: z.array(kontaktpersonSchema),
@@ -176,11 +205,11 @@ const bruksenhetSchema = z
 
 const bygningSchema = z
   .object({
-    id: heltallSchema,
-    bygningsnr: tekstSchema,
+    id: z.number().int().nonnegative(),
+    bygningsnr: z.string().min(1),
     bygningstype: bygningstypeSchema,
-    naeringsgruppe: tekstSchema,
-    matrikkelenhet: tekstSchema,
+    naeringsgruppe: z.string().min(1),
+    matrikkelenhet: z.string().min(1),
     bruksenheter: z.array(bruksenhetSchema),
     endringer: z.array(bygningsendringSchema).min(1),
   })
