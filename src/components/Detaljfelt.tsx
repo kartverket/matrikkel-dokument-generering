@@ -77,7 +77,7 @@ export function Detaljgrid({ felter, tom, className }: DetaljgridProps) {
   const { t } = useTranslation()
 
   return (
-    <dl className={cn("grid grid-cols-3 gap-x-7 gap-y-4", className)}>
+    <dl className={cn("grid grid-cols-4 gap-x-7 gap-y-4", className)}>
       {felter.map(
         ({
           key,

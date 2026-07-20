@@ -5,7 +5,7 @@ import { type DetaljfeltData, Detaljgrid } from "./Detaljfelt"
 interface Props {
   navn: string
   erUtgatt: boolean
-  statuskode: string | null
+  statuskode: string | null | undefined
   utgattLabel: string
   felter: DetaljfeltData[]
   tom: string

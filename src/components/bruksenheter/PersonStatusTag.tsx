@@ -2,7 +2,7 @@ import { Tag } from "@kv-designsystem/react"
 
 interface Props {
   erUtgatt: boolean
-  statuskode: string | null
+  statuskode: string | null | undefined
   utgattLabel: string
   tom: string
 }

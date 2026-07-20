@@ -6,8 +6,8 @@ export function sorterBruksenheterEtterNummer<
   T extends Pick<Bruksenhet, "nummer">,
 >(bruksenheter: readonly T[]): T[] {
   return bruksenheter.toSorted((a, b) => {
-    if (a.nummer === null) return b.nummer === null ? 0 : 1
-    if (b.nummer === null) return -1
+    if (a.nummer == null) return b.nummer == null ? 0 : 1
+    if (b.nummer == null) return -1
 
     return bruksenhetsnummerCollator.compare(a.nummer, b.nummer)
   })
