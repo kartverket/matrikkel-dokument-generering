@@ -1,4 +1,6 @@
+import type { TFunction } from "i18next"
 import { useTranslation } from "react-i18next"
+import { oversettKode } from "../../lib/i18n/koder/oversettKode.ts"
 import type { Tiltakshaver } from "../../lib/schema/reports/bygg/byg0011/aktoer.schema.ts"
 import {
   formatAdresselinjer,
@@ -15,7 +17,11 @@ interface Props {
 
 const tiltakshaverFelt = lagDetaljfeltBuilder("rapport.BYG0011.tiltakshavere")
 
-function getTiltakshaverDetaljfelter(tiltakshaver: Tiltakshaver, tom: string) {
+function getTiltakshaverDetaljfelter(
+  tiltakshaver: Tiltakshaver,
+  t: TFunction,
+  tom: string,
+) {
   return [
     tiltakshaverFelt("rolle", tiltakshaver.rolle),
     tiltakshaverFelt("identifikasjonsNr", tiltakshaver.identifikasjonsNr),
@@ -44,7 +50,14 @@ function getTiltakshaverDetaljfelter(tiltakshaver: Tiltakshaver, tom: string) {
     tiltakshaverFelt(
       "kategori",
       joinStrings(
-        [tiltakshaver.kategorikode, tiltakshaver.kontaktpersonKode],
+        [
+          tiltakshaver.kategorikode == null
+            ? null
+            : oversettKode(t, "aktoer", tiltakshaver.kategorikode),
+          tiltakshaver.kontaktpersonKode == null
+            ? null
+            : oversettKode(t, "kontaktperson", tiltakshaver.kontaktpersonKode),
+        ],
         " / ",
         tom,
       ),
@@ -66,7 +79,7 @@ export function Tiltakshavere({ tiltakshavere }: Props) {
           erUtgatt={tiltakshaver.eierErUtgatt}
           statuskode={tiltakshaver.statuskode ?? null}
           utgattLabel={t(`${translationKey}.utgatt`)}
-          felter={getTiltakshaverDetaljfelter(tiltakshaver, tom)}
+          felter={getTiltakshaverDetaljfelter(tiltakshaver, t, tom)}
           tom={tom}
         />
       ))}

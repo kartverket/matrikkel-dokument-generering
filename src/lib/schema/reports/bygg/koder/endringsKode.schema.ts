@@ -19,3 +19,5 @@ export const endringsKodeSchema = z
       "4: Ombygging \n" +
       "5: Ukjent \n",
   })
+
+export type EndringsKode = z.infer<typeof endringsKodeSchema>

@@ -6,9 +6,8 @@ import {
   valgfriListe,
   valgfriNummer,
   valgfriObjekt,
-  valgfriSchema,
   valgfriString,
-} from "../../shared/zodUtils.ts"
+} from "../../../core/utils/zodUtils.ts"
 import { byggningsStatusKodeSchema } from "../koder/byggningsStatusKode.schema.ts"
 import { bygningsTypeKodeSchema } from "../koder/bygningsTypeKodeSchema.ts"
 
@@ -183,10 +182,10 @@ export const byggUtvalgskriterierSchema = valgfriObjekt({
 
   // Byggningsstatus filter-kriterier
   bygningsstatus: valgfriObjekt({
-    naavaerende: valgfriListe(valgfriSchema(byggningsStatusKodeSchema)).meta({
+    naavaerende: valgfriListe(byggningsStatusKodeSchema).meta({
       description: "Én eller flere statuser som bygningen skal ha nå.",
     }),
-    tidligere: valgfriSchema(byggningsStatusKodeSchema).meta({
+    tidligere: valgfriListe(byggningsStatusKodeSchema).meta({
       description:
         "Én eller flere tidligere statuser som skal finnes i bygningens statushistorikk. ",
     }),
@@ -280,7 +279,6 @@ export const byggUtvalgskriterierSchema = valgfriObjekt({
       example: true,
     }),
   }).meta({
-    title: "Subrapporter",
     description:
       "Angir hvilke detaljerte opplysninger som skal tas med for hvert bygg i rapporten.",
   }),

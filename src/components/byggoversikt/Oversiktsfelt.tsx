@@ -1,8 +1,11 @@
 import { Label, Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
+import {
+  getBygningstype,
+  oversettKode,
+} from "../../lib/i18n/koder/oversettKode.ts"
 import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 import type { Bygning } from "../../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
-import { getBygningstype } from "../../lib/schema/reports/bygg/koder/bygningsTypeKodeSchema.ts"
 
 interface Props {
   bygning: Bygning
@@ -14,7 +17,11 @@ export default function Oversiktsfelt({ bygning, gjeldendeEndring }: Props) {
   const key = "rapport.BYG0011.byggoversikt"
 
   const oversikt = {
-    bygningsstatus: gjeldendeEndring.bygningsstatus.navn,
+    bygningsstatus: oversettKode(
+      t,
+      "bygningsstatus",
+      gjeldendeEndring.bygningsstatus.kortkode,
+    ),
     bygningstype: `${bygning.bygningsType.kode} ${getBygningstype(bygning.bygningsType.kode, t)}`,
     antallBruksenheter: gjeldendeEndring.bruksenheter.length,
     antallBoenheter: gjeldendeEndring.antallBoenheter,

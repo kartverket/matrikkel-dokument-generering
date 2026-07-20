@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi"
 import { rapportSchema } from "../../../core/rapport.schema"
-import { valgfriListe } from "../../shared/zodUtils.ts"
+import { valgfriListe } from "../../../core/utils/zodUtils.ts"
 import { byggUtvalgskriterierSchema } from "../shared/byggUtvalgskriterier.schema.ts"
 import { byggEndringSchema } from "./byggEndring.schema.ts"
 

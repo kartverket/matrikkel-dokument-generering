@@ -48,3 +48,5 @@ export const byggningsStatusKodeSchema = z
       "DO: Data fra bygningsendring overført",
     example: "TB",
   })
+
+export type BygningsStatusKode = z.infer<typeof byggningsStatusKodeSchema>

@@ -1,5 +1,6 @@
 import { Heading, Table, Tag } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
+import { oversettKode } from "../../lib/i18n/koder/oversettKode.ts"
 import type { ByggUtvalgskriterier as Utvalgskriterier } from "../../lib/schema/reports/bygg/shared/byggUtvalgskriterier.schema.ts"
 import { formatDate } from "../../lib/utils/formatDate"
 
@@ -30,7 +31,7 @@ export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {
                 <span className="flex flex-wrap gap-2">
                   {bygningsstatusKriterier?.naavaerende?.map((status) => (
                     <Tag key={status} data-color="success" variant="outline">
-                      {status}
+                      {oversettKode(bygningsstatusKriterier.naavaerende)}
                     </Tag>
                   ))}
                 </span>
@@ -49,7 +50,7 @@ export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {
                 <span className="flex flex-wrap gap-2">
                   {bygningsstatusKriterier?.tidligere?.map((status) => (
                     <Tag key={status} data-color="accent" variant="outline">
-                      {status}
+                      {formaterKode(t, "bygningsstatus", status)}
                     </Tag>
                   ))}
                 </span>

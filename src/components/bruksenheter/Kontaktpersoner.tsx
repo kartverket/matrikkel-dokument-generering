@@ -1,4 +1,6 @@
+import type { TFunction } from "i18next"
 import { useTranslation } from "react-i18next"
+import { oversettKode } from "../../lib/i18n/koder/oversettKode.ts"
 import type { Bruksenhet } from "../../lib/schema/reports/bygg/byg0011/bruksenhet.schema"
 import { formatAdresse } from "../../lib/utils/formatAdresse"
 import { joinStrings } from "../../lib/utils/joinStrings"
@@ -17,6 +19,7 @@ const kontaktpersonFelt = lagDetaljfeltBuilder(
 
 function getKontaktpersonDetaljfelter(
   kontaktperson: Kontaktperson,
+  t: TFunction,
   tom: string,
 ) {
   return [
@@ -25,7 +28,14 @@ function getKontaktpersonDetaljfelter(
     kontaktpersonFelt(
       "kategori",
       joinStrings(
-        [kontaktperson.kategorikode, kontaktperson.kontaktpersonKode],
+        [
+          kontaktperson.kategorikode == null
+            ? null
+            : oversettKode(t, "aktoer", kontaktperson.kategorikode),
+          kontaktperson.kontaktpersonKode == null
+            ? null
+            : oversettKode(t, "kontaktperson", kontaktperson.kontaktpersonKode),
+        ],
         " / ",
         tom,
       ),
@@ -62,7 +72,7 @@ export function Kontaktpersoner({ kontaktpersoner }: Props) {
           erUtgatt={kontaktperson.eierErUtgatt}
           statuskode={kontaktperson.statuskode ?? null}
           utgattLabel={t(`${translationKey}.utgatt`)}
-          felter={getKontaktpersonDetaljfelter(kontaktperson, tom)}
+          felter={getKontaktpersonDetaljfelter(kontaktperson, t, tom)}
           tom={tom}
         />
       ))}

@@ -35,3 +35,5 @@ export const aktoerKodeSchema = z
       "11: Utenlandsk \n" +
       "12: Annen Eiertype \n",
   })
+
+export type AktoerKode = z.infer<typeof aktoerKodeSchema>

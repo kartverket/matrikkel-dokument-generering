@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi"
-import { valgfriNummer } from "../../shared/zodUtils.ts"
+import { valgfriNummer } from "../../../core/utils/zodUtils.ts"
 
 export const arealFordelingSchema = z
   .object({

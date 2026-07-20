@@ -13,3 +13,5 @@ export const kontaktPersonKodeSchema = z
       "1: Tiltakshaver \n" +
       "2: Kontaktperson \n",
   })
+
+export type KontaktPersonKode = z.infer<typeof kontaktPersonKodeSchema>

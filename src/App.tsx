@@ -21,7 +21,7 @@ function App() {
   const i18n = createI18n(mockData.locale)
   return (
     <I18nextProvider i18n={i18n}>
-      <DocumentComponent data={mockData} />
+      <DocumentComponent rapport={mockData} />
     </I18nextProvider>
   )
 }

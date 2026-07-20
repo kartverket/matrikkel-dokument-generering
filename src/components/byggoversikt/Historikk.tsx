@@ -1,6 +1,7 @@
 import { Heading, Paragraph, Tag } from "@kv-designsystem/react"
 import { Activity } from "react"
 import { useTranslation } from "react-i18next"
+import { oversettKode } from "../../lib/i18n/koder/oversettKode.ts"
 import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 import { formatDate } from "../../lib/utils/formatDate"
 import {
@@ -65,7 +66,7 @@ export default function Historikk({ byggEndringer }: Props) {
                   </span>
                   {endring.endringskode && (
                     <Tag data-color="success" variant="outline">
-                      {endring.endringskode}
+                      {oversettKode(t, "endring", endring.endringskode)}
                     </Tag>
                   )}
                 </div>
@@ -73,7 +74,11 @@ export default function Historikk({ byggEndringer }: Props) {
                   data-color={erGroennStatus ? "success" : "accent"}
                   variant="outline"
                 >
-                  {endring.bygningsstatus.navn}
+                  {oversettKode(
+                    t,
+                    "bygningsstatus",
+                    endring.bygningsstatus.kortkode,
+                  )}
                 </Tag>
               </div>
               {beskrivelse && <Paragraph>{beskrivelse}</Paragraph>}

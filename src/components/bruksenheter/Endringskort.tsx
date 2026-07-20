@@ -1,9 +1,12 @@
 import { Card, Divider, Heading, Paragraph, Tag } from "@kv-designsystem/react"
 import { Fragment } from "react"
 import { useTranslation } from "react-i18next"
+import {
+  getBygningstype,
+  oversettKode,
+} from "../../lib/i18n/koder/oversettKode.ts"
 import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 import type { Bygning } from "../../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
-import { getBygningstype } from "../../lib/schema/reports/bygg/koder/bygningsTypeKodeSchema.ts"
 import { arealLinje } from "../../lib/utils/arealLinje"
 import { formatArea } from "../../lib/utils/formatArea"
 import { formatDate } from "../../lib/utils/formatDate"
@@ -28,11 +31,20 @@ export function Endringskort({ endring, bygning }: Props) {
   const numberFormatter = new Intl.NumberFormat(i18n.language)
   const formatDato = (dato: string | null | undefined) =>
     dato == null ? null : formatDate(i18n, dato, "", kortDato)
+  const endringskode =
+    endring.endringskode == null
+      ? null
+      : oversettKode(t, "endring", endring.endringskode)
+  const bygningsstatus = oversettKode(
+    t,
+    "bygningsstatus",
+    endring.bygningsstatus.kortkode,
+  )
   const formatertTittel = [
     t("rapport.BYG0011.bruksenheter.endringTittel", {
       lopenr: endring.lopeNr,
     }),
-    endring.endringskode,
+    endringskode,
   ]
     .filter(Boolean)
     .join(" · ")
@@ -42,7 +54,7 @@ export function Endringskort({ endring, bygning }: Props) {
       title: t("rapport.BYG0011.bruksenheter.grunnopplysninger"),
       felter: [
         bruksenhetFelt("lopenr", String(endring.lopeNr)),
-        bruksenhetFelt("endringskode", endring.endringskode),
+        bruksenhetFelt("endringskode", endringskode),
         bruksenhetFelt(
           "bygningstype",
           `${bygning.bygningsType.kode} ${getBygningstype(bygning.bygningsType.kode, t)}`,
@@ -55,7 +67,7 @@ export function Endringskort({ endring, bygning }: Props) {
             `rapport.BYG0011.utvalgskriterier.${endring.bygningsstatus.bestaaende ? "ja" : "nei"}`,
           ),
         ),
-        bruksenhetFelt("bygningsstatus", endring.bygningsstatus.navn),
+        bruksenhetFelt("bygningsstatus", bygningsstatus),
         bruksenhetFelt(
           "bygningsstatuskode",
           String(endring.bygningsstatus.kode),
@@ -117,7 +129,7 @@ export function Endringskort({ endring, bygning }: Props) {
             {formatertTittel}
           </Heading>
           <Tag data-color="accent" variant="outline">
-            {endring.bygningsstatus.navn}
+            {bygningsstatus}
           </Tag>
         </div>
 

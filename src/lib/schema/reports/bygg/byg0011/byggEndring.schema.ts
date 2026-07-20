@@ -8,7 +8,8 @@ import {
   valgfriObjekt,
   valgfriSchema,
   valgfriString,
-} from "../../shared/zodUtils.ts"
+} from "../../../core/utils/zodUtils.ts"
+import { aktoerKodeSchema } from "../koder/aktoerKode.schema.ts"
 import { bygningsTypeKodeSchema } from "../koder/bygningsTypeKodeSchema.ts"
 import { endringsKodeSchema } from "../koder/endringsKode.schema.ts"
 import { kontaktPersonKodeSchema } from "../koder/kontaktPersonKode.schema.ts"
@@ -45,7 +46,7 @@ export const byggEndringSchema = z
       }),
     }),
 
-    byggEtasjePlanEndringer: valgfriListe(
+    etasjePlan: valgfriListe(
       valgfriObjekt({
         etasjeplan: z.string().min(1).meta({
           example: "Hovedetasje",
@@ -113,10 +114,14 @@ export const byggEndringSchema = z
         "Datoene da bygningsendringen nådde ulike statuser i byggesaks- og registreringsforløpet.",
     }),
 
-    tiltaksHaver: valgfriObjekt({
+    // Tidligere Hjemmelshaver/aktuell eier/kontaktinstans
+    aktoer: valgfriObjekt({
       bruksenhetsNr: valgfriString.meta({
         title: "Bruksenhetsnummer",
         example: "H0101",
+      }),
+      aktoerKode: aktoerKodeSchema.meta({
+        description: "Rollekoden til aktøren",
       }),
 
       identifikasjonsNr: valgfriString.meta({
@@ -124,14 +129,43 @@ export const byggEndringSchema = z
         description: "Fødselsdato eller Org. nummer for tiltakshaver",
       }),
 
-      // Rollekoden til tiltakshaveren
-      kontaktPersonKode: valgfriSchema(kontaktPersonKodeSchema), // Kan en tiltakshaver ha rolle som kontaktperson?
-
       // Samme felt som Status i dag, eneste gyldige verdier for status er enten død eller tom -> Derfor navn-endring
       erAvdoed: valgfriBool.default(false).meta({
         title: "Avdødd",
         description: "Er vedkommende død? \n" + "Standardverdi: false",
         example: true,
+      }),
+
+      navn: valgfriString.meta({
+        description:
+          "Navnet til aktøren. Kan være et selskapsnavn eller personnavn",
+        example: "Bygg AS",
+      }),
+
+      adresse: valgfriString.meta({
+        description: "Adressen til aktøren",
+        example: "Postboks 1350 Vika 113 OSLO",
+      }),
+
+      andel: valgfriString.meta({
+        description: "Andel aktøren eier av bruksenhetetn",
+        example: "2/5",
+      }),
+    }),
+
+    // Tiltakshaveren til endringen
+    tiltaksHaver: valgfriObjekt({
+      bruksenhetsNr: valgfriString.meta({
+        title: "Bruksenhetsnummer",
+        example: "H0101",
+      }),
+
+      // Rollekoden til tiltakshaveren
+      kontaktPersonKode: valgfriSchema(kontaktPersonKodeSchema), // Kan en tiltakshaver ha rolle som kontaktperson?
+
+      identifikasjonsNr: valgfriString.meta({
+        title: "Fødselsdato/org.nr",
+        description: "Fødselsdato eller Org. nummer for tiltakshaver",
       }),
 
       navn: valgfriString.meta({

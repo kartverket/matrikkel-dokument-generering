@@ -1,4 +1,6 @@
+import type { TFunction } from "i18next"
 import { useTranslation } from "react-i18next"
+import { oversettKode } from "../../lib/i18n/koder/oversettKode.ts"
 import type { Bruksenhet } from "../../lib/schema/reports/bygg/byg0011/bruksenhet.schema"
 import { formatAdresse } from "../../lib/utils/formatAdresse"
 import { lagDetaljfeltBuilder } from "../Detaljfelt"
@@ -24,6 +26,7 @@ const getAndel = (hjemmelshaver: Props["hjemmelshavere"][number]) => {
 
 const getHjemmelshaverDetaljfelter = (
   hjemmelshaver: Props["hjemmelshavere"][number],
+  t: TFunction,
   tom: string,
 ) => {
   return [
@@ -45,7 +48,12 @@ const getHjemmelshaverDetaljfelter = (
     hjemmelshaverFelt("land", hjemmelshaver.land),
     hjemmelshaverFelt("gyldigFra", hjemmelshaver.datofra),
     hjemmelshaverFelt("gyldigTil", hjemmelshaver.datotil),
-    hjemmelshaverFelt("kategori", hjemmelshaver.kategorikode),
+    hjemmelshaverFelt(
+      "kategori",
+      hjemmelshaver.kategorikode == null
+        ? null
+        : oversettKode(t, "aktoer", hjemmelshaver.kategorikode),
+    ),
   ]
 }
 
@@ -63,7 +71,7 @@ export function Hjemmelshavere({ hjemmelshavere }: Props) {
           erUtgatt={hjemmelshaver.eierErUtgatt}
           statuskode={hjemmelshaver.statuskode ?? null}
           utgattLabel={t(`${translationKey}.utgatt`)}
-          felter={getHjemmelshaverDetaljfelter(hjemmelshaver, tom)}
+          felter={getHjemmelshaverDetaljfelter(hjemmelshaver, t, tom)}
           tom={tom}
         />
       ))}

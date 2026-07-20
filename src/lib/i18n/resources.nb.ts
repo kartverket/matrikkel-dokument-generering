@@ -1,10 +1,10 @@
-import { getBygningstypeNavn } from "../schema/reports/bygg/koder/bygningsTypeKodeSchema.ts"
+import { koderNb } from "./koder/resources.koder.nb.ts"
 import { shared } from "./resources.shared"
 
 export const nb = {
   ...shared,
   tom: "tom",
-  bygningstyper: getBygningstypeNavn("nb"),
+  koder: koderNb,
   pdf: {
     header: {
       bygg: "Bygningsnr. {{bygningsnr}} · Bygg {{nr}} av {{total}}",

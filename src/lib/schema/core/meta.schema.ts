@@ -1,9 +1,7 @@
 import { z } from "@hono/zod-openapi"
-import { rapportKodeSchema } from "../registry.ts"
-import { koordinatSystemKodeSchema } from "../reports/shared/koordinatSystem.schema.ts"
+import { koordinatSystemKodeSchema } from "./koder/koordinatSystemKode.schema.ts"
 
 export const rapportMetadataSchema = z.object({
-  rapportKode: rapportKodeSchema,
   kommune: z.object({
     kommuneNr: z
       .string()
