@@ -47,10 +47,9 @@ const bruksenhetReferanseSchema = z
 
 export const bygningsendringSchema = z
   .object({
-    id: z.number().int().nonnegative(),
     lopenr: z.number().int().nonnegative(),
-    endringskode: z.string().min(1).nullable().optional(),
-    beskrivelse: z.string().min(1).nullable().optional().default(null),
+    endringskode: z.string().nullable().optional(),
+    beskrivelse: z.string().nullable().optional().default(null),
     bygningsstatus: bygningsstatusSchema,
     antallBoenheter: z.number().int().nonnegative(),
     bruksareal: arealFordelingSchema,
