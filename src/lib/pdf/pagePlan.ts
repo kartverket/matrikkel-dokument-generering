@@ -31,8 +31,7 @@ function escapeCssString(value: string): string {
   return value.replace(/\\/g, "\\\\").replace(/"/g, '\\"')
 }
 
-
-// Viser "Side X av Y" ved hjelp av CSS-tellerne `counter(page)` og `counter(pages)`. 
+// Viser "Side X av Y" ved hjelp av CSS-tellerne `counter(page)` og `counter(pages)`.
 // Returverdien er ment å legges direkte inn i `PageBoxes` (som `PageContent`).
 
 export function pageCounterContent(

@@ -1,11 +1,6 @@
-import type {
-  PageBoxes,
-  PageContent,
-  PageDef,
-  PagePlan,
-} from "./pagePlan"
+import type { PageBoxes, PageContent, PageDef, PagePlan } from "./pagePlan"
 
-// Genererer CSS med navngitte `@page`-blokker og tilhørende CSS-klasser fra en rapport-uavhengig `PagePlan`. 
+// Genererer CSS med navngitte `@page`-blokker og tilhørende CSS-klasser fra en rapport-uavhengig `PagePlan`.
 
 const MARGINS = "size: A4; margin: 22mm 18mm 22mm 18mm;"
 const LABEL = "font-size: 9pt; color: #555;"
@@ -23,10 +18,7 @@ function box(name: string, value: PageContent | undefined): string {
   return `@${name} { content: ${contentExpression(value)}; ${LABEL} }`
 }
 
-function boxes(
-  prefix: "top" | "bottom",
-  value: PageBoxes | undefined,
-): string {
+function boxes(prefix: "top" | "bottom", value: PageBoxes | undefined): string {
   if (!value) return ""
   return [
     box(`${prefix}-left`, value.left),
@@ -47,10 +39,7 @@ function mergeBoxes(
   }
 }
 
-function pageBody(page: {
-  header?: PageBoxes
-  footer?: PageBoxes
-}): string {
+function pageBody(page: { header?: PageBoxes; footer?: PageBoxes }): string {
   return [MARGINS, boxes("top", page.header), boxes("bottom", page.footer)]
     .filter(Boolean)
     .join(" ")
