@@ -2,9 +2,10 @@ import { Fragment } from "react"
 import { renderToStaticMarkup } from "react-dom/server"
 import { I18nextProvider } from "react-i18next"
 import { createI18n } from "./lib/i18n/createI18n"
+import { buildPageCss } from "./lib/pdf/buildPageCss"
+import { buildByggPagePlan } from "./lib/pdf/plans/bygg0011"
 import type { RapportMeta } from "./lib/schema/core/index.ts"
 import type { ByggRapport } from "./lib/schema/reports/bygg/bygg0011/index"
-import { buildPageCss } from "./lib/utils/buildPageCss"
 import { formatDate } from "./lib/utils/formatDate"
 import Bruksenheter from "./sections/Bruksenheter.tsx"
 import Byggoversikt from "./sections/Byggoversikt.tsx"
@@ -56,7 +57,7 @@ export function renderDocument(data: ByggRapport, css = ""): string {
       timeStyle: "short",
     }),
   })
-  const pageCss = buildPageCss(data, t, generertLabel)
+  const pageCss = buildPageCss(buildByggPagePlan(data, t, generertLabel))
   const body = renderToStaticMarkup(
     <I18nextProvider i18n={i18n}>
       <DocumentComponent data={data} />
