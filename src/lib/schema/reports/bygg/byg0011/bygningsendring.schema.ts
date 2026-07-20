@@ -1,14 +1,14 @@
 import { z } from "@hono/zod-openapi"
-import { arealFordelingSchema } from "./arealFordeling.schema"
-import { koordinatSchema } from "./koordinat.schema"
 import {
   valgfriDato,
   valgfriHeltall,
   valgfriNummer,
   valgfriString,
 } from "../../../core/common"
-import { tiltakshaverSchema } from "./person.schema"
 import { bygningsTypeSchema } from "../shared/bygningsType.schema"
+import { arealFordelingSchema } from "./arealFordeling.schema"
+import { koordinatSchema } from "./koordinat.schema"
+import { tiltakshaverSchema } from "./person.schema"
 
 export const bygningsdatoerSchema = z
   .object({
