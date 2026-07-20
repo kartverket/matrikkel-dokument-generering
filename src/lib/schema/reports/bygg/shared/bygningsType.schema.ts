@@ -2,9 +2,9 @@ import { z } from "@hono/zod-openapi"
 import type { TFunction } from "i18next"
 import type { RapportLocale } from "../../../core/locale.schema"
 
-type BygningstypeRad = readonly [kode: string, nb: string, nn?: string]
+type BygningsTypeRad = readonly [kode: string, nb: string, nn?: string]
 
-const bygningstyper = [
+const bygningsTyper = [
   [" ", "Ikke valgt", "Ikkje valt"],
   ["111", "Enebolig", "Einebustad"],
   [
@@ -241,11 +241,11 @@ const bygningstyper = [
   ["830", "Monument"],
   ["840", "Offentlig toalett", "Offentleg toalett"],
   ["999", "Ukjent bygningstype", "Ukjend bygningstype"],
-] as const satisfies readonly BygningstypeRad[]
+] as const satisfies readonly BygningsTypeRad[]
 
-export type Bygningstypekode = (typeof bygningstyper)[number][0]
+export type Bygningstypekode = (typeof bygningsTyper)[number][0]
 
-export const bygningstypekoder = bygningstyper.map(([kode]) => kode) as [
+export const bygningstypekoder = bygningsTyper.map(([kode]) => kode) as [
   Bygningstypekode,
   ...Bygningstypekode[],
 ]
@@ -254,8 +254,8 @@ export function getBygningstypeNavn(
   locale: RapportLocale,
 ): Record<Bygningstypekode, string> {
   return Object.fromEntries(
-    bygningstyper.map((rad) => {
-      const [kode, nb, nn = nb] = rad as BygningstypeRad
+    bygningsTyper.map((rad) => {
+      const [kode, nb, nn = nb] = rad as BygningsTypeRad
       return [kode, locale === "nn" ? nn : nb]
     }),
   ) as Record<Bygningstypekode, string>

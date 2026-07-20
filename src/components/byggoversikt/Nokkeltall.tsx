@@ -1,7 +1,7 @@
 import { Card } from "@digdir/designsystemet-react"
 import { Label, Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/bygningsEndring.schema"
+import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 import { formatArea } from "../../lib/utils/formatArea"
 
 interface Props {

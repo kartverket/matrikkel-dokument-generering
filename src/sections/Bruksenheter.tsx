@@ -12,7 +12,7 @@ import { Detaljgrid, lagDetaljfeltBuilder } from "../components/Detaljfelt.tsx"
 import { Section } from "../components/Section.tsx"
 import type { Bruksenhet } from "../lib/schema/reports/bygg/byg0011/bruksenhet.schema.ts"
 import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byg0011.schema.ts"
-import type { BygningsEndring } from "../lib/schema/reports/bygg/byg0011/bygningsEndring.schema.ts"
+import type { BygningsEndring } from "../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 import type { Tiltakshaver } from "../lib/schema/reports/bygg/byg0011/person.schema.ts"
 import { formatArea } from "../lib/utils/formatArea.ts"
 import {

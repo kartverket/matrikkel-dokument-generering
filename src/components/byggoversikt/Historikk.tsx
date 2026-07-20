@@ -1,7 +1,7 @@
 import { Heading, Paragraph, Tag } from "@kv-designsystem/react"
 import { Activity } from "react"
 import { useTranslation } from "react-i18next"
-import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/bygningsEndring.schema"
+import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 import { formatDate } from "../../lib/utils/formatDate"
 import {
   lagHistorikkbeskrivelseForBygningsendring,

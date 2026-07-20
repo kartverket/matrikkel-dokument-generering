@@ -1,10 +1,10 @@
 import { z } from "@hono/zod-openapi"
-import { valgfriNummer } from "../../../core/common"
 import { rapportSchema } from "../../../core/rapport.schema"
-import { byggUtvalgskriterierSchema } from "../shared/utvalgskriterier.schema"
+import { valgfriNummer } from "../../../core/zodUtils.ts"
+import { byggUtvalgskriterierSchema } from "../shared/byggUtvalgskriterier.schema.ts"
 import { arealFordelingSchema } from "./arealFordeling.schema"
 import { bruksenhetSchema } from "./bruksenhet.schema"
-import { bygningsEndringSchema } from "./bygningsEndring.schema"
+import { byggEndringSchema } from "./byggEndring.schema.ts"
 
 const bygningsEtasjeSchema = z
   .object({
@@ -40,7 +40,7 @@ const bygningSchema = z
     }),
     etasjePlan: etasjePlanSchema,
     bruksenheter: z.array(bruksenhetSchema).optional().default([]),
-    endringer: z.array(bygningsEndringSchema).optional().default([]),
+    endringer: z.array(byggEndringSchema).optional().default([]),
   })
   .meta({ id: "BYG0011Bygning" })
 
@@ -50,11 +50,10 @@ export const byg0011Schema = rapportSchema
     utvalgskriterier: byggUtvalgskriterierSchema,
     bygninger: z.array(bygningSchema).optional().default([]),
   })
-  .openapi("BYG0011Rapport", {
-    description: "Datagrunnlag for rapporten BYG0011.",
+  .openapi("BYG0011", {
+    title: "BYG0011",
   })
 
 export type Bygning = z.infer<typeof bygningSchema>
-export type Bygningsetasje = z.infer<typeof bygningsEtasjeSchema>
 export type EtasjePlan = z.infer<typeof etasjePlanSchema>
 export type Byg0011Rapport = z.infer<typeof byg0011Schema>

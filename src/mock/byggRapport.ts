@@ -1,6 +1,6 @@
 import type { Bruksenhet } from "../lib/schema/reports/bygg/byg0011/bruksenhet.schema"
 import type { Byg0011Rapport as ByggRapport } from "../lib/schema/reports/bygg/byg0011/byg0011.schema"
-import type { BygningsEndring } from "../lib/schema/reports/bygg/byg0011/bygningsEndring.schema"
+import type { BygningsEndring } from "../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 
 type Bygningsstatus = BygningsEndring["bygningsstatus"]
 type Bygningsdatoer = BygningsEndring["datoer"]

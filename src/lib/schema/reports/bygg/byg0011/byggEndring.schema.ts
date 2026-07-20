@@ -4,8 +4,8 @@ import {
   valgfriHeltall,
   valgfriNummer,
   valgfriString,
-} from "../../../core/common"
-import { bygningsTypeSchema } from "../shared/bygningsType.schema"
+} from "../../../core/zodUtils.ts"
+import { bygningsTypeSchema } from "../shared/bygningsType.schema.ts"
 import { arealFordelingSchema } from "./arealFordeling.schema"
 import { koordinatSchema } from "./koordinat.schema"
 import { tiltakshaverSchema } from "./person.schema"
@@ -31,7 +31,7 @@ const bruksenhetReferanseSchema = z
       "Referanse til en bruksenhet som berøres av en bygningsendring.",
   })
 
-export const bygningsEndringSchema = z
+export const byggEndringSchema = z
   .object({
     lopenr: valgfriHeltall.meta({
       description: "Løpenummer for endringen.",
@@ -61,4 +61,4 @@ export const bygningsEndringSchema = z
   .meta({ id: "BYG0011Bygningsendring" })
 
 export type ByggEndringsDatoer = z.infer<typeof bygningsdatoerSchema>
-export type BygningsEndring = z.infer<typeof bygningsEndringSchema>
+export type BygningsEndring = z.infer<typeof byggEndringSchema>

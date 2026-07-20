@@ -6,15 +6,8 @@ import {
   valgfriNummer,
   valgfriObjekt,
   valgfriString,
-} from "../../../core/common"
+} from "../../../core/zodUtils.ts"
 import { bygningsTypeSchema } from "./bygningsType.schema"
-
-const matrikkelenhetSchema = valgfriObjekt({
-  gnr: valgfriHeltall.meta({ example: 208 }),
-  bnr: valgfriHeltall.meta({ example: 12 }),
-  fnr: valgfriHeltall.meta({ example: null }),
-  snr: valgfriHeltall.meta({ example: null }),
-}).meta({ id: "ByggMatrikkelenhetKriterium" })
 
 const bygningsstatuser = [
   "Rammetillatelse",
@@ -71,7 +64,26 @@ export const byggUtvalgskriterierSchema = valgfriObjekt({
     utenBokstav: valgfriBool.meta({ example: false }),
     tilleggsnavn: valgfriString.meta({ example: "Solgløtt" }),
   }),
-  matrikkelenhet: matrikkelenhetSchema,
+  matrikkelenhet: valgfriObjekt({
+    gnr: valgfriHeltall.meta({
+      title: "Gårdsnummer",
+      description: "Nummeret på et større geografisk område innen kommunen.",
+    }),
+    bnr: valgfriHeltall.meta({
+      title: "Bruksnummer",
+      description: "Nummeret på den enkelte eiendommen innenfor gårdsnummeret.",
+    }),
+    fnr: valgfriHeltall.meta({
+      title: "Festenummer",
+      description:
+        "Brukes når tomten er festet, altså leid på lang tid, i stedet for eid som egen grunneiendom.",
+    }),
+    snr: valgfriHeltall.meta({
+      title: "Seksjonsnummer",
+      description:
+        "Brukes når eiendommen er seksjonert, for eksempel en eierleilighet eller næringsseksjon i et sameie.",
+    }),
+  }),
   hjemmelshaver: valgfriObjekt({
     foedselsEllerOrgnr: valgfriString.meta({ example: "999999999" }),
     etternavn: valgfriString.meta({ example: "Nordmann" }),
