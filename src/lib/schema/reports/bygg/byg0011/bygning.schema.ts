@@ -5,7 +5,6 @@ import { bygningsendringSchema } from "./bygningsendring.schema"
 
 export const bygningSchema = z
   .object({
-    id: z.number().int().nonnegative(),
     bygningsnr: z.string().min(1),
     bygningstype: bygningstypeSchema,
     naeringsgruppe: z.string().min(1),
