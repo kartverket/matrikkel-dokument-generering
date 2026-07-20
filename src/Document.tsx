@@ -14,7 +14,7 @@ import { Utvalgskriterier } from "./sections/Utvalgskriterier.tsx"
 export function DocumentComponent({ rapport }: { rapport: Byg0011Rapport }) {
   return (
     <>
-      <Metadata metadata={rapport.metadata} />
+      <Metadata metadata={rapport.metadata} rapportKode={rapport.rapportKode} />
       <div className="pg-utvalgskriterier">
         <Utvalgskriterier index={1} kriterier={rapport.utvalgskriterier} />
       </div>

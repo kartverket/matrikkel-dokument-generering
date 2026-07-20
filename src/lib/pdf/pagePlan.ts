@@ -1,5 +1,5 @@
 // Rapport-uavhengig beskrivelse av topp- og bunntezster for en PDF-side.
-// Hver rapporttype leverer sin egen `PagePlan`
+// Hver rapportKode leverer sin egen `PagePlan`
 // `buildPageCss` oversetter planen til CSS med `@page`-margin­bokser (som Chromium/Gotenberg støtter).
 
 export type PageContent = string | { raw: string }

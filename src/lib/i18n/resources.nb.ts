@@ -17,7 +17,7 @@ export const nb = {
   },
   rapport: {
     metaData: {
-      rapportType: "Rapporttype",
+      rapportKode: "rapportKode",
       rapportNr: "Rapportnr",
       kommune: "Kommune",
       kommuneNr: "Kommunenr",

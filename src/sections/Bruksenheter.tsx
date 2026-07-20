@@ -84,10 +84,8 @@ function getTiltakshavere(
 
 function berorerBruksenhet(endring: BygningsEndring, bruksenhet: Bruksenhet) {
   return (
-    bruksenhet.nummer !== null &&
-    endring.bruksenheter.some(
-      ({ bruksenhetsnr }) => bruksenhetsnr === bruksenhet.nummer,
-    )
+    bruksenhet.bruksenhetsNr !== null &&
+    endring.bruksenheter.some(() => bruksenhetsNr === bruksenhet.bruksenhetsNr)
   )
 }
 

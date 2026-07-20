@@ -6,7 +6,7 @@ import { arealFordelingSchema } from "../shared/arealFordeling.schema.ts"
 export const bruksenhetSchema = z
   .object({
     id: z.string().min(1),
-    nummer: z.string().min(1).nullable().optional(),
+    bruksenhetsNr: z.string().min(1).nullable().optional(),
     type: z.string().min(1).nullable().optional(),
     seksjon: z.string().min(1).nullable().optional(),
     adresse: z.string().min(1).nullable().optional(),

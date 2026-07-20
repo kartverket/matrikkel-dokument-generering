@@ -14,7 +14,7 @@ const createDocumentRoute = createRoute({
   tags: ["Dokument"],
   summary: "Generer PDF fra en Matrikkelen-rapport",
   description:
-    "Validerer innsendt rapport mot skjemaet for valgt rapportType. Ved gyldig input renderes dokumentet til HTML og konverteres til PDF. Ved ugyldig input returneres valideringsfeil per felt.",
+    "Validerer innsendt rapport mot skjemaet for valgt rapportKode. Ved gyldig input renderes dokumentet til HTML og konverteres til PDF. Ved ugyldig input returneres valideringsfeil per felt.",
   operationId: "createDocument",
   request: {
     body: {
