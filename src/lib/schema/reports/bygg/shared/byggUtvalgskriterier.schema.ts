@@ -9,7 +9,7 @@ const valgfriNummer = z
   .default(null)
 const valgfriBool = z.boolean().nullable().optional().default(false)
 const valgfriString = z.string().nullable().optional().default(null)
-const valgfriDato = z.iso.datetime().nullable().optional().default(null).meta({
+const valgfriDato = z.iso.datetime().optional().nullable().default(null).meta({
   example: "2023-01-01T00:00:00Z",
 })
 const valgfriObjekt = <T extends z.ZodRawShape>(shape: T) =>
