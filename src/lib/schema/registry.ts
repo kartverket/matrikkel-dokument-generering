@@ -7,4 +7,4 @@ export const rapportKodeSchema = z.enum(supportedReportTypes).meta({
   description: "Rapportkode for rapporten som skal genereres.",
 })
 
-export type RapportType = z.infer<typeof rapportKodeSchema>
+// export type RapportType = z.infer<typeof rapportKodeSchema>

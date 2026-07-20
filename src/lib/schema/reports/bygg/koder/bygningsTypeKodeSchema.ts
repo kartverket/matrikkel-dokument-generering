@@ -1,5 +1,6 @@
 import { z } from "@hono/zod-openapi"
 
+// ref: BygningstypeKodeId.java
 export const bygningsTypeKodeSchema = z
   .enum([
     " ", // Ikke valgt (Sånn det blir definert i M22 i dag...)

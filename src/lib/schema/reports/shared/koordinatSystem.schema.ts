@@ -1,5 +1,6 @@
 import { z } from "@hono/zod-openapi"
 
+// ref: KoordinatsystemKodeId.java
 const koordinatSystemer = {
   1: "NGO1948 Gauss-K. akse 1",
   2: "NGO1948 Gauss-K. akse 2",

@@ -1,5 +1,6 @@
 import { z } from "@hono/zod-openapi"
 
+// ref: BygningsendringsKodeId.java
 export const endringsKodeSchema = z
   .union([
     z.literal(1), // Tilbygg

@@ -45,6 +45,20 @@ export const byggEndringSchema = z
       }),
     }),
 
+    byggEtasjePlanEndringer: valgfriListe(
+      valgfriObjekt({
+        etasjeplan: z.string().min(1).meta({
+          example: "Hovedetasje",
+        }),
+        etasje: z.number().int().nonnegative().meta({
+          example: 1,
+        }),
+        antallBoenheter: valgfriNummer,
+        bruksareal: arealFordelingSchema,
+        bruttoareal: arealFordelingSchema,
+      }),
+    ),
+
     byggKoordinatEndring: valgfriObjekt({
       nord: valgfriNummer.meta({
         description:
@@ -138,7 +152,7 @@ export const byggEndringSchema = z
   })
   .meta({ id: "BYG0011Bygningsendring" })
 
-export type ByggEndringsDatoer = z.infer<
+/*export type ByggEndringsDatoer = z.infer<
   typeof byggEndringSchema.shape.byggDatoEndring
->
+>*/
 export type BygningsEndring = z.infer<typeof byggEndringSchema>

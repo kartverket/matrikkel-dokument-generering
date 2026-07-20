@@ -1,7 +1,8 @@
 import { z } from "@hono/zod-openapi"
 import { arealFordelingSchema } from "../shared/arealFordeling.schema.ts"
-import { hjemmelshaverSchema, kontaktpersonSchema } from "./aktoer.schema.ts"
 
+// TODO - Gjennomgå feltene
+// TODO - Differansiere i typedefinisjonen mellom bruksenhet-payloaden vi får inn, og den vi selv bruker
 export const bruksenhetSchema = z
   .object({
     id: z.string().min(1),
@@ -15,7 +16,7 @@ export const bruksenhetSchema = z
     antallBad: z.number().int().nonnegative(),
     antallWc: z.number().int().nonnegative(),
 
-    // TODO - Fjerne, dette har vi ikke noe informasjon, og er ikke en del av dagens rapport.
+    // TODO - Fjerne, dette har vi ikke noe informasjon om knyttet opp mot en bruksenhet. Vi har kun informasjon om arealfordeling på bygg og etasje- nivå.
     arealfordeling: z.object({
       bebygdAreal: z.number().nonnegative(),
       bruksareal: arealFordelingSchema,
@@ -33,8 +34,6 @@ export const bruksenhetSchema = z
         }),
       ),
     }),
-    hjemmelshavere: z.array(hjemmelshaverSchema),
-    kontaktpersoner: z.array(kontaktpersonSchema),
   })
   .meta({ id: "BYG0011Bruksenhet" })
 

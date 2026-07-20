@@ -55,16 +55,12 @@ export const byggUtvalgskriterierSchema = valgfriObjekt({
       description:
         "En entydig identifikasjon av bygningen som er unik på landsbasis og tildeles automatisk.",
     }),
-    bygningstyper: z
-      .array(bygningsTypeKodeSchema)
-      .optional()
-      .default([])
-      .meta({
-        title: "Bygningstyper",
-        description:
-          "Bygningstypene som skal inkluderes i rapporten. Hver type oppgis med kode fra Matrikkelens bygningsklassifikasjon.",
-        example: [{ kode: "111" }],
-      }),
+    bygningstyper: valgfriListe(bygningsTypeKodeSchema).meta({
+      title: "Bygningstyper",
+      description:
+        "Bygningstypene som skal inkluderes i rapporten. Hver type oppgis med kode fra Matrikkelens bygningsklassifikasjon.",
+      example: [{ kode: "111" }],
+    }),
     lopeNr: valgfriHeltall.meta({
       title: "Løpenummer",
       description:
@@ -291,7 +287,7 @@ export const byggUtvalgskriterierSchema = valgfriObjekt({
 }).meta({
   id: "ByggUtvalgskriterier",
   description:
-    "Felles utvalgskriterier for byggrapporter (BYGXXXX). Kun ppgitte kriterier brukes til å avgrense rapporten.",
+    "Felles utvalgskriterier for byggrapporter (BYGXXXX). Kun oppgitte kriterier brukes til å avgrense rapporten.",
 })
 
 export type ByggUtvalgskriterier = z.infer<typeof byggUtvalgskriterierSchema>
