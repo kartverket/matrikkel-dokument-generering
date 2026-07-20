@@ -2,7 +2,6 @@ import { Heading, Table } from "@kv-designsystem/react"
 import { Fragment } from "react"
 import { useTranslation } from "react-i18next"
 import type { Bruksenhet } from "../lib/schema/reports/bygg/byg0011/bruksenhet.schema"
-import { summerAreal } from "../lib/utils/arealLinje"
 import { formatArea } from "../lib/utils/formatArea"
 import { Detaljgrid, lagDetaljfeltBuilder } from "./Detaljfelt"
 
@@ -19,11 +18,9 @@ function getArealDetaljfelter(arealfordeling: Props["arealfordeling"]) {
     arealFelt("bebygdAreal", formatArea(arealfordeling.bebygdAreal), {
       valueClassName,
     }),
-    arealFelt(
-      "bruksareal",
-      formatArea(summerAreal(arealfordeling.bruksareal)),
-      { valueClassName },
-    ),
+    arealFelt("bruksareal", formatArea(arealfordeling.bruksareal.totalt), {
+      valueClassName,
+    }),
     arealFelt(
       "koordinater",
       `${arealfordeling.koordinat.nord} / ${arealfordeling.koordinat.ost}`,

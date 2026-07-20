@@ -1,7 +1,6 @@
 import { Heading, Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { Bygningsendring } from "../../lib/schema/reports/bygg/byg0011/bygningsendring.schema"
-import { summerAreal } from "../../lib/utils/arealLinje"
 import { formatArea } from "../../lib/utils/formatArea"
 
 interface Props {
@@ -15,10 +14,10 @@ export default function ArealFordeling({ endring }: Props) {
   const sum = endring.etasjeplan.reduce(
     (acc, e) => ({
       antallBoenheter: acc.antallBoenheter + e.antallBoenheter,
-      bolig: acc.bolig + e.bruksareal.bolig,
-      annet: acc.annet + e.bruksareal.annet,
-      bra: acc.bra + summerAreal(e.bruksareal),
-      bta: acc.bta + summerAreal(e.bruttoareal),
+      bolig: acc.bolig + (e.bruksareal.bolig ?? 0),
+      annet: acc.annet + (e.bruksareal.annet ?? 0),
+      bra: acc.bra + (e.bruksareal.totalt ?? 0),
+      bta: acc.bta + (e.bruttoareal.totalt ?? 0),
     }),
     { antallBoenheter: 0, bolig: 0, annet: 0, bra: 0, bta: 0 },
   )
@@ -46,8 +45,8 @@ export default function ArealFordeling({ endring }: Props) {
               <Table.Cell>{e.antallBoenheter}</Table.Cell>
               <Table.Cell>{formatArea(e.bruksareal.bolig)}</Table.Cell>
               <Table.Cell>{formatArea(e.bruksareal.annet)}</Table.Cell>
-              <Table.Cell>{formatArea(summerAreal(e.bruksareal))}</Table.Cell>
-              <Table.Cell>{formatArea(summerAreal(e.bruttoareal))}</Table.Cell>
+              <Table.Cell>{formatArea(e.bruksareal.totalt)}</Table.Cell>
+              <Table.Cell>{formatArea(e.bruttoareal.totalt)}</Table.Cell>
             </Table.Row>
           ))}
           <Table.Row className="font-semibold">

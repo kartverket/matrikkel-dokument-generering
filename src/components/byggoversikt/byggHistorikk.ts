@@ -59,8 +59,11 @@ export function lagHistorikkbeskrivelseForBygningsendring(
   const beskrivelser: string[] = []
 
   for (const arealtype of ["bolig", "annet", "totalt"] as const) {
-    const differanse =
-      endring?.bruksareal[arealtype] - forrigeEndring?.bruksareal[arealtype]
+    const areal = endring.bruksareal[arealtype]
+    const forrigeAreal = forrigeEndring.bruksareal[arealtype]
+    if (areal === null || forrigeAreal === null) continue
+
+    const differanse = areal - forrigeAreal
     if (differanse === 0) continue
 
     beskrivelser.push(

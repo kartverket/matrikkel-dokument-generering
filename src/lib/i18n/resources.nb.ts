@@ -305,6 +305,7 @@ export const nb = {
           typer: {
             bolig: "bolig",
             annet: "annet",
+            totalt: "totalt",
           },
         },
       },
