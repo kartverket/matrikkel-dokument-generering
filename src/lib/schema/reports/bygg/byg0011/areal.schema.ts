@@ -1,16 +1,21 @@
 import { z } from "@hono/zod-openapi"
 
+const arealKvadratmeter = z
+  .number()
+  .nonnegative()
+  .nullable()
+  .optional()
+  .default(null)
+  .meta({
+    description: "Areal i kvadratmeter.",
+    example: 123.4,
+  })
+
 export const arealFordelingSchema = z
   .object({
-    bolig: z.number().nonnegative().meta({
-      example: 123.4,
-    }),
-    annet: z.number().nonnegative().meta({
-      example: 123.4,
-    }),
-    totalt: z.number().nonnegative().meta({
-      example: 123.4,
-    }),
+    bolig: arealKvadratmeter,
+    annet: arealKvadratmeter,
+    totalt: arealKvadratmeter,
   })
   .meta({
     id: "BYG0011ArealFordeling",
