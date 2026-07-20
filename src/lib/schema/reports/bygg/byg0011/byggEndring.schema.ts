@@ -123,6 +123,13 @@ export const byggEndringSchema = valgfriObjekt({
       "58 – bygningens løpenummer innenfor registreringskrets 103",
   }),
 
+  harKulturminne: valgfriBool.meta({
+    // Vil ikke si at bygget nødvendigvis er fredet
+    description:
+      "Inneholder endringen kulturminne? \n" +
+      "å ha kulturminner vil så at endringen er knyttet et registrert kulturminne i Riksantikvarens database Askeladden",
+  }),
+
   // Tidligere Hjemmelshaver/aktuell eier/kontaktinstans
   aktoer: valgfriObjekt({
     bruksenhetsNr: valgfriString.meta({
