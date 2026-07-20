@@ -99,8 +99,14 @@ export const byggUtvalgsKriterierSchema = z
           .optional()
           .default([])
           .meta({ example: byggningsStatuser }),
-        periodeFra: z.iso.datetime().optional().meta({ example: "2019-01-01" }),
-        periodeTil: z.iso.datetime().optional().meta({ example: "2026-07-17" }),
+        periodeFra: z.iso
+          .datetime()
+          .optional()
+          .meta({ example: "2019-01-01T00:00:00Z" }),
+        periodeTil: z.iso
+          .datetime()
+          .optional()
+          .meta({ example: "2026-07-17T00:00:00Z" }),
       })
       .optional(),
     sokevindu: z
@@ -158,8 +164,8 @@ export const byggUtvalgsKriterierSchema = z
       bygningsstatus: {
         naavaerende: ["Tatt i bruk"],
         tidligere: ["Rammetillatelse"],
-        periodeFra: "2019-01-01",
-        periodeTil: "2026-07-17",
+        periodeFra: "2019-01-01T00:00:00Z",
+        periodeTil: "2026-07-17T00:00:00Z",
       },
       sokevindu: {
         nedreVenstre: { nord: 6642000, ost: 597300 },
