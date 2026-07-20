@@ -3,6 +3,16 @@ import { shared } from "./resources.shared"
 export const nn = {
   ...shared,
   tom: "tom",
+  pdf: {
+    header: {
+      bygg: "Bygningsnr. {{bygningsnr}} · Bygg {{nr}} av {{total}}",
+    },
+    footer: {
+      side: "Side",
+      av: "av",
+      rapportGenerert: "Rapport {{type}} · Generert {{dato}}",
+    },
+  },
   rapport: {
     metaData: {
       rapportType: "Rapporttype",
