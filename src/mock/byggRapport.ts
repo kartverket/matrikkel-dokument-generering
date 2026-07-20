@@ -238,16 +238,20 @@ const mockByggRapport: ByggRapport = {
     bygning: {
       bygningsnr: "12345678",
       bygningstyper: [{ kode: 111, navn: "Enebolig" }],
+      lopenr: null,
     },
     adresse: {
       adressekode: "1000",
       bruksenhetsnr: "H0101",
       adressenavn: "Storgata",
       nr: 1,
+      bokstav: null,
       utenBokstav: true,
+      tilleggsnavn: null,
     },
-    matrikkelenhet: { gnr: 208, bnr: 12 },
+    matrikkelenhet: { gnr: 208, bnr: 12, fnr: null, snr: null },
     hjemmelshaver: {
+      foedselsEllerOrgnr: null,
       etternavn: "Nordmann",
       fornavn: "Ola",
     },
@@ -255,6 +259,7 @@ const mockByggRapport: ByggRapport = {
       naavaerende: ["Tatt i bruk"],
       tidligere: [],
       periodeFra: isoDatetime("2019-01-01"),
+      periodeTil: null,
     },
     sokevindu: {
       nord: 6642000,

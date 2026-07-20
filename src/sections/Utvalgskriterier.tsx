@@ -20,26 +20,30 @@ export function Utvalgskriterier({ index, kriterier }: Props) {
 
   return (
     <Section index={index} title={t("rapport.BYG0011.utvalgskriterier.title")}>
-      <div className="flex flex-col gap-10">
-        <RapportutvalgKriterier omfangsKriterier={kriterier.omfang} />
-        <BygningKriterier bygningKriterier={kriterier.bygning} />
-        <AdresseKriterier adresseKriterier={kriterier.adresse} />
+      {kriterier && (
+        <div className="flex flex-col gap-10">
+          <RapportutvalgKriterier omfangsKriterier={kriterier.omfang} />
+          <BygningKriterier bygningKriterier={kriterier.bygning} />
+          <AdresseKriterier adresseKriterier={kriterier.adresse} />
 
-        <div className="grid break-inside-avoid grid-cols-2 gap-6">
-          <MatrikkelenhetKriterier
-            matrikkelenhetKriterier={kriterier.matrikkelenhet}
+          <div className="grid break-inside-avoid grid-cols-2 gap-6">
+            <MatrikkelenhetKriterier
+              matrikkelenhetKriterier={kriterier.matrikkelenhet}
+            />
+            <HjemmelshaverKriterier
+              hjemmelshaverKriterier={kriterier.hjemmelshaver}
+            />
+          </div>
+
+          <BygningsstatusKriterier
+            bygningsstatusKriterier={kriterier.bygningsstatus}
           />
-          <HjemmelshaverKriterier
-            hjemmelshaverKriterier={kriterier.hjemmelshaver}
+          <SokevinduKriterier sokevinduKriterier={kriterier.sokevindu} />
+          <SubrapporterKriterier
+            subrapporterKriterier={kriterier.subrapporter}
           />
         </div>
-
-        <BygningsstatusKriterier
-          bygningsstatusKriterier={kriterier.bygningsstatus}
-        />
-        <SokevinduKriterier sokevinduKriterier={kriterier.sokevindu} />
-        <SubrapporterKriterier subrapporterKriterier={kriterier.subrapporter} />
-      </div>
+      )}
     </Section>
   )
 }

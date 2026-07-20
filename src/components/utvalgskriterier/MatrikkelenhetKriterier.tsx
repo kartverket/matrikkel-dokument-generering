@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next"
 import type { Utvalgskriterier } from "../../lib/schema/reports/bygg/bygg0011/index"
 
 interface Props {
-  matrikkelenhetKriterier: Utvalgskriterier["matrikkelenhet"]
+  matrikkelenhetKriterier: NonNullable<Utvalgskriterier>["matrikkelenhet"]
 }
 
 export function MatrikkelenhetKriterier({ matrikkelenhetKriterier }: Props) {
