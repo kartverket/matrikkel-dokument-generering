@@ -1,6 +1,6 @@
 import { Card, Heading } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import type { Utvalgskriterier } from "../../lib/schema/byggRapportSchema"
+import type { Utvalgskriterier } from "../../lib/schema/reports/bygg/bygg0011/index"
 
 const numberFormatter = new Intl.NumberFormat("nb-NO", {
   maximumFractionDigits: 2,
@@ -13,6 +13,8 @@ interface Props {
 export function SokevinduKriterier({ sokevinduKriterier }: Props) {
   const { t } = useTranslation()
   const uk = "rapport.BYG0011.utvalgskriterier"
+
+  if (!sokevinduKriterier) return null
 
   return (
     <section className="break-inside-avoid">
@@ -27,17 +29,13 @@ export function SokevinduKriterier({ sokevinduKriterier }: Props) {
                 {t(`${uk}.felt.ost`)}
               </dt>
               <dd className="mt-3 flex items-center gap-3 font-medium tabular-nums">
-                <span>
-                  {numberFormatter.format(sokevinduKriterier.nedreVenstre.ost)}
-                </span>
+                <span>{numberFormatter.format(sokevinduKriterier.ost)}</span>
                 <span className="flex flex-1 items-center" aria-hidden="true">
                   <span className="size-2 rounded-full bg-kv-blue" />
                   <span className="h-0.5 flex-1 bg-kv-blue" />
                   <span className="size-2 rounded-full bg-kv-blue" />
                 </span>
-                <span>
-                  {numberFormatter.format(sokevinduKriterier.ovreHoeyre.ost)}
-                </span>
+                <span>{numberFormatter.format(sokevinduKriterier.vest)}</span>
               </dd>
             </div>
             <div>
@@ -45,17 +43,13 @@ export function SokevinduKriterier({ sokevinduKriterier }: Props) {
                 {t(`${uk}.felt.nord`)}
               </dt>
               <dd className="mt-3 flex items-center gap-3 font-medium tabular-nums">
-                <span>
-                  {numberFormatter.format(sokevinduKriterier.nedreVenstre.nord)}
-                </span>
+                <span>{numberFormatter.format(sokevinduKriterier.nord)}</span>
                 <span className="flex flex-1 items-center" aria-hidden="true">
                   <span className="size-2 rounded-full bg-kv-blue" />
                   <span className="h-0.5 flex-1 bg-kv-blue" />
                   <span className="size-2 rounded-full bg-kv-blue" />
                 </span>
-                <span>
-                  {numberFormatter.format(sokevinduKriterier.ovreHoeyre.nord)}
-                </span>
+                <span>{numberFormatter.format(sokevinduKriterier.syd)}</span>
               </dd>
             </div>
           </dl>

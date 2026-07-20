@@ -1,11 +1,13 @@
 import { z } from "@hono/zod-openapi"
-import { rapportSchema } from "./rapportSchema"
+import { rapportSchema } from "../../../core"
+import { byggUtvalgsKriterierSchema } from "../shared/byggUtvalgskriterier.schema"
+import { bygningstypeSchema } from "../shared/bygningstyper.schema"
 
 const tekstSchema = z.string().min(1)
 const valgfriTekstSchema = tekstSchema.nullable().optional()
 const heltallSchema = z.number().int().nonnegative()
 const arealSchema = z.number().nonnegative()
-const datoSchema = z.iso.date()
+const datoSchema = z.iso.datetime()
 const valgfriDatoSchema = datoSchema.nullable()
 
 const arealFordelingSchema = z
@@ -25,13 +27,6 @@ const koordinatSchema = z
     ost: z.number(),
   })
   .meta({ id: "Koordinat" })
-
-const bygningstypeSchema = z
-  .object({
-    kode: heltallSchema,
-    navn: tekstSchema,
-  })
-  .meta({ id: "Bygningstype" })
 
 const bygningsstatusSchema = z
   .object({
@@ -77,15 +72,6 @@ const kontaktpersonSchema = z
     kontaktpersonKode: valgfriTekstSchema,
   })
   .meta({ id: "Kontaktperson" })
-
-const matrikkelenhetSchema = z
-  .object({
-    gnr: heltallSchema,
-    bnr: heltallSchema,
-    fnr: heltallSchema.nullable(),
-    snr: heltallSchema.nullable(),
-  })
-  .meta({ id: "Matrikkelenhet" })
 
 const hjemmelshaverSchema = z
   .object({
@@ -140,56 +126,6 @@ const bygningsetasjeSchema = z
     bruttoareal: arealFordelingSchema,
   })
   .meta({ id: "Bygningsetasje" })
-
-const utvalgskriterierSchema = z
-  .object({
-    omfang: z.object({
-      bestaaendeBygg: z.boolean(),
-      utgaatteBygg: z.boolean(),
-      bygninger: z.boolean(),
-      bygningsendringer: z.boolean(),
-      frededeBygninger: tekstSchema,
-    }),
-    bygning: z.object({
-      bygningsnr: valgfriTekstSchema,
-      bygningstyper: z.array(bygningstypeSchema),
-      lopenr: heltallSchema.nullable(),
-    }),
-    adresse: z.object({
-      adressekode: valgfriTekstSchema,
-      bruksenhetsnr: valgfriTekstSchema,
-      adressenavn: valgfriTekstSchema,
-      nr: heltallSchema.nullable(),
-      bokstav: valgfriTekstSchema,
-      utenBokstav: z.boolean(),
-      tilleggsnavn: valgfriTekstSchema,
-    }),
-    matrikkelenhet: matrikkelenhetSchema,
-    hjemmelshaver: z.object({
-      foedselsEllerOrgnr: valgfriTekstSchema,
-      etternavn: valgfriTekstSchema,
-      fornavn: valgfriTekstSchema,
-    }),
-    bygningsstatus: z.object({
-      naavaerende: z.array(tekstSchema),
-      tidligere: z.array(tekstSchema),
-      periodeFra: valgfriDatoSchema,
-      periodeTil: valgfriDatoSchema,
-    }),
-    sokevindu: z.object({
-      nedreVenstre: koordinatSchema,
-      ovreHoeyre: koordinatSchema,
-    }),
-    subrapporter: z.object({
-      etasjer: z.boolean(),
-      bruksenheter: z.boolean(),
-      tiltakshavere: z.boolean(),
-      kontaktpersoner: z.boolean(),
-      hjemmelshavere: z.boolean(),
-      kulturminner: z.boolean(),
-    }),
-  })
-  .meta({ id: "Utvalgskriterier" })
 
 const bygningsendringSchema = z
   .object({
@@ -253,7 +189,7 @@ const bygningSchema = z
 export const byggRapportSchema = rapportSchema
   .extend({
     rapportType: z.literal("BYG0011").meta({}),
-    utvalgskriterier: utvalgskriterierSchema,
+    utvalgskriterier: byggUtvalgsKriterierSchema,
     bygninger: z.array(bygningSchema),
   })
   .openapi("ByggRapport", {
@@ -268,5 +204,5 @@ export type Kontaktperson = z.infer<typeof kontaktpersonSchema>
 export type Tiltakshaver = z.infer<typeof tiltakshaverSchema>
 export type Bruksenhet = z.infer<typeof bruksenhetSchema>
 export type Hjemmelshaver = z.infer<typeof hjemmelshaverSchema>
-export type Utvalgskriterier = z.infer<typeof utvalgskriterierSchema>
+export type Utvalgskriterier = z.infer<typeof byggUtvalgsKriterierSchema>
 export type BygningsDatoerSchema = z.infer<typeof bygningsdatoerSchema>

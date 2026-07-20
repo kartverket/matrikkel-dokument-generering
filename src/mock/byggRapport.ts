@@ -2,7 +2,7 @@ import type {
   Bruksenhet,
   ByggRapport,
   Bygningsendring,
-} from "../lib/schema/byggRapportSchema"
+} from "../lib/schema/reports/bygg/bygg0011/index"
 
 type Bygningsstatus = Bygningsendring["bygningsstatus"]
 type Bygningsdatoer = Bygningsendring["datoer"]
@@ -43,6 +43,10 @@ function refBruksenhet(bruksenhetsnr: string) {
   return { bruksenhetsnr }
 }
 
+function isoDatetime(date: string) {
+  return `${date}T00:00:00Z`
+}
+
 const olaNordmann: Hjemmelshaver = {
   eierIdent: "12051978",
   navn: "Ola Nordmann",
@@ -56,7 +60,7 @@ const olaNordmann: Hjemmelshaver = {
   land: "Norge",
   statuskode: "AKTIV",
   eierErUtgatt: false,
-  datofra: "2019-01-10",
+  datofra: isoDatetime("2019-01-10"),
   datotil: null,
   kategorikode: "FYSISK_PERSON",
   harAndel: true,
@@ -85,7 +89,7 @@ const byggmesterBob: Kontaktperson = {
   postnummeromradenr: "0666",
   postnummeromradenavn: "Oslo",
   land: "Norge",
-  datofra: "2019-05-01",
+  datofra: isoDatetime("2019-05-01"),
   kategorikode: "JURIDISK_PERSON",
   kontaktpersonKode: "ANSVARLIG_SOKER",
   statuskode: "AKTIV",
@@ -104,10 +108,10 @@ const gjeldendeEndring: Bygningsendring = {
   bebygdAreal: 95,
   koordinat: { nord: 6642100, ost: 597400 },
   datoer: datoer({
-    rammetillatelse: "2019-03-15",
-    igangsettingstillatelse: "2019-05-01",
-    ferdigattest: "2020-08-20",
-    tattIBruk: "2020-09-01",
+    rammetillatelse: isoDatetime("2019-03-15"),
+    igangsettingstillatelse: isoDatetime("2019-05-01"),
+    ferdigattest: isoDatetime("2020-08-20"),
+    tattIBruk: isoDatetime("2020-09-01"),
   }),
   etasjeplan: [
     {
@@ -138,7 +142,7 @@ const gjeldendeEndring: Bygningsendring = {
       postnummeromradenavn: "Oslo",
       land: "Norge",
       bruksenhetsnr: "H0101",
-      datofra: "2019-03-15",
+      datofra: isoDatetime("2019-03-15"),
       kategorikode: "FYSISK_PERSON",
       kontaktpersonKode: null,
       statuskode: "AKTIV",
@@ -164,9 +168,9 @@ const historiskeEndringer: Bygningsendring[] = [
     bygningsstatus: statuser.FA,
     bruksareal: { bolig: 121, annet: 74 },
     datoer: datoer({
-      rammetillatelse: "2016-09-12",
-      igangsettingstillatelse: "2017-03-06",
-      ferdigattest: "2020-01-22",
+      rammetillatelse: isoDatetime("2016-09-12"),
+      igangsettingstillatelse: isoDatetime("2017-03-06"),
+      ferdigattest: isoDatetime("2020-01-22"),
     }),
     bruksenheter: [refBruksenhet("H0103")],
   },
@@ -178,8 +182,8 @@ const historiskeEndringer: Bygningsendring[] = [
     bygningsstatus: statuser.IG,
     bruksareal: { bolig: 121, annet: 60 },
     datoer: datoer({
-      rammetillatelse: "2016-09-12",
-      igangsettingstillatelse: "2017-03-06",
+      rammetillatelse: isoDatetime("2016-09-12"),
+      igangsettingstillatelse: isoDatetime("2017-03-06"),
     }),
     bruksenheter: [refBruksenhet("H0103")],
   },
@@ -190,7 +194,7 @@ const historiskeEndringer: Bygningsendring[] = [
     endringskode: "Underbygg",
     bygningsstatus: statuser.RA,
     bruksareal: { bolig: 102, annet: 60 },
-    datoer: datoer({ rammetillatelse: "2016-09-12" }),
+    datoer: datoer({ rammetillatelse: isoDatetime("2016-09-12") }),
     bruksenheter: [refBruksenhet("H0104")],
   },
   {
@@ -201,7 +205,9 @@ const historiskeEndringer: Bygningsendring[] = [
     beskrivelse: "Midlertidig tillatelse er gitt.",
     bygningsstatus: statuser.MB,
     bruksareal: { bolig: 102, annet: 0 },
-    datoer: datoer({ midlertidigBrukstillatelse: "2008-09-12" }),
+    datoer: datoer({
+      midlertidigBrukstillatelse: isoDatetime("2008-09-12"),
+    }),
     bruksenheter: [refBruksenhet("H0103")],
   },
   {
@@ -210,7 +216,7 @@ const historiskeEndringer: Bygningsendring[] = [
     lopenr: 0,
     bygningsstatus: statuser.TB,
     bruksareal: { bolig: 102, annet: 0 },
-    datoer: datoer({ tattIBruk: "1998-06-18" }),
+    datoer: datoer({ tattIBruk: isoDatetime("1998-06-18") }),
     bruksenheter: [refBruksenhet("H0101"), refBruksenhet("H0102")],
   },
 ]
@@ -220,52 +226,49 @@ const mockByggRapport: ByggRapport = {
   kommune: { nr: "3201", navn: "Bærum" },
   koordinatsystem: "EUREF89 UTM sone 32",
   locale: "nb",
-  generertTidspunkt: new Date("2026-07-17T10:00:00Z"),
+  generertTidspunkt: "2026-07-17T10:00:00Z",
   utvalgskriterier: {
     omfang: {
-      bestaaendeBygg: true,
-      utgaatteBygg: false,
-      bygninger: true,
-      bygningsendringer: true,
-      frededeBygninger: "Inkluder",
+      inkluderBestaaendeBygg: true,
+      inkluderUtgaatteBygg: false,
+      inkluderBygninger: true,
+      inkluderBygningsendringer: true,
+      inkluderFrededeBygninger: true,
     },
     bygning: {
       bygningsnr: "12345678",
       bygningstyper: [{ kode: 111, navn: "Enebolig" }],
-      lopenr: null,
     },
     adresse: {
       adressekode: "1000",
       bruksenhetsnr: "H0101",
       adressenavn: "Storgata",
       nr: 1,
-      bokstav: null,
       utenBokstav: true,
-      tilleggsnavn: null,
     },
-    matrikkelenhet: { gnr: 208, bnr: 12, fnr: null, snr: null },
+    matrikkelenhet: { gnr: 208, bnr: 12 },
     hjemmelshaver: {
-      foedselsEllerOrgnr: null,
       etternavn: "Nordmann",
       fornavn: "Ola",
     },
     bygningsstatus: {
       naavaerende: ["Tatt i bruk"],
       tidligere: [],
-      periodeFra: "2019-01-01",
-      periodeTil: null,
+      periodeFra: isoDatetime("2019-01-01"),
     },
     sokevindu: {
-      nedreVenstre: { nord: 6642000, ost: 597300 },
-      ovreHoeyre: { nord: 6642200, ost: 597500 },
+      nord: 6642000,
+      ost: 597300,
+      syd: 6642200,
+      vest: 597500,
     },
     subrapporter: {
-      etasjer: true,
-      bruksenheter: true,
-      tiltakshavere: true,
-      kontaktpersoner: true,
-      hjemmelshavere: true,
-      kulturminner: true,
+      inkluderEtasjer: true,
+      inkluderBruksenheter: true,
+      inkluderTiltakshavere: true,
+      inkluderKontaktpersoner: true,
+      inkluderHjemmelshavere: true,
+      inkluderKulturminner: true,
     },
   },
   bygninger: [

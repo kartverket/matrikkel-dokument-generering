@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next"
 import type {
   Bygning,
   Bygningsendring,
-} from "../../lib/schema/byggRapportSchema"
+} from "../../lib/schema/reports/bygg/bygg0011/index"
 import { formatDate } from "../../lib/utils/formatDate"
 
 interface Props {

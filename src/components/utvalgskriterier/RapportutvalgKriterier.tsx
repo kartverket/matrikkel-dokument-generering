@@ -1,6 +1,6 @@
 import { Heading, Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import type { Utvalgskriterier } from "../../lib/schema/byggRapportSchema"
+import type { Utvalgskriterier } from "../../lib/schema/reports/bygg/bygg0011/index"
 
 interface Props {
   omfangsKriterier: Utvalgskriterier["omfang"]
@@ -22,7 +22,9 @@ export function RapportutvalgKriterier({ omfangsKriterier }: Props) {
               {t(`${uk}.felt.bestaaendeBygg`)}
             </Table.HeaderCell>
             <Table.Cell>
-              {t(`${uk}.${omfangsKriterier.bestaaendeBygg ? "ja" : "nei"}`)}
+              {t(
+                `${uk}.${omfangsKriterier?.inkluderBestaaendeBygg ? "ja" : "nei"}`,
+              )}
             </Table.Cell>
           </Table.Row>
           <Table.Row>
@@ -30,7 +32,9 @@ export function RapportutvalgKriterier({ omfangsKriterier }: Props) {
               {t(`${uk}.felt.utgaatteBygg`)}
             </Table.HeaderCell>
             <Table.Cell>
-              {t(`${uk}.${omfangsKriterier.utgaatteBygg ? "ja" : "nei"}`)}
+              {t(
+                `${uk}.${omfangsKriterier?.inkluderUtgaatteBygg ? "ja" : "nei"}`,
+              )}
             </Table.Cell>
           </Table.Row>
           <Table.Row>
@@ -38,7 +42,7 @@ export function RapportutvalgKriterier({ omfangsKriterier }: Props) {
               {t(`${uk}.felt.bygninger`)}
             </Table.HeaderCell>
             <Table.Cell>
-              {t(`${uk}.${omfangsKriterier.bygninger ? "ja" : "nei"}`)}
+              {t(`${uk}.${omfangsKriterier?.inkluderBygninger ? "ja" : "nei"}`)}
             </Table.Cell>
           </Table.Row>
           <Table.Row>
@@ -46,14 +50,20 @@ export function RapportutvalgKriterier({ omfangsKriterier }: Props) {
               {t(`${uk}.felt.bygningsendringer`)}
             </Table.HeaderCell>
             <Table.Cell>
-              {t(`${uk}.${omfangsKriterier.bygningsendringer ? "ja" : "nei"}`)}
+              {t(
+                `${uk}.${omfangsKriterier?.inkluderBygningsendringer ? "ja" : "nei"}`,
+              )}
             </Table.Cell>
           </Table.Row>
           <Table.Row>
             <Table.HeaderCell scope="row">
               {t(`${uk}.felt.frededeBygninger`)}
             </Table.HeaderCell>
-            <Table.Cell>{omfangsKriterier.frededeBygninger}</Table.Cell>
+            <Table.Cell>
+              {t(
+                `${uk}.${omfangsKriterier?.inkluderFrededeBygninger ? "ja" : "nei"}`,
+              )}
+            </Table.Cell>
           </Table.Row>
         </Table.Body>
       </Table>

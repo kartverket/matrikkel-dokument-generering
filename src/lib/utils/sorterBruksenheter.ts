@@ -1,4 +1,4 @@
-import type { Bruksenhet } from "../schema/byggRapportSchema.ts"
+import type { Bruksenhet } from "../schema/reports/bygg/bygg0011/index.ts"
 
 const bruksenhetsnummerCollator = new Intl.Collator("nb", { numeric: true })
 

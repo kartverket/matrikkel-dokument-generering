@@ -8,11 +8,11 @@ import { MatrikkelenhetKriterier } from "../components/utvalgskriterier/Matrikke
 import { RapportutvalgKriterier } from "../components/utvalgskriterier/RapportutvalgKriterier"
 import { SokevinduKriterier } from "../components/utvalgskriterier/SokevinduKriterier"
 import { SubrapporterKriterier } from "../components/utvalgskriterier/SubrapporterKriterier"
-import type { Utvalgskriterier as UtvalgskriterierType } from "../lib/schema/byggRapportSchema"
+import type { ByggUtvalgsKriterier } from "../lib/schema/reports/bygg/shared/byggUtvalgskriterier.schema.ts"
 
 interface Props {
   index: number
-  kriterier: UtvalgskriterierType
+  kriterier: ByggUtvalgsKriterier
 }
 
 export function Utvalgskriterier({ index, kriterier }: Props) {
