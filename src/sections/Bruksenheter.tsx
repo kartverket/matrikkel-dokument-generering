@@ -11,10 +11,9 @@ import { Tiltakshavere } from "../components/bruksenheter/Tiltakshavere.tsx"
 import { Detaljgrid, lagDetaljfeltBuilder } from "../components/Detaljfelt.tsx"
 import { Section } from "../components/Section.tsx"
 import type { Bruksenhet } from "../lib/schema/reports/bygg/byg0011/bruksenhet.schema.ts"
-import type { Bygning } from "../lib/schema/reports/bygg/byg0011/bygning.schema.ts"
+import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byg0011.schema.ts"
 import type { Bygningsendring } from "../lib/schema/reports/bygg/byg0011/bygningsendring.schema.ts"
 import type { Tiltakshaver } from "../lib/schema/reports/bygg/byg0011/person.schema.ts"
-import { summerAreal } from "../lib/utils/arealLinje.ts"
 import { formatArea } from "../lib/utils/formatArea.ts"
 import {
   finnGjeldendeBygningsendring,
@@ -42,7 +41,7 @@ function getBruksenhetDetaljfelter(bruksenhet: Bruksenhet, t: TFunction) {
     bruksenhetFelt("etasje", bruksenhet.etasje),
     bruksenhetFelt(
       "bruksareal",
-      formatArea(summerAreal(bruksenhet.arealfordeling.bruksareal)),
+      formatArea(bruksenhet.arealfordeling.bruksareal.totalt),
     ),
     bruksenhetFelt("antallRom", String(bruksenhet.antallRom)),
     bruksenhetFelt("kjokkentilgang", kjokkentilgang),

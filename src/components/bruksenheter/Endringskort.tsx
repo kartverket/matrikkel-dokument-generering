@@ -1,10 +1,10 @@
 import { Card, Divider, Heading, Paragraph, Tag } from "@kv-designsystem/react"
 import { Fragment } from "react"
 import { useTranslation } from "react-i18next"
-import type { Bygning } from "../../lib/schema/reports/bygg/byg0011/bygning.schema"
+import type { Bygning } from "../../lib/schema/reports/bygg/byg0011/byg0011.schema"
 import type { Bygningsendring } from "../../lib/schema/reports/bygg/byg0011/bygningsendring.schema"
 import { getBygningstype } from "../../lib/schema/reports/bygg/shared/bygningstype.schema"
-import { arealLinje, summerAreal } from "../../lib/utils/arealLinje"
+import { arealLinje } from "../../lib/utils/arealLinje"
 import { formatArea } from "../../lib/utils/formatArea"
 import { formatDate } from "../../lib/utils/formatDate"
 import {
@@ -118,15 +118,12 @@ export function Endringskort({ endring, bygning }: Props) {
           etasjefelt("antallBoenheter", String(etasje.antallBoenheter)),
           etasjefelt("bruksarealBolig", formatArea(etasje.bruksareal.bolig)),
           etasjefelt("bruksarealAnnet", formatArea(etasje.bruksareal.annet)),
-          etasjefelt(
-            "bruksarealTotalt",
-            formatArea(summerAreal(etasje.bruksareal)),
-          ),
+          etasjefelt("bruksarealTotalt", formatArea(etasje.bruksareal.totalt)),
           etasjefelt("bruttoarealBolig", formatArea(etasje.bruttoareal.bolig)),
           etasjefelt("bruttoarealAnnet", formatArea(etasje.bruttoareal.annet)),
           etasjefelt(
             "bruttoarealTotalt",
-            formatArea(summerAreal(etasje.bruttoareal)),
+            formatArea(etasje.bruttoareal.totalt),
           ),
         ],
       })),

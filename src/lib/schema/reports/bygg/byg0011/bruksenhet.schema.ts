@@ -4,15 +4,6 @@ import { bygningsetasjeSchema } from "./bygningsetasje.schema"
 import { koordinatSchema } from "./koordinat.schema"
 import { hjemmelshaverSchema, kontaktpersonSchema } from "./person.schema"
 
-const bruksenhetArealfordelingSchema = z
-  .object({
-    bebygdAreal: z.number().nonnegative(),
-    bruksareal: arealFordelingSchema,
-    koordinat: koordinatSchema,
-    etasjeplan: z.array(bygningsetasjeSchema),
-  })
-  .meta({ id: "BYG0011BruksenhetArealfordeling" })
-
 export const bruksenhetSchema = z
   .object({
     id: z.string().min(1),
@@ -25,7 +16,12 @@ export const bruksenhetSchema = z
     kjokkentilgang: z.boolean().nullable(),
     antallBad: z.number().int().nonnegative(),
     antallWc: z.number().int().nonnegative(),
-    arealfordeling: bruksenhetArealfordelingSchema,
+    arealfordeling: z.object({
+      bebygdAreal: z.number().nonnegative(),
+      bruksareal: arealFordelingSchema,
+      koordinat: koordinatSchema,
+      etasjeplan: z.array(bygningsetasjeSchema),
+    }),
     hjemmelshavere: z.array(hjemmelshaverSchema),
     kontaktpersoner: z.array(kontaktpersonSchema),
   })

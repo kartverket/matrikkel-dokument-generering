@@ -1,7 +1,5 @@
-export function arealLinje(a: { bolig: number; annet: number }): string {
-  return `${a.bolig} / ${a.annet} / ${summerAreal(a)} m²`
-}
+import type { ArealFordeling } from "../schema/reports/bygg/byg0011/areal.schema"
 
-export function summerAreal(a: { bolig: number; annet: number }): number {
-  return a.bolig + a.annet
+export function arealLinje(a: ArealFordeling): string {
+  return `${a.bolig} / ${a.annet} / ${a.totalt} m²`
 }

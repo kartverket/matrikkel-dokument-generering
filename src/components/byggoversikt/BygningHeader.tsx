@@ -1,7 +1,7 @@
 import { Heading } from "@digdir/designsystemet-react"
 import { Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import type { Bygning } from "../../lib/schema/reports/bygg/byg0011/bygning.schema"
+import type { Bygning } from "../../lib/schema/reports/bygg/byg0011/byg0011.schema"
 import type { Bygningsendring } from "../../lib/schema/reports/bygg/byg0011/bygningsendring.schema"
 import { getBygningstype } from "../../lib/schema/reports/bygg/shared/bygningstype.schema"
 import { formatDate } from "../../lib/utils/formatDate"

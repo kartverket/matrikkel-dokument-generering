@@ -21,3 +21,5 @@ export const arealFordelingSchema = z
     id: "BYG0011ArealFordeling",
     description: "Areal i kvadratmeter.",
   })
+
+export type ArealFordeling = z.infer<typeof arealFordelingSchema>

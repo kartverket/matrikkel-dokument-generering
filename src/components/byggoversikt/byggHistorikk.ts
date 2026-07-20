@@ -58,9 +58,9 @@ export function lagHistorikkbeskrivelseForBygningsendring(
   const statuskode = endring.bygningsstatus.kortkode
   const beskrivelser: string[] = []
 
-  for (const arealtype of ["bolig", "annet"] as const) {
+  for (const arealtype of ["bolig", "annet", "totalt"] as const) {
     const differanse =
-      endring.bruksareal[arealtype] - forrigeEndring.bruksareal[arealtype]
+      endring?.bruksareal[arealtype] - forrigeEndring?.bruksareal[arealtype]
     if (differanse === 0) continue
 
     beskrivelser.push(
