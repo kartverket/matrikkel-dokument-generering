@@ -1,6 +1,6 @@
 import { Heading, Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import type { RapportMeta } from "../lib/schema/rapportSchema"
+import type { RapportMeta } from "../lib/schema/core"
 import { formatDate } from "../lib/utils/formatDate"
 
 const rapportTitleByType = {

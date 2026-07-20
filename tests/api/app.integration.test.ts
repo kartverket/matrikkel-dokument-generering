@@ -1,6 +1,6 @@
 import { describe, expect, spyOn, test } from "bun:test"
 import { createApp } from "../../src/api/app.ts"
-import { byggRapportSchema } from "../../src/lib/schema/reports/BYG0011.ts"
+import { byggRapportSchema } from "../../src/lib/schema/reports/bygg/bygg0011/index.ts"
 import mockByggRapport from "../../src/mock/byggRapport.ts"
 
 const app = createApp()

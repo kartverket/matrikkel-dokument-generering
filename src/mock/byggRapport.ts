@@ -2,7 +2,7 @@ import type {
   Bruksenhet,
   ByggRapport,
   Bygningsendring,
-} from "../lib/schema/reports/BYG0011"
+} from "../lib/schema/reports/bygg/bygg0011/index"
 
 type Bygningsstatus = Bygningsendring["bygningsstatus"]
 type Bygningsdatoer = Bygningsendring["datoer"]

@@ -1,6 +1,6 @@
 import { Heading, Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import type { Bygningsendring } from "../../lib/schema/reports/BYG0011"
+import type { Bygningsendring } from "../../lib/schema/reports/bygg/bygg0011/index"
 import { Detaljgrid, lagDetaljfeltBuilder } from "../Detaljfelt"
 
 interface Props {

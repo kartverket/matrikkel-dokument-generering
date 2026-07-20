@@ -10,12 +10,7 @@ import { RegistrerteVedtak } from "../components/bruksenheter/RegistrerteVedtak.
 import { Tiltakshavere } from "../components/bruksenheter/Tiltakshavere.tsx"
 import { Detaljgrid, lagDetaljfeltBuilder } from "../components/Detaljfelt.tsx"
 import { Section } from "../components/Section.tsx"
-import type {
-  Bruksenhet,
-  Bygning,
-  Bygningsendring,
-  Tiltakshaver,
-} from "../lib/schema/reports/BYG0011.ts"
+
 import { summerAreal } from "../lib/utils/arealLinje.ts"
 import { formatArea } from "../lib/utils/formatArea.ts"
 import {
@@ -23,6 +18,12 @@ import {
   isFerdigstilt,
 } from "../lib/utils/isFerdigstilt.ts"
 import { sorterBruksenheterEtterNummer } from "../lib/utils/sorterBruksenheter.ts"
+import type {
+  Bruksenhet,
+  Bygning,
+  Bygningsendring,
+  Tiltakshaver,
+} from "../lib/schema/reports/bygg/bygg0011/index.ts"
 
 interface Props {
   index: number

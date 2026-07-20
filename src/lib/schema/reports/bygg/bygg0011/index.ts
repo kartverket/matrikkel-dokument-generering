@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi"
-import { byggUtvalgsKriterierSchema } from "../byggUtvalgsKriterier"
-import { bygningstypeSchema } from "../bygningstypeSchema"
-import { rapportSchema } from "../rapportSchema"
+import { rapportSchema } from "../../../core"
+import { byggUtvalgsKriterierSchema } from "../shared/bygg.utvalgskriterier.schema"
+import { bygningstypeSchema } from "../shared/bygningstyper.schema"
 
 const tekstSchema = z.string().min(1)
 const valgfriTekstSchema = tekstSchema.nullable().optional()

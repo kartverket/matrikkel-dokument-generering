@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi"
-import { bygningstypeSchema } from "./bygningstypeSchema"
+import { bygningstypeSchema } from "./bygningstyper.schema"
 
 const matrikkelenhetSchema = z
   .object({

@@ -1,4 +1,4 @@
-import type { Bygningsendring } from "../schema/reports/BYG0011"
+import type { Bygningsendring } from "../schema/reports/bygg/bygg0011/index"
 
 const SEFRAK_KATEGORI = "SEFRAK-registrert bygning"
 

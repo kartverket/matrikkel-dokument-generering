@@ -1,7 +1,7 @@
 import { Heading, Table } from "@kv-designsystem/react"
 import { Fragment } from "react"
 import { useTranslation } from "react-i18next"
-import type { Bruksenhet } from "../lib/schema/reports/BYG0011"
+import type { Bruksenhet } from "../lib/schema/reports/bygg/bygg0011/index"
 import { summerAreal } from "../lib/utils/arealLinje"
 import { formatArea } from "../lib/utils/formatArea"
 import { Detaljgrid, lagDetaljfeltBuilder } from "./Detaljfelt"

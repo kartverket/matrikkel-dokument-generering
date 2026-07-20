@@ -1,4 +1,4 @@
-import type { Bygningsendring } from "../schema/reports/BYG0011"
+import type { Bygningsendring } from "../schema/reports/bygg/bygg0011/index"
 
 export function isFerdigstilt(endring: Bygningsendring): boolean {
   return (

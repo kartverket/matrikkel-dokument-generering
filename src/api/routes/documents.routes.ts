@@ -2,7 +2,7 @@ import { createRoute, type OpenAPIHono, z } from "@hono/zod-openapi"
 import { renderDocument } from "../../Document.tsx"
 import { htmlToPdf } from "../../lib/pdf/gotenberg.ts"
 import { getDocumentCss } from "../../lib/pdf/styles.ts"
-import { byggRapportSchema } from "../../lib/schema/reports/BYG0011.ts"
+import { byggRapportSchema } from "../../lib/schema/reports/bygg/bygg0011/index.ts"
 import {
   pdfErrorResponseSchema,
   validationErrorResponseSchema,
