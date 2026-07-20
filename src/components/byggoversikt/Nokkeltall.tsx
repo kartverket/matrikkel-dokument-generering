@@ -1,7 +1,7 @@
 import { Card } from "@digdir/designsystemet-react"
 import { Label, Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import type { Bygningsendring } from "../../lib/schema/reports/bygg/bygg0011/index"
+import type { Bygningsendring } from "../../lib/schema/reports/bygg/byg0011/schema/bygningsendring.schema"
 import { summerAreal } from "../../lib/utils/arealLinje"
 import { formatArea } from "../../lib/utils/formatArea"
 

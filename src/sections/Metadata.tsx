@@ -1,7 +1,7 @@
 import { Heading, Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import type { RapportMeta } from "../lib/schema/core"
 import { formatDate } from "../lib/utils/formatDate"
+import type { RapportMeta } from "../reporting/registry"
 
 const rapportTitleByType = {
   BYG0011: "rapport.BYG0011.rapportTittel",

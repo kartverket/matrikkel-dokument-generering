@@ -10,12 +10,10 @@ import { RegistrerteVedtak } from "../components/bruksenheter/RegistrerteVedtak.
 import { Tiltakshavere } from "../components/bruksenheter/Tiltakshavere.tsx"
 import { Detaljgrid, lagDetaljfeltBuilder } from "../components/Detaljfelt.tsx"
 import { Section } from "../components/Section.tsx"
-import type {
-  Bruksenhet,
-  Bygning,
-  Bygningsendring,
-  Tiltakshaver,
-} from "../lib/schema/reports/bygg/bygg0011/index.ts"
+import type { Bruksenhet } from "../lib/schema/reports/bygg/byg0011/schema/bruksenhet.schema.ts"
+import type { Bygningsendring } from "../lib/schema/reports/bygg/byg0011/schema/bygningsendring.schema.ts"
+import type { Bygning } from "../lib/schema/reports/bygg/byg0011/schema/bygning.schema.ts"
+import type { Tiltakshaver } from "../lib/schema/reports/bygg/byg0011/schema/person.schema.ts"
 import { summerAreal } from "../lib/utils/arealLinje.ts"
 import { formatArea } from "../lib/utils/formatArea.ts"
 import {

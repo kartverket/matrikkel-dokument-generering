@@ -1,10 +1,8 @@
 import { Card, Divider, Heading, Paragraph, Tag } from "@kv-designsystem/react"
 import { Fragment } from "react"
 import { useTranslation } from "react-i18next"
-import type {
-  Bygning,
-  Bygningsendring,
-} from "../../lib/schema/reports/bygg/bygg0011/index"
+import type { Bygningsendring } from "../../lib/schema/reports/bygg/byg0011/schema/bygningsendring.schema"
+import type { Bygning } from "../../lib/schema/reports/bygg/byg0011/schema/bygning.schema"
 import { arealLinje, summerAreal } from "../../lib/utils/arealLinje"
 import { formatArea } from "../../lib/utils/formatArea"
 import { formatDate } from "../../lib/utils/formatDate"
@@ -28,8 +26,8 @@ export function Endringskort({ endring, bygning }: Props) {
   const tom = t("tom")
   const kortDato = { dateStyle: "short" } as const
   const numberFormatter = new Intl.NumberFormat(i18n.language)
-  const formatDato = (dato: string | null) =>
-    dato === null ? null : formatDate(i18n, dato, "", kortDato)
+  const formatDato = (dato: string | null | undefined) =>
+    dato == null ? null : formatDate(i18n, dato, "", kortDato)
   const formatertTittel = [
     t("rapport.BYG0011.bruksenheter.endringTittel", {
       lopenr: endring.lopenr,

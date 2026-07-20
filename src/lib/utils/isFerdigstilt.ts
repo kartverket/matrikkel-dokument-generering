@@ -1,9 +1,7 @@
-import type { Bygningsendring } from "../schema/reports/bygg/bygg0011/index"
+import type { Bygningsendring } from "../schema/reports/bygg/byg0011/schema/bygningsendring.schema"
 
 export function isFerdigstilt(endring: Bygningsendring): boolean {
-  return (
-    endring.datoer.ferdigattest !== null || endring.datoer.tattIBruk !== null
-  )
+  return endring.datoer.ferdigattest != null || endring.datoer.tattIBruk != null
 }
 
 export function finnGjeldendeBygningsendring(

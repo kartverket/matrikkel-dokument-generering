@@ -1,5 +1,5 @@
 import type { TFunction } from "i18next"
-import type { Bygningsendring } from "../../lib/schema/reports/bygg/bygg0011/index"
+import type { Bygningsendring } from "../../lib/schema/reports/bygg/byg0011/schema/bygningsendring.schema"
 
 const GODKJENNINGSSTATUSER = new Set(["RA", "IG"])
 

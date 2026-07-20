@@ -1,8 +1,8 @@
 import { createRoute, type OpenAPIHono, z } from "@hono/zod-openapi"
-import { renderDocument } from "../../Document.tsx"
 import { htmlToPdf } from "../../lib/pdf/gotenberg.ts"
 import { getDocumentCss } from "../../lib/pdf/styles.ts"
-import { byggRapportSchema } from "../../lib/schema/reports/bygg/bygg0011/index.ts"
+import { reportRegistry } from "../../reporting/registry.ts"
+import { reportRequestSchema } from "../../reporting/report-request.schema.ts"
 import {
   pdfErrorResponseSchema,
   validationErrorResponseSchema,
@@ -12,15 +12,15 @@ const createDocumentRoute = createRoute({
   method: "post",
   path: "/create-document",
   tags: ["Dokument"],
-  summary: "Generer PDF fra en byggrapport",
+  summary: "Generer PDF fra en Matrikkelen-rapport",
   description:
-    "Validerer innsendt byggrapport mot skjemaet. Ved gyldig input renderes dokumentet til HTML og konverteres til PDF. Ved ugyldig input returneres valideringsfeil per felt.",
+    "Validerer innsendt rapport mot skjemaet for valgt rapportType. Ved gyldig input renderes dokumentet til HTML og konverteres til PDF. Ved ugyldig input returneres valideringsfeil per felt.",
   operationId: "createDocument",
   request: {
     body: {
       required: true,
       content: {
-        "application/json": { schema: byggRapportSchema },
+        "application/json": { schema: reportRequestSchema },
       },
     },
   },
@@ -54,7 +54,7 @@ export function registerDocumentRoutes(app: OpenAPIHono) {
 
     try {
       const css = await getDocumentCss()
-      const html = renderDocument(data, css)
+      const html = reportRegistry.render(data, css)
       const pdf = await htmlToPdf(html)
       return c.body(pdf, 200, { "Content-Type": "application/pdf" })
     } catch (error) {

@@ -1,7 +1,7 @@
 import { describe, expect, spyOn, test } from "bun:test"
 import { createApp } from "../../src/api/app.ts"
-import { byggRapportSchema } from "../../src/lib/schema/reports/bygg/bygg0011/index.ts"
 import mockByggRapport from "../../src/mock/byggRapport.ts"
+import { reportRequestSchema } from "../../src/reporting/report-request.schema.ts"
 
 const app = createApp()
 
@@ -9,7 +9,7 @@ describe("HTTP API", () => {
   test("accepts the JSON representation documented by OpenAPI", () => {
     const jsonPayload = JSON.parse(JSON.stringify(mockByggRapport))
 
-    expect(byggRapportSchema.safeParse(jsonPayload).success).toBe(true)
+    expect(reportRequestSchema.safeParse(jsonPayload).success).toBe(true)
   })
 
   test.each([
@@ -26,7 +26,7 @@ describe("HTTP API", () => {
     const response = await app.request("/create-document", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: "{}",
+      body: JSON.stringify({ rapportType: "BYG0011" }),
     })
 
     expect(response.status).toBe(400)
@@ -35,7 +35,6 @@ describe("HTTP API", () => {
       errors: {
         valid: false,
         errors: expect.objectContaining({
-          rapportType: expect.any(Array),
           bygninger: expect.any(Array),
         }),
       },

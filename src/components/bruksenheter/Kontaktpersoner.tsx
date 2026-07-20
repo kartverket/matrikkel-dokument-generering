@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next"
-import type { Bruksenhet } from "../../lib/schema/reports/bygg/bygg0011/index"
+import type { Bruksenhet } from "../../lib/schema/reports/bygg/byg0011/schema/bruksenhet.schema"
 import { formatAdresse } from "../../lib/utils/formatAdresse"
 import { joinStrings } from "../../lib/utils/joinStrings"
 import { lagDetaljfeltBuilder } from "../Detaljfelt"

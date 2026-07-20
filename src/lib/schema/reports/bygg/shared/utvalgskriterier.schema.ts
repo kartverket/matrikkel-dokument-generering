@@ -1,17 +1,29 @@
 import { z } from "@hono/zod-openapi"
-import { bygningstypeSchema } from "./bygningstyper.schema"
+import { bygningstypeSchema } from "./bygningstype.schema"
 
 const matrikkelenhetSchema = z
   .object({
-    gnr: z.number().nonnegative().optional().meta({ example: 208 }),
-    bnr: z.number().nonnegative().optional().meta({ example: 12 }),
-    fnr: z.number().nonnegative().optional().meta({ example: null }),
-    snr: z.number().nonnegative().optional().meta({ example: null }),
+    gnr: z.number().int().nonnegative().optional().meta({ example: 208 }),
+    bnr: z.number().int().nonnegative().optional().meta({ example: 12 }),
+    fnr: z
+      .number()
+      .int()
+      .nonnegative()
+      .nullable()
+      .optional()
+      .meta({ example: null }),
+    snr: z
+      .number()
+      .int()
+      .nonnegative()
+      .nullable()
+      .optional()
+      .meta({ example: null }),
   })
   .optional()
-  .meta({ id: "Matrikkelenhet" })
+  .meta({ id: "ByggMatrikkelenhetKriterium" })
 
-const byggningsStatuser = [
+const bygningsstatuser = [
   "Rammetillatelse",
   "Igangsettingstillatelse",
   "Midlertidig brukstillatelse",
@@ -19,15 +31,15 @@ const byggningsStatuser = [
   "Tatt i bruk",
   "Meldingssak registrer tiltak",
   "Meldingssak tiltak fullført",
-  "Tiltak unntatt fra byggesalsbehandling",
-  "Bygning revert/brent",
+  "Tiltak unntatt fra byggesaksbehandling",
+  "Bygning revet/brent",
   "Bygging avlyst",
   "Bygning flyttet",
-  "Byggningsnummer utgått",
+  "Bygningsnummer utgått",
   "Fritatt for søknadsplikt",
-]
+] as const
 
-export const byggUtvalgsKriterierSchema = z
+export const byggUtvalgskriterierSchema = z
   .object({
     omfang: z
       .object({
@@ -60,17 +72,15 @@ export const byggUtvalgsKriterierSchema = z
           .optional()
           .default([])
           .meta({ example: [{ kode: 111, navn: "Enebolig" }] }),
-        lopenr: z.number().optional().meta({ example: 1 }),
+        lopenr: z.number().int().nonnegative().optional().meta({ example: 1 }),
       })
       .optional(),
     adresse: z
       .object({
         adressekode: z.string().optional().meta({ example: "1000" }),
-        bruksenhetsnr: z.string().optional().meta({
-          example: "H0101",
-        }),
+        bruksenhetsnr: z.string().optional().meta({ example: "H0101" }),
         adressenavn: z.string().optional().meta({ example: "Storgata" }),
-        nr: z.number().nonnegative().optional().meta({ example: 1 }),
+        nr: z.number().int().nonnegative().optional().meta({ example: 1 }),
         bokstav: z.string().optional().meta({ example: "A" }),
         utenBokstav: z.boolean().optional(),
         tilleggsnavn: z.string().optional().meta({ example: "Solgløtt" }),
@@ -93,18 +103,18 @@ export const byggUtvalgsKriterierSchema = z
           .array(z.string())
           .optional()
           .default([])
-          .meta({ example: byggningsStatuser }),
+          .meta({ example: bygningsstatuser }),
         tidligere: z
           .array(z.string())
           .optional()
           .default([])
-          .meta({ example: byggningsStatuser }),
+          .meta({ example: bygningsstatuser }),
         periodeFra: z.iso
-          .datetime()
+          .datetime({ offset: true })
           .optional()
           .meta({ example: "2019-01-01T00:00:00Z" }),
         periodeTil: z.iso
-          .datetime()
+          .datetime({ offset: true })
           .optional()
           .meta({ example: "2026-07-17T00:00:00Z" }),
       })
@@ -113,8 +123,8 @@ export const byggUtvalgsKriterierSchema = z
       .object({
         nord: z.number().meta({ example: 6642000 }),
         ost: z.number().meta({ example: 597300 }),
-        vest: z.number().meta({ example: 597300 }),
-        syd: z.number().meta({ example: 6642000 }),
+        vest: z.number().meta({ example: 597500 }),
+        syd: z.number().meta({ example: 6642200 }),
       })
       .optional()
       .meta({
@@ -132,7 +142,7 @@ export const byggUtvalgsKriterierSchema = z
       .optional(),
   })
   .meta({
-    id: "Utvalgskriterier",
+    id: "ByggUtvalgskriterier",
     example: {
       omfang: {
         inkluderBestaaendeBygg: true,
@@ -168,8 +178,10 @@ export const byggUtvalgsKriterierSchema = z
         periodeTil: "2026-07-17T00:00:00Z",
       },
       sokevindu: {
-        nedreVenstre: { nord: 6642000, ost: 597300 },
-        ovreHoeyre: { nord: 6642200, ost: 597500 },
+        nord: 6642000,
+        ost: 597300,
+        vest: 597500,
+        syd: 6642200,
       },
       subrapporter: {
         inkluderEtasjer: true,
@@ -182,4 +194,4 @@ export const byggUtvalgsKriterierSchema = z
     },
   })
 
-export type ByggUtvalgsKriterier = z.infer<typeof byggUtvalgsKriterierSchema>
+export type ByggUtvalgskriterier = z.infer<typeof byggUtvalgskriterierSchema>
