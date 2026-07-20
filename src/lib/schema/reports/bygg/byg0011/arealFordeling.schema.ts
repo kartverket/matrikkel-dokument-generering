@@ -1,15 +1,10 @@
 import { z } from "@hono/zod-openapi"
+import { valgfriNummer } from "../../../core/common"
 
-const arealKvadratmeter = z
-  .number()
-  .nonnegative()
-  .nullable()
-  .optional()
-  .default(null)
-  .meta({
-    description: "Areal i kvadratmeter.",
-    example: 123.4,
-  })
+const arealKvadratmeter = valgfriNummer.meta({
+  description: "Areal i kvadratmeter.",
+  example: 123.4,
+})
 
 export const arealFordelingSchema = z
   .object({

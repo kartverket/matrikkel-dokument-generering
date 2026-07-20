@@ -1,29 +1,13 @@
 import { z } from "@hono/zod-openapi"
+import {
+  valgfriBool,
+  valgfriDato,
+  valgfriHeltall,
+  valgfriNummer,
+  valgfriObjekt,
+  valgfriString,
+} from "../../../core/common"
 import { bygningstypeSchema } from "./bygningstype.schema"
-
-const valgfriNummer = z
-  .number()
-  .nonnegative()
-  .nullable()
-  .optional()
-  .default(null)
-const valgfriHeltall = z
-  .number()
-  .int()
-  .nonnegative()
-  .nullable()
-  .optional()
-  .default(null)
-const valgfriBool = z.boolean().nullable().optional().default(false)
-const valgfriString = z.string().nullable().optional().default(null)
-const valgfriDato = z.iso
-  .datetime({ offset: true })
-  .nullable()
-  .optional()
-  .default(null)
-  .meta({ example: "2023-01-01T00:00:00Z" })
-const valgfriObjekt = <T extends z.ZodRawShape>(shape: T) =>
-  z.object(shape).nullable().optional().default(null)
 
 const matrikkelenhetSchema = valgfriObjekt({
   gnr: valgfriHeltall.meta({ example: 208 }),

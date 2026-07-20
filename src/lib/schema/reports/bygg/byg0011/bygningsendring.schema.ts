@@ -1,6 +1,5 @@
 import { z } from "@hono/zod-openapi"
-import { arealFordelingSchema } from "./areal.schema"
-import { bygningsetasjeSchema } from "./bygningsetasje.schema"
+import { arealFordelingSchema } from "./arealFordeling.schema"
 import { koordinatSchema } from "./koordinat.schema"
 import { tiltakshaverSchema } from "./person.schema"
 
@@ -57,7 +56,6 @@ export const bygningsendringSchema = z
     bebygdAreal: z.number().nonnegative(),
     koordinat: koordinatSchema,
     datoer: bygningsdatoerSchema,
-    etasjeplan: z.array(bygningsetasjeSchema),
     bruksenheter: z.array(bruksenhetReferanseSchema),
     tiltakshavere: z.array(tiltakshaverSchema).optional().default([]),
     kulturminner: z.array(kulturminneSchema).optional().default([]),

@@ -1,19 +1,19 @@
 import { Heading, Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import type { Bygningsendring } from "../../lib/schema/reports/bygg/byg0011/bygningsendring.schema"
+import type { EtasjePlan } from "../../lib/schema/reports/bygg/byg0011/byg0011.schema"
 import { formatArea } from "../../lib/utils/formatArea"
 
 interface Props {
-  endring: Bygningsendring
+  etasjePlan: EtasjePlan
 }
 
-export default function ArealFordeling({ endring }: Props) {
+export default function ArealFordeling({ etasjePlan }: Props) {
   const { t } = useTranslation()
   const af = "rapport.BYG0011.byggoversikt.arealfordeling"
 
-  const sum = endring.etasjeplan.reduce(
+  const sum = etasjePlan.reduce(
     (acc, e) => ({
-      antallBoenheter: acc.antallBoenheter + e.antallBoenheter,
+      antallBoenheter: acc.antallBoenheter + (e.antallBoenheter ?? 0),
       bolig: acc.bolig + (e.bruksareal.bolig ?? 0),
       annet: acc.annet + (e.bruksareal.annet ?? 0),
       bra: acc.bra + (e.bruksareal.totalt ?? 0),
@@ -39,7 +39,7 @@ export default function ArealFordeling({ endring }: Props) {
           </Table.Row>
         </Table.Head>
         <Table.Body>
-          {endring.etasjeplan.map((e) => (
+          {etasjePlan.map((e) => (
             <Table.Row key={`${e.etasjeplan}-${e.etasje}`}>
               <Table.Cell>{e.etasjeplan}</Table.Cell>
               <Table.Cell>{e.antallBoenheter}</Table.Cell>

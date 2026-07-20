@@ -6,27 +6,21 @@ import { getBygningstype } from "../../lib/schema/reports/bygg/shared/bygningsty
 
 interface Props {
   bygning: Bygning
-  endring: Bygningsendring
-  koordinatsystem: string
+  gjeldendeEndring: Bygningsendring
 }
 
-export default function Oversiktsfelt({
-  bygning,
-  endring,
-  koordinatsystem,
-}: Props) {
+export default function Oversiktsfelt({ bygning, gjeldendeEndring }: Props) {
   const { t } = useTranslation()
   const key = "rapport.BYG0011.byggoversikt"
 
   const oversikt = {
-    bygningsstatus: endring.bygningsstatus.navn,
-    bygningstype: `${bygning.bygningstype.kode} ${getBygningstype(bygning.bygningstype.kode, t)}`,
-    antallBruksenheter: endring.bruksenheter.length,
-    antallBoenheter: endring.antallBoenheter,
+    bygningsstatus: gjeldendeEndring.bygningsstatus.navn,
+    bygningstype: `${bygning.bygningsType.kode} ${getBygningstype(bygning.bygningsType.kode, t)}`,
+    antallBruksenheter: gjeldendeEndring.bruksenheter.length,
+    antallBoenheter: gjeldendeEndring.antallBoenheter,
     naeringsgruppe: bygning.naeringsgruppe,
-    koordinater: `${endring.koordinat.nord} N / ${endring.koordinat.ost} Ø`,
-    koordinatsystem,
-    etasjer: endring.etasjeplan
+    koordinater: `${gjeldendeEndring.koordinat.nord} N / ${gjeldendeEndring.koordinat.ost} Ø`,
+    etasjer: bygning.etasjePlan
       .map((e) => `${e.etasjeplan} (${e.etasje})`)
       .join(", "),
     bygningsnr: bygning.bygningsnr,

@@ -9,19 +9,20 @@ import {
 } from "./byggHistorikk"
 
 interface Props {
-  endringer: Bygningsendring[]
+  byggEndringer: Bygningsendring[]
 }
 
 const groenneStatuser = new Set(["FA", "TB"])
 
-export default function Historikk({ endringer }: Props) {
+export default function Historikk({ byggEndringer }: Props) {
   const { i18n, t } = useTranslation()
   const tom = t("tom")
   const h = "rapport.BYG0011.byggoversikt.historikk"
 
-  if (endringer.length === 0) return null
+  if (byggEndringer.length === 0) return null
 
-  const kronologiskeEndringer = sorterBygningsendringerKronologisk(endringer)
+  const kronologiskeEndringer =
+    sorterBygningsendringerKronologisk(byggEndringer)
 
   const rader = kronologiskeEndringer
     .map((rad, i) => ({

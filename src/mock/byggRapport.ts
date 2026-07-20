@@ -110,22 +110,7 @@ const gjeldendeEndring: Bygningsendring = {
     ferdigattest: isoDatetime("2020-08-20"),
     tattIBruk: isoDatetime("2020-09-01"),
   }),
-  etasjeplan: [
-    {
-      etasjeplan: "Hovedetasje",
-      etasje: 1,
-      antallBoenheter: 1,
-      bruksareal: { bolig: 80, annet: 10, totalt: 90 },
-      bruttoareal: { bolig: 90, annet: 12, totalt: 102 },
-    },
-    {
-      etasjeplan: "Annenetasje",
-      etasje: 2,
-      antallBoenheter: 0,
-      bruksareal: { bolig: 60, annet: 10, totalt: 70 },
-      bruttoareal: { bolig: 68, annet: 12, totalt: 80 },
-    },
-  ],
+
   bruksenheter: [refBruksenhet("H0101")],
   tiltakshavere: [
     {
@@ -230,20 +215,16 @@ const mockByggRapport: ByggRapport = {
     bygning: {
       bygningsnr: "12345678",
       bygningstyper: [{ kode: "111" }],
-      lopenr: null,
     },
     adresse: {
       adressekode: "1000",
       bruksenhetsnr: "H0101",
       adressenavn: "Storgata",
       nr: 1,
-      bokstav: null,
       utenBokstav: true,
-      tilleggsnavn: null,
     },
-    matrikkelenhet: { gnr: 208, bnr: 12, fnr: null, snr: null },
+    matrikkelenhet: { gnr: 208, bnr: 12 },
     hjemmelshaver: {
-      foedselsEllerOrgnr: null,
       etternavn: "Nordmann",
       fornavn: "Ola",
     },
@@ -251,7 +232,6 @@ const mockByggRapport: ByggRapport = {
       naavaerende: ["Tatt i bruk"],
       tidligere: [],
       periodeFra: isoDatetime("2019-01-01"),
-      periodeTil: null,
     },
     sokevindu: {
       nord: 6642000,
@@ -271,9 +251,28 @@ const mockByggRapport: ByggRapport = {
   bygninger: [
     {
       bygningsnr: "12345678",
-      bygningstype: { kode: "111" },
+      bygningsType: { kode: "111" },
       naeringsgruppe: "Bolig",
+      antallBoenheter: 1,
+      bruksArealBolig: { bolig: 140, annet: 35, totalt: 175 },
+      bruttoArealBolig: { bolig: 158, annet: 44, totalt: 202 },
       matrikkelenhet: "208/12",
+      etasjePlan: [
+        {
+          etasjeplan: "Hovedetasje",
+          etasje: 1,
+          antallBoenheter: 1,
+          bruksareal: { bolig: 80, annet: 10, totalt: 90 },
+          bruttoareal: { bolig: 90, annet: 12, totalt: 102 },
+        },
+        {
+          etasjeplan: "Annenetasje",
+          etasje: 2,
+          antallBoenheter: 0,
+          bruksareal: { bolig: 60, annet: 10, totalt: 70 },
+          bruttoareal: { bolig: 68, annet: 12, totalt: 80 },
+        },
+      ],
       bruksenheter: [
         {
           id: "H0101",

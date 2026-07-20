@@ -273,7 +273,7 @@ export const nn = {
         bygningsnr: "Bygningsnummer",
         header: {
           bygg: "Bygg {{lopenr}}",
-          bygningsnrLopenr: "Bygningsnr. {{bygningsnr}} · Løpenr. {{lopenr}}",
+          bygningsnrLopenr: "Bygningsnr. {{bygningsnr}}",
           ferdigattest: "Ferdigattest: {{dato}}",
         },
         nokkeltall: {

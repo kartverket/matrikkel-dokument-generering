@@ -17,8 +17,10 @@ export function SokevinduKriterier({ sokevinduKriterier }: Props) {
 
   if (!sokevinduKriterier) return null
 
-  const formatCoordinate = (value: number | null) =>
-    value === null ? ikkeAngitt : numberFormatter.format(value)
+  const formatCoordinate = (value: number | undefined) =>
+    value === null || value === undefined
+      ? ikkeAngitt
+      : numberFormatter.format(value)
 
   return (
     <section className="break-inside-avoid">

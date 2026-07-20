@@ -15,11 +15,10 @@ import {
 
 const bruksenhetFelt = lagDetaljfeltBuilder("rapport.BYG0011.bruksenheter")
 const byggFelt = lagDetaljfeltBuilder("rapport.BYG0011")
-const etasjefelt = lagDetaljfeltBuilder("rapport.BYG0011.etasjer")
 
 interface Props {
   endring: Bygningsendring
-  bygning: Pick<Bygning, "bygningstype" | "naeringsgruppe" | "matrikkelenhet">
+  bygning: Pick<Bygning, "bygningsType" | "naeringsgruppe" | "matrikkelenhet">
 }
 
 export function Endringskort({ endring, bygning }: Props) {
@@ -46,7 +45,7 @@ export function Endringskort({ endring, bygning }: Props) {
         bruksenhetFelt("endringskode", endring.endringskode),
         bruksenhetFelt(
           "bygningstype",
-          `${bygning.bygningstype.kode} ${getBygningstype(bygning.bygningstype.kode, t)}`,
+          `${bygning.bygningsType.kode} ${getBygningstype(bygning.bygningsType.kode, t)}`,
         ),
         byggFelt("naeringsgruppe", bygning.naeringsgruppe),
         byggFelt("matrikkelenhet", bygning.matrikkelenhet),
@@ -107,27 +106,6 @@ export function Endringskort({ endring, bygning }: Props) {
   ] satisfies Array<{ title: string; felter: DetaljfeltData[] }>
 
   const lister = [
-    {
-      title: t("rapport.BYG0011.bruksenheter.etasjerIEndringen"),
-      emptyText: t("rapport.BYG0011.bruksenheter.ingenEtasjer"),
-      elementer: endring.etasjeplan.map((etasje) => ({
-        key: `${etasje.etasjeplan}-${etasje.etasje}`,
-        felter: [
-          etasjefelt("etasjeplan", etasje.etasjeplan),
-          etasjefelt("etasje", String(etasje.etasje)),
-          etasjefelt("antallBoenheter", String(etasje.antallBoenheter)),
-          etasjefelt("bruksarealBolig", formatArea(etasje.bruksareal.bolig)),
-          etasjefelt("bruksarealAnnet", formatArea(etasje.bruksareal.annet)),
-          etasjefelt("bruksarealTotalt", formatArea(etasje.bruksareal.totalt)),
-          etasjefelt("bruttoarealBolig", formatArea(etasje.bruttoareal.bolig)),
-          etasjefelt("bruttoarealAnnet", formatArea(etasje.bruttoareal.annet)),
-          etasjefelt(
-            "bruttoarealTotalt",
-            formatArea(etasje.bruttoareal.totalt),
-          ),
-        ],
-      })),
-    },
     {
       title: t("rapport.BYG0011.bruksenheter.kulturminnerIEndringen"),
       emptyText: t("rapport.BYG0011.bruksenheter.ingenKulturminner"),

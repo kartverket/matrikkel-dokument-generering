@@ -1,6 +1,5 @@
 import { z } from "@hono/zod-openapi"
-import { arealFordelingSchema } from "./areal.schema"
-import { bygningsetasjeSchema } from "./bygningsetasje.schema"
+import { arealFordelingSchema } from "./arealFordeling.schema"
 import { koordinatSchema } from "./koordinat.schema"
 import { hjemmelshaverSchema, kontaktpersonSchema } from "./person.schema"
 
@@ -16,11 +15,25 @@ export const bruksenhetSchema = z
     kjokkentilgang: z.boolean().nullable(),
     antallBad: z.number().int().nonnegative(),
     antallWc: z.number().int().nonnegative(),
+
+    // TODO - Fjerne, dette har vi ikke noe informasjon, og er ikke en del av dagens rapport.
     arealfordeling: z.object({
       bebygdAreal: z.number().nonnegative(),
       bruksareal: arealFordelingSchema,
       koordinat: koordinatSchema,
-      etasjeplan: z.array(bygningsetasjeSchema),
+      etasjeplan: z.array(
+        z.object({
+          etasjeplan: z.string().min(1).meta({
+            example: "Hovedetasje",
+          }),
+          etasje: z.number().int().nonnegative().meta({
+            example: 1,
+          }),
+          antallBoenheter: z.number().int().nonnegative(),
+          bruksareal: arealFordelingSchema,
+          bruttoareal: arealFordelingSchema,
+        }),
+      ),
     }),
     hjemmelshavere: z.array(hjemmelshaverSchema),
     kontaktpersoner: z.array(kontaktpersonSchema),

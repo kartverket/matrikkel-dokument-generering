@@ -31,11 +31,7 @@ export function DocumentComponent({ data }: { data: Byg0011Rapport }) {
         return (
           <Fragment key={bygning.bygningsnr}>
             <div className={`pg-bygg-${nr}-oversikt`}>
-              <Byggoversikt
-                index={2}
-                bygning={bygning}
-                koordinatsystem={data.koordinatsystem}
-              />
+              <Byggoversikt index={2} bygning={bygning} />
             </div>
             <div className={`pg-bygg-${nr}-bruksenhet`}>
               <Bruksenheter index={3} bygning={bygning} />
