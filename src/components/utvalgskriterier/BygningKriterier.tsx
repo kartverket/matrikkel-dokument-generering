@@ -1,6 +1,6 @@
 import { Heading, Table, Tag } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import { getBygningstype } from "../../lib/schema/reports/bygg/shared/bygningstype.schema"
+import { getBygningstype } from "../../lib/schema/reports/bygg/shared/bygningsType.schema"
 import type { ByggUtvalgskriterier as Utvalgskriterier } from "../../lib/schema/reports/bygg/shared/utvalgskriterier.schema"
 
 interface Props {

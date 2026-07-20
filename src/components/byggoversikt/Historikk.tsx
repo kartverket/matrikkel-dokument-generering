@@ -1,7 +1,7 @@
 import { Heading, Paragraph, Tag } from "@kv-designsystem/react"
 import { Activity } from "react"
 import { useTranslation } from "react-i18next"
-import type { Bygningsendring } from "../../lib/schema/reports/bygg/byg0011/bygningsendring.schema"
+import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/bygningsEndring.schema"
 import { formatDate } from "../../lib/utils/formatDate"
 import {
   lagHistorikkbeskrivelseForBygningsendring,
@@ -9,7 +9,7 @@ import {
 } from "./byggHistorikk"
 
 interface Props {
-  byggEndringer: Bygningsendring[]
+  byggEndringer: BygningsEndring[]
 }
 
 const groenneStatuser = new Set(["FA", "TB"])

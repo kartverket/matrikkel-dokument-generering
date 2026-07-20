@@ -1,38 +1,25 @@
 import { z } from "@hono/zod-openapi"
 import { arealFordelingSchema } from "./arealFordeling.schema"
 import { koordinatSchema } from "./koordinat.schema"
+import {
+  valgfriDato,
+  valgfriHeltall,
+  valgfriNummer,
+  valgfriString,
+} from "../../../core/common"
 import { tiltakshaverSchema } from "./person.schema"
-
-const valgfriDatoSchema = z.iso.datetime({ offset: true }).nullable().optional()
-
-export const bygningsstatusSchema = z
-  .object({
-    kode: z.number().int().nonnegative(),
-    kortkode: z.string().min(1),
-    navn: z.string().min(1),
-    bestaaende: z.boolean(),
-  })
-  .meta({ id: "BYG0011Bygningsstatus" })
+import { bygningsTypeSchema } from "../shared/bygningsType.schema"
 
 export const bygningsdatoerSchema = z
   .object({
-    rammetillatelse: valgfriDatoSchema,
-    igangsettingstillatelse: valgfriDatoSchema,
-    midlertidigBrukstillatelse: valgfriDatoSchema,
-    ferdigattest: valgfriDatoSchema,
-    tattIBruk: valgfriDatoSchema,
-    utgaattRevet: valgfriDatoSchema,
+    rammetillatelse: valgfriDato,
+    igangsettingstillatelse: valgfriDato,
+    midlertidigBrukstillatelse: valgfriDato,
+    ferdigattest: valgfriDato,
+    tattIBruk: valgfriDato,
+    utgaattRevet: valgfriDato,
   })
   .meta({ id: "BYG0011Bygningsdatoer" })
-
-const kulturminneSchema = z
-  .object({
-    id: z.string().min(1),
-    navn: z.string().min(1),
-    status: z.string().min(1),
-    kategori: z.string().min(1),
-  })
-  .meta({ id: "BYG0011Kulturminne" })
 
 const bruksenhetReferanseSchema = z
   .object({
@@ -44,24 +31,34 @@ const bruksenhetReferanseSchema = z
       "Referanse til en bruksenhet som berøres av en bygningsendring.",
   })
 
-export const bygningsendringSchema = z
+export const bygningsEndringSchema = z
   .object({
-    lopenr: z.number().int().nonnegative(),
-    endringskode: z.string().nullable().optional(),
-    beskrivelse: z.string().nullable().optional().default(null),
-    bygningsstatus: bygningsstatusSchema,
-    antallBoenheter: z.number().int().nonnegative(),
-    bruksareal: arealFordelingSchema,
-    bruttoareal: arealFordelingSchema,
-    bebygdAreal: z.number().nonnegative(),
+    lopenr: valgfriHeltall.meta({
+      description: "Løpenummer for endringen.",
+      example: 1,
+    }),
+    endringsKode: valgfriString,
+    bygningsStatus: valgfriString,
+    bygningsType: bygningsTypeSchema,
+    naeringsgruppe: valgfriString.meta({
+      example: "Bolig",
+    }),
+    antallBoenheter: valgfriHeltall,
+    bruksArealBolig: arealFordelingSchema,
+    bruttoArealBolig: arealFordelingSchema,
+    bebygdAreal: valgfriNummer.meta({
+      description: "Bebygd areal i kvadratmeter.",
+      example: 123,
+    }),
     koordinat: koordinatSchema,
     datoer: bygningsdatoerSchema,
-    bruksenheter: z.array(bruksenhetReferanseSchema),
+
+    // TODO fjerne tiltakshavere, inngår som en rolle i Hjemmelshaver/aktuell eier/kontaktinstans
     tiltakshavere: z.array(tiltakshaverSchema).optional().default([]),
-    kulturminner: z.array(kulturminneSchema).optional().default([]),
+
+    bruksenheter: z.array(bruksenhetReferanseSchema),
   })
   .meta({ id: "BYG0011Bygningsendring" })
 
-export type Bygningsstatus = z.infer<typeof bygningsstatusSchema>
-export type Bygningsdatoer = z.infer<typeof bygningsdatoerSchema>
-export type Bygningsendring = z.infer<typeof bygningsendringSchema>
+export type ByggEndringsDatoer = z.infer<typeof bygningsdatoerSchema>
+export type BygningsEndring = z.infer<typeof bygningsEndringSchema>

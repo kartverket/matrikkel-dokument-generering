@@ -1,11 +1,10 @@
 import { z } from "@hono/zod-openapi"
-import { valgfriNummer, valgfriString } from "../../../core/common"
+import { valgfriNummer } from "../../../core/common"
 import { rapportSchema } from "../../../core/rapport.schema"
-import { bygningstypeSchema } from "../shared/bygningstype.schema"
 import { byggUtvalgskriterierSchema } from "../shared/utvalgskriterier.schema"
 import { arealFordelingSchema } from "./arealFordeling.schema"
 import { bruksenhetSchema } from "./bruksenhet.schema"
-import { bygningsendringSchema } from "./bygningsendring.schema"
+import { bygningsEndringSchema } from "./bygningsEndring.schema"
 
 const bygningsEtasjeSchema = z
   .object({
@@ -34,22 +33,14 @@ const bygningSchema = z
     bygningsnr: z.string().min(1).meta({
       example: "12 345 678",
     }),
-    endringsKode: valgfriString,
-    bygningsStatus: valgfriString,
-    bygningsType: bygningstypeSchema,
-    naeringsgruppe: valgfriString.meta({
-      example: "Bolig",
-    }),
-    antallBoenheter: z.number().int().nonnegative(),
-    bruksArealBolig: arealFordelingSchema,
-    bruttoArealBolig: arealFordelingSchema,
 
     matrikkelenhet: z.string().min(1).meta({
       example: "12/345/0/67",
+      description: "KommuneNr / GårdsNr / BruksNr / Festenr",
     }),
     etasjePlan: etasjePlanSchema,
     bruksenheter: z.array(bruksenhetSchema).optional().default([]),
-    endringer: z.array(bygningsendringSchema).optional().default([]),
+    endringer: z.array(bygningsEndringSchema).optional().default([]),
   })
   .meta({ id: "BYG0011Bygning" })
 

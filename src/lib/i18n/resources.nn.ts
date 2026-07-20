@@ -1,4 +1,4 @@
-import { getBygningstypeNavn } from "../schema/reports/bygg/shared/bygningstype.schema"
+import { getBygningstypeNavn } from "../schema/reports/bygg/shared/bygningsType.schema"
 import { shared } from "./resources.shared"
 
 export const nn = {

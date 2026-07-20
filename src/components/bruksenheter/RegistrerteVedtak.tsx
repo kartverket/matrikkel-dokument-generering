@@ -1,15 +1,15 @@
 import { Heading, Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import type { Bygningsendring } from "../../lib/schema/reports/bygg/byg0011/bygningsendring.schema"
+import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/bygningsEndring.schema"
 import { Detaljgrid, lagDetaljfeltBuilder } from "../Detaljfelt"
 
 interface Props {
-  endring: Bygningsendring | undefined
+  endring: BygningsEndring | undefined
 }
 
 const vedtakFelt = lagDetaljfeltBuilder("rapport.BYG0011.registrerteVedtak")
 
-function getVedtakDetaljfelter(datoer: Bygningsendring["datoer"]) {
+function getVedtakDetaljfelter(datoer: BygningsEndring["datoer"]) {
   return [
     vedtakFelt("rammetillatelse", datoer.rammetillatelse),
     vedtakFelt("igangsettingstillatelse", datoer.igangsettingstillatelse),

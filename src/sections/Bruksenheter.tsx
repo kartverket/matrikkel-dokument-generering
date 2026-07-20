@@ -12,7 +12,7 @@ import { Detaljgrid, lagDetaljfeltBuilder } from "../components/Detaljfelt.tsx"
 import { Section } from "../components/Section.tsx"
 import type { Bruksenhet } from "../lib/schema/reports/bygg/byg0011/bruksenhet.schema.ts"
 import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byg0011.schema.ts"
-import type { Bygningsendring } from "../lib/schema/reports/bygg/byg0011/bygningsendring.schema.ts"
+import type { BygningsEndring } from "../lib/schema/reports/bygg/byg0011/bygningsEndring.schema.ts"
 import type { Tiltakshaver } from "../lib/schema/reports/bygg/byg0011/person.schema.ts"
 import { formatArea } from "../lib/utils/formatArea.ts"
 import {
@@ -51,12 +51,14 @@ function getBruksenhetDetaljfelter(bruksenhet: Bruksenhet, t: TFunction) {
 }
 
 function getTiltakshavere(
-  endringer: Bygningsendring[],
+  endringer: BygningsEndring[],
   bruksenhet: Bruksenhet,
 ): Tiltakshaver[] {
   const unikeTiltakshavere = new Map<string, Tiltakshaver>()
 
-  for (const endring of endringer.toSorted((a, b) => b.lopenr - a.lopenr)) {
+  for (const endring of endringer.toSorted(
+    (a, b) => (b?.lopenr ?? 0) - (a?.lopenr ?? 0),
+  )) {
     if (isFerdigstilt(endring)) continue
 
     for (const tiltakshaver of endring.tiltakshavere) {
@@ -80,7 +82,7 @@ function getTiltakshavere(
   return [...unikeTiltakshavere.values()]
 }
 
-function berorerBruksenhet(endring: Bygningsendring, bruksenhet: Bruksenhet) {
+function berorerBruksenhet(endring: BygningsEndring, bruksenhet: Bruksenhet) {
   return (
     bruksenhet.nummer !== null &&
     endring.bruksenheter.some(

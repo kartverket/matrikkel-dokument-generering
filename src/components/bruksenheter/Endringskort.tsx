@@ -2,8 +2,8 @@ import { Card, Divider, Heading, Paragraph, Tag } from "@kv-designsystem/react"
 import { Fragment } from "react"
 import { useTranslation } from "react-i18next"
 import type { Bygning } from "../../lib/schema/reports/bygg/byg0011/byg0011.schema"
-import type { Bygningsendring } from "../../lib/schema/reports/bygg/byg0011/bygningsendring.schema"
-import { getBygningstype } from "../../lib/schema/reports/bygg/shared/bygningstype.schema"
+import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/bygningsEndring.schema"
+import { getBygningstype } from "../../lib/schema/reports/bygg/shared/bygningsType.schema"
 import { arealLinje } from "../../lib/utils/arealLinje"
 import { formatArea } from "../../lib/utils/formatArea"
 import { formatDate } from "../../lib/utils/formatDate"
@@ -17,8 +17,8 @@ const bruksenhetFelt = lagDetaljfeltBuilder("rapport.BYG0011.bruksenheter")
 const byggFelt = lagDetaljfeltBuilder("rapport.BYG0011")
 
 interface Props {
-  endring: Bygningsendring
-  bygning: Pick<Bygning, "bygningsType" | "naeringsgruppe" | "matrikkelenhet">
+  endring: BygningsEndring
+  bygning: Pick<Bygning, "bygningsType" | "matrikkelenhet">
 }
 
 export function Endringskort({ endring, bygning }: Props) {
@@ -104,27 +104,6 @@ export function Endringskort({ endring, bygning }: Props) {
       ],
     },
   ] satisfies Array<{ title: string; felter: DetaljfeltData[] }>
-
-  const lister = [
-    {
-      title: t("rapport.BYG0011.bruksenheter.kulturminnerIEndringen"),
-      emptyText: t("rapport.BYG0011.bruksenheter.ingenKulturminner"),
-      elementer: endring.kulturminner.map((kulturminne) => ({
-        key: kulturminne.id,
-        felter: [
-          bruksenhetFelt("kulturminneNavn", kulturminne.navn),
-          bruksenhetFelt("kulturminneStatus", kulturminne.status),
-          bruksenhetFelt("kulturminneKategori", kulturminne.kategori, {
-            className: "col-span-3",
-          }),
-        ],
-      })),
-    },
-  ] satisfies Array<{
-    title: string
-    emptyText: string
-    elementer: Array<{ key: string; felter: DetaljfeltData[] }>
-  }>
 
   return (
     <Card

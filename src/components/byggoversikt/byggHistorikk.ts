@@ -1,12 +1,12 @@
 import type { TFunction } from "i18next"
-import type { Bygningsendring } from "../../lib/schema/reports/bygg/byg0011/bygningsendring.schema"
+import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/bygningsEndring.schema"
 
 const GODKJENNINGSSTATUSER = new Set(["RA", "IG"])
 
 type HistorikkTranslationKey = "rapport.BYG0011.byggoversikt.historikk"
 
-function finnPrimaerDato({ datoer, bygningsstatus }: Bygningsendring) {
-  switch (bygningsstatus.kortkode) {
+function finnPrimaerDato({ datoer, bygningsStatus }: BygningsEndring) {
+  switch (bygningsStatus) {
     case "FA":
       return datoer.ferdigattest
     case "MB":
@@ -25,7 +25,7 @@ function finnPrimaerDato({ datoer, bygningsstatus }: Bygningsendring) {
 }
 
 export function sorterBygningsendringerKronologisk(
-  endringer: Bygningsendring[],
+  endringer: BygningsEndring[],
 ) {
   return endringer
     .map((endring) => ({ endring, dato: finnPrimaerDato(endring) }))
@@ -33,44 +33,44 @@ export function sorterBygningsendringerKronologisk(
       if (a.dato && b.dato) return a.dato.localeCompare(b.dato)
       if (a.dato) return 1
       if (b.dato) return -1
-      return a.endring.lopenr - b.endring.lopenr
+      return (a.endring?.lopenr ?? 0) - (b.endring?.lopenr ?? 0)
     })
 }
 
 function finnArealverb(
-  statuskode: string,
+  statusKode: string,
   differanse: number,
 ): "lagtTil" | "fjernet" | "godkjent" {
-  if (GODKJENNINGSSTATUSER.has(statuskode)) return "godkjent"
+  if (GODKJENNINGSSTATUSER.has(statusKode)) return "godkjent"
   return differanse >= 0 ? "lagtTil" : "fjernet"
 }
 
 export function lagHistorikkbeskrivelseForBygningsendring(
   t: TFunction,
   translationKey: HistorikkTranslationKey,
-  endring: Bygningsendring,
-  forrigeEndring: Bygningsendring | undefined,
+  endring: BygningsEndring,
+  forrigeEndring: BygningsEndring | undefined,
 ): string | null {
-  if (endring.beskrivelse) return endring.beskrivelse
-
   if (forrigeEndring === undefined) return t(`${translationKey}.foersteVedtak`)
 
-  const statuskode = endring.bygningsstatus.kortkode
   const beskrivelser: string[] = []
 
   for (const arealtype of ["bolig", "annet", "totalt"] as const) {
-    const areal = endring.bruksareal[arealtype]
-    const forrigeAreal = forrigeEndring.bruksareal[arealtype]
+    const areal = endring.et?.[arealtype]
+    const forrigeAreal = forrigeEndring.bruksareal?.[arealtype]
     if (areal === null || forrigeAreal === null) continue
 
     const differanse = (areal ?? 0) - (forrigeAreal ?? 0)
     if (differanse === 0) continue
 
     beskrivelser.push(
-      t(`${translationKey}.areal.${finnArealverb(statuskode, differanse)}`, {
-        areal: Math.abs(differanse),
-        type: t(`${translationKey}.typer.${arealtype}`),
-      }),
+      t(
+        `${translationKey}.areal.${finnArealverb(endring.endringsKode, differanse)}`,
+        {
+          areal: Math.abs(differanse),
+          type: t(`${translationKey}.typer.${arealtype}`),
+        },
+      ),
     )
   }
 

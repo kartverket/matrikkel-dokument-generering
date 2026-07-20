@@ -1,9 +1,9 @@
 import type { Bruksenhet } from "../lib/schema/reports/bygg/byg0011/bruksenhet.schema"
 import type { Byg0011Rapport as ByggRapport } from "../lib/schema/reports/bygg/byg0011/byg0011.schema"
-import type { Bygningsendring } from "../lib/schema/reports/bygg/byg0011/bygningsendring.schema"
+import type { BygningsEndring } from "../lib/schema/reports/bygg/byg0011/bygningsEndring.schema"
 
-type Bygningsstatus = Bygningsendring["bygningsstatus"]
-type Bygningsdatoer = Bygningsendring["datoer"]
+type Bygningsstatus = BygningsEndring["bygningsstatus"]
+type Bygningsdatoer = BygningsEndring["datoer"]
 type Hjemmelshaver = Bruksenhet["hjemmelshavere"][number]
 type Kontaktperson = Bruksenhet["kontaktpersoner"][number]
 
@@ -94,7 +94,7 @@ const byggmesterBob: Kontaktperson = {
   eierErUtgatt: false,
 }
 
-const gjeldendeEndring: Bygningsendring = {
+const gjeldendeEndring: BygningsEndring = {
   lopenr: 5,
   endringskode: null,
   beskrivelse: null,
@@ -141,7 +141,7 @@ const gjeldendeEndring: Bygningsendring = {
   ],
 }
 
-const historiskeEndringer: Bygningsendring[] = [
+const historiskeEndringer: BygningsEndring[] = [
   {
     ...gjeldendeEndring,
     lopenr: 4,

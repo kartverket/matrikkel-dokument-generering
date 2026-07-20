@@ -270,10 +270,8 @@ export function getBygningstype(kode: string, t: TFunction): string {
   return t(`bygningstyper.${gyldigKode}`)
 }
 
-export const bygningstypeSchema = z
+export const bygningsTypeSchema = z
   .object({
     kode: z.enum(bygningstypekoder).meta({ example: "111" }),
   })
-  .meta({ id: "ByggBygningstype" })
-
-export type Bygningstype = z.infer<typeof bygningstypeSchema>
+  .meta({ id: "ByggBygningsType" })

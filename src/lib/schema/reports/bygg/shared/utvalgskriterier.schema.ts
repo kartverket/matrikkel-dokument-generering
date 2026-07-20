@@ -7,7 +7,7 @@ import {
   valgfriObjekt,
   valgfriString,
 } from "../../../core/common"
-import { bygningstypeSchema } from "./bygningstype.schema"
+import { bygningsTypeSchema } from "./bygningsType.schema"
 
 const matrikkelenhetSchema = valgfriObjekt({
   gnr: valgfriHeltall.meta({ example: 208 }),
@@ -56,7 +56,7 @@ export const byggUtvalgskriterierSchema = valgfriObjekt({
       description: "Bygningsnummeret til bygget som rapporten skal omfatte.",
     }),
     bygningstyper: z
-      .array(bygningstypeSchema)
+      .array(bygningsTypeSchema)
       .optional()
       .default([])
       .meta({ example: [{ kode: "111" }] }),

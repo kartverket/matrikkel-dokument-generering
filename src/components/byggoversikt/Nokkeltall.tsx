@@ -1,11 +1,11 @@
 import { Card } from "@digdir/designsystemet-react"
 import { Label, Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import type { Bygningsendring } from "../../lib/schema/reports/bygg/byg0011/bygningsendring.schema"
+import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/bygningsEndring.schema"
 import { formatArea } from "../../lib/utils/formatArea"
 
 interface Props {
-  gjeldendeEndring: Bygningsendring
+  gjeldendeEndring: BygningsEndring
 }
 
 export default function Nokkeltall({ gjeldendeEndring }: Props) {
