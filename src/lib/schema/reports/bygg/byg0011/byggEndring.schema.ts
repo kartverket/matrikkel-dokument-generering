@@ -10,11 +10,12 @@ import {
   valgfriString,
 } from "../../../core/utils/zodUtils.ts"
 import { aktoerKodeSchema } from "../koder/aktoerKode.schema.ts"
+import { bruksenhetsKodeSchema } from "../koder/bruksenhetsTypeKode.schema.ts"
 import { bygningsTypeKodeSchema } from "../koder/bygningsTypeKodeSchema.ts"
 import { endringsKodeSchema } from "../koder/endringsKode.schema.ts"
+import { kjokkenTilgangKodeSchema } from "../koder/kjokkenTilgangKode.ts"
 import { kontaktPersonKodeSchema } from "../koder/kontaktPersonKode.schema.ts"
 import { arealFordelingSchema } from "../shared/arealFordeling.schema.ts"
-import { bruksenhetSchema } from "./bruksenhet.schema.ts"
 
 export const byggEndringSchema = valgfriObjekt({
   // Unik ID for en bygg-endring
@@ -198,7 +199,34 @@ export const byggEndringSchema = valgfriObjekt({
   }),
 
   // Bruksenheter til endringen
-  bruksenheter: valgfriListe(bruksenhetSchema),
+  bruksenheter: valgfriListe(
+    valgfriObjekt({
+      bruksenhetsNr: valgfriString.meta({
+        description: "Bruksenhetsnummer",
+        example: "H0101",
+      }),
+
+      bruksenhetsTypeKode: bruksenhetsKodeSchema,
+
+      bruksAreal: valgfriNummer.meta({
+        description:
+          "Bruksarealet til bruksenheten gitt endringen. Oppgis i kvadratmeter. ",
+      }),
+
+      antallRom: valgfriNummer,
+      antallBad: valgfriNummer,
+      antallWC: valgfriNummer,
+      kjokkenTilgangKode: kjokkenTilgangKodeSchema,
+      adresse: valgfriString.meta({
+        example: "Postboks 1234 Nydalen 123 OSLO",
+        description: "Adressen til bruksenheten gitt endringen.",
+      }),
+
+      matrikkelEnhetsNr: valgfriString.meta({
+        example: "1234-56/789",
+      }),
+    }),
+  ),
 })
 
 export type ByggEndringsDatoer = NonNullable<
