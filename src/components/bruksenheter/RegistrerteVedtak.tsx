@@ -55,7 +55,9 @@ export function RegistrerteVedtak({ endringer }: Props) {
           {sorterte.map((endring) => (
             <Table.Row key={endring?.lopeNr}>
               <Table.HeaderCell scope="row" className="text-kv-default">
-                {t(`${bruksenhetKey}.endringKort`, { lopeNr: endring?.lopeNr })}
+                {t(`${bruksenhetKey}.endringKort`, {
+                  lopenr: endring?.lopeNr ?? 0,
+                })}
               </Table.HeaderCell>
               <Table.Cell className="tabular-nums">
                 {formatDato(endring?.byggDatoEndring?.rammetillatelse)}
