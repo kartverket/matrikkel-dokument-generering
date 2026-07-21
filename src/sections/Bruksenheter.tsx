@@ -82,7 +82,7 @@ export default function Bruksenheter({ index, bygning }: Props) {
             <div
               key={bruksenhet.id}
               data-bruksenhet={bruksenhet.nummer ?? ingenOppgittBruksenhet}
-              className="space-y-8 mb-10"
+              className="mb-10 space-y-8"
             >
               <BruksenhetHeader
                 bruksenhetNummer={bruksenhet.nummer ?? null}

@@ -11,9 +11,9 @@
   --color-kv-gray: var(--ds-color-neutral-background-tinted);
   --color-kv-blue: var(--ds-color-accent-base-default);
   --color-kv-blue-subtle: var(--ds-color-accent-surface-tinted);
-  --color-kv-green: #156C30;
-  --color-kv-green-subtle: #F6FAF7;
-  --color-kv-green-border: #97C7A6;
+  --color-kv-green: #156c30;
+  --color-kv-green-subtle: #f6faf7;
+  --color-kv-green-border: #97c7a6;
 }
 
 body {
