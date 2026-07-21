@@ -222,7 +222,7 @@ const mockByggRapport: ByggRapport = {
   locale: "nb",
   metadata: {
     kommune: { kommuneNr: "3201", kommuneNavn: "Bærum" },
-    koordinatSystemKode: 22,
+    koordinatSystemKode: "22",
     generertTidspunkt: "2026-07-17T10:00:00Z",
   },
   utvalgskriterier: {

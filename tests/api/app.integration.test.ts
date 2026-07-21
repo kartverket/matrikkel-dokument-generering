@@ -68,6 +68,10 @@ describe("HTTP API", () => {
     expect(openApi.paths["/create-document"].post).toBeDefined()
     expect(openApi.components.schemas.ValidationErrorResponse).toBeDefined()
     expect(openApi.components.schemas.PdfErrorResponse).toBeDefined()
+    expect(
+      openApi.components.schemas.ByggUtvalgskriterier.properties.bygning
+        .properties.bygningstyper.example,
+    ).toEqual(["111"])
     expect(openApi.servers).toEqual([
       { url: "/", description: "Gjeldende miljø" },
     ])

@@ -56,7 +56,7 @@ export const byggUtvalgskriterierSchema = valgfriObjekt({
       title: "Bygningstyper",
       description:
         "Bygningstypene som skal inkluderes i rapporten. Hver type oppgis med kode fra Matrikkelens bygningsklassifikasjon.",
-      example: [{ kode: "111" }],
+      example: ["111"],
     }),
     lopeNr: valgfriHeltall.meta({
       title: "Løpenummer",
