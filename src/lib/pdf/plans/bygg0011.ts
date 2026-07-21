@@ -1,12 +1,12 @@
 import type { TFunction } from "i18next"
-import type { ByggRapport } from "../../schema/reports/bygg/bygg0011/index"
+import type { Byg0011Rapport } from "../../schema/reports/bygg/byg0011/byggRapport.schema.ts"
 import { type PageDef, type PagePlan, pageCounterContent } from "../pagePlan"
 
 // BYG0011-spesifikk oversettelse fra rapport-data til en `PagePlan`.
 // Legger til én navngitt side per bygg × seksjon slik at header/footer oppdaterer seg riktig når rapporten spenner over flere sider.
 
 export function buildByggPagePlan(
-  data: ByggRapport,
+  data: Byg0011Rapport,
   t: TFunction,
   generertLabel: string,
 ): PagePlan {

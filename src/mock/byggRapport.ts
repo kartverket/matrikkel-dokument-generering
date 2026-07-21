@@ -1,232 +1,230 @@
+import type { Bruksenhet } from "../lib/schema/reports/bygg/byg0011/bruksenhet.schema"
 import type {
-  Bruksenhet,
-  ByggRapport,
-  Bygningsendring,
-} from "../lib/schema/reports/bygg/bygg0011/index"
-
-type Bygningsstatus = Bygningsendring["bygningsstatus"]
-type Bygningsdatoer = Bygningsendring["datoer"]
-type Hjemmelshaver = Bruksenhet["hjemmelshavere"][number]
-type Kontaktperson = Bruksenhet["kontaktpersoner"][number]
-
-const statuser = {
-  RA: { kode: 1, kortkode: "RA", navn: "Rammetillatelse", bestaaende: false },
-  IG: {
-    kode: 2,
-    kortkode: "IG",
-    navn: "Igangsettingstillatelse",
-    bestaaende: false,
-  },
-  MB: {
-    kode: 3,
-    kortkode: "MB",
-    navn: "Midlertidig tillatelse",
-    bestaaende: false,
-  },
-  TB: { kode: 4, kortkode: "TB", navn: "Tatt i bruk", bestaaende: true },
-  FA: { kode: 5, kortkode: "FA", navn: "Ferdigattestert", bestaaende: true },
-} satisfies Record<string, Bygningsstatus>
-
-function datoer(overrides: Partial<Bygningsdatoer>): Bygningsdatoer {
-  return {
-    rammetillatelse: null,
-    igangsettingstillatelse: null,
-    midlertidigBrukstillatelse: null,
-    ferdigattest: null,
-    tattIBruk: null,
-    utgaattRevet: null,
-    ...overrides,
-  }
-}
-
-function refBruksenhet(bruksenhetsnr: string) {
-  return { bruksenhetsnr }
-}
+  ByggEndringsDatoer,
+  BygningsEndring,
+} from "../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
+import type { Byg0011Rapport as ByggRapport } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
+import type { EndringsKode } from "../lib/schema/reports/bygg/koder/endringsKode.schema.ts"
 
 function isoDatetime(date: string) {
   return `${date}T00:00:00Z`
 }
 
-const olaNordmann: Hjemmelshaver = {
-  eierIdent: "12051978",
-  navn: "Ola Nordmann",
-  andelTeller: 1,
-  andelNevner: 2,
-  adresselinje1: "Belsetveien 114",
-  adresselinje2: null,
-  adresselinje3: null,
-  postnummer: "1348",
-  poststed: "Rykkinn",
-  land: "Norge",
-  statuskode: "AKTIV",
-  eierErUtgatt: false,
-  datofra: isoDatetime("2019-01-10"),
-  datotil: null,
-  kategorikode: "FYSISK_PERSON",
-  harAndel: true,
+function arealFordeling(boligAreal: number, annetAreal: number) {
+  return {
+    boligAreal,
+    annetAreal,
+    totaltAreal: boligAreal + annetAreal,
+  }
 }
 
-const kariNordmann: Hjemmelshaver = {
-  ...olaNordmann,
-  eierIdent: "03111980",
-  navn: "Kari Nordmann",
+function bruksenhet({
+  id,
+  etasje,
+  antallRom,
+  boligAreal,
+}: {
+  id: string
+  etasje: string
+  antallRom: number
+  boligAreal: number
+}): Bruksenhet {
+  return {
+    id,
+    bruksenhetsNr: id,
+    type: "Bolig",
+    seksjon: `Seksjon 3201-94/309/0/${id.at(-1)}`,
+    adresse: `Belsetveien 114 ${id}, 1348 Rykkinn`,
+    etasje,
+    antallRom,
+    kjokkentilgang: true,
+    antallBad: 1,
+    antallWc: 1,
+    arealfordeling: {
+      bebygdAreal: boligAreal,
+      bruksareal: arealFordeling(boligAreal, 0),
+      etasjeplan: [
+        {
+          etasjeplan: etasje,
+          etasje: 1,
+          antallBoenheter: 1,
+          bruksareal: arealFordeling(boligAreal, 0),
+          bruttoareal: arealFordeling(Math.ceil(boligAreal * 1.1), 0),
+        },
+      ],
+    },
+  }
 }
 
-const perHansen: Hjemmelshaver = {
-  ...olaNordmann,
-  eierIdent: "22071965",
-  navn: "Per Hansen",
-  andelNevner: 1,
+const h0101 = bruksenhet({
+  id: "H0101",
+  etasje: "Hovedetasje",
+  antallRom: 3,
+  boligAreal: 74,
+})
+
+const h0102 = bruksenhet({
+  id: "H0102",
+  etasje: "Loft",
+  antallRom: 2,
+  boligAreal: 28,
+})
+
+const h0103 = bruksenhet({
+  id: "H0103",
+  etasje: "Kjeller",
+  antallRom: 2,
+  boligAreal: 40,
+})
+
+const h0104 = bruksenhet({
+  id: "H0104",
+  etasje: "Underetasje",
+  antallRom: 2,
+  boligAreal: 42,
+})
+
+function byggEndring({
+  lopeNr,
+  endringsKode,
+  boligAreal,
+  annetAreal,
+  datoer,
+  bruksenheter,
+}: {
+  lopeNr: number
+  endringsKode?: EndringsKode
+  boligAreal: number
+  annetAreal: number
+  datoer: ByggEndringsDatoer
+  bruksenheter: Bruksenhet[]
+}): BygningsEndring {
+  return {
+    lopeNr,
+    byggMetaEndring: {
+      endringsKode,
+      bygningsType: "111",
+      antallBoenheter: 1,
+      naeringsgruppe: "Bolig",
+    },
+    byggArealEndring: {
+      bruksarealBolig: arealFordeling(boligAreal, annetAreal),
+      bruttoarealBolig: arealFordeling(
+        Math.ceil(boligAreal * 1.13),
+        Math.ceil(annetAreal * 1.2),
+      ),
+      bebygdAreal: 95,
+    },
+    etasjePlan: [
+      {
+        etasjeplan: "Hovedetasje",
+        etasje: 1,
+        antallBoenheter: 1,
+        bruksareal: arealFordeling(80, 10),
+        bruttoareal: arealFordeling(90, 12),
+      },
+      {
+        etasjeplan: "Annenetasje",
+        etasje: 2,
+        antallBoenheter: 0,
+        bruksareal: arealFordeling(60, 10),
+        bruttoareal: arealFordeling(68, 12),
+      },
+    ],
+    byggKoordinatEndring: { nord: 6642100, ost: 597400 },
+    byggDatoEndring: datoer,
+    aktoer: {
+      bruksenhetsNr: "H0101",
+      aktoerKode: "4",
+      identifikasjonsNr: "12051978",
+      erAvdoed: false,
+      navn: "Ola Nordmann",
+      adresse: "Belsetveien 114, 1348 Rykkinn",
+      andel: "1/2",
+    },
+    tiltaksHaver: {
+      bruksenhetsNr: "H0101",
+      kontaktPersonKode: "1",
+      identifikasjonsNr: "01019012345",
+      navn: "Fredrik Nordmann",
+      adresse: "Storgata 1, 0155 Oslo",
+    },
+    bruksenheter,
+  }
 }
 
-const byggmesterBob: Kontaktperson = {
-  rolle: "Kontaktperson",
-  eierIdent: "987654321",
-  navn: "Byggmester Bob AS",
-  adresselinje1: "Håndverkerveien 5",
-  adresselinje2: null,
-  adresselinje3: null,
-  postnummeromradenr: "0666",
-  postnummeromradenavn: "Oslo",
-  land: "Norge",
-  datofra: isoDatetime("2019-05-01"),
-  kategorikode: "JURIDISK_PERSON",
-  kontaktpersonKode: "ANSVARLIG_SOKER",
-  statuskode: "AKTIV",
-  eierErUtgatt: false,
-}
-
-const gjeldendeEndring: Bygningsendring = {
-  id: 1001,
-  lopenr: 5,
-  endringskode: null,
-  beskrivelse: null,
-  bygningsstatus: statuser.TB,
-  antallBoenheter: 1,
-  bruksareal: { bolig: 140, annet: 35 },
-  bruttoareal: { bolig: 158, annet: 44 },
-  bebygdAreal: 95,
-  koordinat: { nord: 6642100, ost: 597400 },
-  datoer: datoer({
+const gjeldendeEndring = byggEndring({
+  lopeNr: 5,
+  boligAreal: 140,
+  annetAreal: 35,
+  datoer: {
     rammetillatelse: isoDatetime("2019-03-15"),
     igangsettingstillatelse: isoDatetime("2019-05-01"),
     ferdigattest: isoDatetime("2020-08-20"),
     tattIBruk: isoDatetime("2020-09-01"),
-  }),
-  etasjeplan: [
-    {
-      etasjeplan: "Hovedetasje",
-      etasje: 1,
-      antallBoenheter: 1,
-      bruksareal: { bolig: 80, annet: 10 },
-      bruttoareal: { bolig: 90, annet: 12 },
-    },
-    {
-      etasjeplan: "Annenetasje",
-      etasje: 2,
-      antallBoenheter: 0,
-      bruksareal: { bolig: 60, annet: 10 },
-      bruttoareal: { bolig: 68, annet: 12 },
-    },
-  ],
-  bruksenheter: [refBruksenhet("H0101")],
-  tiltakshavere: [
-    {
-      rolle: "Tiltakshaver",
-      eierIdent: "01019012345",
-      navn: "Fredrik Nordmann",
-      adresselinje1: "Storgata 1",
-      adresselinje2: null,
-      adresselinje3: null,
-      postnummeromradenr: "0155",
-      postnummeromradenavn: "Oslo",
-      land: "Norge",
-      bruksenhetsnr: "H0101",
-      datofra: isoDatetime("2019-03-15"),
-      kategorikode: "FYSISK_PERSON",
-      kontaktpersonKode: null,
-      statuskode: "AKTIV",
-      eierErUtgatt: false,
-    },
-  ],
-  kulturminner: [
-    {
-      id: "KM-12345",
-      navn: "Storgata 1",
-      status: "Regulert",
-      kategori: "SEFRAK-registrert bygning",
-    },
-  ],
-}
+  },
+  bruksenheter: [h0101, h0102, h0103],
+})
 
-const historiskeEndringer: Bygningsendring[] = [
-  {
-    ...gjeldendeEndring,
-    id: 1002,
-    lopenr: 4,
-    endringskode: "Tilbygg",
-    bygningsstatus: statuser.FA,
-    bruksareal: { bolig: 121, annet: 74 },
-    datoer: datoer({
+const historiskeEndringer: BygningsEndring[] = [
+  byggEndring({
+    lopeNr: 4,
+    endringsKode: "1",
+    boligAreal: 121,
+    annetAreal: 74,
+    datoer: {
       rammetillatelse: isoDatetime("2016-09-12"),
       igangsettingstillatelse: isoDatetime("2017-03-06"),
       ferdigattest: isoDatetime("2020-01-22"),
-    }),
-    bruksenheter: [refBruksenhet("H0103")],
-  },
-  {
-    ...gjeldendeEndring,
-    id: 1003,
-    lopenr: 3,
-    endringskode: "Påbygg",
-    bygningsstatus: statuser.IG,
-    bruksareal: { bolig: 121, annet: 60 },
-    datoer: datoer({
+    },
+    bruksenheter: [h0103],
+  }),
+  byggEndring({
+    lopeNr: 3,
+    endringsKode: "2",
+    boligAreal: 121,
+    annetAreal: 60,
+    datoer: {
       rammetillatelse: isoDatetime("2016-09-12"),
       igangsettingstillatelse: isoDatetime("2017-03-06"),
-    }),
-    bruksenheter: [refBruksenhet("H0103")],
-  },
-  {
-    ...gjeldendeEndring,
-    id: 1004,
-    lopenr: 2,
-    endringskode: "Underbygg",
-    bygningsstatus: statuser.RA,
-    bruksareal: { bolig: 102, annet: 60 },
-    datoer: datoer({ rammetillatelse: isoDatetime("2016-09-12") }),
-    bruksenheter: [refBruksenhet("H0104")],
-  },
-  {
-    ...gjeldendeEndring,
-    id: 1005,
-    lopenr: 1,
-    endringskode: "Ombygging",
-    beskrivelse: "Midlertidig tillatelse er gitt.",
-    bygningsstatus: statuser.MB,
-    bruksareal: { bolig: 102, annet: 0 },
-    datoer: datoer({
+    },
+    bruksenheter: [h0103],
+  }),
+  byggEndring({
+    lopeNr: 2,
+    endringsKode: "3",
+    boligAreal: 102,
+    annetAreal: 60,
+    datoer: { rammetillatelse: isoDatetime("2016-09-12") },
+    bruksenheter: [h0104],
+  }),
+  byggEndring({
+    lopeNr: 1,
+    endringsKode: "4",
+    boligAreal: 102,
+    annetAreal: 0,
+    datoer: {
       midlertidigBrukstillatelse: isoDatetime("2008-09-12"),
-    }),
-    bruksenheter: [refBruksenhet("H0103")],
-  },
-  {
-    ...gjeldendeEndring,
-    id: 1006,
-    lopenr: 0,
-    bygningsstatus: statuser.TB,
-    bruksareal: { bolig: 102, annet: 0 },
-    datoer: datoer({ tattIBruk: isoDatetime("1998-06-18") }),
-    bruksenheter: [refBruksenhet("H0101"), refBruksenhet("H0102")],
-  },
+    },
+    bruksenheter: [h0103],
+  }),
+  byggEndring({
+    lopeNr: 0,
+    boligAreal: 102,
+    annetAreal: 0,
+    datoer: { tattIBruk: isoDatetime("1998-06-18") },
+    bruksenheter: [h0101, h0102],
+  }),
 ]
 
 const mockByggRapport: ByggRapport = {
-  rapportType: "BYG0011",
-  kommune: { nr: "3201", navn: "Bærum" },
-  koordinatsystem: "EUREF89 UTM sone 32",
+  rapportKode: "BYG0011",
   locale: "nb",
-  generertTidspunkt: "2026-07-17T10:00:00Z",
+  metadata: {
+    kommune: { kommuneNr: "3201", kommuneNavn: "Bærum" },
+    koordinatSystemKode: 22,
+    generertTidspunkt: "2026-07-17T10:00:00Z",
+  },
   utvalgskriterier: {
     omfang: {
       inkluderBestaaendeBygg: true,
@@ -236,36 +234,31 @@ const mockByggRapport: ByggRapport = {
       inkluderFrededeBygninger: true,
     },
     bygning: {
-      bygningsnr: "12345678",
-      bygningstyper: [{ kode: 111, navn: "Enebolig" }],
-      lopenr: null,
+      bygningsNr: "12345678",
+      bygningstyper: ["111"],
     },
     adresse: {
-      adressekode: "1000",
-      bruksenhetsnr: "H0101",
-      adressenavn: "Storgata",
-      nr: 1,
-      bokstav: null,
+      adresseKode: "1000",
+      bruksenhetsNr: "H0101",
+      adresseNavn: "Storgata",
+      adresseNr: 1,
       utenBokstav: true,
-      tilleggsnavn: null,
     },
-    matrikkelenhet: { gnr: 208, bnr: 12, fnr: null, snr: null },
-    hjemmelshaver: {
-      foedselsEllerOrgnr: null,
+    matrikkelenhet: { gnr: 208, bnr: 12 },
+    aktoer: {
       etternavn: "Nordmann",
       fornavn: "Ola",
     },
     bygningsstatus: {
-      naavaerende: ["Tatt i bruk"],
+      naavaerende: ["TB"],
       tidligere: [],
       periodeFra: isoDatetime("2019-01-01"),
-      periodeTil: null,
     },
     sokevindu: {
-      nord: 6642000,
-      ost: 597300,
-      syd: 6642200,
-      vest: 597500,
+      nord: 6642200,
+      ost: 597500,
+      syd: 6642000,
+      vest: 597300,
     },
     subrapporter: {
       inkluderEtasjer: true,
@@ -278,102 +271,8 @@ const mockByggRapport: ByggRapport = {
   },
   bygninger: [
     {
-      id: 1,
       bygningsnr: "12345678",
-      bygningstype: { kode: 111, navn: "Enebolig" },
-      naeringsgruppe: "Bolig",
-      matrikkelenhet: "208/12",
-      bruksenheter: [
-        {
-          id: "H0101",
-          nummer: "H0101",
-          type: "Bolig",
-          seksjon: "Seksjon 3201-94/309/0/1",
-          adresse: "Belsetveien 114 H0101, 1348 Rykkinn",
-          etasje: "Hovedetasje (H01)",
-          antallRom: 3,
-          kjokkentilgang: true,
-          antallBad: 1,
-          antallWc: 1,
-          arealfordeling: {
-            bebygdAreal: 74,
-            bruksareal: { bolig: 74, annet: 0 },
-            koordinat: { nord: 6642100, ost: 597400 },
-            etasjeplan: [
-              {
-                etasjeplan: "Hovedetasje",
-                etasje: 1,
-                antallBoenheter: 1,
-                bruksareal: { bolig: 74, annet: 0 },
-                bruttoareal: { bolig: 80, annet: 0 },
-              },
-            ],
-          },
-          hjemmelshavere: [olaNordmann, kariNordmann],
-          kontaktpersoner: [byggmesterBob],
-        },
-        {
-          id: "H0102",
-          nummer: "H0102",
-          type: "Bolig",
-          seksjon: "Seksjon 3201-94/309/0/2",
-          adresse: "Belsetveien 114 H0102, 1348 Rykkinn",
-          etasje: "Loft (L01)",
-          antallRom: 2,
-          kjokkentilgang: true,
-          antallBad: 1,
-          antallWc: 1,
-          arealfordeling: {
-            bebygdAreal: 28,
-            bruksareal: { bolig: 28, annet: 0 },
-            koordinat: { nord: 6642100, ost: 597400 },
-            etasjeplan: [
-              {
-                etasjeplan: "Loft",
-                etasje: 1,
-                antallBoenheter: 1,
-                bruksareal: { bolig: 28, annet: 0 },
-                bruttoareal: { bolig: 31, annet: 0 },
-              },
-            ],
-          },
-          hjemmelshavere: [perHansen],
-          kontaktpersoner: [],
-        },
-        {
-          id: "H0103",
-          nummer: "H0103",
-          type: "Bolig",
-          seksjon: "Seksjon 3201-94/309/0/3",
-          adresse: "Belsetveien 114 H0103, 1348 Rykkinn",
-          etasje: "Kjeller (K01)",
-          antallRom: 2,
-          kjokkentilgang: true,
-          antallBad: 1,
-          antallWc: 1,
-          arealfordeling: {
-            bebygdAreal: 40,
-            bruksareal: { bolig: 40, annet: 0 },
-            koordinat: { nord: 6644118, ost: 254384 },
-            etasjeplan: [
-              {
-                etasjeplan: "Kjeller",
-                etasje: 1,
-                antallBoenheter: 1,
-                bruksareal: { bolig: 40, annet: 0 },
-                bruttoareal: { bolig: 44, annet: 0 },
-              },
-            ],
-          },
-          hjemmelshavere: [
-            {
-              ...olaNordmann,
-              andelNevner: 1,
-            },
-          ],
-          kontaktpersoner: [],
-        },
-      ],
+      matrikkelenhetsNr: "3201/208/12/0",
       endringer: [gjeldendeEndring, ...historiskeEndringer],
     },
   ],

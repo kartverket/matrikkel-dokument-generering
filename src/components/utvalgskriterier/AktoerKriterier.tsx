@@ -1,12 +1,12 @@
 import { Card, Heading } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import type { Utvalgskriterier } from "../../lib/schema/reports/bygg/bygg0011/index"
+import type { ByggUtvalgskriterier as Utvalgskriterier } from "../../lib/schema/reports/bygg/shared/byggUtvalgskriterier.schema.ts"
 
 interface Props {
-  hjemmelshaverKriterier: NonNullable<Utvalgskriterier>["hjemmelshaver"]
+  aktoerKriterier: NonNullable<Utvalgskriterier>["aktoer"]
 }
 
-export function HjemmelshaverKriterier({ hjemmelshaverKriterier }: Props) {
+export function AktoerKriterier({ aktoerKriterier }: Props) {
   const { t } = useTranslation()
   const uk = "rapport.BYG0011.utvalgskriterier"
   const ikkeAngitt = t(`${uk}.ikkeAngitt`)
@@ -23,19 +23,19 @@ export function HjemmelshaverKriterier({ hjemmelshaverKriterier }: Props) {
               {t(`${uk}.felt.foedselsEllerOrgnr`)}
             </dt>
             <dd className="mt-1 font-medium">
-              {hjemmelshaverKriterier?.foedselsEllerOrgnr ?? ikkeAngitt}
+              {aktoerKriterier?.identifikasjonsNr ?? ikkeAngitt}
             </dd>
           </div>
           <div>
             <dt className="text-kv-subtle">{t(`${uk}.felt.etternavn`)}</dt>
             <dd className="mt-1 font-medium">
-              {hjemmelshaverKriterier?.etternavn ?? ikkeAngitt}
+              {aktoerKriterier?.etternavn ?? ikkeAngitt}
             </dd>
           </div>
           <div>
             <dt className="text-kv-subtle">{t(`${uk}.felt.fornavn`)}</dt>
             <dd className="mt-1 font-medium">
-              {hjemmelshaverKriterier?.fornavn ?? ikkeAngitt}
+              {aktoerKriterier?.fornavn ?? ikkeAngitt}
             </dd>
           </div>
         </dl>

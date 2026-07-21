@@ -5,24 +5,21 @@ import ArealFordeling from "../components/ArealFordeling.tsx"
 import { BruksenhetHeader } from "../components/bruksenheter/BruksenhetHeader.tsx"
 import { Endringskort } from "../components/bruksenheter/Endringskort.tsx"
 import { Hjemmelshavere } from "../components/bruksenheter/Hjemmelshavere.tsx"
-import { Kontaktpersoner } from "../components/bruksenheter/Kontaktpersoner.tsx"
 import { RegistrerteVedtak } from "../components/bruksenheter/RegistrerteVedtak.tsx"
 import { Tiltakshavere } from "../components/bruksenheter/Tiltakshavere.tsx"
 import { Detaljgrid, lagDetaljfeltBuilder } from "../components/Detaljfelt.tsx"
 import { Section } from "../components/Section.tsx"
+import type { Bruksenhet } from "../lib/schema/reports/bygg/byg0011/bruksenhet.schema.ts"
 import type {
-  Bruksenhet,
-  Bygning,
-  Bygningsendring,
-  Tiltakshaver,
-} from "../lib/schema/reports/bygg/bygg0011/index.ts"
-import { summerAreal } from "../lib/utils/arealLinje.ts"
+  BygningsEndring,
+  TiltaksHaver,
+} from "../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
+import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 import { formatArea } from "../lib/utils/formatArea.ts"
 import {
   finnGjeldendeBygningsendring,
   isFerdigstilt,
 } from "../lib/utils/isFerdigstilt.ts"
-import { sorterBruksenheterEtterNummer } from "../lib/utils/sorterBruksenheter.ts"
 
 interface Props {
   index: number
@@ -44,7 +41,7 @@ function getBruksenhetDetaljfelter(bruksenhet: Bruksenhet, t: TFunction) {
     bruksenhetFelt("etasje", bruksenhet.etasje),
     bruksenhetFelt(
       "bruksareal",
-      formatArea(summerAreal(bruksenhet.arealfordeling.bruksareal)),
+      formatArea(bruksenhet.arealfordeling.bruksareal.totaltAreal),
     ),
     bruksenhetFelt("antallRom", String(bruksenhet.antallRom)),
     bruksenhetFelt("kjokkentilgang", kjokkentilgang),
@@ -54,55 +51,57 @@ function getBruksenhetDetaljfelter(bruksenhet: Bruksenhet, t: TFunction) {
 }
 
 function getTiltakshavere(
-  endringer: Bygningsendring[],
+  endringer: BygningsEndring[],
   bruksenhet: Bruksenhet,
-): Tiltakshaver[] {
-  const unikeTiltakshavere = new Map<string, Tiltakshaver>()
+): TiltaksHaver[] {
+  const unikeTiltakshavere = new Map<string, TiltaksHaver>()
 
-  for (const endring of endringer.toSorted((a, b) => b.lopenr - a.lopenr)) {
-    if (isFerdigstilt(endring)) continue
+  for (const endring of endringer.toSorted(
+    (a, b) => (b?.lopeNr ?? 0) - (a?.lopeNr ?? 0),
+  )) {
+    const tiltakshaver = endring?.tiltaksHaver
 
-    for (const tiltakshaver of endring.tiltakshavere) {
-      if (tiltakshaver.bruksenhetsnr !== bruksenhet.nummer) continue
+    if (!tiltakshaver || isFerdigstilt(endring)) continue
+    if (tiltakshaver.bruksenhetsNr !== bruksenhet.bruksenhetsNr) continue
 
-      const nokkel = JSON.stringify([
-        tiltakshaver.eierIdent,
-        tiltakshaver.rolle,
-        tiltakshaver.bruksenhetsnr,
-        tiltakshaver.datofra,
-        tiltakshaver.kategorikode,
-        tiltakshaver.kontaktpersonKode,
-      ])
+    const nokkel = JSON.stringify([
+      tiltakshaver.identifikasjonsNr,
+      tiltakshaver.kontaktPersonKode,
+      tiltakshaver.bruksenhetsNr,
+    ])
 
-      if (!unikeTiltakshavere.has(nokkel)) {
-        unikeTiltakshavere.set(nokkel, tiltakshaver)
-      }
+    if (!unikeTiltakshavere.has(nokkel)) {
+      unikeTiltakshavere.set(nokkel, tiltakshaver)
     }
   }
 
-  return [...unikeTiltakshavere.values()]
+  return Array.from(unikeTiltakshavere.values())
 }
 
-function berorerBruksenhet(endring: Bygningsendring, bruksenhet: Bruksenhet) {
-  return (
-    bruksenhet.nummer !== null &&
-    endring.bruksenheter.some(
-      ({ bruksenhetsnr }) => bruksenhetsnr === bruksenhet.nummer,
-    )
+function berorerBruksenhet(
+  endring: BygningsEndring,
+  bruksenhet: Bruksenhet,
+): boolean {
+  return Boolean(
+    bruksenhet.bruksenhetsNr &&
+      endring?.bruksenheter?.some(
+        (berortBruksenhet) =>
+          berortBruksenhet.bruksenhetsNr === bruksenhet.bruksenhetsNr,
+      ),
   )
 }
-
 export default function Bruksenheter({ index, bygning }: Props) {
+  const { endringer } = bygning
   const { t } = useTranslation()
   const i18n = "rapport.BYG0011.bruksenheter"
   const tom = t("tom")
   const ingenOppgittBruksenhet = t(`${i18n}.ingenOppgittBruksenhet`)
-  const gjeldende = finnGjeldendeBygningsendring(bygning.endringer)
-  const sorterteBruksenheter = sorterBruksenheterEtterNummer(
-    bygning.bruksenheter,
+  const gjeldende = finnGjeldendeBygningsendring(endringer)
+  const sorterteBruksenheter = endringer.flatMap(
+    (endring) => endring?.bruksenheter ?? [],
   )
 
-  if (bygning.bruksenheter.length === 0) return null
+  if (sorterteBruksenheter.length === 0) return null
 
   return (
     <Section
@@ -112,7 +111,7 @@ export default function Bruksenheter({ index, bygning }: Props) {
     >
       <div className="flex flex-col gap-5">
         {sorterteBruksenheter.map((bruksenhet) => {
-          const endringer = bygning.endringer.filter((endring) =>
+          const bruksenhetsEndringer = endringer.filter((endring) =>
             berorerBruksenhet(endring, bruksenhet),
           )
           const gjeldendeEndringForBruksenhet = berorerBruksenhet(
@@ -121,17 +120,19 @@ export default function Bruksenheter({ index, bygning }: Props) {
           )
             ? gjeldende
             : undefined
-          const tiltakshavere = getTiltakshavere(bygning.endringer, bruksenhet)
+          const tiltakshavere = getTiltakshavere(endringer, bruksenhet)
 
           return (
             <Card
               key={bruksenhet.id}
-              data-bruksenhet={bruksenhet.nummer ?? ingenOppgittBruksenhet}
+              data-bruksenhet={
+                bruksenhet.bruksenhetsNr ?? ingenOppgittBruksenhet
+              }
               className="break-inside-avoid border border-kv-border"
             >
               <Card.Block className="p-7">
                 <BruksenhetHeader
-                  bruksenhetNummer={bruksenhet.nummer ?? null}
+                  bruksenhetNummer={bruksenhet.bruksenhetsNr ?? null}
                   bruksenhetTypeChip={bruksenhet.type ?? null}
                   bruksenhetSeksjon={bruksenhet.seksjon ?? null}
                   ingenOppgittBruksenhet={ingenOppgittBruksenhet}
@@ -153,26 +154,25 @@ export default function Bruksenheter({ index, bygning }: Props) {
                 <ArealFordeling arealfordeling={bruksenhet.arealfordeling} />
 
                 <Divider className="my-6" />
-                <Hjemmelshavere hjemmelshavere={bruksenhet.hjemmelshavere} />
-
-                <Divider className="my-6" />
-                <Kontaktpersoner kontaktpersoner={bruksenhet.kontaktpersoner} />
+                <Hjemmelshavere
+                  aktoer={gjeldendeEndringForBruksenhet?.aktoer}
+                />
 
                 <Divider className="my-6" />
 
                 <div>
                   <Paragraph className="mb-3 font-bold text-kv-subtle text-xs tracking-wide">
-                    {endringer.length > 0
+                    {bruksenhetsEndringer.length > 0
                       ? t(`${i18n}.endringerPaBruksenheten`)
                       : t(`${i18n}.ingenEndringer`)}
                   </Paragraph>
-                  {endringer.length > 0 && (
+                  {bruksenhetsEndringer.length > 0 && (
                     <div className="flex flex-col gap-3">
-                      {endringer.map((endring) => (
+                      {bruksenhetsEndringer.map((bruksenhetsEndring) => (
                         <Endringskort
-                          key={endring.id}
-                          endring={endring}
-                          bygning={bygning}
+                          key={bruksenhetsEndring?.lopeNr}
+                          endring={bruksenhetsEndring}
+                          matrikkelNummer={bygning.matrikkelenhetsNr}
                         />
                       ))}
                     </div>

@@ -1,6 +1,7 @@
 import { Heading, Table, Tag } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import type { Utvalgskriterier } from "../../lib/schema/reports/bygg/bygg0011/index"
+import { oversettKode } from "../../lib/i18n/koder/oversettKode.ts"
+import type { ByggUtvalgskriterier as Utvalgskriterier } from "../../lib/schema/reports/bygg/shared/byggUtvalgskriterier.schema.ts"
 
 interface Props {
   bygningKriterier: NonNullable<Utvalgskriterier>["bygning"]
@@ -23,14 +24,14 @@ export function BygningKriterier({ bygningKriterier }: Props) {
               {t(`${uk}.felt.bygningsnr`)}
             </Table.HeaderCell>
             <Table.Cell>
-              {bygningKriterier?.bygningsnr ?? ikkeAngitt}
+              {bygningKriterier?.bygningsNr ?? ikkeAngitt}
             </Table.Cell>
           </Table.Row>
           <Table.Row>
             <Table.HeaderCell scope="row">
               {t(`${uk}.felt.lopenr`)}
             </Table.HeaderCell>
-            <Table.Cell>{bygningKriterier?.lopenr ?? ikkeAngitt}</Table.Cell>
+            <Table.Cell>{bygningKriterier?.lopeNr ?? ikkeAngitt}</Table.Cell>
           </Table.Row>
           <Table.Row>
             <Table.HeaderCell scope="row">
@@ -40,9 +41,9 @@ export function BygningKriterier({ bygningKriterier }: Props) {
               {bygningKriterier?.bygningstyper &&
               bygningKriterier.bygningstyper.length > 0 ? (
                 <span className="flex flex-wrap gap-2">
-                  {bygningKriterier?.bygningstyper.map(({ kode, navn }) => (
+                  {bygningKriterier.bygningstyper.map((kode) => (
                     <Tag key={kode} data-color="accent" variant="outline">
-                      {kode} – {navn}
+                      {oversettKode({ t, kodeverk: "bygningstype", kode })}
                     </Tag>
                   ))}
                 </span>

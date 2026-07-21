@@ -1,34 +1,34 @@
 import { Card } from "@digdir/designsystemet-react"
 import { Label, Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import type { Bygningsendring } from "../../lib/schema/reports/bygg/bygg0011/index"
-import { summerAreal } from "../../lib/utils/arealLinje"
+import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 import { formatArea } from "../../lib/utils/formatArea"
 
 interface Props {
-  endring: Bygningsendring
+  gjeldendeEndring: NonNullable<BygningsEndring>
 }
 
-export default function Nokkeltall({ endring }: Props) {
+export default function Nokkeltall({ gjeldendeEndring }: Props) {
   const { t } = useTranslation()
   const key = "rapport.BYG0011.byggoversikt"
+  const areal = gjeldendeEndring.byggArealEndring
 
   const kort = [
     {
       id: "bra",
-      areal: summerAreal(endring.bruksareal),
+      areal: areal?.bruksarealBolig.totaltAreal,
       label: t(`${key}.bra`),
       beskrivelse: t(`${key}.nokkeltall.braBeskrivelse`),
     },
     {
       id: "bta",
-      areal: summerAreal(endring.bruttoareal),
+      areal: areal?.bruttoarealBolig.totaltAreal,
       label: t(`${key}.bta`),
       beskrivelse: t(`${key}.nokkeltall.btaBeskrivelse`),
     },
     {
       id: "bya",
-      areal: endring.bebygdAreal,
+      areal: areal?.bebygdAreal,
       label: t(`${key}.bya`),
       beskrivelse: t(`${key}.nokkeltall.byaBeskrivelse`),
     },

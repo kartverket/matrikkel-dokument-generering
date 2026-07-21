@@ -1,6 +1,6 @@
 import { Card, Heading } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import type { Utvalgskriterier } from "../../lib/schema/reports/bygg/bygg0011/index"
+import type { ByggUtvalgskriterier as Utvalgskriterier } from "../../lib/schema/reports/bygg/shared/byggUtvalgskriterier.schema.ts"
 
 interface Props {
   matrikkelenhetKriterier: NonNullable<Utvalgskriterier>["matrikkelenhet"]

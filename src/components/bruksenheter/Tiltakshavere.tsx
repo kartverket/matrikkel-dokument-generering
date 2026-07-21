@@ -1,54 +1,32 @@
+import type { TFunction } from "i18next"
 import { useTranslation } from "react-i18next"
-import type { Tiltakshaver } from "../../lib/schema/reports/bygg/bygg0011/index"
-import {
-  formatAdresselinjer,
-  formatPoststed,
-} from "../../lib/utils/formatAdresse"
-import { joinStrings } from "../../lib/utils/joinStrings"
+import { oversettKode } from "../../lib/i18n/koder/oversettKode.ts"
+import type { TiltaksHaver } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 import { lagDetaljfeltBuilder } from "../Detaljfelt"
 import { PersonCard } from "../PersonCard"
 import { PersonGrid } from "../PersonGrid"
 
 interface Props {
-  tiltakshavere: Tiltakshaver[]
+  tiltakshavere: TiltaksHaver[]
 }
 
 const tiltakshaverFelt = lagDetaljfeltBuilder("rapport.BYG0011.tiltakshavere")
 
-function getTiltakshaverDetaljfelter(tiltakshaver: Tiltakshaver, tom: string) {
+function getTiltakshaverDetaljfelter(tiltakshaver: TiltaksHaver, t: TFunction) {
   return [
-    tiltakshaverFelt("rolle", tiltakshaver.rolle),
-    tiltakshaverFelt("eierIdent", tiltakshaver.eierIdent),
     tiltakshaverFelt(
-      "adresselinjer",
-      formatAdresselinjer(
-        [
-          tiltakshaver.adresselinje1,
-          tiltakshaver.adresselinje2,
-          tiltakshaver.adresselinje3,
-        ],
-        tom,
-      ),
+      "rolle",
+      tiltakshaver.kontaktPersonKode === undefined
+        ? null
+        : oversettKode({
+            t,
+            kodeverk: "kontaktperson",
+            kode: tiltakshaver.kontaktPersonKode,
+          }),
     ),
-    tiltakshaverFelt(
-      "poststed",
-      formatPoststed(
-        tiltakshaver.postnummeromradenr,
-        tiltakshaver.postnummeromradenavn,
-        tom,
-      ),
-    ),
-    tiltakshaverFelt("land", tiltakshaver.land),
-    tiltakshaverFelt("bruksenhetsnr", tiltakshaver.bruksenhetsnr),
-    tiltakshaverFelt("gyldigFra", tiltakshaver.datofra),
-    tiltakshaverFelt(
-      "kategori",
-      joinStrings(
-        [tiltakshaver.kategorikode, tiltakshaver.kontaktpersonKode],
-        " / ",
-        tom,
-      ),
-    ),
+    tiltakshaverFelt("identifikasjonsNr", tiltakshaver.identifikasjonsNr),
+    tiltakshaverFelt("adresse", tiltakshaver.adresse),
+    tiltakshaverFelt("bruksenhetsnr", tiltakshaver.bruksenhetsNr),
   ]
 }
 
@@ -62,11 +40,11 @@ export function Tiltakshavere({ tiltakshavere }: Props) {
       {tiltakshavere.map((tiltakshaver, index) => (
         <PersonCard
           key={String(index)}
-          navn={tiltakshaver.navn}
-          erUtgatt={tiltakshaver.eierErUtgatt}
-          statuskode={tiltakshaver.statuskode ?? null}
+          navn={tiltakshaver.navn ?? tom}
+          erUtgatt={false}
+          statuskode={null}
           utgattLabel={t(`${translationKey}.utgatt`)}
-          felter={getTiltakshaverDetaljfelter(tiltakshaver, tom)}
+          felter={getTiltakshaverDetaljfelter(tiltakshaver, t)}
           tom={tom}
         />
       ))}

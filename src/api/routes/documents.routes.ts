@@ -2,7 +2,7 @@ import { createRoute, type OpenAPIHono, z } from "@hono/zod-openapi"
 import { renderDocument } from "../../Document.tsx"
 import { htmlToPdf } from "../../lib/pdf/gotenberg.ts"
 import { getDocumentCss } from "../../lib/pdf/styles.ts"
-import { byggRapportSchema } from "../../lib/schema/reports/bygg/bygg0011/index.ts"
+import { byggRapportSchema } from "../../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 import {
   pdfErrorResponseSchema,
   validationErrorResponseSchema,
@@ -12,9 +12,9 @@ const createDocumentRoute = createRoute({
   method: "post",
   path: "/create-document",
   tags: ["Dokument"],
-  summary: "Generer PDF fra en byggrapport",
+  summary: "Generer PDF fra en Matrikkelen-rapport",
   description:
-    "Validerer innsendt byggrapport mot skjemaet. Ved gyldig input renderes dokumentet til HTML og konverteres til PDF. Ved ugyldig input returneres valideringsfeil per felt.",
+    "Validerer innsendt rapport mot skjemaet for valgt rapportKode. Ved gyldig input renderes dokumentet til HTML og konverteres til PDF. Ved ugyldig input returneres valideringsfeil per felt.",
   operationId: "createDocument",
   request: {
     body: {

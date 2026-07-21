@@ -1,6 +1,6 @@
 import { describe, expect, spyOn, test } from "bun:test"
 import { createApp } from "../../src/api/app.ts"
-import { byggRapportSchema } from "../../src/lib/schema/reports/bygg/bygg0011/index.ts"
+import { byggRapportSchema } from "../../src/lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 import mockByggRapport from "../../src/mock/byggRapport.ts"
 
 const app = createApp()
@@ -35,8 +35,9 @@ describe("HTTP API", () => {
       errors: {
         valid: false,
         errors: expect.objectContaining({
-          rapportType: expect.any(Array),
-          bygninger: expect.any(Array),
+          rapportKode: expect.any(Array),
+          metadata: expect.any(Array),
+          locale: expect.any(Array),
         }),
       },
     })

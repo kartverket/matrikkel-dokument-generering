@@ -1,8 +1,10 @@
+import { koderNn } from "./koder/resources.koder.nn.ts"
 import { shared } from "./resources.shared"
 
 export const nn = {
   ...shared,
   tom: "tom",
+  koder: koderNn,
   pdf: {
     header: {
       bygg: "Bygningsnr. {{bygningsnr}} · Bygg {{nr}} av {{total}}",
@@ -121,6 +123,8 @@ export const nn = {
         bygningsstatuskode: "Statuskode",
         bygningsstatusKortkode: "Statuskortkode",
         bestaaende: "Beståande",
+        sefrakId: "Sefrak-ID",
+        kulturminne: "Kulturminne",
         arealOgPlassering: "AREAL OG PLASSERING",
         antallBoenheter: "Tal på bueiningar",
         bruksarealEndring: "Bruksareal bustad / anna / totalt",
@@ -179,7 +183,7 @@ export const nn = {
       kontaktpersoner: {
         title: "Kontaktpersonar",
         rolle: "Rolle",
-        eierIdent: "Fødsels-/org.nr",
+        identifikasjonsNr: "Fødsels-/org.nr",
         navn: "Namn",
         adresselinjer: "Adresselinjer",
         poststed: "Postnr og poststad",
@@ -226,8 +230,9 @@ export const nn = {
       tiltakshavere: {
         title: "Tiltakshavarar",
         rolle: "Rolle i tiltaket",
-        eierIdent: "Fødsels-/org.nr",
+        identifikasjonsNr: "Fødsels-/org.nr",
         navn: "Namn",
+        adresse: "Adresse",
         adresselinjer: "Adresselinjer",
         poststed: "Postnr og poststad",
         land: "Land",
@@ -239,8 +244,9 @@ export const nn = {
       },
       hjemmelshavere: {
         title: "Heimelshavarar",
-        eierIdent: "Fødselsnr/orgnr",
+        identifikasjonsNr: "Fødselsnr/orgnr",
         navn: "Namn",
+        adresse: "Adresse",
         andel: "Andel",
         bruksenhetsnr: "Tilknytt brukseining",
         adresselinjer: "Adresselinjer",
@@ -271,7 +277,7 @@ export const nn = {
         bygningsnr: "Bygningsnummer",
         header: {
           bygg: "Bygg {{lopenr}}",
-          bygningsnrLopenr: "Bygningsnr. {{bygningsnr}} · Løpenr. {{lopenr}}",
+          bygningsnrLopenr: "Bygningsnr. {{bygningsnr}}",
           ferdigattest: "Ferdigattest: {{dato}}",
         },
         nokkeltall: {
@@ -303,6 +309,7 @@ export const nn = {
           typer: {
             bolig: "bustad",
             annet: "anna",
+            totalt: "totalt",
           },
         },
       },

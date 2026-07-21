@@ -1,8 +1,7 @@
 import { Heading, Table } from "@kv-designsystem/react"
 import { Fragment } from "react"
 import { useTranslation } from "react-i18next"
-import type { Bruksenhet } from "../lib/schema/reports/bygg/bygg0011/index"
-import { summerAreal } from "../lib/utils/arealLinje"
+import type { Bruksenhet } from "../lib/schema/reports/bygg/byg0011/bruksenhet.schema"
 import { formatArea } from "../lib/utils/formatArea"
 import { Detaljgrid, lagDetaljfeltBuilder } from "./Detaljfelt"
 
@@ -19,16 +18,9 @@ function getArealDetaljfelter(arealfordeling: Props["arealfordeling"]) {
     arealFelt("bebygdAreal", formatArea(arealfordeling.bebygdAreal), {
       valueClassName,
     }),
-    arealFelt(
-      "bruksareal",
-      formatArea(summerAreal(arealfordeling.bruksareal)),
-      { valueClassName },
-    ),
-    arealFelt(
-      "koordinater",
-      `${arealfordeling.koordinat.nord} / ${arealfordeling.koordinat.ost}`,
-      { valueClassName },
-    ),
+    arealFelt("bruksareal", formatArea(arealfordeling.bruksareal.totaltAreal), {
+      valueClassName,
+    }),
   ]
 }
 
@@ -90,10 +82,10 @@ export default function Arealfordeling({ arealfordeling }: Props) {
                     {t(`${af}.bruksarealRad`)}
                   </Table.HeaderCell>
                   <Table.Cell className="text-right tabular-nums">
-                    {etasje.bruksareal.bolig}
+                    {etasje.bruksareal.boligAreal}
                   </Table.Cell>
                   <Table.Cell className="text-right tabular-nums">
-                    {etasje.bruksareal.annet}
+                    {etasje.bruksareal.annetAreal}
                   </Table.Cell>
                 </Table.Row>
                 <Table.Row>
@@ -101,10 +93,10 @@ export default function Arealfordeling({ arealfordeling }: Props) {
                     {t(`${af}.bruttoarealRad`)}
                   </Table.HeaderCell>
                   <Table.Cell className="text-right tabular-nums">
-                    {etasje.bruttoareal.bolig}
+                    {etasje.bruttoareal.boligAreal}
                   </Table.Cell>
                   <Table.Cell className="text-right tabular-nums">
-                    {etasje.bruttoareal.annet}
+                    {etasje.bruttoareal.annetAreal}
                   </Table.Cell>
                 </Table.Row>
               </Fragment>

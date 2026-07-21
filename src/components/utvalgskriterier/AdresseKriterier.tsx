@@ -1,6 +1,6 @@
 import { Heading, Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import type { Utvalgskriterier } from "../../lib/schema/reports/bygg/bygg0011/index"
+import type { ByggUtvalgskriterier as Utvalgskriterier } from "../../lib/schema/reports/bygg/shared/byggUtvalgskriterier.schema.ts"
 
 interface Props {
   adresseKriterier: NonNullable<Utvalgskriterier>["adresse"]
@@ -23,7 +23,7 @@ export function AdresseKriterier({ adresseKriterier }: Props) {
               {t(`${uk}.felt.adressekode`)}
             </Table.HeaderCell>
             <Table.Cell>
-              {adresseKriterier?.adressekode ?? ikkeAngitt}
+              {adresseKriterier?.adresseKode ?? ikkeAngitt}
             </Table.Cell>
           </Table.Row>
           <Table.Row>
@@ -31,7 +31,7 @@ export function AdresseKriterier({ adresseKriterier }: Props) {
               {t(`${uk}.felt.bruksenhetsnr`)}
             </Table.HeaderCell>
             <Table.Cell>
-              {adresseKriterier?.bruksenhetsnr ?? ikkeAngitt}
+              {adresseKriterier?.bruksenhetsNr ?? ikkeAngitt}
             </Table.Cell>
           </Table.Row>
           <Table.Row>
@@ -39,20 +39,22 @@ export function AdresseKriterier({ adresseKriterier }: Props) {
               {t(`${uk}.felt.adressenavn`)}
             </Table.HeaderCell>
             <Table.Cell>
-              {adresseKriterier?.adressenavn ?? ikkeAngitt}
+              {adresseKriterier?.adresseNavn ?? ikkeAngitt}
             </Table.Cell>
           </Table.Row>
           <Table.Row>
             <Table.HeaderCell scope="row">
               {t(`${uk}.felt.nr`)}
             </Table.HeaderCell>
-            <Table.Cell>{adresseKriterier?.nr ?? ikkeAngitt}</Table.Cell>
+            <Table.Cell>{adresseKriterier?.adresseNr ?? ikkeAngitt}</Table.Cell>
           </Table.Row>
           <Table.Row>
             <Table.HeaderCell scope="row">
               {t(`${uk}.felt.bokstav`)}
             </Table.HeaderCell>
-            <Table.Cell>{adresseKriterier?.bokstav ?? ikkeAngitt}</Table.Cell>
+            <Table.Cell>
+              {adresseKriterier?.adresseBokstav ?? ikkeAngitt}
+            </Table.Cell>
           </Table.Row>
           <Table.Row>
             <Table.HeaderCell scope="row">
@@ -67,7 +69,7 @@ export function AdresseKriterier({ adresseKriterier }: Props) {
               {t(`${uk}.felt.tilleggsnavn`)}
             </Table.HeaderCell>
             <Table.Cell>
-              {adresseKriterier?.tilleggsnavn ?? ikkeAngitt}
+              {adresseKriterier?.adresseTilleggsNavn ?? ikkeAngitt}
             </Table.Cell>
           </Table.Row>
         </Table.Body>

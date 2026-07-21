@@ -1,70 +1,88 @@
 import type { TFunction } from "i18next"
-import type { Bygningsendring } from "../../lib/schema/reports/bygg/bygg0011/index"
+import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 
-const GODKJENNINGSSTATUSER = new Set(["RA", "IG"])
+type Endring = NonNullable<BygningsEndring>
 
 type HistorikkTranslationKey = "rapport.BYG0011.byggoversikt.historikk"
 
-function finnPrimaerDato({ datoer, bygningsstatus }: Bygningsendring) {
-  switch (bygningsstatus.kortkode) {
-    case "FA":
-      return datoer.ferdigattest
-    case "MB":
-      return datoer.midlertidigBrukstillatelse
-    case "IG":
-      return datoer.igangsettingstillatelse
-    case "RA":
-      return datoer.rammetillatelse
-    case "TB":
-      return datoer.tattIBruk
-    case "BR":
-      return datoer.utgaattRevet
-    default:
-      return null
-  }
+// Milepælene i et byggesaksforløp, sist oppnådde først
+const MILEPAELER = [
+  "utgaattRevet",
+  "tattIBruk",
+  "ferdigattest",
+  "midlertidigBrukstillatelse",
+  "igangsettingstillatelse",
+  "rammetillatelse",
+] as const
+
+export type Milepael = (typeof MILEPAELER)[number]
+
+export function finnSisteMilepael(endring: Endring): Milepael | undefined {
+  const datoer = endring.byggDatoEndring
+  if (datoer === undefined) return undefined
+  return MILEPAELER.find((milepael) => datoer[milepael] !== undefined)
 }
 
-export function sorterBygningsendringerKronologisk(
-  endringer: Bygningsendring[],
-) {
+function finnPrimaerDato(endring: Endring): string | undefined {
+  const milepael = finnSisteMilepael(endring)
+  if (milepael === undefined) return undefined
+  return endring.byggDatoEndring?.[milepael]
+}
+
+export function sorterBygningsendringerKronologisk(endringer: Endring[]) {
   return endringer
     .map((endring) => ({ endring, dato: finnPrimaerDato(endring) }))
     .toSorted((a, b) => {
       if (a.dato && b.dato) return a.dato.localeCompare(b.dato)
       if (a.dato) return 1
       if (b.dato) return -1
-      return a.endring.lopenr - b.endring.lopenr
+      return a.endring.lopeNr - b.endring.lopeNr
     })
 }
 
+// En endring som kun har fått tillatelser er godkjent, men ikke gjennomført
+function erKunGodkjent(endring: Endring): boolean {
+  const milepael = finnSisteMilepael(endring)
+  return (
+    milepael === "rammetillatelse" || milepael === "igangsettingstillatelse"
+  )
+}
+
 function finnArealverb(
-  statuskode: string,
+  endring: Endring,
   differanse: number,
 ): "lagtTil" | "fjernet" | "godkjent" {
-  if (GODKJENNINGSSTATUSER.has(statuskode)) return "godkjent"
+  if (erKunGodkjent(endring)) return "godkjent"
   return differanse >= 0 ? "lagtTil" : "fjernet"
 }
+
+const AREALTYPER = [
+  ["bolig", "boligAreal"],
+  ["annet", "annetAreal"],
+  ["totalt", "totaltAreal"],
+] as const
 
 export function lagHistorikkbeskrivelseForBygningsendring(
   t: TFunction,
   translationKey: HistorikkTranslationKey,
-  endring: Bygningsendring,
-  forrigeEndring: Bygningsendring | undefined,
+  endring: Endring,
+  forrigeEndring: Endring | undefined,
 ): string | null {
-  if (endring.beskrivelse) return endring.beskrivelse
-
   if (forrigeEndring === undefined) return t(`${translationKey}.foersteVedtak`)
 
-  const statuskode = endring.bygningsstatus.kortkode
   const beskrivelser: string[] = []
 
-  for (const arealtype of ["bolig", "annet"] as const) {
-    const differanse =
-      endring.bruksareal[arealtype] - forrigeEndring.bruksareal[arealtype]
+  for (const [arealtype, arealfelt] of AREALTYPER) {
+    const areal = endring.byggArealEndring?.bruksarealBolig[arealfelt]
+    const forrigeAreal =
+      forrigeEndring.byggArealEndring?.bruksarealBolig[arealfelt]
+    if (areal === undefined || forrigeAreal === undefined) continue
+
+    const differanse = areal - forrigeAreal
     if (differanse === 0) continue
 
     beskrivelser.push(
-      t(`${translationKey}.areal.${finnArealverb(statuskode, differanse)}`, {
+      t(`${translationKey}.areal.${finnArealverb(endring, differanse)}`, {
         areal: Math.abs(differanse),
         type: t(`${translationKey}.typer.${arealtype}`),
       }),
