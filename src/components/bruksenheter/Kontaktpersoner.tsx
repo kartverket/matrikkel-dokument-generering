@@ -1,94 +1,69 @@
-import { Table } from "@kv-designsystem/react"
+import { Card, Heading, Paragraph } from "@kv-designsystem/react"
+import type { TFunction } from "i18next"
 import { useTranslation } from "react-i18next"
-import { formatAdresse } from "../../lib/utils/formatAdresse"
-import { formatDate } from "../../lib/utils/formatDate"
-import { joinStrings } from "../../lib/utils/joinStrings"
-import { KategoriSeksjon } from "./KategoriSeksjon"
-import type {Aktor} from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts";
+import { oversettKode } from "../../lib/i18n/koder/oversettKode.ts"
+import type { TiltaksHaver } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
+import { Detaljgrid, lagDetaljfeltBuilder } from "../Detaljfelt.tsx"
 
 interface Props {
-  kontaktpersoner: Aktor[]
+  kontaktpersoner: TiltaksHaver[] | undefined
+}
+
+const translationKey = "rapport.BYG0011.kontaktpersoner"
+const kontaktpersonFelt = lagDetaljfeltBuilder(translationKey)
+
+function getKontaktpersonDetaljfelter(
+  kontaktperson: TiltaksHaver,
+  t: TFunction,
+) {
+  return [
+    kontaktpersonFelt(
+      "rolle",
+      kontaktperson.kontaktPersonKode === undefined
+        ? null
+        : oversettKode({
+            t,
+            kodeverk: "kontaktperson",
+            kode: kontaktperson.kontaktPersonKode,
+          }),
+    ),
+    kontaktpersonFelt("identifikasjonsNr", kontaktperson.identifikasjonsNr),
+    kontaktpersonFelt("adresselinjer", kontaktperson.adresse),
+    kontaktpersonFelt("bruksenhetsnr", kontaktperson.bruksenhetsNr),
+  ]
 }
 
 export function Kontaktpersoner({ kontaktpersoner }: Props) {
-  const { i18n, t } = useTranslation()
+  const { t } = useTranslation()
   const tom = t("tom")
-  const translationKey = "rapport.BYG0011.kontaktpersoner"
-  const bruksenhetKey = "rapport.BYG0011.bruksenheter"
-  const utgattLabel = t(`${translationKey}.utgatt`)
 
   return (
-    <KategoriSeksjon
-      title={t(`${translationKey}.title`)}
-      emptyText={t(`${bruksenhetKey}.ingenKontaktpersoner`)}
-      isEmpty={kontaktpersoner.length === 0}
-    >
-      <Table className="w-full">
-        <Table.Head>
-          <Table.Row>
-            <Table.HeaderCell>{t(`${translationKey}.navn`)}</Table.HeaderCell>
-            <Table.HeaderCell>{t(`${translationKey}.status`)}</Table.HeaderCell>
-            <Table.HeaderCell>{t(`${translationKey}.rolle`)}</Table.HeaderCell>
-            <Table.HeaderCell>
-              {t(`${translationKey}.eierIdent`)}
-            </Table.HeaderCell>
-            <Table.HeaderCell>
-              {t(`${translationKey}.adresselinjer`)}
-            </Table.HeaderCell>
-            <Table.HeaderCell>
-              {t(`${translationKey}.kategori`)}
-            </Table.HeaderCell>
-            <Table.HeaderCell>
-              {t(`${translationKey}.gyldigFra`)}
-            </Table.HeaderCell>
-          </Table.Row>
-        </Table.Head>
-        <Table.Body>
+    <div>
+      <Heading level={4} data-size="xs" className="mb-4">
+        {t(`${translationKey}.title`)}
+      </Heading>
+
+      {!kontaktpersoner || kontaktpersoner.length === 0 ? (
+        <Paragraph className="text-kv-subtle text-sm">{tom}</Paragraph>
+      ) : (
+        <div className="grid grid-cols-2 gap-3">
           {kontaktpersoner.map((kontaktperson) => (
-            <Table.Row key={kontaktperson.eierIdent}>
-              <Table.HeaderCell scope="row" className="text-kv-default">
-                {kontaktperson.navn}
-              </Table.HeaderCell>
-              <Table.Cell>
-                <PersonStatusTag
-                  erUtgatt={kontaktperson.eierErUtgatt}
-                  statuskode={kontaktperson.statuskode ?? null}
-                  utgattLabel={utgattLabel}
-                  tom={tom}
-                />
-              </Table.Cell>
-              <Table.Cell>{kontaktperson.rolle}</Table.Cell>
-              <Table.Cell className="tabular-nums">
-                {kontaktperson.eierIdent}
-              </Table.Cell>
-              <Table.Cell>
-                {formatAdresse(
-                  [
-                    kontaktperson.adresselinje1,
-                    kontaktperson.adresselinje2,
-                    kontaktperson.adresselinje3,
-                  ],
-                  kontaktperson.postnummeromradenr,
-                  kontaktperson.postnummeromradenavn,
-                  tom,
-                )}
-              </Table.Cell>
-              <Table.Cell>
-                {joinStrings(
-                  [kontaktperson.kategorikode, kontaktperson.kontaktpersonKode],
-                  " / ",
-                  tom,
-                )}
-              </Table.Cell>
-              <Table.Cell className="tabular-nums">
-                {formatDate(i18n, kontaktperson.datofra, tom, {
-                  dateStyle: "short",
-                })}
-              </Table.Cell>
-            </Table.Row>
+            <Card
+              key={JSON.stringify(kontaktperson)}
+              className="pdf-keep-together min-w-0"
+            >
+              <Paragraph className="wrap-break-word mb-4 min-w-0 font-semibold">
+                {kontaktperson.navn ?? tom}
+              </Paragraph>
+              <Detaljgrid
+                className="[&_dd]:wrap-anywhere grid-cols-1 *:min-w-0 sm:grid-cols-2 xl:grid-cols-3"
+                felter={getKontaktpersonDetaljfelter(kontaktperson, t)}
+                tom={tom}
+              />
+            </Card>
           ))}
-        </Table.Body>
-      </Table>
-    </KategoriSeksjon>
+        </div>
+      )}
+    </div>
   )
 }
