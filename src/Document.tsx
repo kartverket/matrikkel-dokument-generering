@@ -8,15 +8,15 @@ import type { Byg0011Rapport } from "./lib/schema/reports/bygg/byg0011/byggRappo
 import { formatDate } from "./lib/utils/formatDate"
 import Bruksenheter from "./sections/Bruksenheter.tsx"
 import Byggoversikt from "./sections/Byggoversikt.tsx"
+import { ByggUtvalgskriterier } from "./sections/ByggUtvalgskriterier.tsx"
 import { Metadata } from "./sections/Metadata.tsx"
-import { Utvalgskriterier } from "./sections/Utvalgskriterier.tsx"
 
 export function DocumentComponent({ rapport }: { rapport: Byg0011Rapport }) {
   return (
     <>
       <Metadata metadata={rapport.metadata} rapportKode={rapport.rapportKode} />
       <div className="pg-utvalgskriterier">
-        <Utvalgskriterier index={1} kriterier={rapport.utvalgskriterier} />
+        <ByggUtvalgskriterier index={1} kriterier={rapport.utvalgskriterier} />
       </div>
       {rapport.bygninger.map((bygning, i) => {
         const nr = i + 1

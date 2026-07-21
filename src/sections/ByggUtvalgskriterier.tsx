@@ -15,7 +15,7 @@ interface Props {
   kriterier: UtvalgskriterierType
 }
 
-export function Utvalgskriterier({ index, kriterier }: Props) {
+export function ByggUtvalgskriterier({ index, kriterier }: Props) {
   const { t } = useTranslation()
 
   return (

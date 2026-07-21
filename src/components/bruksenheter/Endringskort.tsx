@@ -1,12 +1,8 @@
-import { Card, Divider, Heading, Paragraph, Tag } from "@kv-designsystem/react"
+import { Card, Divider, Heading, Paragraph } from "@kv-designsystem/react"
 import { Fragment } from "react"
 import { useTranslation } from "react-i18next"
-import {
-  getBygningstype,
-  oversettKode,
-} from "../../lib/i18n/koder/oversettKode.ts"
+import { oversettKode } from "../../lib/i18n/koder/oversettKode.ts"
 import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
-import type { Bygning } from "../../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 import { arealLinje, formatArea } from "../../lib/utils/formatArea"
 import { formatDate } from "../../lib/utils/formatDate"
 import {
@@ -17,28 +13,54 @@ import {
 
 const bruksenhetFelt = lagDetaljfeltBuilder("rapport.BYG0011.bruksenheter")
 const byggFelt = lagDetaljfeltBuilder("rapport.BYG0011")
+const etasjeFelt = lagDetaljfeltBuilder("rapport.BYG0011.etasjer")
 
 interface Props {
   endring: BygningsEndring
-  bygning: Pick<Bygning, "bygningsType" | "matrikkelenhet">
+  matrikkelNummer?: string
 }
 
-export function Endringskort({ endring, bygning }: Props) {
+export function Endringskort({ endring, matrikkelNummer }: Props) {
   const { i18n, t } = useTranslation()
+
+  if (!endring) return null
+
   const tom = t("tom")
   const kortDato = { dateStyle: "short" } as const
   const numberFormatter = new Intl.NumberFormat(i18n.language)
   const formatDato = (dato: string | null | undefined) =>
     dato == null ? null : formatDate(i18n, dato, "", kortDato)
+
+  const {
+    byggMetaEndring,
+    byggArealEndring,
+    byggKoordinatEndring,
+    byggDatoEndring,
+  } = endring
+
   const endringskode =
-    endring.endringskode == null
+    byggMetaEndring?.endringsKode == null
       ? null
-      : oversettKode(t, "endring", endring.endringskode)
-  const bygningsstatus = oversettKode(
-    t,
-    "bygningsstatus",
-    endring.bygningsstatus.kortkode,
-  )
+      : oversettKode({
+          t,
+          kodeverk: "endring",
+          kode: byggMetaEndring.endringsKode,
+        })
+
+  const bygningstype =
+    byggMetaEndring == null
+      ? null
+      : `${byggMetaEndring.bygningsType} ${oversettKode({
+          t,
+          kodeverk: "bygningstype",
+          kode: byggMetaEndring.bygningsType,
+        })}`.trim()
+
+  const koordinater =
+    byggKoordinatEndring?.nord == null || byggKoordinatEndring.ost == null
+      ? null
+      : `${numberFormatter.format(byggKoordinatEndring.nord)} N / ${numberFormatter.format(byggKoordinatEndring.ost)} Ø`
+
   const formatertTittel = [
     t("rapport.BYG0011.bruksenheter.endringTittel", {
       lopenr: endring.lopeNr,
@@ -54,44 +76,42 @@ export function Endringskort({ endring, bygning }: Props) {
       felter: [
         bruksenhetFelt("lopenr", String(endring.lopeNr)),
         bruksenhetFelt("endringskode", endringskode),
+        bruksenhetFelt("bygningstype", bygningstype),
+        byggFelt("naeringsgruppe", byggMetaEndring?.naeringsgruppe),
+        byggFelt("matrikkelenhet", matrikkelNummer),
+        bruksenhetFelt("sefrakId", endring.sefrakId),
         bruksenhetFelt(
-          "bygningstype",
-          `${bygning.bygningsType.kode} ${getBygningstype(bygning.bygningsType.kode, t)}`,
+          "kulturminne",
+          endring.harKulturminne == null
+            ? null
+            : t(
+                `rapport.BYG0011.bruksenheter.${endring.harKulturminne ? "ja" : "nei"}`,
+              ),
         ),
-        byggFelt("naeringsgruppe", bygning.naeringsgruppe),
-        byggFelt("matrikkelenhet", bygning.matrikkelenhet),
-        bruksenhetFelt(
-          "bestaaende",
-          t(
-            `rapport.BYG0011.utvalgskriterier.${endring.bygningsstatus.bestaaende ? "ja" : "nei"}`,
-          ),
-        ),
-        bruksenhetFelt("bygningsstatus", bygningsstatus),
-        bruksenhetFelt(
-          "bygningsstatuskode",
-          String(endring.bygningsstatus.kode),
-        ),
-        bruksenhetFelt(
-          "bygningsstatusKortkode",
-          endring.bygningsstatus.kortkode,
-        ),
-        bruksenhetFelt("endringsbeskrivelse", endring.beskrivelse, {
-          className: "col-span-3",
-        }),
       ],
     },
     {
       title: t("rapport.BYG0011.bruksenheter.arealOgPlassering"),
       felter: [
-        bruksenhetFelt("antallBoenheter", String(endring.antallBoenheter)),
-        bruksenhetFelt("bruksarealEndring", arealLinje(endring.bruksareal)),
-        bruksenhetFelt("bruttoarealEndring", arealLinje(endring.bruttoareal)),
-        bruksenhetFelt("bebygdArealEndring", formatArea(endring.bebygdAreal)),
         bruksenhetFelt(
-          "koordinater",
-          `${numberFormatter.format(endring.koordinat.nord)} N / ${numberFormatter.format(endring.koordinat.ost)} Ø`,
-          { className: "col-span-2" },
+          "antallBoenheter",
+          byggMetaEndring?.antallBoenheter == null
+            ? null
+            : String(byggMetaEndring.antallBoenheter),
         ),
+        bruksenhetFelt(
+          "bruksarealEndring",
+          arealLinje(byggArealEndring?.bruksarealBolig),
+        ),
+        bruksenhetFelt(
+          "bruttoarealEndring",
+          arealLinje(byggArealEndring?.bruttoarealBolig),
+        ),
+        bruksenhetFelt(
+          "bebygdArealEndring",
+          formatArea(byggArealEndring?.bebygdAreal),
+        ),
+        bruksenhetFelt("koordinater", koordinater, { className: "col-span-2" }),
       ],
     },
     {
@@ -99,22 +119,78 @@ export function Endringskort({ endring, bygning }: Props) {
       felter: [
         bruksenhetFelt(
           "rammetillatelse",
-          formatDato(endring.datoer.rammetillatelse),
+          formatDato(byggDatoEndring?.rammetillatelse),
         ),
         bruksenhetFelt(
           "igangsettingstillatelse",
-          formatDato(endring.datoer.igangsettingstillatelse),
+          formatDato(byggDatoEndring?.igangsettingstillatelse),
         ),
         bruksenhetFelt(
           "midlertidigBrukstillatelse",
-          formatDato(endring.datoer.midlertidigBrukstillatelse),
+          formatDato(byggDatoEndring?.midlertidigBrukstillatelse),
         ),
-        bruksenhetFelt("ferdigattest", formatDato(endring.datoer.ferdigattest)),
-        bruksenhetFelt("tattIBruk", formatDato(endring.datoer.tattIBruk)),
-        bruksenhetFelt("utgaattRevet", formatDato(endring.datoer.utgaattRevet)),
+        bruksenhetFelt(
+          "ferdigattest",
+          formatDato(byggDatoEndring?.ferdigattest),
+        ),
+        bruksenhetFelt("tattIBruk", formatDato(byggDatoEndring?.tattIBruk)),
+        bruksenhetFelt(
+          "utgaattRevet",
+          formatDato(byggDatoEndring?.utgaattRevet),
+        ),
       ],
     },
   ] satisfies Array<{ title: string; felter: DetaljfeltData[] }>
+
+  const etasjer = endring.etasjePlan.filter((etasje) => etasje != null)
+
+  const lister = [
+    {
+      title: t("rapport.BYG0011.bruksenheter.etasjerIEndringen"),
+      emptyText: t("rapport.BYG0011.bruksenheter.ingenEtasjer"),
+      elementer: etasjer.map((etasje) => ({
+        key: `${etasje.etasjeplan}-${etasje.etasje}`,
+        felter: [
+          etasjeFelt("etasjeplan", etasje.etasjeplan),
+          etasjeFelt("etasje", String(etasje.etasje)),
+          etasjeFelt(
+            "antallBoenheter",
+            etasje.antallBoenheter == null
+              ? null
+              : String(etasje.antallBoenheter),
+          ),
+          etasjeFelt(
+            "bruksarealBolig",
+            formatArea(etasje.bruksareal.boligAreal),
+          ),
+          etasjeFelt(
+            "bruksarealAnnet",
+            formatArea(etasje.bruksareal.annetAreal),
+          ),
+          etasjeFelt(
+            "bruksarealTotalt",
+            formatArea(etasje.bruksareal.totaltAreal),
+          ),
+          etasjeFelt(
+            "bruttoarealBolig",
+            formatArea(etasje.bruttoareal.boligAreal),
+          ),
+          etasjeFelt(
+            "bruttoarealAnnet",
+            formatArea(etasje.bruttoareal.annetAreal),
+          ),
+          etasjeFelt(
+            "bruttoarealTotalt",
+            formatArea(etasje.bruttoareal.totaltAreal),
+          ),
+        ],
+      })),
+    },
+  ] satisfies Array<{
+    title: string
+    emptyText: string
+    elementer: Array<{ key: string; felter: DetaljfeltData[] }>
+  }>
 
   return (
     <Card
@@ -127,9 +203,6 @@ export function Endringskort({ endring, bygning }: Props) {
           <Heading level={5} data-size="xs" className="font-medium">
             {formatertTittel}
           </Heading>
-          <Tag data-color="accent" variant="outline">
-            {bygningsstatus}
-          </Tag>
         </div>
 
         {grupper.map(({ title, felter }, index) => (

@@ -23,9 +23,17 @@ export default function Byggoversikt({ bygning, index }: Props) {
       <div className="mt-8 space-y-8 rounded-xl border border-kv-blue-subtle p-8">
         <BygningHeader bygning={bygning} />
         <Divider />
-        <Nokkeltall gjeldendeEndring={gjeldendeEndring} />
-        <Oversiktsfelt bygning={bygning} gjeldendeEndring={gjeldendeEndring} />
-        <ArealFordeling etasjePlan={gjeldendeEndring.etasjePlan} />
+
+        {gjeldendeEndring && (
+          <>
+            <Nokkeltall gjeldendeEndring={gjeldendeEndring} />
+            <Oversiktsfelt
+              bygning={bygning}
+              gjeldendeEndring={gjeldendeEndring}
+            />
+            <ArealFordeling etasjePlan={gjeldendeEndring.etasjePlan} />
+          </>
+        )}
         <Historikk byggEndringer={bygning.endringer} />
       </div>
     </Section>

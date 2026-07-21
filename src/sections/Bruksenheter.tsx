@@ -5,7 +5,6 @@ import ArealFordeling from "../components/ArealFordeling.tsx"
 import { BruksenhetHeader } from "../components/bruksenheter/BruksenhetHeader.tsx"
 import { Endringskort } from "../components/bruksenheter/Endringskort.tsx"
 import { Hjemmelshavere } from "../components/bruksenheter/Hjemmelshavere.tsx"
-import { Kontaktpersoner } from "../components/bruksenheter/Kontaktpersoner.tsx"
 import { RegistrerteVedtak } from "../components/bruksenheter/RegistrerteVedtak.tsx"
 import { Tiltakshavere } from "../components/bruksenheter/Tiltakshavere.tsx"
 import { Detaljgrid, lagDetaljfeltBuilder } from "../components/Detaljfelt.tsx"
@@ -21,7 +20,6 @@ import {
   finnGjeldendeBygningsendring,
   isFerdigstilt,
 } from "../lib/utils/isFerdigstilt.ts"
-import { sorterBruksenheterEtterNummer } from "../lib/utils/sorterBruksenheter.ts"
 
 interface Props {
   index: number
@@ -93,14 +91,17 @@ function berorerBruksenhet(
   )
 }
 export default function Bruksenheter({ index, bygning }: Props) {
+  const { endringer } = bygning
   const { t } = useTranslation()
   const i18n = "rapport.BYG0011.bruksenheter"
   const tom = t("tom")
   const ingenOppgittBruksenhet = t(`${i18n}.ingenOppgittBruksenhet`)
-  const gjeldende = finnGjeldendeBygningsendring(bygning.endringer)
-  const sorterteBruksenheter = sorterBruksenheterEtterNummer(bygning.endringer)
+  const gjeldende = finnGjeldendeBygningsendring(endringer)
+  const sorterteBruksenheter = endringer.flatMap(
+    (endring) => endring?.bruksenheter ?? [],
+  )
 
-  if (bygning.bruksenheter.length === 0) return null
+  if (sorterteBruksenheter.length === 0) return null
 
   return (
     <Section
@@ -110,7 +111,7 @@ export default function Bruksenheter({ index, bygning }: Props) {
     >
       <div className="flex flex-col gap-5">
         {sorterteBruksenheter.map((bruksenhet) => {
-          const endringer = bygning.endringer.filter((endring) =>
+          const bruksenhetsEndringer = endringer.filter((endring) =>
             berorerBruksenhet(endring, bruksenhet),
           )
           const gjeldendeEndringForBruksenhet = berorerBruksenhet(
@@ -119,17 +120,19 @@ export default function Bruksenheter({ index, bygning }: Props) {
           )
             ? gjeldende
             : undefined
-          const tiltakshavere = getTiltakshavere(bygning.endringer, bruksenhet)
+          const tiltakshavere = getTiltakshavere(endringer, bruksenhet)
 
           return (
             <Card
               key={bruksenhet.id}
-              data-bruksenhet={bruksenhet.nummer ?? ingenOppgittBruksenhet}
+              data-bruksenhet={
+                bruksenhet.bruksenhetsNr ?? ingenOppgittBruksenhet
+              }
               className="break-inside-avoid border border-kv-border"
             >
               <Card.Block className="p-7">
                 <BruksenhetHeader
-                  bruksenhetNummer={bruksenhet.nummer ?? null}
+                  bruksenhetNummer={bruksenhet.bruksenhetsNr ?? null}
                   bruksenhetTypeChip={bruksenhet.type ?? null}
                   bruksenhetSeksjon={bruksenhet.seksjon ?? null}
                   ingenOppgittBruksenhet={ingenOppgittBruksenhet}
@@ -151,26 +154,23 @@ export default function Bruksenheter({ index, bygning }: Props) {
                 <ArealFordeling arealfordeling={bruksenhet.arealfordeling} />
 
                 <Divider className="my-6" />
-                <Hjemmelshavere hjemmelshavere={bruksenhet.hjemmelshavere} />
-
-                <Divider className="my-6" />
-                <Kontaktpersoner kontaktpersoner={bruksenhet.kontaktpersoner} />
+                <Hjemmelshavere aktoer={gjeldendeEndringForBruksenhet?.aktoer} />
 
                 <Divider className="my-6" />
 
                 <div>
                   <Paragraph className="mb-3 font-bold text-kv-subtle text-xs tracking-wide">
-                    {endringer.length > 0
+                    {bruksenhetsEndringer.length > 0
                       ? t(`${i18n}.endringerPaBruksenheten`)
                       : t(`${i18n}.ingenEndringer`)}
                   </Paragraph>
-                  {endringer.length > 0 && (
+                  {bruksenhetsEndringer.length > 0 && (
                     <div className="flex flex-col gap-3">
-                      {endringer.map((endring) => (
+                      {bruksenhetsEndringer.map((bruksenhetsEndring) => (
                         <Endringskort
-                          key={endring.lopeNr}
-                          endring={endring}
-                          bygning={bygning}
+                          key={bruksenhetsEndring?.lopeNr}
+                          endring={bruksenhetsEndring}
+                          matrikkelNummer={bygning.matrikkelenhetsNr}
                         />
                       ))}
                     </div>

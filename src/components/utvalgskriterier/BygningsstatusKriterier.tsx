@@ -31,7 +31,11 @@ export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {
                 <span className="flex flex-wrap gap-2">
                   {bygningsstatusKriterier?.naavaerende?.map((status) => (
                     <Tag key={status} data-color="success" variant="outline">
-                      {oversettKode(bygningsstatusKriterier.naavaerende)}
+                      {oversettKode({
+                        t,
+                        kodeverk: "bygningsstatus",
+                        kode: status,
+                      })}
                     </Tag>
                   ))}
                 </span>
@@ -50,7 +54,11 @@ export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {
                 <span className="flex flex-wrap gap-2">
                   {bygningsstatusKriterier?.tidligere?.map((status) => (
                     <Tag key={status} data-color="accent" variant="outline">
-                      {formaterKode(t, "bygningsstatus", status)}
+                      {oversettKode({
+                        t,
+                        kodeverk: "bygningsstatus",
+                        kode: status,
+                      })}
                     </Tag>
                   ))}
                 </span>

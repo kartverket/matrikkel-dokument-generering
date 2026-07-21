@@ -1,80 +1,47 @@
 import type { TFunction } from "i18next"
 import { useTranslation } from "react-i18next"
 import { oversettKode } from "../../lib/i18n/koder/oversettKode.ts"
-import type { Bruksenhet } from "../../lib/schema/reports/bygg/byg0011/bruksenhet.schema"
-import { formatAdresse } from "../../lib/utils/formatAdresse"
+import type { Aktoer } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 import { lagDetaljfeltBuilder } from "../Detaljfelt"
 import { PersonCard } from "../PersonCard"
 import { PersonGrid } from "../PersonGrid"
 
 interface Props {
-  hjemmelshavere: Bruksenhet["hjemmelshavere"]
+  aktoer: Aktoer | undefined
 }
 
 const hjemmelshaverFelt = lagDetaljfeltBuilder("rapport.BYG0011.hjemmelshavere")
 
-const getAndel = (hjemmelshaver: Props["hjemmelshavere"][number]) => {
-  if (
-    hjemmelshaver.harAndel &&
-    hjemmelshaver.andelTeller !== null &&
-    hjemmelshaver.andelNevner !== null
-  ) {
-    return `${hjemmelshaver.andelTeller}/${hjemmelshaver.andelNevner}`
-  }
-  return null
-}
-
-const getHjemmelshaverDetaljfelter = (
-  hjemmelshaver: Props["hjemmelshavere"][number],
-  t: TFunction,
-  tom: string,
-) => {
+const getHjemmelshaverDetaljfelter = (aktoer: Aktoer, t: TFunction) => {
   return [
-    hjemmelshaverFelt("identifikasjonsNr", hjemmelshaver.identifikasjonsNr),
-    hjemmelshaverFelt("andel", getAndel(hjemmelshaver)),
-    hjemmelshaverFelt(
-      "adresselinjer",
-      formatAdresse(
-        [
-          hjemmelshaver.adresselinje1,
-          hjemmelshaver.adresselinje2,
-          hjemmelshaver.adresselinje3,
-        ],
-        hjemmelshaver.postnummer,
-        hjemmelshaver.poststed,
-        tom,
-      ),
-    ),
-    hjemmelshaverFelt("land", hjemmelshaver.land),
-    hjemmelshaverFelt("gyldigFra", hjemmelshaver.datofra),
-    hjemmelshaverFelt("gyldigTil", hjemmelshaver.datotil),
+    hjemmelshaverFelt("identifikasjonsNr", aktoer.identifikasjonsNr),
+    hjemmelshaverFelt("andel", aktoer.andel),
+    hjemmelshaverFelt("adresse", aktoer.adresse),
+    hjemmelshaverFelt("bruksenhetsnr", aktoer.bruksenhetsNr),
     hjemmelshaverFelt(
       "kategori",
-      hjemmelshaver.kategorikode == null
-        ? null
-        : oversettKode(t, "aktoer", hjemmelshaver.kategorikode),
+      oversettKode({ t, kodeverk: "aktoer", kode: aktoer.aktoerKode }),
     ),
   ]
 }
 
-export function Hjemmelshavere({ hjemmelshavere }: Props) {
+export function Hjemmelshavere({ aktoer }: Props) {
   const { t } = useTranslation()
   const tom = t("tom")
   const translationKey = "rapport.BYG0011.hjemmelshavere"
 
   return (
     <PersonGrid title={t(`${translationKey}.title`)} tom={tom}>
-      {hjemmelshavere.map((hjemmelshaver) => (
+      {aktoer && (
         <PersonCard
-          key={hjemmelshaver.identifikasjonsNr}
-          navn={hjemmelshaver.navn}
-          erUtgatt={hjemmelshaver.eierErUtgatt}
-          statuskode={hjemmelshaver.statuskode ?? null}
+          navn={aktoer.navn ?? tom}
+          erUtgatt={aktoer.erAvdoed}
+          statuskode={null}
           utgattLabel={t(`${translationKey}.utgatt`)}
-          felter={getHjemmelshaverDetaljfelter(hjemmelshaver, t, tom)}
+          felter={getHjemmelshaverDetaljfelter(aktoer, t)}
           tom={tom}
         />
-      ))}
+      )}
     </PersonGrid>
   )
 }
