@@ -1,11 +1,10 @@
 import type { Bruksenhet } from "../lib/schema/reports/bygg/byg0011/bruksenhet.schema"
-import type { BygningsEndring } from "../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
+import type {
+  ByggEndringsDatoer,
+  BygningsEndring,
+} from "../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 import type { Byg0011Rapport as ByggRapport } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
-
-type ByggDatoEndring = NonNullable<BygningsEndring["byggDatoEndring"]>
-type EndringsKode = NonNullable<
-  NonNullable<BygningsEndring["byggMetaEndring"]>["endringsKode"]
->
+import type { EndringsKode } from "../lib/schema/reports/bygg/koder/endringsKode.schema.ts"
 
 function isoDatetime(date: string) {
   return `${date}T00:00:00Z`
@@ -97,7 +96,7 @@ function byggEndring({
   endringsKode?: EndringsKode
   boligAreal: number
   annetAreal: number
-  datoer: ByggDatoEndring
+  datoer: ByggEndringsDatoer
   bruksenheter: Bruksenhet[]
 }): BygningsEndring {
   return {

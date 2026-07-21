@@ -13,7 +13,7 @@ export function finnGjeldendeBygningsendring(
 ): BygningsEndring {
   // TODO: denne funksjonen returner kun basisregistreringen
   const nyesteFoerst = endringer.toSorted(
-    (a, b) => (b.lopeNr ?? 0) - (a.lopeNr ?? 0),
+    (a, b) => (b?.lopeNr ?? 0) - (a?.lopeNr ?? 0),
   )
   return nyesteFoerst.find(isFerdigstilt) ?? nyesteFoerst[0]
 }

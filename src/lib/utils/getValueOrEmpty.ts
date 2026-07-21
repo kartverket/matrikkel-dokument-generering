@@ -3,7 +3,7 @@ interface DetaljVerdi {
   erTom: boolean
 }
 
-export function getDetaljVerdi(
+export function getValueOrEmpty(
   value: string | null | undefined,
   tom: string,
 ): DetaljVerdi {

@@ -10,9 +10,11 @@ import { RegistrerteVedtak } from "../components/bruksenheter/RegistrerteVedtak.
 import { Tiltakshavere } from "../components/bruksenheter/Tiltakshavere.tsx"
 import { Detaljgrid, lagDetaljfeltBuilder } from "../components/Detaljfelt.tsx"
 import { Section } from "../components/Section.tsx"
-import type { Tiltakshaver } from "../lib/schema/reports/bygg/byg0011/aktoer.schema.ts"
 import type { Bruksenhet } from "../lib/schema/reports/bygg/byg0011/bruksenhet.schema.ts"
-import type { BygningsEndring } from "../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
+import type {
+  BygningsEndring,
+  TiltaksHaver,
+} from "../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 import { formatArea } from "../lib/utils/formatArea.ts"
 import {
@@ -41,7 +43,7 @@ function getBruksenhetDetaljfelter(bruksenhet: Bruksenhet, t: TFunction) {
     bruksenhetFelt("etasje", bruksenhet.etasje),
     bruksenhetFelt(
       "bruksareal",
-      formatArea(bruksenhet.arealfordeling.bruksareal.totalt),
+      formatArea(bruksenhet.arealfordeling.bruksareal.totaltAreal),
     ),
     bruksenhetFelt("antallRom", String(bruksenhet.antallRom)),
     bruksenhetFelt("kjokkentilgang", kjokkentilgang),
@@ -53,51 +55,50 @@ function getBruksenhetDetaljfelter(bruksenhet: Bruksenhet, t: TFunction) {
 function getTiltakshavere(
   endringer: BygningsEndring[],
   bruksenhet: Bruksenhet,
-): Tiltakshaver[] {
-  const unikeTiltakshavere = new Map<string, Tiltakshaver>()
+): TiltaksHaver[] {
+  const unikeTiltakshavere = new Map<string, TiltaksHaver>()
 
   for (const endring of endringer.toSorted(
     (a, b) => (b?.lopeNr ?? 0) - (a?.lopeNr ?? 0),
   )) {
-    if (isFerdigstilt(endring)) continue
+    const tiltakshaver = endring?.tiltaksHaver
 
-    for (const tiltakshaver of endring.tiltakshavere) {
-      if (tiltakshaver.bruksenhetsnr !== bruksenhet.nummer) continue
+    if (!tiltakshaver || isFerdigstilt(endring)) continue
+    if (tiltakshaver.bruksenhetsNr !== bruksenhet.bruksenhetsNr) continue
 
-      const nokkel = JSON.stringify([
-        tiltakshaver.identifikasjonsNr,
-        tiltakshaver.rolle,
-        tiltakshaver.bruksenhetsnr,
-        tiltakshaver.datofra,
-        tiltakshaver.kategorikode,
-        tiltakshaver.kontaktpersonKode,
-      ])
+    const nokkel = JSON.stringify([
+      tiltakshaver.identifikasjonsNr,
+      tiltakshaver.kontaktPersonKode,
+      tiltakshaver.bruksenhetsNr,
+    ])
 
-      if (!unikeTiltakshavere.has(nokkel)) {
-        unikeTiltakshavere.set(nokkel, tiltakshaver)
-      }
+    if (!unikeTiltakshavere.has(nokkel)) {
+      unikeTiltakshavere.set(nokkel, tiltakshaver)
     }
   }
 
-  return [...unikeTiltakshavere.values()]
+  return Array.from(unikeTiltakshavere.values())
 }
 
-function berorerBruksenhet(endring: BygningsEndring, bruksenhet: Bruksenhet) {
-  return (
-    bruksenhet.bruksenhetsNr !== null &&
-    endring.bruksenheter.some(() => bruksenhetsNr === bruksenhet.bruksenhetsNr)
+function berorerBruksenhet(
+  endring: BygningsEndring,
+  bruksenhet: Bruksenhet,
+): boolean {
+  return Boolean(
+    bruksenhet.bruksenhetsNr &&
+      endring?.bruksenheter?.some(
+        (berortBruksenhet) =>
+          berortBruksenhet.bruksenhetsNr === bruksenhet.bruksenhetsNr,
+      ),
   )
 }
-
 export default function Bruksenheter({ index, bygning }: Props) {
   const { t } = useTranslation()
   const i18n = "rapport.BYG0011.bruksenheter"
   const tom = t("tom")
   const ingenOppgittBruksenhet = t(`${i18n}.ingenOppgittBruksenhet`)
   const gjeldende = finnGjeldendeBygningsendring(bygning.endringer)
-  const sorterteBruksenheter = sorterBruksenheterEtterNummer(
-    bygning.bruksenheter,
-  )
+  const sorterteBruksenheter = sorterBruksenheterEtterNummer(bygning.endringer)
 
   if (bygning.bruksenheter.length === 0) return null
 
