@@ -2,7 +2,7 @@ import type { TFunction } from "i18next"
 import { useTranslation } from "react-i18next"
 import ArealFordeling from "../components/ArealFordeling.tsx"
 import { BruksenhetHeader } from "../components/bruksenheter/BruksenhetHeader.tsx"
-import { Hjemmelshavere } from "../components/bruksenheter/Hjemmelshavere.tsx"
+import {Aktorere, Hjemmelshavere} from "../components/Aktorere.tsx"
 import { Kontaktpersoner } from "../components/bruksenheter/Kontaktpersoner.tsx"
 import { RegistrerteVedtak } from "../components/bruksenheter/RegistrerteVedtak.tsx"
 import { Tiltakshavere } from "../components/bruksenheter/Tiltakshavere.tsx"
@@ -94,7 +94,7 @@ export default function Bruksenheter({ index, bygning }: Props) {
                 tom={tom}
                 className="gap-x-8 gap-y-5"
               />
-              <Hjemmelshavere aktoer={gjeldendeEndringForBruksenhet?.aktoer} />{" "}
+              <Aktorere aktorer={gjeldendeEndringForBruksenhet?.aktorer} />{" "}
               hjemmelshavere={bruksenhet.hjemmelshavere} />
               <RegistrerteVedtak endringer={endringer} />
               {/* ArealFordeling */}

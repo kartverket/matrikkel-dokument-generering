@@ -1,14 +1,13 @@
 import { Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import type { Bruksenhet } from "../../lib/schema/reports/bygg/bygg0011/index"
 import { formatAdresse } from "../../lib/utils/formatAdresse"
 import { formatDate } from "../../lib/utils/formatDate"
 import { joinStrings } from "../../lib/utils/joinStrings"
 import { KategoriSeksjon } from "./KategoriSeksjon"
-import { PersonStatusTag } from "./PersonStatusTag"
+import type {Aktor} from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts";
 
 interface Props {
-  kontaktpersoner: Bruksenhet["kontaktpersoner"]
+  kontaktpersoner: Aktor[]
 }
 
 export function Kontaktpersoner({ kontaktpersoner }: Props) {

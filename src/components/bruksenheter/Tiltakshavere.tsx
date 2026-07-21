@@ -1,10 +1,5 @@
-import type { TFunction } from "i18next"
 import { useTranslation } from "react-i18next"
-import { oversettKode } from "../../lib/i18n/koder/oversettKode.ts"
 import type { TiltaksHaver } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
-import { lagDetaljfeltBuilder } from "../Detaljfelt"
-import { PersonCard } from "../PersonCard"
-import { PersonGrid } from "../PersonGrid"
 
 interface Props {
   tiltakshavere: TiltaksHaver[]
