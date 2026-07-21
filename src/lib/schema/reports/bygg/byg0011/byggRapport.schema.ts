@@ -28,7 +28,7 @@ export const byggRapportSchema = rapportSchema
   })
   .meta({
     id: "BYG0011",
-    title: "ByggRapport",
+    title: "BYG0011 - Byggrapport",
   })
 
 export type Bygning = z.infer<typeof bygningSchema>

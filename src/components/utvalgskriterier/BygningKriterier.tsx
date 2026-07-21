@@ -43,7 +43,7 @@ export function BygningKriterier({ bygningKriterier }: Props) {
                 <span className="flex flex-wrap gap-2">
                   {bygningKriterier.bygningstyper.map((kode) => (
                     <Tag key={kode} data-color="accent" variant="outline">
-                      {oversettKode(t, "bygningstype", kode)}
+                      {oversettKode({ t, kodeverk: "bygningstype", kode })}
                     </Tag>
                   ))}
                 </span>

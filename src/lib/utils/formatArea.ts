@@ -5,8 +5,8 @@ export function formatArea(value: number | undefined): string | null {
 }
 
 export function arealLinje(a: ArealFordeling | undefined): string | null {
-  if (!a) return null
+  if (a === undefined) return null
   const verdier = [a.boligAreal, a.annetAreal, a.totaltAreal]
-  if (verdier.every((verdi) => verdi == null)) return null
+  if (verdier.every((verdi) => verdi === undefined)) return null
   return `${verdier.map((verdi) => verdi ?? "–").join(" / ")} m²`
 }

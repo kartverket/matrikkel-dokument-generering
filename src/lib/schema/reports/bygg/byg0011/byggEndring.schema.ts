@@ -201,7 +201,7 @@ export const byggEndringSchema = valgfriObjekt({
 
   // Bruksenheter til endringen
   bruksenheter: valgfriListe(bruksenhetSchema),
-}).meta({ id: "BYG0011Bygningsendring" })
+})
 
 export type ByggEndringsDatoer = NonNullable<
   NonNullable<BygningsEndring>["byggDatoEndring"]
@@ -210,5 +210,6 @@ export type TiltaksHaver = NonNullable<
   NonNullable<BygningsEndring>["tiltaksHaver"]
 >
 export type Aktoer = NonNullable<NonNullable<BygningsEndring>["aktoer"]>
+export type EtasjePlan = NonNullable<BygningsEndring>["etasjePlan"]
 
 export type BygningsEndring = z.infer<typeof byggEndringSchema>

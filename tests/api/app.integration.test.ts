@@ -35,8 +35,9 @@ describe("HTTP API", () => {
       errors: {
         valid: false,
         errors: expect.objectContaining({
-          rapportType: expect.any(Array),
-          bygninger: expect.any(Array),
+          rapportKode: expect.any(Array),
+          metadata: expect.any(Array),
+          locale: expect.any(Array),
         }),
       },
     })

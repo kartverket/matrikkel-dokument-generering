@@ -5,7 +5,9 @@ import { oversettKode } from "../../lib/i18n/koder/oversettKode.ts"
 import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 import { formatDate } from "../../lib/utils/formatDate"
 import {
+  finnSisteMilepael,
   lagHistorikkbeskrivelseForBygningsendring,
+  type Milepael,
   sorterBygningsendringerKronologisk,
 } from "./byggHistorikk"
 
@@ -13,17 +15,17 @@ interface Props {
   byggEndringer: BygningsEndring[]
 }
 
-const groenneStatuser = new Set(["FA", "TB"])
+const groenneMilepaeler = new Set<Milepael>(["ferdigattest", "tattIBruk"])
 
 export default function Historikk({ byggEndringer }: Props) {
   const { i18n, t } = useTranslation()
   const tom = t("tom")
   const h = "rapport.BYG0011.byggoversikt.historikk"
 
-  if (byggEndringer.length === 0) return null
+  const endringer = byggEndringer.filter((endring) => endring !== undefined)
+  if (endringer.length === 0) return null
 
-  const kronologiskeEndringer =
-    sorterBygningsendringerKronologisk(byggEndringer)
+  const kronologiskeEndringer = sorterBygningsendringerKronologisk(endringer)
 
   const rader = kronologiskeEndringer
     .map((rad, i) => ({
@@ -51,11 +53,10 @@ export default function Historikk({ byggEndringer }: Props) {
       <ul className="space-y-8 border-kv-green border-l-3 pl-6">
         {rader.map(({ endring, dato, beskrivelse }) => {
           const beroerteBruksenhetsnumre = endring.bruksenheter.flatMap(
-            ({ bruksenhetsnr }) => bruksenhetsnr ?? [],
+            ({ bruksenhetsNr }) => bruksenhetsNr ?? [],
           )
-          const erGroennStatus = groenneStatuser.has(
-            endring.bygningsstatus.kortkode,
-          )
+          const endringsKode = endring.byggMetaEndring?.endringsKode
+          const milepael = finnSisteMilepael(endring)
 
           return (
             <li key={endring.lopeNr} className="space-y-1">
@@ -64,22 +65,26 @@ export default function Historikk({ byggEndringer }: Props) {
                   <span className="font-semibold">
                     {formatDate(i18n, dato, tom, { dateStyle: "short" })}
                   </span>
-                  {endring.endringskode && (
+                  {endringsKode !== undefined && (
                     <Tag data-color="success" variant="outline">
-                      {oversettKode(t, "endring", endring.endringskode)}
+                      {oversettKode({
+                        t,
+                        kodeverk: "endring",
+                        kode: endringsKode,
+                      })}
                     </Tag>
                   )}
                 </div>
-                <Tag
-                  data-color={erGroennStatus ? "success" : "accent"}
-                  variant="outline"
-                >
-                  {oversettKode(
-                    t,
-                    "bygningsstatus",
-                    endring.bygningsstatus.kortkode,
-                  )}
-                </Tag>
+                {milepael && (
+                  <Tag
+                    data-color={
+                      groenneMilepaeler.has(milepael) ? "success" : "accent"
+                    }
+                    variant="outline"
+                  >
+                    {t(`rapport.BYG0011.registrerteVedtak.${milepael}`)}
+                  </Tag>
+                )}
               </div>
               {beskrivelse && <Paragraph>{beskrivelse}</Paragraph>}
               <Activity

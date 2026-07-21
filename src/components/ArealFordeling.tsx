@@ -18,14 +18,9 @@ function getArealDetaljfelter(arealfordeling: Props["arealfordeling"]) {
     arealFelt("bebygdAreal", formatArea(arealfordeling.bebygdAreal), {
       valueClassName,
     }),
-    arealFelt("bruksareal", formatArea(arealfordeling.bruksareal.totalt), {
+    arealFelt("bruksareal", formatArea(arealfordeling.bruksareal.totaltAreal), {
       valueClassName,
     }),
-    arealFelt(
-      "koordinater",
-      `${arealfordeling.koordinat.nord} / ${arealfordeling.koordinat.ost}`,
-      { valueClassName },
-    ),
   ]
 }
 
@@ -87,10 +82,10 @@ export default function Arealfordeling({ arealfordeling }: Props) {
                     {t(`${af}.bruksarealRad`)}
                   </Table.HeaderCell>
                   <Table.Cell className="text-right tabular-nums">
-                    {etasje.bruksareal.bolig}
+                    {etasje.bruksareal.boligAreal}
                   </Table.Cell>
                   <Table.Cell className="text-right tabular-nums">
-                    {etasje.bruksareal.annet}
+                    {etasje.bruksareal.annetAreal}
                   </Table.Cell>
                 </Table.Row>
                 <Table.Row>
@@ -98,10 +93,10 @@ export default function Arealfordeling({ arealfordeling }: Props) {
                     {t(`${af}.bruttoarealRad`)}
                   </Table.HeaderCell>
                   <Table.Cell className="text-right tabular-nums">
-                    {etasje.bruttoareal.bolig}
+                    {etasje.bruttoareal.boligAreal}
                   </Table.Cell>
                   <Table.Cell className="text-right tabular-nums">
-                    {etasje.bruttoareal.annet}
+                    {etasje.bruttoareal.annetAreal}
                   </Table.Cell>
                 </Table.Row>
               </Fragment>

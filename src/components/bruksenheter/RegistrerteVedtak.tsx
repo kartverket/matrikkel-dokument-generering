@@ -16,7 +16,9 @@ const vedtakFelt = lagDetaljfeltBuilder("rapport.BYG0011.registrerteVedtak")
 
 function getVedtakDetaljfelter(datoer: ByggEndringsDatoer, i18n: I18n) {
   const formatDato = (dato: string | undefined) =>
-    dato == null ? null : formatDate(i18n, dato, "", { dateStyle: "short" })
+    dato === undefined
+      ? null
+      : formatDate(i18n, dato, "", { dateStyle: "short" })
 
   return [
     vedtakFelt("rammetillatelse", formatDato(datoer.rammetillatelse)),
@@ -45,7 +47,7 @@ export function RegistrerteVedtak({ endring }: Props) {
       <Heading level={4} data-size="xs" className="mb-4">
         {t(`${translationKey}.title`)}
       </Heading>
-      {datoer == null ? (
+      {datoer === undefined ? (
         <Paragraph className="text-kv-subtle text-sm">{tom}</Paragraph>
       ) : (
         <Detaljgrid felter={getVedtakDetaljfelter(datoer, i18n)} tom={tom} />

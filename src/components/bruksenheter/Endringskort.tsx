@@ -5,6 +5,7 @@ import { oversettKode } from "../../lib/i18n/koder/oversettKode.ts"
 import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 import { arealLinje, formatArea } from "../../lib/utils/formatArea"
 import { formatDate } from "../../lib/utils/formatDate"
+import { formaterBygningstype } from "../../lib/utils/formaterBygningstype.ts"
 import {
   type DetaljfeltData,
   Detaljgrid,
@@ -23,13 +24,13 @@ interface Props {
 export function Endringskort({ endring, matrikkelNummer }: Props) {
   const { i18n, t } = useTranslation()
 
-  if (!endring) return null
+  if (endring === undefined) return null
 
   const tom = t("tom")
   const kortDato = { dateStyle: "short" } as const
   const numberFormatter = new Intl.NumberFormat(i18n.language)
-  const formatDato = (dato: string | null | undefined) =>
-    dato == null ? null : formatDate(i18n, dato, "", kortDato)
+  const formatDato = (dato: string | undefined) =>
+    dato === undefined ? null : formatDate(i18n, dato, "", kortDato)
 
   const {
     byggMetaEndring,
@@ -39,7 +40,7 @@ export function Endringskort({ endring, matrikkelNummer }: Props) {
   } = endring
 
   const endringskode =
-    byggMetaEndring?.endringsKode == null
+    byggMetaEndring?.endringsKode === undefined
       ? null
       : oversettKode({
           t,
@@ -47,17 +48,11 @@ export function Endringskort({ endring, matrikkelNummer }: Props) {
           kode: byggMetaEndring.endringsKode,
         })
 
-  const bygningstype =
-    byggMetaEndring == null
-      ? null
-      : `${byggMetaEndring.bygningsType} ${oversettKode({
-          t,
-          kodeverk: "bygningstype",
-          kode: byggMetaEndring.bygningsType,
-        })}`.trim()
+  const bygningstype = formaterBygningstype(t, byggMetaEndring?.bygningsType)
 
   const koordinater =
-    byggKoordinatEndring?.nord == null || byggKoordinatEndring.ost == null
+    byggKoordinatEndring?.nord === undefined ||
+    byggKoordinatEndring.ost === undefined
       ? null
       : `${numberFormatter.format(byggKoordinatEndring.nord)} N / ${numberFormatter.format(byggKoordinatEndring.ost)} Ø`
 
@@ -82,7 +77,7 @@ export function Endringskort({ endring, matrikkelNummer }: Props) {
         bruksenhetFelt("sefrakId", endring.sefrakId),
         bruksenhetFelt(
           "kulturminne",
-          endring.harKulturminne == null
+          endring.harKulturminne === undefined
             ? null
             : t(
                 `rapport.BYG0011.bruksenheter.${endring.harKulturminne ? "ja" : "nei"}`,
@@ -95,7 +90,7 @@ export function Endringskort({ endring, matrikkelNummer }: Props) {
       felter: [
         bruksenhetFelt(
           "antallBoenheter",
-          byggMetaEndring?.antallBoenheter == null
+          byggMetaEndring?.antallBoenheter === undefined
             ? null
             : String(byggMetaEndring.antallBoenheter),
         ),
@@ -142,7 +137,7 @@ export function Endringskort({ endring, matrikkelNummer }: Props) {
     },
   ] satisfies Array<{ title: string; felter: DetaljfeltData[] }>
 
-  const etasjer = endring.etasjePlan.filter((etasje) => etasje != null)
+  const etasjer = endring.etasjePlan.filter((etasje) => etasje !== undefined)
 
   const lister = [
     {
@@ -155,7 +150,7 @@ export function Endringskort({ endring, matrikkelNummer }: Props) {
           etasjeFelt("etasje", String(etasje.etasje)),
           etasjeFelt(
             "antallBoenheter",
-            etasje.antallBoenheter == null
+            etasje.antallBoenheter === undefined
               ? null
               : String(etasje.antallBoenheter),
           ),

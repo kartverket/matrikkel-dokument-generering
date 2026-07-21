@@ -1,6 +1,6 @@
 import { Heading, Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import type { EtasjePlan } from "../../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
+import type { EtasjePlan } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 import { formatArea } from "../../lib/utils/formatArea"
 
 interface Props {
@@ -11,13 +11,15 @@ export default function ArealFordeling({ etasjePlan }: Props) {
   const { t } = useTranslation()
   const af = "rapport.BYG0011.byggoversikt.arealfordeling"
 
-  const sum = etasjePlan.reduce(
+  const etasjer = etasjePlan.filter((etasje) => etasje !== undefined)
+
+  const sum = etasjer.reduce(
     (acc, e) => ({
       antallBoenheter: acc.antallBoenheter + (e.antallBoenheter ?? 0),
-      bolig: acc.bolig + (e.bruksareal.bolig ?? 0),
-      annet: acc.annet + (e.bruksareal.annet ?? 0),
-      bra: acc.bra + (e.bruksareal.totalt ?? 0),
-      bta: acc.bta + (e.bruttoareal.totalt ?? 0),
+      bolig: acc.bolig + (e.bruksareal.boligAreal ?? 0),
+      annet: acc.annet + (e.bruksareal.annetAreal ?? 0),
+      bra: acc.bra + (e.bruksareal.totaltAreal ?? 0),
+      bta: acc.bta + (e.bruttoareal.totaltAreal ?? 0),
     }),
     { antallBoenheter: 0, bolig: 0, annet: 0, bra: 0, bta: 0 },
   )
@@ -39,14 +41,14 @@ export default function ArealFordeling({ etasjePlan }: Props) {
           </Table.Row>
         </Table.Head>
         <Table.Body>
-          {etasjePlan.map((e) => (
+          {etasjer.map((e) => (
             <Table.Row key={`${e.etasjeplan}-${e.etasje}`}>
               <Table.Cell>{e.etasjeplan}</Table.Cell>
               <Table.Cell>{e.antallBoenheter}</Table.Cell>
-              <Table.Cell>{formatArea(e.bruksareal.bolig)}</Table.Cell>
-              <Table.Cell>{formatArea(e.bruksareal.annet)}</Table.Cell>
-              <Table.Cell>{formatArea(e.bruksareal.totalt)}</Table.Cell>
-              <Table.Cell>{formatArea(e.bruttoareal.totalt)}</Table.Cell>
+              <Table.Cell>{formatArea(e.bruksareal.boligAreal)}</Table.Cell>
+              <Table.Cell>{formatArea(e.bruksareal.annetAreal)}</Table.Cell>
+              <Table.Cell>{formatArea(e.bruksareal.totaltAreal)}</Table.Cell>
+              <Table.Cell>{formatArea(e.bruttoareal.totaltAreal)}</Table.Cell>
             </Table.Row>
           ))}
           <Table.Row className="font-semibold">

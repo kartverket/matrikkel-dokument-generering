@@ -5,29 +5,30 @@ import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/bygg
 import { formatArea } from "../../lib/utils/formatArea"
 
 interface Props {
-  gjeldendeEndring: BygningsEndring
+  gjeldendeEndring: NonNullable<BygningsEndring>
 }
 
 export default function Nokkeltall({ gjeldendeEndring }: Props) {
   const { t } = useTranslation()
   const key = "rapport.BYG0011.byggoversikt"
+  const areal = gjeldendeEndring.byggArealEndring
 
   const kort = [
     {
       id: "bra",
-      areal: gjeldendeEndring.bruksareal.totalt,
+      areal: areal?.bruksarealBolig.totaltAreal,
       label: t(`${key}.bra`),
       beskrivelse: t(`${key}.nokkeltall.braBeskrivelse`),
     },
     {
       id: "bta",
-      areal: gjeldendeEndring.bruttoareal.totalt,
+      areal: areal?.bruttoarealBolig.totaltAreal,
       label: t(`${key}.bta`),
       beskrivelse: t(`${key}.nokkeltall.btaBeskrivelse`),
     },
     {
       id: "bya",
-      areal: gjeldendeEndring.bebygdAreal,
+      areal: areal?.bebygdAreal,
       label: t(`${key}.bya`),
       beskrivelse: t(`${key}.nokkeltall.byaBeskrivelse`),
     },

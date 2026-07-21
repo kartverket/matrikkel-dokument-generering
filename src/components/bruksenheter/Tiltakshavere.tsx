@@ -16,7 +16,7 @@ function getTiltakshaverDetaljfelter(tiltakshaver: TiltaksHaver, t: TFunction) {
   return [
     tiltakshaverFelt(
       "rolle",
-      tiltakshaver.kontaktPersonKode == null
+      tiltakshaver.kontaktPersonKode === undefined
         ? null
         : oversettKode({
             t,

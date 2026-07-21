@@ -46,13 +46,15 @@ export function AdresseKriterier({ adresseKriterier }: Props) {
             <Table.HeaderCell scope="row">
               {t(`${uk}.felt.nr`)}
             </Table.HeaderCell>
-            <Table.Cell>{adresseKriterier?.nr ?? ikkeAngitt}</Table.Cell>
+            <Table.Cell>{adresseKriterier?.adresseNr ?? ikkeAngitt}</Table.Cell>
           </Table.Row>
           <Table.Row>
             <Table.HeaderCell scope="row">
               {t(`${uk}.felt.bokstav`)}
             </Table.HeaderCell>
-            <Table.Cell>{adresseKriterier?.bokstav ?? ikkeAngitt}</Table.Cell>
+            <Table.Cell>
+              {adresseKriterier?.adresseBokstav ?? ikkeAngitt}
+            </Table.Cell>
           </Table.Row>
           <Table.Row>
             <Table.HeaderCell scope="row">

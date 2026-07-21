@@ -14,38 +14,36 @@ import { bygningsTypeKodeSchema } from "../koder/bygningsTypeKodeSchema.ts"
 // Felles utvalgskriterier for all bygg rapporter (BYGXXXX)
 export const byggUtvalgskriterierSchema = valgfriObjekt({
   // Omfang filter-kriterier
-  omfang: z
-    .object({
-      inkluderBestaaendeBygg: valgfriBool.meta({
-        title: "Inkluder bestående bygg",
-        description:
-          "Angir om rapporten skal inkludere bygg som ikke er registrert som utgått.",
-      }),
-      inkluderUtgaatteBygg: valgfriBool.meta({
-        title: "Inkluder utgåtte bygg",
-        description:
-          "Angir om rapporten skal inkludere bygg som er registrert som utgått, for eksempel revet eller brent.",
-      }),
-      inkluderBygninger: valgfriBool.meta({
-        title: "Inkluder bygninger",
-        description:
-          "Angir om rapporten skal inkludere selve bygningene (løpenummer er ikke angitt).",
-      }),
-      inkluderBygningsendringer: valgfriBool.meta({
-        title: "Inkluder bygningsendringer",
-        description:
-          "Angir om rapporten skal inkludere registrerte endringer på bygninger, for eksempel tilbygg eller påbygg.",
-      }),
-      inkluderFrededeBygninger: valgfriBool.meta({
-        title: "Inkluder fredede bygninger",
-        description:
-          "Angir om rapporten skal inkludere bygninger som er registrert som fredet.",
-      }),
-    })
-    .meta({
-      title: "Omfang",
-      description: "Angir hvilke hovedkategorier rapporten skal omfatte.",
+  omfang: valgfriObjekt({
+    inkluderBestaaendeBygg: valgfriBool.meta({
+      title: "Inkluder bestående bygg",
+      description:
+        "Angir om rapporten skal inkludere bygg som ikke er registrert som utgått.",
     }),
+    inkluderUtgaatteBygg: valgfriBool.meta({
+      title: "Inkluder utgåtte bygg",
+      description:
+        "Angir om rapporten skal inkludere bygg som er registrert som utgått, for eksempel revet eller brent.",
+    }),
+    inkluderBygninger: valgfriBool.meta({
+      title: "Inkluder bygninger",
+      description:
+        "Angir om rapporten skal inkludere selve bygningene (løpenummer er ikke angitt).",
+    }),
+    inkluderBygningsendringer: valgfriBool.meta({
+      title: "Inkluder bygningsendringer",
+      description:
+        "Angir om rapporten skal inkludere registrerte endringer på bygninger, for eksempel tilbygg eller påbygg.",
+    }),
+    inkluderFrededeBygninger: valgfriBool.meta({
+      title: "Inkluder fredede bygninger",
+      description:
+        "Angir om rapporten skal inkludere bygninger som er registrert som fredet.",
+    }),
+  }).meta({
+    title: "Omfang",
+    description: "Angir hvilke hovedkategorier rapporten skal omfatte.",
+  }),
 
   //Bygg filter-kriterier
   bygning: valgfriObjekt({
