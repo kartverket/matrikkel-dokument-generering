@@ -136,9 +136,7 @@ export const byggEndringSchema = valgfriObjekt({
       title: "Bruksenhetsnummer",
       example: "H0101",
     }),
-    aktoerKode: aktoerKodeSchema.meta({
-      description: "Rollekoden til aktøren",
-    }),
+    aktoerKode: aktoerKodeSchema,
 
     identifikasjonsNr: valgfriString.meta({
       title: "Fødselsdato/org.nr",

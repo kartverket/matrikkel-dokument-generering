@@ -135,7 +135,7 @@ function byggEndring({
     byggDatoEndring: datoer,
     aktoer: {
       bruksenhetsNr: "H0101",
-      aktoerKode: 4,
+      aktoerKode: "4",
       identifikasjonsNr: "12051978",
       erAvdoed: false,
       navn: "Ola Nordmann",
@@ -144,7 +144,7 @@ function byggEndring({
     },
     tiltaksHaver: {
       bruksenhetsNr: "H0101",
-      kontaktPersonKode: 1,
+      kontaktPersonKode: "1",
       identifikasjonsNr: "01019012345",
       navn: "Fredrik Nordmann",
       adresse: "Storgata 1, 0155 Oslo",
@@ -169,7 +169,7 @@ const gjeldendeEndring = byggEndring({
 const historiskeEndringer: BygningsEndring[] = [
   byggEndring({
     lopeNr: 4,
-    endringsKode: 1,
+    endringsKode: "1",
     boligAreal: 121,
     annetAreal: 74,
     datoer: {
@@ -181,7 +181,7 @@ const historiskeEndringer: BygningsEndring[] = [
   }),
   byggEndring({
     lopeNr: 3,
-    endringsKode: 2,
+    endringsKode: "2",
     boligAreal: 121,
     annetAreal: 60,
     datoer: {
@@ -192,7 +192,7 @@ const historiskeEndringer: BygningsEndring[] = [
   }),
   byggEndring({
     lopeNr: 2,
-    endringsKode: 3,
+    endringsKode: "3",
     boligAreal: 102,
     annetAreal: 60,
     datoer: { rammetillatelse: isoDatetime("2016-09-12") },
@@ -200,7 +200,7 @@ const historiskeEndringer: BygningsEndring[] = [
   }),
   byggEndring({
     lopeNr: 1,
-    endringsKode: 4,
+    endringsKode: "4",
     boligAreal: 102,
     annetAreal: 0,
     datoer: {
