@@ -29,7 +29,7 @@ function byggGrupper(
   gjeldendeLabel: string,
 ): Gruppe[] {
   const grupper: Gruppe[] = endringer
-    .toSorted((a, b) => b.lopenr - a.lopenr)
+    .toSorted((a, b) => a.lopenr - b.lopenr)
     .map((endring) => ({
       key: `endring-${endring.id}`,
       radeLabel: endringLabel(endring.lopenr),

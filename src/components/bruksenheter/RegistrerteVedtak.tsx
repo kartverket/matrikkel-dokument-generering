@@ -17,7 +17,7 @@ export function RegistrerteVedtak({ endringer }: Props) {
   const formatDato = (dato: string | null) =>
     formatDate(i18n, dato, tom, { dateStyle: "short" })
 
-  const sorterte = endringer.toSorted((a, b) => b.lopenr - a.lopenr)
+  const sorterte = endringer.toSorted((a, b) => a.lopenr - b.lopenr)
 
   return (
     <KategoriSeksjon

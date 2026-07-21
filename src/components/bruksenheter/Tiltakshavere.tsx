@@ -26,7 +26,7 @@ function byggRader(
   bruksenhetsnr: string | null,
 ): Rad[] {
   const rader: Rad[] = []
-  const sorterte = endringer.toSorted((a, b) => b.lopenr - a.lopenr)
+  const sorterte = endringer.toSorted((a, b) => a.lopenr - b.lopenr)
 
   for (const endring of sorterte) {
     const relevante = endring.tiltakshavere.filter(

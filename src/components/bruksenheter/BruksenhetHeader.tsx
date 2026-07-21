@@ -17,7 +17,7 @@ export function BruksenhetHeader({
   bygningsNr,
 }: Props) {
   return (
-    <div className="mb-6 flex items-start justify-between gap-4 p-3 bg-kv-green/5">
+    <div className="mb-6 flex items-start justify-between gap-4 bg-kv-green/5 p-3">
       <div className="flex flex-wrap items-center gap-3">
         <Heading
           level={3}
