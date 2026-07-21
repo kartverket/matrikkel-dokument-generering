@@ -1,6 +1,6 @@
 import { Card, Heading } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import type { Utvalgskriterier } from "../../lib/schema/reports/bygg/bygg0011/index"
+import type { ByggUtvalgskriterier as Utvalgskriterier } from "../../lib/schema/reports/bygg/shared/byggUtvalgskriterier.schema.ts"
 
 const numberFormatter = new Intl.NumberFormat("nb-NO", {
   maximumFractionDigits: 2,
@@ -17,8 +17,10 @@ export function SokevinduKriterier({ sokevinduKriterier }: Props) {
 
   if (!sokevinduKriterier) return null
 
-  const formatCoordinate = (value: number | null) =>
-    value === null ? ikkeAngitt : numberFormatter.format(value)
+  const formatCoordinate = (value: number | undefined) =>
+    value === null || value === undefined
+      ? ikkeAngitt
+      : numberFormatter.format(value)
 
   return (
     <section className="break-inside-avoid">

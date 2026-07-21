@@ -8,14 +8,10 @@ import { RegistrerteVedtak } from "../components/bruksenheter/RegistrerteVedtak.
 import { Tiltakshavere } from "../components/bruksenheter/Tiltakshavere.tsx"
 import { Detaljgrid, lagDetaljfeltBuilder } from "../components/Detaljfelt.tsx"
 import { Section } from "../components/Section.tsx"
-import type {
-  Bruksenhet,
-  Bygning,
-  Bygningsendring,
-} from "../lib/schema/reports/bygg/bygg0011/index.ts"
-import { summerAreal } from "../lib/utils/arealLinje.ts"
+import type { Bruksenhet } from "../lib/schema/reports/bygg/byg0011/bruksenhet.schema.ts"
+import type { BygningsEndring } from "../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
+import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 import { formatArea } from "../lib/utils/formatArea.ts"
-import { sorterBruksenheterEtterNummer } from "../lib/utils/sorterBruksenheter.ts"
 
 interface Props {
   index: number
@@ -37,7 +33,7 @@ function getBruksenhetDetaljfelter(bruksenhet: Bruksenhet, t: TFunction) {
     bruksenhetFelt("etasje", bruksenhet.etasje),
     bruksenhetFelt(
       "bruksareal",
-      formatArea(summerAreal(bruksenhet.arealfordeling.bruksareal)),
+      formatArea(bruksenhet?.arealfordeling?.bruksareal?.boligAreal ?? 0),
     ),
     bruksenhetFelt("antallRom", String(bruksenhet.antallRom)),
     bruksenhetFelt("kjokkentilgang", kjokkentilgang),
@@ -46,11 +42,11 @@ function getBruksenhetDetaljfelter(bruksenhet: Bruksenhet, t: TFunction) {
   ]
 }
 
-function berorerBruksenhet(endring: Bygningsendring, bruksenhet: Bruksenhet) {
+function berorerBruksenhet(endring: BygningsEndring, bruksenhet: Bruksenhet) {
   return (
-    bruksenhet.nummer !== null &&
-    endring.bruksenheter.some(
-      ({ bruksenhetsnr }) => bruksenhetsnr === bruksenhet.nummer,
+    bruksenhet.bruksenhetsNr !== null &&
+    endring?.bruksenheter.some(
+      ({ bruksenhetsNr }) => bruksenhetsNr === bruksenhet.bruksenhetsNr,
     )
   )
 }
@@ -60,11 +56,11 @@ export default function Bruksenheter({ index, bygning }: Props) {
   const i18n = "rapport.BYG0011.bruksenheter"
   const tom = t("tom")
   const ingenOppgittBruksenhet = t(`${i18n}.ingenOppgittBruksenhet`)
-  const sorterteBruksenheter = sorterBruksenheterEtterNummer(
-    bygning.bruksenheter,
-  )
 
-  if (bygning.bruksenheter.length === 0) return null
+  // TODO: Bruksenheter burde kunne ta inn en ferdig sortert/aggregert liste med bruksenheter, denne sortering dupliserer bruksnhetenene per endring
+  const sorterteBruksenheter = bygning.endringer.flatMap(
+    (endring) => endring?.bruksenheter ?? [],
+  )
 
   return (
     <Section
@@ -81,37 +77,31 @@ export default function Bruksenheter({ index, bygning }: Props) {
           return (
             <div
               key={bruksenhet.id}
-              data-bruksenhet={bruksenhet.nummer ?? ingenOppgittBruksenhet}
+              data-bruksenhet={
+                bruksenhet.bruksenhetsNr ?? ingenOppgittBruksenhet
+              }
               className="mb-10 space-y-8"
             >
               <BruksenhetHeader
-                bruksenhetNummer={bruksenhet.nummer ?? null}
+                bruksenhetNummer={bruksenhet.bruksenhetsNr ?? null}
                 bruksenhetTypeChip={bruksenhet.type ?? null}
                 bruksenhetSeksjon={bruksenhet.seksjon ?? null}
                 ingenOppgittBruksenhet={ingenOppgittBruksenhet}
                 bygningsNr={bygning.bygningsnr ?? null}
               />
-
               <Detaljgrid
                 felter={getBruksenhetDetaljfelter(bruksenhet, t)}
                 tom={tom}
                 className="gap-x-8 gap-y-5"
               />
-
-              <Hjemmelshavere hjemmelshavere={bruksenhet.hjemmelshavere} />
-
+              <Hjemmelshavere aktoer={gjeldendeEndringForBruksenhet?.aktoer} />{" "}
+              hjemmelshavere={bruksenhet.hjemmelshavere} />
               <RegistrerteVedtak endringer={endringer} />
-
-              <ArealFordeling
-                arealfordeling={bruksenhet.arealfordeling}
-                endringer={endringer}
-              />
-
+              {/* ArealFordeling */}
               <Tiltakshavere
                 endringer={endringer}
                 bruksenhetsnr={bruksenhet.nummer ?? null}
               />
-
               <Kontaktpersoner kontaktpersoner={bruksenhet.kontaktpersoner} />
             </div>
           )

@@ -1,11 +1,11 @@
 import { Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import type { Bygningsendring } from "../../lib/schema/reports/bygg/bygg0011/index"
+import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 import { formatDate } from "../../lib/utils/formatDate"
 import { KategoriSeksjon } from "./KategoriSeksjon"
 
 interface Props {
-  endringer: Bygningsendring[]
+  endringer: BygningsEndring[]
 }
 
 export function RegistrerteVedtak({ endringer }: Props) {
@@ -14,10 +14,12 @@ export function RegistrerteVedtak({ endringer }: Props) {
   const bruksenhetKey = "rapport.BYG0011.bruksenheter"
   const tom = t("tom")
 
-  const formatDato = (dato: string | null) =>
+  const formatDato = (dato: string | null | undefined) =>
     formatDate(i18n, dato, tom, { dateStyle: "short" })
 
-  const sorterte = endringer.toSorted((a, b) => a.lopenr - b.lopenr)
+  const sorterte = endringer?.toSorted(
+    (a, b) => (a?.lopeNr ?? 0) - (b?.lopeNr ?? 0),
+  )
 
   return (
     <KategoriSeksjon
@@ -51,27 +53,29 @@ export function RegistrerteVedtak({ endringer }: Props) {
         </Table.Head>
         <Table.Body>
           {sorterte.map((endring) => (
-            <Table.Row key={endring.id}>
+            <Table.Row key={endring?.lopeNr}>
               <Table.HeaderCell scope="row" className="text-kv-default">
-                {t(`${bruksenhetKey}.endringKort`, { lopenr: endring.lopenr })}
+                {t(`${bruksenhetKey}.endringKort`, { lopeNr: endring?.lopeNr })}
               </Table.HeaderCell>
               <Table.Cell className="tabular-nums">
-                {formatDato(endring.datoer.rammetillatelse)}
+                {formatDato(endring?.byggDatoEndring?.rammetillatelse)}
               </Table.Cell>
               <Table.Cell className="tabular-nums">
-                {formatDato(endring.datoer.igangsettingstillatelse)}
+                {formatDato(endring?.byggDatoEndring?.igangsettingstillatelse)}
               </Table.Cell>
               <Table.Cell className="tabular-nums">
-                {formatDato(endring.datoer.midlertidigBrukstillatelse)}
+                {formatDato(
+                  endring?.byggDatoEndring?.midlertidigBrukstillatelse,
+                )}
               </Table.Cell>
               <Table.Cell className="tabular-nums">
-                {formatDato(endring.datoer.ferdigattest)}
+                {formatDato(endring?.byggDatoEndring?.ferdigattest)}
               </Table.Cell>
               <Table.Cell className="tabular-nums">
-                {formatDato(endring.datoer.tattIBruk)}
+                {formatDato(endring?.byggDatoEndring?.tattIBruk)}
               </Table.Cell>
               <Table.Cell className="tabular-nums">
-                {formatDato(endring.datoer.utgaattRevet)}
+                {formatDato(endring?.byggDatoEndring?.utgaattRevet)}
               </Table.Cell>
             </Table.Row>
           ))}

@@ -13,7 +13,6 @@
     "test": "bun test",
     "format": "biome format --write . && biome check --write --formatter-enabled=false --linter-enabled=false . && bun run sort:classes",
     "format:check": "biome check . --formatter-enabled=true --linter-enabled=false --assist-enabled=false",
-    "prepare": "husky",
     "preview": "vite preview --host 0.0.0.0",
     "serve": "bun run build:css && bun src/api/server.ts"
   },

@@ -1,53 +1,39 @@
 import { Heading } from "@digdir/designsystemet-react"
 import { Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import type {
-  Bygning,
-  Bygningsendring,
-} from "../../lib/schema/reports/bygg/bygg0011/index"
-import { formatDate } from "../../lib/utils/formatDate"
+import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
+import type { Bygning } from "../../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
+import { formaterBygningstype } from "../../lib/utils/formaterBygningstype.ts"
 
 interface Props {
   bygning: Bygning
-  endring: Bygningsendring
+  gjeldendeEndring: BygningsEndring
 }
 
-export default function BygningHeader({ bygning, endring }: Props) {
-  const { i18n, t } = useTranslation()
+export default function BygningHeader({ bygning, gjeldendeEndring }: Props) {
+  const { t } = useTranslation()
   const key = "rapport.BYG0011.byggoversikt.header"
+  const bygningstype = formaterBygningstype(
+    t,
+    gjeldendeEndring?.byggMetaEndring?.bygningsType,
+  )
 
   return (
     <div className="flex items-center justify-between">
       <div>
         <div className="flex items-center gap-4">
-          <Heading level={3}>
-            {t(`${key}.bygg`, { lopenr: endring.lopenr })}
-          </Heading>
-          <Paragraph className="text-kv-subtle" data-size="sm">
-            {bygning.bygningstype.kode} {bygning.bygningstype.navn}
-          </Paragraph>
+          <Heading level={3}>{t(`${key}.bygg`)}</Heading>
+          {bygningstype && (
+            <Paragraph className="text-kv-subtle" data-size="sm">
+              {bygningstype}
+            </Paragraph>
+          )}
         </div>
         <Paragraph className="text-kv-subtle" data-size="sm">
-          {t(`${key}.bygningsnrLopenr`, {
+          {t(`${key}.bygningsNr`, {
             bygningsnr: bygning.bygningsnr,
-            lopenr: endring.lopenr,
           })}
         </Paragraph>
-      </div>
-
-      <div>
-        <Paragraph data-size="sm" className="font-semibold text-kv-blue">
-          {endring.bygningsstatus.navn}
-        </Paragraph>
-        {endring.datoer.ferdigattest && (
-          <Paragraph className="text-kv-subtle" data-size="sm">
-            {t(`${key}.ferdigattest`, {
-              dato: formatDate(i18n, endring.datoer.ferdigattest, "—", {
-                dateStyle: "short",
-              }),
-            })}
-          </Paragraph>
-        )}
       </div>
     </div>
   )

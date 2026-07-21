@@ -1,8 +1,10 @@
+import { koderNb } from "./koder/resources.koder.nb.ts"
 import { shared } from "./resources.shared"
 
 export const nb = {
   ...shared,
   tom: "tom",
+  koder: koderNb,
   pdf: {
     header: {
       bygg: "Bygningsnr. {{bygningsnr}} · Bygg {{nr}} av {{total}}",
@@ -15,7 +17,7 @@ export const nb = {
   },
   rapport: {
     metaData: {
-      rapportType: "Rapporttype",
+      rapportKode: "rapportKode",
       rapportNr: "Rapportnr",
       kommune: "Kommune",
       kommuneNr: "Kommunenr",
@@ -26,7 +28,7 @@ export const nb = {
       rapportTittel: "Bygg Rapport",
       title: "Bygning {{bygningsnr}} – {{bygningstype}}",
       utvalgskriterier: {
-        title: "Utvalgskriterier",
+        title: "ByggUtvalgskriterier",
         ja: "Ja",
         nei: "Nei",
         ikkeAngitt: "Ikke angitt",
@@ -127,6 +129,8 @@ export const nb = {
         bygningsstatuskode: "Statuskode",
         bygningsstatusKortkode: "Statuskortkode",
         bestaaende: "Bestående",
+        sefrakId: "Sefrak-ID",
+        kulturminne: "Kulturminne",
         arealOgPlassering: "AREAL OG PLASSERING",
         antallBoenheter: "Antall boenheter",
         bruksarealEndring: "Bruksareal bolig / annet / totalt",
@@ -185,7 +189,7 @@ export const nb = {
       kontaktpersoner: {
         title: "Kontaktpersoner",
         rolle: "Rolle",
-        eierIdent: "Fødsels-/org.nr",
+        identifikasjonsNr: "Fødsels-/org.nr",
         navn: "Navn",
         adresselinjer: "Adresselinjer",
         poststed: "Postnr og poststed",
@@ -232,8 +236,9 @@ export const nb = {
       tiltakshavere: {
         title: "Tiltakshavere",
         rolle: "Rolle i tiltaket",
-        eierIdent: "Fødsels-/org.nr",
+        identifikasjonsNr: "Fødsels-/org.nr",
         navn: "Navn",
+        adresse: "Adresse",
         adresselinjer: "Adresselinjer",
         poststed: "Postnr og poststed",
         land: "Land",
@@ -245,8 +250,9 @@ export const nb = {
       },
       hjemmelshavere: {
         title: "Hjemmelshavere",
-        eierIdent: "Fødselsnr/orgnr",
+        identifikasjonsNr: "Fødselsnr/orgnr",
         navn: "Navn",
+        adresse: "Adresse",
         andel: "Andel",
         bruksenhetsnr: "Tilknyttet bruksenhet",
         adresselinjer: "Adresselinjer",
@@ -277,7 +283,7 @@ export const nb = {
         bygningsnr: "Bygningsnummer",
         header: {
           bygg: "Bygg {{lopenr}}",
-          bygningsnrLopenr: "Bygningsnr. {{bygningsnr}} · Løpenr. {{lopenr}}",
+          bygningsNr: "Bygningsnr. {{bygningsnr}}",
           ferdigattest: "Ferdigattest: {{dato}}",
         },
         nokkeltall: {
@@ -309,6 +315,7 @@ export const nb = {
           typer: {
             bolig: "bolig",
             annet: "annet",
+            totalt: "totalt",
           },
         },
       },

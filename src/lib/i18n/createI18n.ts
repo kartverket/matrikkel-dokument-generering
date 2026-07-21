@@ -1,6 +1,6 @@
 import i18next, { type i18n as I18n } from "i18next"
 import { initReactI18next } from "react-i18next"
-import type { RapportLocale } from "../schema/core"
+import type { RapportLocale } from "../schema/core/locale.schema"
 import { nb } from "./resources.nb"
 import { nn } from "./resources.nn"
 

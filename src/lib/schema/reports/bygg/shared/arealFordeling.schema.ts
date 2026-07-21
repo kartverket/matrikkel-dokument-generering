@@ -1,0 +1,26 @@
+import { z } from "@hono/zod-openapi"
+import { valgfriNummer } from "../../../core/utils/zodUtils.ts"
+
+export const arealFordelingSchema = z
+  .object({
+    boligAreal: valgfriNummer.meta({
+      description: "Areal som er registrert brukt til boligformål",
+      example: 123.4,
+    }),
+    annetAreal: valgfriNummer.meta({
+      description:
+        "Areal brukt til andre formål, for eksempel hotell, kontor, butikk",
+      example: 10,
+    }),
+    totaltAreal: valgfriNummer.meta({
+      description: "Summen av Bolig + Annet",
+      example: 133.4,
+    }),
+  })
+  .meta({
+    id: "ArealFordeling",
+    description:
+      "Alle verdier oppgitt i kvadratmeter. En verdi kan være enten negativ eller positiv. En negativ-verdi er knyttet opp mot endring",
+  })
+
+export type ArealFordeling = z.infer<typeof arealFordelingSchema>

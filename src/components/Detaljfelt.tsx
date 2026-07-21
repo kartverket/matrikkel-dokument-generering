@@ -1,7 +1,7 @@
 import type { ParseKeys } from "i18next"
 import { useTranslation } from "react-i18next"
 import { cn } from "../lib/utils/cn"
-import { getDetaljVerdi } from "../lib/utils/getDetaljVerdi"
+import { getValueOrEmpty } from "../lib/utils/getValueOrEmpty.ts"
 
 interface Props {
   label: string
@@ -91,7 +91,7 @@ export function Detaljgrid({ felter, tom, className }: DetaljgridProps) {
             label={t(labelKey)}
             className={feltClassName}
             valueClassName={valueClassName}
-            {...getDetaljVerdi(value, tom)}
+            {...getValueOrEmpty(value, tom)}
           />
         ),
       )}

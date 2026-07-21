@@ -1,57 +1,19 @@
-import { Table } from "@kv-designsystem/react"
+import type { TFunction } from "i18next"
 import { useTranslation } from "react-i18next"
-import type {
-  Bygningsendring,
-  Tiltakshaver,
-} from "../../lib/schema/reports/bygg/bygg0011/index"
-import { formatAdresse } from "../../lib/utils/formatAdresse"
-import { formatDate } from "../../lib/utils/formatDate"
-import { joinStrings } from "../../lib/utils/joinStrings"
-import { KategoriSeksjon } from "./KategoriSeksjon"
+import { oversettKode } from "../../lib/i18n/koder/oversettKode.ts"
+import type { TiltaksHaver } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
+import { lagDetaljfeltBuilder } from "../Detaljfelt"
+import { PersonCard } from "../PersonCard"
+import { PersonGrid } from "../PersonGrid"
 
 interface Props {
-  endringer: Bygningsendring[]
-  bruksenhetsnr: string | null
+  tiltakshavere: TiltaksHaver[]
 }
 
-interface Rad {
-  endring: Bygningsendring
-  tiltakshaver: Tiltakshaver
-  antallForEndring: number
-  erForsteForEndring: boolean
-}
-
-function byggRader(
-  endringer: Bygningsendring[],
-  bruksenhetsnr: string | null,
-): Rad[] {
-  const rader: Rad[] = []
-  const sorterte = endringer.toSorted((a, b) => a.lopenr - b.lopenr)
-
-  for (const endring of sorterte) {
-    const relevante = endring.tiltakshavere.filter(
-      (t) => t.bruksenhetsnr === bruksenhetsnr,
-    )
-    relevante.forEach((tiltakshaver, index) => {
-      rader.push({
-        endring,
-        tiltakshaver,
-        antallForEndring: relevante.length,
-        erForsteForEndring: index === 0,
-      })
-    })
-  }
-
-  return rader
-}
-
-export function Tiltakshavere({ endringer, bruksenhetsnr }: Props) {
-  const { i18n, t } = useTranslation()
+export function Tiltakshavere({ tiltakshavere }: Props) {
+  const { t } = useTranslation()
   const tom = t("tom")
   const translationKey = "rapport.BYG0011.tiltakshavere"
-  const bruksenhetKey = "rapport.BYG0011.bruksenheter"
-
-  const rader = byggRader(endringer, bruksenhetsnr)
 
   return (
     <KategoriSeksjon
