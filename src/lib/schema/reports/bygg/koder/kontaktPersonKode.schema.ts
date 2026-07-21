@@ -8,10 +8,14 @@ export const kontaktPersonKodeSchema = z
   ])
   .meta({
     id: "KontaktPersonKode",
-    description:
-      "Rollen til tiltakshaver. Koder: \n" +
-      "1: Tiltakshaver \n" +
-      "2: Kontaktperson \n",
+    description: `Rollen til tiltakshaver.
+
+Koder:
+
+\`\`\`
+1: Tiltakshaver
+2: Kontaktperson
+\`\`\``,
   })
 
 export type KontaktPersonKode = z.infer<typeof kontaktPersonKodeSchema>

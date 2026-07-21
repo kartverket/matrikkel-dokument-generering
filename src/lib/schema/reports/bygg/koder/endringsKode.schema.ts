@@ -11,13 +11,17 @@ export const endringsKodeSchema = z
   ])
   .meta({
     id: "EndringsKode",
-    description:
-      "Beskriver endring i bygning. Koder: \n" +
-      "1: Tilbygg \n" +
-      "2: Påbygg \n" +
-      "3: Underbygg \n" +
-      "4: Ombygging \n" +
-      "5: Ukjent \n",
+    description: `Beskriver endring i bygning.
+
+Koder:
+
+\`\`\`
+1: Tilbygg
+2: Påbygg
+3: Underbygg
+4: Ombygging
+5: Ukjent
+\`\`\``,
   })
 
 export type EndringsKode = z.infer<typeof endringsKodeSchema>
