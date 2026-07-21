@@ -28,9 +28,7 @@ export function RegistrerteVedtak({ endringer }: Props) {
       <Table className="w-full">
         <Table.Head>
           <Table.Row>
-            <Table.HeaderCell className="w-32">
-              {t(`${bruksenhetKey}.endring`)}
-            </Table.HeaderCell>
+            <Table.HeaderCell></Table.HeaderCell>
             <Table.HeaderCell>
               {t(`${translationKey}.rammetillatelse`)}
             </Table.HeaderCell>

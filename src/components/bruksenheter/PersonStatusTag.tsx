@@ -14,7 +14,7 @@ export function PersonStatusTag({
   tom,
 }: Props) {
   return (
-    <Tag data-color={erUtgatt ? "danger" : "success"} variant="outline">
+    <Tag data-color={erUtgatt ? "danger" : "success"}>
       {erUtgatt ? utgattLabel : (statuskode ?? tom)}
     </Tag>
   )

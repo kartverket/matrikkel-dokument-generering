@@ -73,9 +73,7 @@ export default function Arealfordeling({ arealfordeling, endringer }: Props) {
       <Table className="w-full">
         <Table.Head>
           <Table.Row>
-            <Table.HeaderCell className="w-32">
-              {t(`${bruksenhetKey}.endring`)}
-            </Table.HeaderCell>
+            <Table.HeaderCell></Table.HeaderCell>
             <Table.HeaderCell>{t(`${af}.etasje`)}</Table.HeaderCell>
             <Table.HeaderCell className="text-right">
               {t(`${etasjerKey}.antallBoenheter`)}

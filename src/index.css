@@ -21,6 +21,15 @@ body {
 }
 
 /*
+ * Fjerne streker i alle KV-tabeller. Overstyrer variablene fra
+ * @digdir/designsystemet-css sin table.css
+ */
+.ds-table {
+  --dsc-table-border-width: 0px;
+  --dsc-table-divider-border-width: 0px;
+}
+
+/*
  * PDF-skalering: Gotenberg/Chromium bruker print-emulering ved konvertering,
  * så alt inne i @media print treffer kun PDF-rendringen — ikke web-preview.
  
