@@ -1,4 +1,3 @@
-import { Card, Divider, Heading, Tag } from "@kv-designsystem/react"
 import type { TFunction } from "i18next"
 import { useTranslation } from "react-i18next"
 import ArealFordeling from "../components/ArealFordeling.tsx"
@@ -83,7 +82,7 @@ export default function Bruksenheter({ index, bygning }: Props) {
             <div
               key={bruksenhet.id}
               data-bruksenhet={bruksenhet.nummer ?? ingenOppgittBruksenhet}
-              className="space-y-8 border-kv-blue-subtle border-b"
+              className="space-y-8 mb-10"
             >
               <BruksenhetHeader
                 bruksenhetNummer={bruksenhet.nummer ?? null}

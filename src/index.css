@@ -11,7 +11,9 @@
   --color-kv-gray: var(--ds-color-neutral-background-tinted);
   --color-kv-blue: var(--ds-color-accent-base-default);
   --color-kv-blue-subtle: var(--ds-color-accent-surface-tinted);
-  --color-kv-green: var(--ds-color-success-base-default);
+  --color-kv-green: #156C30;
+  --color-kv-green-subtle: #F6FAF7;
+  --color-kv-green-border: #97C7A6;
 }
 
 body {
@@ -27,18 +29,4 @@ body {
 .ds-table {
   --dsc-table-border-width: 0px;
   --dsc-table-divider-border-width: 0px;
-}
-
-/*
- * PDF-skalering: Gotenberg/Chromium bruker print-emulering ved konvertering,
- * så alt inne i @media print treffer kun PDF-rendringen — ikke web-preview.
- 
- * Ved å justere rot-`font-size` skaleres alle rem-baserte størrelser
- * (tekst, padding, margin, gap) proporsjonalt både i Tailwind og KV
- * designsystem.
- */
-@media print {
-  :root {
-    font-size: calc(10px);
-  }
 }
