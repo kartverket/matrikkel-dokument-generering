@@ -1,36 +1,46 @@
-import { Heading } from "@digdir/designsystemet-react"
 import { Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 
 interface Props {
-  gjeldendeBygningsType?: string
+  gjeldendeTypeKode?: string
+  gjeldendeStatusKode?: string
   byggNr: string
 }
 
 export default function BygningHeader({
-  gjeldendeBygningsType,
+  gjeldendeTypeKode,
+  gjeldendeStatusKode,
   byggNr,
 }: Props) {
   const { t } = useTranslation()
-  const key = "rapport.BYG0011.byggoversikt.header"
+  const key = "rapport.BYG0011.byggoversikt"
 
   return (
-    <div className="flex items-center justify-between">
-      <div>
-        <div className="flex items-center gap-4">
-          <Heading level={3}>{t(`${key}.bygg`)}</Heading>
-          {gjeldendeBygningsType && (
-            <Paragraph className="text-kv-subtle" data-size="sm">
-              {gjeldendeBygningsType}
-            </Paragraph>
-          )}
-        </div>
+    <div>
+      <div className="flex flex-col  gap-4">
         <Paragraph className="text-kv-subtle" data-size="sm">
-          {t(`${key}.bygningsNr`, {
-            bygningsnr: byggNr,
-          })}
+          Type:{" "}
+          {gjeldendeTypeKode
+            ? t(`koder.bygningstype.${gjeldendeTypeKode}`, {
+                defaultValue: gjeldendeTypeKode,
+              })
+            : t(`${key}.ukjentByggningsType`)}
+        </Paragraph>
+
+        <Paragraph className="text-kv-subtle" data-size="sm">
+          Status:{" "}
+          {gjeldendeStatusKode
+            ? t(`koder.bygningsstatus.${gjeldendeStatusKode}`, {
+                defaultValue: gjeldendeStatusKode,
+              })
+            : t(`${key}.ukjentBygningsStatus`)}
         </Paragraph>
       </div>
+      <Paragraph className="text-kv-subtle" data-size="sm">
+        {t(`${key}.header.bygningsNr`, {
+          bygningsnr: byggNr,
+        })}
+      </Paragraph>
     </div>
   )
 }

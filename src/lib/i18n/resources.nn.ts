@@ -264,6 +264,8 @@ export const nn = {
       byggoversikt: {
         title: "Byggoversikt",
         bygningsstatus: "Bygningsstatus",
+        ukjentByggningsType: "Ukjent bygningstype",
+        ukjentBygningsStatus: "Ukjent bygningsstatus",
         bra: "BRA",
         bta: "BTA",
         bya: "BYA",
@@ -276,7 +278,6 @@ export const nn = {
         koordinatsystem: "Koordinatsystem",
         bygningsnr: "Bygningsnummer",
         header: {
-          bygg: "Bygg {{lopenr}}",
           bygningsnrLopenr: "Bygningsnr. {{bygningsnr}}",
           ferdigattest: "Ferdigattest: {{dato}}",
         },
