@@ -83,7 +83,8 @@ function byggEndring({
     lopeNr,
     byggMetaEndring: {
       endringsKode,
-      bygningsType: "111",
+      bygningsStatusKode: "TB",
+      bygningsTypeKode: "111",
       antallBoenheter: 1,
       naeringsgruppe: "Bolig",
     },
