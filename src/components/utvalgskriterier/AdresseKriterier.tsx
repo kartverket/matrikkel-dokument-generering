@@ -14,13 +14,13 @@ export function AdresseKriterier({ adresseKriterier }: Props) {
   return (
     <section className="break-inside-avoid">
       <Heading level={3} data-size="sm" className="mb-4 font-medium">
-        {t(`${uk}.grupper.adresse`)}
+        {t(`${uk}.adresse.tittel`)}
       </Heading>
       <Table zebra border className="w-full table-fixed">
         <Table.Body>
           <Table.Row>
             <Table.HeaderCell scope="row" className="w-1/3">
-              {t(`${uk}.felt.adressekode`)}
+              {t(`${uk}.adresse.adresseKode`)}
             </Table.HeaderCell>
             <Table.Cell>
               {adresseKriterier?.adresseKode ?? ikkeAngitt}
@@ -28,7 +28,7 @@ export function AdresseKriterier({ adresseKriterier }: Props) {
           </Table.Row>
           <Table.Row>
             <Table.HeaderCell scope="row">
-              {t(`${uk}.felt.bruksenhetsnr`)}
+              {t(`${uk}.adresse.bruksenhetsNr`)}
             </Table.HeaderCell>
             <Table.Cell>
               {adresseKriterier?.bruksenhetsNr ?? ikkeAngitt}
@@ -36,7 +36,7 @@ export function AdresseKriterier({ adresseKriterier }: Props) {
           </Table.Row>
           <Table.Row>
             <Table.HeaderCell scope="row">
-              {t(`${uk}.felt.adressenavn`)}
+              {t(`${uk}.adresse.adresseNavn`)}
             </Table.HeaderCell>
             <Table.Cell>
               {adresseKriterier?.adresseNavn ?? ikkeAngitt}
@@ -44,13 +44,13 @@ export function AdresseKriterier({ adresseKriterier }: Props) {
           </Table.Row>
           <Table.Row>
             <Table.HeaderCell scope="row">
-              {t(`${uk}.felt.nr`)}
+              {t(`${uk}.adresse.adresseNr`)}
             </Table.HeaderCell>
             <Table.Cell>{adresseKriterier?.adresseNr ?? ikkeAngitt}</Table.Cell>
           </Table.Row>
           <Table.Row>
             <Table.HeaderCell scope="row">
-              {t(`${uk}.felt.bokstav`)}
+              {t(`${uk}.adresse.adresseBokstav`)}
             </Table.HeaderCell>
             <Table.Cell>
               {adresseKriterier?.adresseBokstav ?? ikkeAngitt}
@@ -58,7 +58,7 @@ export function AdresseKriterier({ adresseKriterier }: Props) {
           </Table.Row>
           <Table.Row>
             <Table.HeaderCell scope="row">
-              {t(`${uk}.felt.utenBokstav`)}
+              {t(`${uk}.adresse.utenBokstav`)}
             </Table.HeaderCell>
             <Table.Cell>
               {t(`${uk}.${adresseKriterier?.utenBokstav ? "ja" : "nei"}`)}
@@ -66,7 +66,7 @@ export function AdresseKriterier({ adresseKriterier }: Props) {
           </Table.Row>
           <Table.Row>
             <Table.HeaderCell scope="row">
-              {t(`${uk}.felt.tilleggsnavn`)}
+              {t(`${uk}.adresse.adresseTilleggsNavn`)}
             </Table.HeaderCell>
             <Table.Cell>
               {adresseKriterier?.adresseTilleggsNavn ?? ikkeAngitt}

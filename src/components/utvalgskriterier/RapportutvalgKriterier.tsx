@@ -13,13 +13,13 @@ export function RapportutvalgKriterier({ omfangsKriterier }: Props) {
   return (
     <section className="break-inside-avoid">
       <Heading level={3} data-size="sm" className="mb-4 font-medium">
-        {t(`${uk}.grupper.omfang`)}
+        {t(`${uk}.omfang.tittel`)}
       </Heading>
       <Table zebra border className="w-full table-fixed">
         <Table.Body>
           <Table.Row>
             <Table.HeaderCell scope="row" className="w-1/3">
-              {t(`${uk}.felt.bestaaendeBygg`)}
+              {t(`${uk}.omfang.inkluderBestaaendeBygg`)}
             </Table.HeaderCell>
             <Table.Cell>
               {t(
@@ -29,7 +29,7 @@ export function RapportutvalgKriterier({ omfangsKriterier }: Props) {
           </Table.Row>
           <Table.Row>
             <Table.HeaderCell scope="row">
-              {t(`${uk}.felt.utgaatteBygg`)}
+              {t(`${uk}.omfang.inkluderUtgaatteBygg`)}
             </Table.HeaderCell>
             <Table.Cell>
               {t(
@@ -39,7 +39,7 @@ export function RapportutvalgKriterier({ omfangsKriterier }: Props) {
           </Table.Row>
           <Table.Row>
             <Table.HeaderCell scope="row">
-              {t(`${uk}.felt.bygninger`)}
+              {t(`${uk}.omfang.inkluderBygninger`)}
             </Table.HeaderCell>
             <Table.Cell>
               {t(`${uk}.${omfangsKriterier?.inkluderBygninger ? "ja" : "nei"}`)}
@@ -47,7 +47,7 @@ export function RapportutvalgKriterier({ omfangsKriterier }: Props) {
           </Table.Row>
           <Table.Row>
             <Table.HeaderCell scope="row">
-              {t(`${uk}.felt.bygningsendringer`)}
+              {t(`${uk}.omfang.inkluderBygningsendringer`)}
             </Table.HeaderCell>
             <Table.Cell>
               {t(
@@ -57,7 +57,7 @@ export function RapportutvalgKriterier({ omfangsKriterier }: Props) {
           </Table.Row>
           <Table.Row>
             <Table.HeaderCell scope="row">
-              {t(`${uk}.felt.frededeBygninger`)}
+              {t(`${uk}.omfang.inkluderFrededeBygninger`)}
             </Table.HeaderCell>
             <Table.Cell>
               {t(
