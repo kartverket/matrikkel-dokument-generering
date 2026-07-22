@@ -10,12 +10,12 @@ import {
   valgfriString,
 } from "../../../core/utils/zodUtils.ts"
 import { aktorKodeSchema } from "../koder/aktorKode.schema.ts"
+import { byggningsStatusKodeSchema } from "../koder/byggningsStatusKode.schema.ts"
 import { bygningsTypeKodeSchema } from "../koder/bygningsTypeKodeSchema.ts"
 import { endringsKodeSchema } from "../koder/endringsKode.schema.ts"
 import { kontaktPersonKodeSchema } from "../koder/kontaktPersonKode.schema.ts"
 import { arealFordelingSchema } from "../shared/arealFordeling.schema.ts"
 import { bruksenhetSchema } from "./bruksenhet.schema.ts"
-import { byggningsStatusKodeSchema } from "../koder/byggningsStatusKode.schema.ts"
 
 export const byggEndringSchema = valgfriObjekt({
   // Unik ID for en bygg-endring
