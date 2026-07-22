@@ -33,7 +33,7 @@ function bruksenhet({
     bruksenhetsTypeKode: "0",
     bruksAreal: boligAreal,
     adresse: `Belsetveien 114 ${id}, 1348 Rykkinn`,
-    matrikkelEnhetsNr: "3201/208/12/0",
+    matrikkelNr: "3201/208/12/0",
     antallRom,
     antallBad: 1,
     antallWC: 1,
@@ -68,7 +68,6 @@ const h0104 = bruksenhet({
 function byggEndring({
   lopeNr,
   endringsKode,
-  bygningsStatusKode,
   boligAreal,
   annetAreal,
   datoer,
@@ -76,7 +75,6 @@ function byggEndring({
 }: {
   lopeNr: number
   endringsKode?: EndringsKode
-  bygningsStatusKode: BygningsStatusKode
   boligAreal: number
   annetAreal: number
   datoer: ByggEndringsDatoer
@@ -86,7 +84,7 @@ function byggEndring({
     lopeNr,
     byggMetaEndring: {
       endringsKode,
-      bygningsStatusKode,
+      bygningsStatusKode: "TB",
       bygningsTypeKode: "111",
       antallBoenheter: 1,
       naeringsgruppe: "Bolig",
@@ -139,7 +137,6 @@ function byggEndring({
 
 const gjeldendeEndring = byggEndring({
   lopeNr: 5,
-  bygningsStatusKode: "TB",
   boligAreal: 140,
   annetAreal: 35,
   datoer: {
@@ -155,7 +152,6 @@ const historiskeEndringer: BygningsEndring[] = [
   byggEndring({
     lopeNr: 4,
     endringsKode: "1",
-    bygningsStatusKode: "FA",
     boligAreal: 121,
     annetAreal: 74,
     datoer: {
@@ -168,7 +164,6 @@ const historiskeEndringer: BygningsEndring[] = [
   byggEndring({
     lopeNr: 3,
     endringsKode: "2",
-    bygningsStatusKode: "IG",
     boligAreal: 121,
     annetAreal: 60,
     datoer: {
@@ -180,7 +175,6 @@ const historiskeEndringer: BygningsEndring[] = [
   byggEndring({
     lopeNr: 2,
     endringsKode: "3",
-    bygningsStatusKode: "RA",
     boligAreal: 102,
     annetAreal: 60,
     datoer: { rammetillatelse: isoDatetime("2016-09-12") },
@@ -189,7 +183,6 @@ const historiskeEndringer: BygningsEndring[] = [
   byggEndring({
     lopeNr: 1,
     endringsKode: "4",
-    bygningsStatusKode: "MB",
     boligAreal: 102,
     annetAreal: 0,
     datoer: {
@@ -199,7 +192,6 @@ const historiskeEndringer: BygningsEndring[] = [
   }),
   byggEndring({
     lopeNr: 0,
-    bygningsStatusKode: "TB",
     boligAreal: 102,
     annetAreal: 0,
     datoer: { tattIBruk: isoDatetime("1998-06-18") },
@@ -262,7 +254,7 @@ const mockByggRapport: ByggRapport = {
   bygninger: [
     {
       bygningsnr: "12345678",
-      matrikkelenhetsNr: "3201/208/12/0",
+      matrikkelNr: "3201/208/12/0",
       endringer: [gjeldendeEndring, ...historiskeEndringer],
     },
   ],

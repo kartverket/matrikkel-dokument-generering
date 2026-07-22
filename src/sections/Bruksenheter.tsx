@@ -98,7 +98,7 @@ export default function Bruksenheter({ index, byggEndringer }: Props) {
                     {t(`${i18n}.matrikkelenhet`)}
                   </dt>
                   <dd className="mt-1 font-medium">
-                    {bruksenhet.matrikkelEnhetsNr ?? tom}
+                    {bruksenhet.matrikkelNr ?? tom}
                   </dd>
                 </div>
                 <div>
