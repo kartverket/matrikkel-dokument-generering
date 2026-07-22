@@ -222,7 +222,7 @@ export const byggEndringSchema = valgfriObjekt({
         description: "Adressen til bruksenheten gitt endringen.",
       }),
 
-      matrikkelEnhetsNr: valgfriString.meta({
+      matrikkelNr: valgfriString.meta({
         example: "1234-56/789",
       }),
     }),

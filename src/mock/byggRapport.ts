@@ -32,7 +32,7 @@ function bruksenhet({
     bruksenhetsTypeKode: "0",
     bruksAreal: boligAreal,
     adresse: `Belsetveien 114 ${id}, 1348 Rykkinn`,
-    matrikkelEnhetsNr: "3201/208/12/0",
+    matrikkelNr: "3201/208/12/0",
     antallRom,
     antallBad: 1,
     antallWC: 1,
@@ -252,7 +252,7 @@ const mockByggRapport: ByggRapport = {
   bygninger: [
     {
       bygningsnr: "12345678",
-      matrikkelenhetsNr: "3201/208/12/0",
+      matrikkelNr: "3201/208/12/0",
       endringer: [gjeldendeEndring, ...historiskeEndringer],
     },
   ],

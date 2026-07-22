@@ -52,10 +52,6 @@ export default function Historikk({ byggEndringer }: Props) {
       <ul className="space-y-8 border-kv-green border-l-3 pl-6">
         {rader.map(({ endring, dato, beskrivelse }) => {
           // TODO: Denne historikken agregeres feil, og må ryddes opp i og standardiseres.
-
-          /*          const beroerteBruksenhetsnumre = endring.bruksenheter.flatMap(
-            ({ bruksenhetsNr }) => bruksenhetsNr ?? [],
-          )*/
           const endringsKode = endring.byggMetaEndring?.endringsKode
           const milepael = finnSisteMilepael(endring)
 
@@ -88,17 +84,6 @@ export default function Historikk({ byggEndringer }: Props) {
                 )}
               </div>
               {beskrivelse && <Paragraph>{beskrivelse}</Paragraph>}
-              {/*          <Activity
-                mode={
-                  beroerteBruksenhetsnumre.length > 0 ? "visible" : "hidden"
-                }
-              >
-                <Paragraph data-size="sm" className="text-kv-subtle">
-                  {t(`${h}.beroerer`, {
-                    bruksenheter: beroerteBruksenhetsnumre.join(" "),
-                  })}
-                </Paragraph>
-              </Activity>*/}
             </li>
           )
         })}
