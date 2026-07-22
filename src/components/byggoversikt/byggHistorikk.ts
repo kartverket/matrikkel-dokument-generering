@@ -4,11 +4,12 @@ import type { EndringsKode } from "../../lib/schema/reports/bygg/koder/endringsK
 
 // Sammendrag av byggets endringer.
 type ByggHistorikk = {
-  byggEndringsKode: EndringsKode
-  byggStatusKode: BygningsStatusKode
-  dato: string
-  datoType: string
-  byggArealEndring: number
+  byggEndringsKode?: EndringsKode
+  byggStatusKode?: BygningsStatusKode
+  // dato: string
+  // datoType: string
+  totalBruksArealEndring: number
+  totalBruttoArealEndring: number
 }
 
 export function byggHistorikk(
@@ -19,33 +20,29 @@ export function byggHistorikk(
   return byggEndringer.flatMap((endring) => {
     if (endring === undefined) return []
 
-    const byggEndringsKode = endring.byggMetaEndring?.endringsKode
-    const byggStatusKode = endring.byggMetaEndring?.bygningsStatusKode
-    const byggArealEndring =
+    const totalBruksArealEndring =
       endring.byggArealEndring?.bruksarealBolig.totaltAreal
 
+    const totalBruttoArealEndring =
+      endring.byggArealEndring?.bruttoarealBolig.totaltAreal
+
+    // Returner tom liste dersom ingen areal endringer har skjedd
     if (
-      byggEndringsKode === undefined ||
-      byggStatusKode === undefined ||
-      byggArealEndring === undefined
+      totalBruksArealEndring === undefined ||
+      totalBruksArealEndring === 0 ||
+      totalBruttoArealEndring === undefined ||
+      totalBruttoArealEndring === 0
     ) {
       return []
     }
 
-    return Object.entries(endring.byggDatoEndring ?? {}).flatMap(
-      ([datoType, dato]) => {
-        if (dato === undefined) return []
-
-        return [
-          {
-            byggEndringsKode,
-            byggStatusKode,
-            dato,
-            datoType,
-            byggArealEndring,
-          },
-        ]
+    return [
+      {
+        byggEndringsKode: endring.byggMetaEndring?.endringsKode,
+        byggStatusKode: endring.byggMetaEndring?.bygningsStatusKode,
+        totalBruksArealEndring,
+        totalBruttoArealEndring,
       },
-    )
+    ]
   })
 }
