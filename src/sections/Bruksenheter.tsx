@@ -77,9 +77,7 @@ export default function Bruksenheter({ index, byggEndringer }: Props) {
                 </div>
 
                 <Paragraph className="text-kv-subtle text-sm">
-                  {t(`rapport.BYG0011.utvalgskriterier.felt.lopenr`, {
-                    lopenr: bruksenhet.lopeNr,
-                  })}{" "}
+                  {t(`rapport.BYG0011.utvalgskriterier.bygning.lopeNr`)}{" "}
                   {bruksenhet.lopeNr}
                 </Paragraph>
               </div>

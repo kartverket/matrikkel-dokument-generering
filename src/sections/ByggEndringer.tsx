@@ -59,7 +59,7 @@ const grupper = {
         m?.endringsKode
           ? oversettKode({ t, kodeverk: "endring", kode: m.endringsKode })
           : null,
-        formaterBygningstype(t, m?.bygningsType),
+        formaterBygningstype(t, m?.bygningsTypeKode),
         m?.naeringsgruppe ?? null,
         m?.antallBoenheter === undefined ? null : String(m.antallBoenheter),
         e.sefrakId ?? null,

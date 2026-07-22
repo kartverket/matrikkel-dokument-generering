@@ -10,6 +10,7 @@ import ByggEndringer from "./sections/ByggEndringer.tsx"
 import Byggoversikt from "./sections/Byggoversikt.tsx"
 import { ByggUtvalgskriterier } from "./sections/ByggUtvalgskriterier.tsx"
 import { Metadata } from "./sections/Metadata.tsx"
+import Bruksenheter from "./sections/Bruksenheter.tsx"
 
 export function DocumentComponent({ rapport }: { rapport: Byg0011Rapport }) {
   return (
@@ -27,7 +28,7 @@ export function DocumentComponent({ rapport }: { rapport: Byg0011Rapport }) {
             </div>
             <div className={`pg-bygg-${nr}-bruksenhet`}>
               <ByggEndringer index={3} bygning={bygning} />
-              <Bruksenheter index={3} byggEndringer={bygning.endringer} />
+              <Bruksenheter index={4} byggEndringer={bygning.endringer} />
             </div>
           </Fragment>
         )
