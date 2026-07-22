@@ -1,43 +1,43 @@
-import { Card, Divider, Heading, Paragraph } from "@kv-designsystem/react";
-import { Fragment } from "react";
-import { useTranslation } from "react-i18next";
-import { oversettKode } from "../../lib/i18n/koder/oversettKode.ts";
-import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts";
-import { arealLinje, formatArea } from "../../lib/utils/formatArea";
-import { formatDate } from "../../lib/utils/formatDate";
-import { formaterBygningstype } from "../../lib/utils/formaterBygningstype.ts";
+import { Card, Divider, Heading, Paragraph } from "@kv-designsystem/react"
+import { Fragment } from "react"
+import { useTranslation } from "react-i18next"
+import { oversettKode } from "../../lib/i18n/koder/oversettKode.ts"
+import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
+import { arealLinje, formatArea } from "../../lib/utils/formatArea"
+import { formatDate } from "../../lib/utils/formatDate"
+import { formaterBygningstype } from "../../lib/utils/formaterBygningstype.ts"
 import {
   type DetaljfeltData,
   Detaljgrid,
   lagDetaljfeltBuilder,
-} from "../Detaljfelt";
+} from "../Detaljfelt"
 
-const bruksenhetFelt = lagDetaljfeltBuilder("rapport.BYG0011.bruksenheter");
-const byggFelt = lagDetaljfeltBuilder("rapport.BYG0011");
-const etasjeFelt = lagDetaljfeltBuilder("rapport.BYG0011.etasjer");
+const bruksenhetFelt = lagDetaljfeltBuilder("rapport.BYG0011.bruksenheter")
+const byggFelt = lagDetaljfeltBuilder("rapport.BYG0011")
+const etasjeFelt = lagDetaljfeltBuilder("rapport.BYG0011.etasjer")
 
 interface Props {
-  endring: BygningsEndring;
-  matrikkelNummer?: string;
+  endring: BygningsEndring
+  matrikkelNummer?: string
 }
 
 export function Endringskort({ endring, matrikkelNummer }: Props) {
-  const { i18n, t } = useTranslation();
+  const { i18n, t } = useTranslation()
 
-  if (endring === undefined) return null;
+  if (endring === undefined) return null
 
-  const tom = t("tom");
-  const kortDato = { dateStyle: "short" } as const;
-  const numberFormatter = new Intl.NumberFormat(i18n.language);
+  const tom = t("tom")
+  const kortDato = { dateStyle: "short" } as const
+  const numberFormatter = new Intl.NumberFormat(i18n.language)
   const formatDato = (dato: string | undefined) =>
-    dato === undefined ? null : formatDate(i18n, dato, "", kortDato);
+    dato === undefined ? null : formatDate(i18n, dato, "", kortDato)
 
   const {
     byggMetaEndring,
     byggArealEndring,
     byggKoordinatEndring,
     byggDatoEndring,
-  } = endring;
+  } = endring
 
   const endringskode =
     byggMetaEndring?.endringsKode === undefined
@@ -46,18 +46,18 @@ export function Endringskort({ endring, matrikkelNummer }: Props) {
           t,
           kodeverk: "endring",
           kode: byggMetaEndring.endringsKode,
-        });
+        })
 
   const bygningstype = formaterBygningstype(
     t,
     byggMetaEndring?.bygningsTypeKode,
-  );
+  )
 
   const koordinater =
     byggKoordinatEndring?.nord === undefined ||
     byggKoordinatEndring.ost === undefined
       ? null
-      : `${numberFormatter.format(byggKoordinatEndring.nord)} N / ${numberFormatter.format(byggKoordinatEndring.ost)} Ø`;
+      : `${numberFormatter.format(byggKoordinatEndring.nord)} N / ${numberFormatter.format(byggKoordinatEndring.ost)} Ø`
 
   const formatertTittel = [
     t("rapport.BYG0011.bruksenheter.endringTittel", {
@@ -66,7 +66,7 @@ export function Endringskort({ endring, matrikkelNummer }: Props) {
     endringskode,
   ]
     .filter(Boolean)
-    .join(" · ");
+    .join(" · ")
 
   const grupper = [
     {
@@ -138,9 +138,9 @@ export function Endringskort({ endring, matrikkelNummer }: Props) {
         ),
       ],
     },
-  ] satisfies Array<{ title: string; felter: DetaljfeltData[] }>;
+  ] satisfies Array<{ title: string; felter: DetaljfeltData[] }>
 
-  const etasjer = endring.etasjePlan.filter((etasje) => etasje !== undefined);
+  const etasjer = endring.etasjePlan.filter((etasje) => etasje !== undefined)
 
   const lister = [
     {
@@ -185,10 +185,10 @@ export function Endringskort({ endring, matrikkelNummer }: Props) {
       })),
     },
   ] satisfies Array<{
-    title: string;
-    emptyText: string;
-    elementer: Array<{ key: string; felter: DetaljfeltData[] }>;
-  }>;
+    title: string
+    emptyText: string
+    elementer: Array<{ key: string; felter: DetaljfeltData[] }>
+  }>
 
   return (
     <Card
@@ -239,5 +239,5 @@ export function Endringskort({ endring, matrikkelNummer }: Props) {
         ))}
       </Card.Block>
     </Card>
-  );
+  )
 }
