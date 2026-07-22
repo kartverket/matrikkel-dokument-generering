@@ -49,7 +49,7 @@ export default function EndringsTabell({
                 </Table.HeaderCell>
               )}
               {kolonner.map((kolonne, j) => (
-                <Table.Cell className="text-kv-default truncate" key={kolonne}>
+                <Table.Cell className="truncate text-kv-default" key={kolonne}>
                   {rad.celler[j] ?? null}
                 </Table.Cell>
               ))}

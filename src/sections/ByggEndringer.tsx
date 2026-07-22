@@ -289,11 +289,11 @@ export default function ByggEndringer({ index, bygning }: Props) {
         <div className="flex flex-col gap-8">
           {kategorier.map((kategori) => (
             <div key={kategori.key} className="my-4 space-y-4">
-              <span className="flex items-center gap-4 ">
+              <span className="flex items-center gap-4">
                 <Heading
                   level={3}
                   data-size="sm"
-                  className="font-medium min-w-max"
+                  className="min-w-max font-medium"
                 >
                   {kategori.tittel}
                 </Heading>
