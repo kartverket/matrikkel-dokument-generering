@@ -3,7 +3,7 @@ import type { BygningsEndring } from "../../../lib/schema/reports/bygg/byg0011/b
 type GjeldendeBygg = BygningsEndring & {}
 
 // Et gjeldende bygg vil si summen av basisregistreringen og ferdigstilte/tatte-i-bruk endringer
-export function finnGjeldendeBygningsendring(
+export function aggregerGjeldendeTilstand(
   endringer: BygningsEndring[],
 ): BygningsEndring {
   // TODO: denne funksjonen returner kun basisregistreringen

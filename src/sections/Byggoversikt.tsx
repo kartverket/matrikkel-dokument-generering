@@ -5,7 +5,7 @@ import BygningHeader from "../components/byggoversikt/BygningHeader"
 import Historikk from "../components/byggoversikt/Historikk"
 import Nokkeltall from "../components/byggoversikt/Nokkeltall"
 import Oversiktsfelt from "../components/byggoversikt/Oversiktsfelt"
-import { finnGjeldendeBygningsendring } from "../components/byggoversikt/utils/gjeldendeBygg.ts"
+import { aggregerGjeldendeTilstand } from "../components/byggoversikt/utils/gjeldendeTilstand.ts"
 import { Section } from "../components/Section"
 import type { BygningsEndring } from "../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 
@@ -17,7 +17,9 @@ interface Props {
 
 export default function Byggoversikt({ byggEndringer, index, byggNr }: Props) {
   const { t } = useTranslation()
-  const gjeldendeEndring = finnGjeldendeBygningsendring(byggEndringer)
+
+  // Den gjeldende tilstanden til bygget aggregert fra basisregistreringen og ferdigstilte/tatte-i-bruk endringer
+  const gjeldendeTilstand = aggregerGjeldendeTilstand(byggEndringer)
 
   return (
     <Section index={index} title={t("rapport.BYG0011.byggoversikt.title")}>
@@ -25,19 +27,19 @@ export default function Byggoversikt({ byggEndringer, index, byggNr }: Props) {
         <BygningHeader
           byggNr={byggNr}
           gjeldendeBygningsType={
-            gjeldendeEndring?.byggMetaEndring?.bygningsTypeKode
+            gjeldendeTilstand?.byggMetaEndring?.bygningsTypeKode
           }
         />
         <Divider />
 
-        {gjeldendeEndring && (
+        {gjeldendeTilstand && (
           <>
-            <Nokkeltall gjeldendeEndring={gjeldendeEndring} />
+            <Nokkeltall gjeldendeEndring={gjeldendeTilstand} />
             <Oversiktsfelt
               byggNr={byggNr}
-              gjeldendeEndring={gjeldendeEndring}
+              gjeldendeEndring={gjeldendeTilstand}
             />
-            <ArealFordeling etasjePlan={gjeldendeEndring.etasjePlan} />
+            <ArealFordeling etasjePlan={gjeldendeTilstand.etasjePlan} />
           </>
         )}
         <Historikk byggEndringer={byggEndringer} />
