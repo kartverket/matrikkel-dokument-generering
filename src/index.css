@@ -25,7 +25,6 @@ th {
   font-weight: 400;
 }
 
-
 /*
  * PDF-skalering: Gotenberg/Chromium bruker print-emulering ved konvertering,
  * så alt inne i @media print treffer kun PDF-rendringen — ikke web-preview.
@@ -50,4 +49,3 @@ th {
   --dsc-table-border-color: var(--color-kv-green-border);
   --dsc-table-divider-border-color: var(--color-kv-green-border);
 }
-
