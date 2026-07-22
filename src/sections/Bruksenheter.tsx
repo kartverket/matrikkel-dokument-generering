@@ -1,11 +1,11 @@
-import { Card } from "@kv-designsystem/react"
+import { Card, Heading, Paragraph, Tag } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import { BruksenhetHeader } from "../components/bruksenheter/BruksenhetHeader.tsx"
 import { Section } from "../components/Section.tsx"
 import type {
   Bruksenhet,
   BygningsEndring,
 } from "../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
+import { cn } from "../lib/utils/cn.ts"
 
 type BruksenhetEndring = Bruksenhet & {
   lopeNr: number
@@ -55,14 +55,44 @@ export default function Bruksenheter({ index, byggEndringer }: Props) {
             className="break-inside-avoid border border-kv-border"
           >
             <Card.Block className="p-7">
-              <BruksenhetHeader
+              {/* <BruksenhetHeader
                 bruksenhetNummer={bruksenhet.bruksenhetsNr ?? null}
                 bruksenhetTypeChip={bruksenhet.bruksenhetsTypeKode}
-                bruksenhetSeksjon={t(`${i18n}.endringTittel`, {
-                  lopenr: bruksenhet.lopeNr,
-                })}
+                bruksenhetSeksjon={t(
+                  `rapport.BYG0011.utvalgskriterier.felt.lopenr`,
+                  {
+                    lopenr: bruksenhet.lopeNr,
+                  },
+                )}
                 ingenOppgittBruksenhet={ingenOppgittBruksenhet}
-              />
+              /> */}
+
+              <div className="mb-6 flex items-start justify-between gap-4">
+                <div className="flex flex-wrap items-center gap-3">
+                  <Heading
+                    level={3}
+                    data-size="sm"
+                    className={cn(
+                      bruksenhet.bruksenhetsNr === null &&
+                        "font-normal text-kv-subtle",
+                    )}
+                  >
+                    {bruksenhet.bruksenhetsNr ?? ingenOppgittBruksenhet}
+                  </Heading>
+                  {bruksenhet.bruksenhetsTypeKode && (
+                    <Tag data-color="accent" variant="outline">
+                      {bruksenhet.bruksenhetsTypeKode}
+                    </Tag>
+                  )}
+                </div>
+
+                <Paragraph className="text-kv-subtle text-sm">
+                  {t(`rapport.BYG0011.utvalgskriterier.felt.lopenr`, {
+                    lopenr: bruksenhet.lopeNr,
+                  })}{" "}
+                  {bruksenhet.lopeNr}
+                </Paragraph>
+              </div>
 
               <dl className="grid grid-cols-4 gap-x-8 gap-y-5">
                 <div className="col-span-2">
