@@ -28,7 +28,7 @@ export default function Oversiktsfelt({ bygning, gjeldendeEndring }: Props) {
   const oversikt = {
     bygningstype: formaterBygningstype(
       t,
-      gjeldendeEndring.byggMetaEndring?.bygningsType,
+      gjeldendeEndring.byggMetaEndring?.bygningsTypeKode,
     ),
     antallBruksenheter: gjeldendeEndring.bruksenheter.length,
     antallBoenheter: gjeldendeEndring.byggMetaEndring?.antallBoenheter,

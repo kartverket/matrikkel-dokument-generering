@@ -11,6 +11,7 @@ import {
 } from "../../../core/utils/zodUtils.ts"
 import { aktorKodeSchema } from "../koder/aktorKode.schema.ts"
 import { bruksenhetsKodeSchema } from "../koder/bruksenhetsTypeKode.schema.ts"
+import { byggningsStatusKodeSchema } from "../koder/byggningsStatusKode.schema.ts"
 import { bygningsTypeKodeSchema } from "../koder/bygningsTypeKodeSchema.ts"
 import { endringsKodeSchema } from "../koder/endringsKode.schema.ts"
 import { kjokkenTilgangKodeSchema } from "../koder/kjokkenTilgangKode.ts"
@@ -30,7 +31,8 @@ export const byggEndringSchema = valgfriObjekt({
 
   byggMetaEndring: valgfriObjekt({
     endringsKode: valgfriSchema(endringsKodeSchema),
-    bygningsType: bygningsTypeKodeSchema,
+    bygningsStatusKode: valgfriSchema(byggningsStatusKodeSchema),
+    bygningsTypeKode: valgfriSchema(bygningsTypeKodeSchema),
     antallBoenheter: valgfriHeltall,
     naeringsgruppe: valgfriString.meta({
       example: "Bolig",
