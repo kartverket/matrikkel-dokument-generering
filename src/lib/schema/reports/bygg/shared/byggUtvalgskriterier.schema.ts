@@ -154,7 +154,7 @@ export const byggUtvalgskriterierSchema = valgfriObjekt({
   }),
 
   // Aktør filter-kriterier
-  aktoer: valgfriObjekt({
+  aktor: valgfriObjekt({
     identifikasjonsNr: valgfriString.meta({
       title: "Fødsels- eller organisasjonsnummer",
       description:

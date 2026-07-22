@@ -1,5 +1,5 @@
 export const koderNn = {
-  aktoer: {
+  aktor: {
     "0": "Ikkje oppgitt",
     "1": "Aksjeselskap",
     "2": "Bustadbyggjelag/burettslag",

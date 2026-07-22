@@ -9,7 +9,7 @@ import {
   valgfriSchema,
   valgfriString,
 } from "../../../core/utils/zodUtils.ts"
-import { aktoerKodeSchema } from "../koder/aktoerKode.schema.ts"
+import { aktorKodeSchema } from "../koder/aktorKode.schema.ts"
 import { bruksenhetsKodeSchema } from "../koder/bruksenhetsTypeKode.schema.ts"
 import { bygningsTypeKodeSchema } from "../koder/bygningsTypeKodeSchema.ts"
 import { endringsKodeSchema } from "../koder/endringsKode.schema.ts"
@@ -132,12 +132,12 @@ export const byggEndringSchema = valgfriObjekt({
   }),
 
   // Tidligere Hjemmelshaver/aktuell eier/kontaktinstans
-  aktoer: valgfriObjekt({
+  aktor: valgfriObjekt({
     bruksenhetsNr: valgfriString.meta({
       title: "Bruksenhetsnummer",
       example: "H0101",
     }),
-    aktoerKode: aktoerKodeSchema,
+    aktorKode: aktorKodeSchema,
 
     identifikasjonsNr: valgfriString.meta({
       title: "Fødselsdato/org.nr",
@@ -235,7 +235,7 @@ export type ByggEndringsDatoer = NonNullable<
 export type TiltaksHaver = NonNullable<
   NonNullable<BygningsEndring>["tiltaksHaver"]
 >
-export type Aktoer = NonNullable<NonNullable<BygningsEndring>["aktoer"]>
+export type Aktor = NonNullable<NonNullable<BygningsEndring>["aktor"]>
 export type EtasjePlan = NonNullable<BygningsEndring>["etasjePlan"]
 
 export type BygningsEndring = z.infer<typeof byggEndringSchema>

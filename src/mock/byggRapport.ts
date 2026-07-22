@@ -113,9 +113,9 @@ function byggEndring({
     ],
     byggKoordinatEndring: { nord: 6642100, ost: 597400 },
     byggDatoEndring: datoer,
-    aktoer: {
+    aktor: {
       bruksenhetsNr: "H0101",
-      aktoerKode: "4",
+      aktorKode: "4",
       identifikasjonsNr: "12051978",
       erAvdoed: false,
       navn: "Ola Nordmann",
@@ -225,7 +225,7 @@ const mockByggRapport: ByggRapport = {
       utenBokstav: true,
     },
     matrikkelenhet: { gnr: 208, bnr: 12 },
-    aktoer: {
+    aktor: {
       etternavn: "Nordmann",
       fornavn: "Ola",
     },
