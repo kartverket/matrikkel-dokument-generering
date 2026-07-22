@@ -51,6 +51,8 @@ export default function Historikk({ byggEndringer }: Props) {
 
       <ul className="space-y-8 border-kv-green border-l-3 pl-6">
         {rader.map(({ endring, dato, beskrivelse }) => {
+          // TODO: Denne historikken agregeres feil, og må ryddes opp i og standardiseres.
+
           /*          const beroerteBruksenhetsnumre = endring.bruksenheter.flatMap(
             ({ bruksenhetsNr }) => bruksenhetsNr ?? [],
           )*/
