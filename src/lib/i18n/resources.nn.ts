@@ -63,7 +63,7 @@ export const nn = {
           fnr: "Fnr",
           snr: "Snr",
         },
-        aktoer: {
+        aktor: {
           tittel: "Heimelshavar",
           identifikasjonsNr: "Fødsels- eller orgnr",
           etternavn: "Etternamn",
@@ -244,7 +244,7 @@ export const nn = {
           tattIBruk: "Teke i bruk",
           utgaattRevet: "Utgått / rive",
         },
-        aktoer: {
+        aktor: {
           tittel: "Aktør",
           navn: "Namn",
           identifikasjonsNr: "Fødselsdato/organisasjonsnummer",

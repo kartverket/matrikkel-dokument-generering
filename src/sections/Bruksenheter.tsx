@@ -155,7 +155,7 @@ export default function Bruksenheter({ index, bygning }: Props) {
 
                 <Divider className="my-6" />
                 <Hjemmelshavere
-                  aktoer={gjeldendeEndringForBruksenhet?.aktoer}
+                  aktor={gjeldendeEndringForBruksenhet?.aktor}
                 />
 
                 <Divider className="my-6" />

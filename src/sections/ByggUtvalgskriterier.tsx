@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next"
 import { Section } from "../components/Section.tsx"
 import { AdresseKriterier } from "../components/utvalgskriterier/AdresseKriterier"
-import { AktoerKriterier } from "../components/utvalgskriterier/AktoerKriterier.tsx"
+import { AktorKriterier } from "../components/utvalgskriterier/AktorKriterier.tsx"
 import { BygningKriterier } from "../components/utvalgskriterier/BygningKriterier"
 import { BygningsstatusKriterier } from "../components/utvalgskriterier/BygningsstatusKriterier"
 import { MatrikkelenhetKriterier } from "../components/utvalgskriterier/MatrikkelenhetKriterier"
@@ -30,7 +30,7 @@ export function ByggUtvalgskriterier({ index, kriterier }: Props) {
             <MatrikkelenhetKriterier
               matrikkelenhetKriterier={kriterier.matrikkelenhet}
             />
-            <AktoerKriterier aktoerKriterier={kriterier.aktoer} />
+            <AktorKriterier aktorKriterier={kriterier.aktor} />
           </div>
 
           <BygningsstatusKriterier

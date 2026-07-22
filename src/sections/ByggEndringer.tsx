@@ -118,10 +118,10 @@ const grupper = {
       ]
     },
   },
-  aktoer: {
+  aktor: {
     felter: ["navn", "identifikasjonsNr", "andel", "adresse"],
     celler: (e) => {
-      const a = e.aktoer
+      const a = e.aktor
       return [
         a?.navn ?? null,
         a?.identifikasjonsNr ?? null,
@@ -228,7 +228,7 @@ export default function ByggEndringer({ index, bygning }: Props) {
     lagEtasjePlan(endringer, t),
     lagKategori("byggKoordinatEndring", endringer, t, i18n),
     lagKategori("byggDatoEndring", endringer, t, i18n),
-    lagKategori("aktoer", endringer, t, i18n),
+    lagKategori("aktor", endringer, t, i18n),
     lagKategori("tiltaksHaver", endringer, t, i18n),
   ].filter((k) => k.rader.length > 0)
 
@@ -245,14 +245,14 @@ export default function ByggEndringer({ index, bygning }: Props) {
       ) : (
         <div className="flex flex-col gap-8">
           {kategorier.map((kategori) => (
-            <div key={kategori.key} className="space-y-4 my-4">
+            <div key={kategori.key} className="my-4 space-y-4">
               <Heading
                 level={3}
                 data-size="sm"
-                className="font-medium flex items-center gap-4"
+                className="flex items-center gap-4 font-medium"
               >
                 {kategori.tittel}
-                <hr className="border-kv-green-border w-full border" />
+                <hr className="w-full border border-kv-green-border" />
               </Heading>
               <EndringsTabell
                 kolonner={kategori.kolonner}

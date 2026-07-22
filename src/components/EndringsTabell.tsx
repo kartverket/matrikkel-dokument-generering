@@ -19,7 +19,7 @@ export default function EndringsTabell({ kolonner, rader, radHeader }: Props) {
   return (
     <Table className="w-full">
       <Table.Head>
-        <Table.Row className="text-kv-subtle font-regular">
+        <Table.Row className="font-regular text-kv-subtle">
           <Table.HeaderCell>{radHeader ?? ""}</Table.HeaderCell>
           {kolonner.map((kolonne) => (
             <Table.HeaderCell key={kolonne}>{kolonne}</Table.HeaderCell>
