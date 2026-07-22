@@ -1,15 +1,14 @@
 import { Label, Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
-import type { Bygning } from "../../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 import { formaterBygningstype } from "../../lib/utils/formaterBygningstype.ts"
 
 interface Props {
-  bygning: Bygning
+  byggNr: string
   gjeldendeEndring: NonNullable<BygningsEndring>
 }
 
-export default function Oversiktsfelt({ bygning, gjeldendeEndring }: Props) {
+export default function Oversiktsfelt({ byggNr, gjeldendeEndring }: Props) {
   const { t } = useTranslation()
   const key = "rapport.BYG0011.byggoversikt"
   const tom = t("tom")
@@ -35,7 +34,7 @@ export default function Oversiktsfelt({ bygning, gjeldendeEndring }: Props) {
     naeringsgruppe: gjeldendeEndring.byggMetaEndring?.naeringsgruppe,
     koordinater,
     etasjer,
-    bygningsnr: bygning.bygningsnr,
+    bygningsnr: byggNr,
   }
 
   return (

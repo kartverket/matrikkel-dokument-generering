@@ -1,6 +1,6 @@
-import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
-import type { BygningsStatusKode } from "../../lib/schema/reports/bygg/koder/byggningsStatusKode.schema.ts"
-import type { EndringsKode } from "../../lib/schema/reports/bygg/koder/endringsKode.schema.ts"
+import type { BygningsEndring } from "../../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
+import type { BygningsStatusKode } from "../../../lib/schema/reports/bygg/koder/byggningsStatusKode.schema.ts"
+import type { EndringsKode } from "../../../lib/schema/reports/bygg/koder/endringsKode.schema.ts"
 
 type Endring = NonNullable<BygningsEndring>
 

@@ -6,35 +6,41 @@ import Historikk from "../components/byggoversikt/Historikk"
 import Nokkeltall from "../components/byggoversikt/Nokkeltall"
 import Oversiktsfelt from "../components/byggoversikt/Oversiktsfelt"
 import { Section } from "../components/Section"
-import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
-import { finnGjeldendeBygningsendring } from "../lib/utils/isFerdigstilt"
+import { finnGjeldendeBygningsendring } from "../components/byggoversikt/utils/gjeldendeBygg.ts"
+import type { BygningsEndring } from "../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 
 interface Props {
   index: number
-  bygning: Bygning
+  byggNr: string
+  byggEndringer: BygningsEndring[]
 }
 
-export default function Byggoversikt({ bygning, index }: Props) {
+export default function Byggoversikt({ byggEndringer, index, byggNr }: Props) {
   const { t } = useTranslation()
-  const gjeldendeEndring = finnGjeldendeBygningsendring(bygning.endringer)
+  const gjeldendeEndring = finnGjeldendeBygningsendring(byggEndringer)
 
   return (
     <Section index={index} title={t("rapport.BYG0011.byggoversikt.title")}>
       <div className="mt-8 space-y-8 rounded-xl border border-kv-blue-subtle p-8">
-        <BygningHeader bygning={bygning} gjeldendeEndring={gjeldendeEndring} />
+        <BygningHeader
+          byggNr={byggNr}
+          gjeldendeBygningsType={
+            gjeldendeEndring?.byggMetaEndring?.bygningsTypeKode
+          }
+        />
         <Divider />
 
         {gjeldendeEndring && (
           <>
             <Nokkeltall gjeldendeEndring={gjeldendeEndring} />
             <Oversiktsfelt
-              bygning={bygning}
+              byggNr={byggNr}
               gjeldendeEndring={gjeldendeEndring}
             />
             <ArealFordeling etasjePlan={gjeldendeEndring.etasjePlan} />
           </>
         )}
-        <Historikk byggEndringer={bygning.endringer} />
+        <Historikk byggEndringer={byggEndringer} />
       </div>
     </Section>
   )

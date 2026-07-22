@@ -1,4 +1,6 @@
-import type { BygningsEndring } from "../schema/reports/bygg/byg0011/byggEndring.schema.ts"
+import type { BygningsEndring } from "../../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
+
+type GjeldendeBygg = BygningsEndring & {}
 
 // Et gjeldende bygg vil si summen av basisregistreringen og ferdigstilte/tatte-i-bruk endringer
 export function finnGjeldendeBygningsendring(

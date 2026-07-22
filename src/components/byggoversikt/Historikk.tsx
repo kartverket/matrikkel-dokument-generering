@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next"
 import { oversettKode } from "../../lib/i18n/koder/oversettKode.ts"
 import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 import { formatDate } from "../../lib/utils/formatDate"
-import { byggHistorikk } from "./byggHistorikk"
+import { byggHistorikk } from "./utils/byggHistorikk.ts"
 
 interface Props {
   byggEndringer: BygningsEndring[]
