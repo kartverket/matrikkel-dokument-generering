@@ -9,10 +9,10 @@ import {
   valgfriSchema,
   valgfriString,
 } from "../../../core/utils/zodUtils.ts"
-import { aktorKodeSchema } from "../koder/aktorKode.schema.ts"
 import { bruksenhetsKodeSchema } from "../koder/bruksenhetsTypeKode.schema.ts"
 import { byggningsStatusKodeSchema } from "../koder/byggningsStatusKode.schema.ts"
 import { bygningsTypeKodeSchema } from "../koder/bygningsTypeKodeSchema.ts"
+import { eierforholdKodeSchema } from "../koder/eierforholdKode.schema.ts"
 import { endringsKodeSchema } from "../koder/endringsKode.schema.ts"
 import { kjokkenTilgangKodeSchema } from "../koder/kjokkenTilgangKode.ts"
 import { kontaktPersonKodeSchema } from "../koder/kontaktPersonKode.schema.ts"
@@ -134,12 +134,12 @@ export const byggEndringSchema = valgfriObjekt({
   }),
 
   // Tidligere Hjemmelshaver/aktuell eier/kontaktinstans
-  aktor: valgfriObjekt({
+  aktuellEier: valgfriObjekt({
     bruksenhetsNr: valgfriString.meta({
       title: "Bruksenhetsnummer",
       example: "H0101",
     }),
-    aktorKode: aktorKodeSchema,
+    eierforholdKode: eierforholdKodeSchema,
 
     identifikasjonsNr: valgfriString.meta({
       title: "Fødselsdato/org.nr",
@@ -239,7 +239,9 @@ export type ByggEndringsDatoer = NonNullable<
 export type TiltaksHaver = NonNullable<
   NonNullable<BygningsEndring>["tiltaksHaver"]
 >
-export type Aktor = NonNullable<NonNullable<BygningsEndring>["aktor"]>
+export type AktuellEier = NonNullable<
+  NonNullable<BygningsEndring>["aktuellEier"]
+>
 export type EtasjePlan = NonNullable<BygningsEndring>["etasjePlan"]
 
 export type BygningsEndring = z.infer<typeof byggEndringSchema>
