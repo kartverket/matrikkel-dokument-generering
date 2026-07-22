@@ -15,6 +15,7 @@ import { endringsKodeSchema } from "../koder/endringsKode.schema.ts"
 import { kontaktPersonKodeSchema } from "../koder/kontaktPersonKode.schema.ts"
 import { arealFordelingSchema } from "../shared/arealFordeling.schema.ts"
 import { bruksenhetSchema } from "./bruksenhet.schema.ts"
+import { byggningsStatusKodeSchema } from "../koder/byggningsStatusKode.schema.ts"
 
 export const byggEndringSchema = valgfriObjekt({
   // Unik ID for en bygg-endring
@@ -29,7 +30,8 @@ export const byggEndringSchema = valgfriObjekt({
 
   byggMetaEndring: valgfriObjekt({
     endringsKode: valgfriSchema(endringsKodeSchema),
-    bygningsType: bygningsTypeKodeSchema,
+    bygningsStatusKode: valgfriSchema(byggningsStatusKodeSchema),
+    bygningsTypeKode: valgfriSchema(bygningsTypeKodeSchema),
     antallBoenheter: valgfriHeltall,
     naeringsgruppe: valgfriString.meta({
       example: "Bolig",
