@@ -85,7 +85,7 @@ export default function Historikk({ byggEndringer }: Props) {
               <div key={lopeNr}>
                 <li className="space-y-1">
                   <div className="flex flex-wrap items-center gap-3">
-                    <div className="flex justify-between w-full">
+                    <div className="flex w-full justify-between">
                       <div className="flex gap-2">
                         <p className="font-semibold">
                           {lopeNr === 0
@@ -120,7 +120,7 @@ export default function Historikk({ byggEndringer }: Props) {
                           </Tag>
                         )}
                       </div>
-                      <span className="flex gap-1 items-center">
+                      <span className="flex items-center gap-1">
                         {formatDate(i18n, dato, tom, { dateStyle: "short" })}
                       </span>
                     </div>
@@ -129,7 +129,7 @@ export default function Historikk({ byggEndringer }: Props) {
                   {beroerer && (
                     <Paragraph
                       data-size="sm"
-                      className="text-kv-subtle truncate"
+                      className="truncate text-kv-subtle"
                     >
                       {beroerer}...<span className="text-xs">+14</span>
                     </Paragraph>
