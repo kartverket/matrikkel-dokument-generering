@@ -98,14 +98,14 @@ function byggEndring({
     },
     etasjePlan: [
       {
-        etasjeplan: "Hovedetasje",
+        etasjeplanKode: "1",
         etasje: 1,
         antallBoenheter: 1,
         bruksareal: arealFordeling(80, 10),
         bruttoareal: arealFordeling(90, 12),
       },
       {
-        etasjeplan: "Annenetasje",
+        etasjeplanKode: "1",
         etasje: 2,
         antallBoenheter: 0,
         bruksareal: arealFordeling(60, 10),

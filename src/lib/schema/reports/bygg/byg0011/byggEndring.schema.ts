@@ -14,6 +14,7 @@ import { bruksenhetsKodeSchema } from "../koder/bruksenhetsTypeKode.schema.ts"
 import { byggningsStatusKodeSchema } from "../koder/byggningsStatusKode.schema.ts"
 import { bygningsTypeKodeSchema } from "../koder/bygningsTypeKodeSchema.ts"
 import { endringsKodeSchema } from "../koder/endringsKode.schema.ts"
+import { etasjeplanKodeSchema } from "../koder/etasjeplanKode.schema.ts"
 import { kjokkenTilgangKodeSchema } from "../koder/kjokkenTilgangKode.ts"
 import { kontaktPersonKodeSchema } from "../koder/kontaktPersonKode.schema.ts"
 import { arealFordelingSchema } from "../shared/arealFordeling.schema.ts"
@@ -50,9 +51,7 @@ export const byggEndringSchema = valgfriObjekt({
 
   etasjePlan: valgfriListe(
     valgfriObjekt({
-      etasjeplan: z.string().min(1).meta({
-        example: "Hovedetasje",
-      }),
+      etasjeplanKode: etasjeplanKodeSchema,
       etasje: z.number().int().nonnegative().meta({
         example: 1,
       }),

@@ -120,6 +120,13 @@ export const koderNn = {
     "4": "Ombygging",
     "5": "Ukjend",
   },
+  etasjeplan: {
+    "0": "Ikkje oppgitt",
+    "1": "Hovudetasje",
+    "2": "Kjellaretasje",
+    "3": "Loft",
+    "4": "Underetasje",
+  },
   kontaktperson: {
     "1": "Tiltakshavar",
     "2": "Kontaktperson",

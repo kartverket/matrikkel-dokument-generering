@@ -182,6 +182,13 @@ export const koderNb = {
     "4": "Ombygging",
     "5": "Ukjent",
   },
+  etasjeplan: {
+    "0": "Ikke oppgitt",
+    "1": "Hovedetasje",
+    "2": "Kjelleretasje",
+    "3": "Loft",
+    "4": "Underetasje",
+  },
   kontaktperson: {
     "1": "Tiltakshaver",
     "2": "Kontaktperson",
