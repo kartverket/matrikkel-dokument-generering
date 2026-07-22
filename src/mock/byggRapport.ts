@@ -4,6 +4,7 @@ import type {
   BygningsEndring,
 } from "../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 import type { Byg0011Rapport as ByggRapport } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
+import type { BygningsStatusKode } from "../lib/schema/reports/bygg/koder/byggningsStatusKode.schema.ts"
 import type { EndringsKode } from "../lib/schema/reports/bygg/koder/endringsKode.schema.ts"
 
 function isoDatetime(date: string) {
@@ -67,6 +68,7 @@ const h0104 = bruksenhet({
 function byggEndring({
   lopeNr,
   endringsKode,
+  bygningsStatusKode,
   boligAreal,
   annetAreal,
   datoer,
@@ -74,6 +76,7 @@ function byggEndring({
 }: {
   lopeNr: number
   endringsKode?: EndringsKode
+  bygningsStatusKode: BygningsStatusKode
   boligAreal: number
   annetAreal: number
   datoer: ByggEndringsDatoer
@@ -83,7 +86,7 @@ function byggEndring({
     lopeNr,
     byggMetaEndring: {
       endringsKode,
-      bygningsStatusKode: "TB",
+      bygningsStatusKode,
       bygningsTypeKode: "111",
       antallBoenheter: 1,
       naeringsgruppe: "Bolig",
@@ -134,46 +137,51 @@ function byggEndring({
   }
 }
 
-const gjeldendeEndring = byggEndring({
+const senestFerdigstilteEndring = byggEndring({
   lopeNr: 5,
+  endringsKode: "4",
+  bygningsStatusKode: "TB",
   boligAreal: 140,
   annetAreal: 35,
   datoer: {
-    rammetillatelse: isoDatetime("2019-03-15"),
-    igangsettingstillatelse: isoDatetime("2019-05-01"),
-    ferdigattest: isoDatetime("2020-08-20"),
-    tattIBruk: isoDatetime("2020-09-01"),
+    rammetillatelse: isoDatetime("2021-03-15"),
+    igangsettingstillatelse: isoDatetime("2021-05-03"),
+    tattIBruk: isoDatetime("2022-09-01"),
   },
   bruksenheter: [h0101, h0102, h0103],
 })
 
-const historiskeEndringer: BygningsEndring[] = [
+const andreEndringer: BygningsEndring[] = [
   byggEndring({
     lopeNr: 4,
     endringsKode: "1",
+    bygningsStatusKode: "FA",
     boligAreal: 121,
     annetAreal: 74,
     datoer: {
-      rammetillatelse: isoDatetime("2016-09-12"),
-      igangsettingstillatelse: isoDatetime("2017-03-06"),
-      ferdigattest: isoDatetime("2020-01-22"),
+      rammetillatelse: isoDatetime("2019-02-12"),
+      igangsettingstillatelse: isoDatetime("2019-05-06"),
+      midlertidigBrukstillatelse: isoDatetime("2020-01-22"),
+      ferdigattest: isoDatetime("2020-08-20"),
     },
     bruksenheter: [h0103],
   }),
   byggEndring({
     lopeNr: 3,
     endringsKode: "2",
+    bygningsStatusKode: "IG",
     boligAreal: 121,
     annetAreal: 60,
     datoer: {
-      rammetillatelse: isoDatetime("2016-09-12"),
-      igangsettingstillatelse: isoDatetime("2017-03-06"),
+      rammetillatelse: isoDatetime("2018-02-01"),
+      igangsettingstillatelse: isoDatetime("2018-06-15"),
     },
     bruksenheter: [h0103],
   }),
   byggEndring({
     lopeNr: 2,
     endringsKode: "3",
+    bygningsStatusKode: "RA",
     boligAreal: 102,
     annetAreal: 60,
     datoer: { rammetillatelse: isoDatetime("2016-09-12") },
@@ -182,15 +190,19 @@ const historiskeEndringer: BygningsEndring[] = [
   byggEndring({
     lopeNr: 1,
     endringsKode: "4",
+    bygningsStatusKode: "MB",
     boligAreal: 102,
     annetAreal: 0,
     datoer: {
+      rammetillatelse: isoDatetime("2007-02-15"),
+      igangsettingstillatelse: isoDatetime("2007-05-04"),
       midlertidigBrukstillatelse: isoDatetime("2008-09-12"),
     },
     bruksenheter: [h0103],
   }),
   byggEndring({
     lopeNr: 0,
+    bygningsStatusKode: "TB",
     boligAreal: 102,
     annetAreal: 0,
     datoer: { tattIBruk: isoDatetime("1998-06-18") },
@@ -254,7 +266,7 @@ const mockByggRapport: ByggRapport = {
     {
       bygningsnr: "12345678",
       matrikkelNr: "3201/208/12/0",
-      endringer: [gjeldendeEndring, ...historiskeEndringer],
+      endringer: [senestFerdigstilteEndring, ...andreEndringer],
     },
   ],
 }

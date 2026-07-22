@@ -10,10 +10,15 @@ describe("byggHistorikk", () => {
     const historikk = byggHistorikk(endringer)
 
     expect(historikk.map(({ lopeNr }) => lopeNr)).toEqual([5, 4, 3, 2, 1, 0])
+    expect(historikk.find(({ lopeNr }) => lopeNr === 5)).toMatchObject({
+      byggEndringsKode: "4",
+      byggStatusKode: "TB",
+      dato: "2022-09-01T00:00:00Z",
+    })
     expect(historikk.find(({ lopeNr }) => lopeNr === 4)).toMatchObject({
       byggEndringsKode: "1",
       byggStatusKode: "FA",
-      dato: "2020-01-22T00:00:00Z",
+      dato: "2020-08-20T00:00:00Z",
       totalBruksArealEndring: 14,
       arealEndringer: [{ type: "annet", areal: 14, handling: "lagtTil" }],
       beroerteBruksenheter: ["H0103"],
