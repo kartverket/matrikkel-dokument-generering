@@ -4,16 +4,15 @@ import type { EndringsKode } from "../../../lib/schema/reports/bygg/koder/endrin
 
 type Endring = NonNullable<BygningsEndring>
 
-export type Arealtype = "bolig" | "annet" | "totalt"
-export type Arealhandling = "lagtTil" | "fjernet" | "godkjent"
+type Arealhandling = "lagtTil" | "fjernet" | "godkjent"
 
-export type HistorikkArealendring = {
-  type: Arealtype
-  areal: number
+type HistorikkArealendring = {
+  type: "bolig" | "annet" | "totalt"
+  areal: number // Arealendringen oppgitt i kvadratmeter, kan være enten positiv eller negativ
   handling: Arealhandling
 }
 
-export type BerortEtasje = {
+type BerortEtasje = {
   etasje: number
   etasjeplan: string
 }
