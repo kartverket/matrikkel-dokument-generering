@@ -11,11 +11,25 @@ type BruksenhetEndring = Bruksenhet & {
   lopeNr: number
 }
 
-type BruksenhetEndringer = BruksenhetEndring[]
-
 interface Props {
   index: number
   byggEndringer: BygningsEndring[]
+}
+
+function getBruksenheterEndringer(byggEndringer: BygningsEndring[]) {
+  return byggEndringer.flatMap((byggEndring) => {
+    if (!byggEndring) return []
+
+    return byggEndring.bruksenheter
+      .filter(
+        (bruksenhet): bruksenhet is NonNullable<typeof bruksenhet> =>
+          bruksenhet !== undefined,
+      )
+      .map((bruksenhet) => ({
+        ...bruksenhet,
+        lopeNr: byggEndring.lopeNr,
+      }))
+  })
 }
 
 export default function Bruksenheter({ index, byggEndringer }: Props) {
@@ -24,16 +38,8 @@ export default function Bruksenheter({ index, byggEndringer }: Props) {
   const tom = t("tom")
   const ingenOppgittBruksenhet = t(`${i18n}.ingenOppgittBruksenhet`)
 
-  const bruksenheter: BruksenhetEndringer = byggEndringer.flatMap(
-    (byggEndring) =>
-      byggEndring === undefined
-        ? []
-        : byggEndring.bruksenheter.flatMap((bruksenhet) =>
-            bruksenhet === undefined
-              ? []
-              : [{ ...bruksenhet, lopeNr: byggEndring.lopeNr }],
-          ),
-  )
+  const bruksenheter: BruksenhetEndring[] =
+    getBruksenheterEndringer(byggEndringer)
 
   return (
     <Section
@@ -80,7 +86,7 @@ export default function Bruksenheter({ index, byggEndringer }: Props) {
                     {t(`${i18n}.bruksareal`)}
                   </dt>
                   <dd className="mt-1 font-medium tabular-nums">
-                    {bruksenhet.bruksAreal === undefined
+                    {bruksenhet.bruksAreal
                       ? tom
                       : `${bruksenhet.bruksAreal} m²`}
                   </dd>
