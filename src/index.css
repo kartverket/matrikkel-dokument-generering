@@ -41,8 +41,8 @@ body {
  * @digdir/designsystemet-css sin table.css
  */
 .ds-table {
-  --dsc-table-border-width: 0px;
-  --dsc-table-divider-border-width: 0px;
+  --dsc-table-border-width: 1px;
+  --dsc-table-divider-border-width: 1px;
   --dsc-table-border-color: var(--color-kv-green-border);
   --dsc-table-divider-border-color: var(--color-kv-green-border);
 }

@@ -3,17 +3,19 @@ import type { i18n as I18n, TFunction } from "i18next"
 import type { ReactNode } from "react"
 import { useTranslation } from "react-i18next"
 import EndringsTabell, {
+  type EndringsGruppe,
   type EndringsRad,
 } from "../components/EndringsTabell.tsx"
 import { Section } from "../components/Section.tsx"
 import { oversettKode } from "../lib/i18n/koder/oversettKode.ts"
 import type { BygningsEndring } from "../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
-import { arealLinje, formatArea } from "../lib/utils/formatArea"
+import { formatArea } from "../lib/utils/formatArea"
 import { formatDate } from "../lib/utils/formatDate"
 import { formaterBygningstype } from "../lib/utils/formaterBygningstype.ts"
 
 const BE = "rapport.BYG0011.byggEndringer" as const
+const ET = "rapport.BYG0011.etasjer" as const
 
 type Props = {
   index: number
@@ -26,7 +28,7 @@ interface Kategori {
   key: string
   tittel: string
   kolonner: string[]
-  rader: EndringsRad[]
+  grupper: EndringsGruppe[]
 }
 
 /**
@@ -76,17 +78,6 @@ const grupper = {
         m?.antallBoenheter === undefined ? null : String(m.antallBoenheter),
         e.sefrakId ?? null,
         jaNei(t, e.harKulturminne),
-      ]
-    },
-  },
-  byggArealEndring: {
-    felter: ["bruksarealBolig", "bruttoarealBolig", "bebygdAreal"],
-    celler: (e) => {
-      const a = e.byggArealEndring
-      return [
-        arealLinje(a?.bruksarealBolig),
-        arealLinje(a?.bruttoarealBolig),
-        formatArea(a?.bebygdAreal),
       ]
     },
   },
@@ -162,56 +153,109 @@ function lagKategori(
     ...g.felter.map((f) => tr(`${BE}.${key}.${f}`)),
     ...(g.ekstraFelter ?? []).map((f) => tr(`${BE}.${f}`)),
   ]
-  const rader = endringer.flatMap<EndringsRad>((e) => {
+  const endringsGrupper = endringer.flatMap<EndringsGruppe>((e) => {
     const celler = g.celler(e, t, i18n)
     return harData(celler)
-      ? [{ key: String(e.lopeNr), header: endringLabel(t, e.lopeNr), celler }]
+      ? [
+          {
+            key: String(e.lopeNr),
+            header: endringLabel(t, e.lopeNr),
+            rader: [{ key: String(e.lopeNr), celler }],
+          },
+        ]
       : []
   })
-  return { key, tittel: tr(`${BE}.${key}.tittel`), kolonner, rader }
+  return {
+    key,
+    tittel: tr(`${BE}.${key}.tittel`),
+    kolonner,
+    grupper: endringsGrupper,
+  }
 }
 
-/** Etasjeplan er en liste — én rad per etasje per endring. */
-function lagEtasjePlan(endringer: Endring[], t: TFunction): Kategori {
-  const p = `${BE}.etasjePlan` as const
+/**
+ * Sammenslått areal-tabell per endring:
+ *   - én rad per etasje (BRA og BTA på samme rad)
+ *   - én sum-rad per endring (summert på tvers av etasjer + BYA fra byggArealEndring)
+ */
+function lagArealer(endringer: Endring[], t: TFunction): Kategori {
+  const tr = t as (path: string) => string
+  const a = `${BE}.areal` as const
+
   const kolonner = [
-    t(`${p}.etasjeplan`),
-    t(`${p}.etasje`),
-    t(`${p}.antallBoenheter`),
-    t(`${p}.bruksareal.boligAreal`),
-    t(`${p}.bruksareal.annetAreal`),
-    t(`${p}.bruksareal.totaltAreal`),
-    t(`${p}.bruttoareal.boligAreal`),
-    t(`${p}.bruttoareal.annetAreal`),
-    t(`${p}.bruttoareal.totaltAreal`),
+    tr(`${ET}.title`),
+    tr(`${ET}.antallBoenheter`),
+    tr(`${a}.boligBra`),
+    tr(`${a}.annetBra`),
+    tr(`${a}.sumBra`),
+    tr(`${a}.boligBta`),
+    tr(`${a}.annetBta`),
+    tr(`${a}.sumBta`),
+    tr(`${a}.bya`),
   ]
-  const rader = endringer.flatMap<EndringsRad>((e) =>
-    e.etasjePlan
-      .filter((et) => et !== undefined)
-      .flatMap<EndringsRad>((et) => {
-        const celler: ReactNode[] = [
-          et.etasjeplan,
-          String(et.etasje),
-          et.antallBoenheter === undefined ? null : String(et.antallBoenheter),
-          formatArea(et.bruksareal.boligAreal),
-          formatArea(et.bruksareal.annetAreal),
-          formatArea(et.bruksareal.totaltAreal),
-          formatArea(et.bruttoareal.boligAreal),
-          formatArea(et.bruttoareal.annetAreal),
-          formatArea(et.bruttoareal.totaltAreal),
-        ]
-        return harData(celler)
-          ? [
-              {
-                key: `${e.lopeNr}-${et.etasjeplan}-${et.etasje}`,
-                header: endringLabel(t, e.lopeNr),
-                celler,
-              },
-            ]
-          : []
-      }),
-  )
-  return { key: "etasjePlan", tittel: t(`${p}.tittel`), kolonner, rader }
+
+  const sumTall = (values: (number | undefined)[]): number | undefined => {
+    const definerte = values.filter((v): v is number => v !== undefined)
+    return definerte.length === 0
+      ? undefined
+      : definerte.reduce((x, y) => x + y, 0)
+  }
+
+  const endringsGrupper = endringer.flatMap<EndringsGruppe>((e) => {
+    const eLabel = endringLabel(t, e.lopeNr)
+    const etasjer = e.etasjePlan.filter(
+      (et): et is NonNullable<typeof et> => et !== undefined,
+    )
+    const bya = e.byggArealEndring?.bebygdAreal
+
+    if (etasjer.length === 0 && bya === undefined) return []
+
+    const etasjeRader: EndringsRad[] = etasjer.map((et) => ({
+      key: `${e.lopeNr}-${et.etasje}-${et.etasjeplan}`,
+      celler: [
+        `${String(et.etasje).padStart(2, "0")} ${et.etasjeplan ?? ""}`,
+        et.antallBoenheter === undefined ? null : String(et.antallBoenheter),
+        formatArea(et.bruksareal.boligAreal),
+        formatArea(et.bruksareal.annetAreal),
+        formatArea(et.bruksareal.totaltAreal),
+        formatArea(et.bruttoareal.boligAreal),
+        formatArea(et.bruttoareal.annetAreal),
+        formatArea(et.bruttoareal.totaltAreal),
+        null,
+      ],
+    }))
+
+    const boenSum = sumTall(etasjer.map((et) => et.antallBoenheter))
+    const sumRad: EndringsRad = {
+      key: `${e.lopeNr}-sum`,
+      celler: [
+        tr(`${a}.sum`),
+        boenSum === undefined ? null : String(boenSum),
+        formatArea(sumTall(etasjer.map((et) => et.bruksareal.boligAreal))),
+        formatArea(sumTall(etasjer.map((et) => et.bruksareal.annetAreal))),
+        formatArea(sumTall(etasjer.map((et) => et.bruksareal.totaltAreal))),
+        formatArea(sumTall(etasjer.map((et) => et.bruttoareal.boligAreal))),
+        formatArea(sumTall(etasjer.map((et) => et.bruttoareal.annetAreal))),
+        formatArea(sumTall(etasjer.map((et) => et.bruttoareal.totaltAreal))),
+        formatArea(bya),
+      ],
+    }
+
+    return [
+      {
+        key: String(e.lopeNr),
+        header: eLabel,
+        rader: [...etasjeRader, sumRad],
+      },
+    ]
+  })
+
+  return {
+    key: "arealer",
+    tittel: tr(`${a}.tittel`),
+    kolonner,
+    grupper: endringsGrupper,
+  }
 }
 
 export default function ByggEndringer({ index, bygning }: Props) {
@@ -221,16 +265,15 @@ export default function ByggEndringer({ index, bygning }: Props) {
     .filter((e): e is Endring => e !== undefined)
     .toSorted((a, b) => a.lopeNr - b.lopeNr)
 
-  // Rekkefølge følger schema; etasjePlan er egen fordi den lister rader per etasje.
+  // Rekkefølge følger schema; arealer slår sammen etasjer + arealendring per endring.
   const kategorier: Kategori[] = [
     lagKategori("byggMetaEndring", endringer, t, i18n),
-    lagKategori("byggArealEndring", endringer, t, i18n),
-    lagEtasjePlan(endringer, t),
+    lagArealer(endringer, t),
     lagKategori("byggKoordinatEndring", endringer, t, i18n),
     lagKategori("byggDatoEndring", endringer, t, i18n),
     lagKategori("aktor", endringer, t, i18n),
     lagKategori("tiltaksHaver", endringer, t, i18n),
-  ].filter((k) => k.rader.length > 0)
+  ].filter((k) => k.grupper.length > 0)
 
   return (
     <Section index={index} title={t(`${BE}.tittel`)}>
@@ -246,17 +289,19 @@ export default function ByggEndringer({ index, bygning }: Props) {
         <div className="flex flex-col gap-8">
           {kategorier.map((kategori) => (
             <div key={kategori.key} className="my-4 space-y-4">
-              <Heading
-                level={3}
-                data-size="sm"
-                className="flex items-center gap-4 font-medium"
-              >
-                {kategori.tittel}
+              <span className="flex items-center gap-4 ">
+                <Heading
+                  level={3}
+                  data-size="sm"
+                  className="font-medium min-w-max"
+                >
+                  {kategori.tittel}
+                </Heading>
                 <hr className="w-full border border-kv-green-border" />
-              </Heading>
+              </span>
               <EndringsTabell
                 kolonner={kategori.kolonner}
-                rader={kategori.rader}
+                grupper={kategori.grupper}
               />
             </div>
           ))}

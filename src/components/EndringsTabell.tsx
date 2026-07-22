@@ -3,18 +3,27 @@ import type { ReactNode } from "react"
 
 export interface EndringsRad {
   key: string
-  header: ReactNode
   celler: readonly ReactNode[]
+}
+
+export interface EndringsGruppe {
+  key: string
+  header: ReactNode
+  rader: readonly EndringsRad[]
 }
 
 interface Props {
   kolonner: readonly string[]
-  rader: readonly EndringsRad[]
+  grupper: readonly EndringsGruppe[]
   radHeader?: string
 }
 
-export default function EndringsTabell({ kolonner, rader, radHeader }: Props) {
-  if (rader.length === 0) return null
+export default function EndringsTabell({
+  kolonner,
+  grupper,
+  radHeader,
+}: Props) {
+  if (grupper.length === 0) return null
 
   return (
     <Table className="w-full">
@@ -26,18 +35,28 @@ export default function EndringsTabell({ kolonner, rader, radHeader }: Props) {
           ))}
         </Table.Row>
       </Table.Head>
-      <Table.Body>
-        {rader.map(({ key, header, celler }) => (
-          <Table.Row key={key}>
-            <Table.HeaderCell scope="row">{header}</Table.HeaderCell>
-            {kolonner.map((kolonne, i) => (
-              <Table.Cell className="text-kv-default" key={kolonne}>
-                {celler[i] ?? null}
-              </Table.Cell>
-            ))}
-          </Table.Row>
-        ))}
-      </Table.Body>
+      {grupper.map((gruppe) => (
+        <Table.Body key={gruppe.key}>
+          {gruppe.rader.map((rad, i) => (
+            <Table.Row key={rad.key}>
+              {i === 0 && (
+                <Table.HeaderCell
+                  scope="row"
+                  rowSpan={gruppe.rader.length}
+                  className="align-top"
+                >
+                  {gruppe.header}
+                </Table.HeaderCell>
+              )}
+              {kolonner.map((kolonne, j) => (
+                <Table.Cell className="text-kv-default truncate" key={kolonne}>
+                  {rad.celler[j] ?? null}
+                </Table.Cell>
+              ))}
+            </Table.Row>
+          ))}
+        </Table.Body>
+      ))}
     </Table>
   )
 }
