@@ -10,11 +10,13 @@ import {
   valgfriString,
 } from "../../../core/utils/zodUtils.ts"
 import { aktorKodeSchema } from "../koder/aktorKode.schema.ts"
+import { bruksenhetsKodeSchema } from "../koder/bruksenhetsTypeKode.schema.ts"
+import { byggningsStatusKodeSchema } from "../koder/byggningsStatusKode.schema.ts"
 import { bygningsTypeKodeSchema } from "../koder/bygningsTypeKodeSchema.ts"
 import { endringsKodeSchema } from "../koder/endringsKode.schema.ts"
+import { kjokkenTilgangKodeSchema } from "../koder/kjokkenTilgangKode.ts"
 import { kontaktPersonKodeSchema } from "../koder/kontaktPersonKode.schema.ts"
 import { arealFordelingSchema } from "../shared/arealFordeling.schema.ts"
-import { bruksenhetSchema } from "./bruksenhet.schema.ts"
 
 export const byggEndringSchema = valgfriObjekt({
   // Unik ID for en bygg-endring
@@ -29,7 +31,8 @@ export const byggEndringSchema = valgfriObjekt({
 
   byggMetaEndring: valgfriObjekt({
     endringsKode: valgfriSchema(endringsKodeSchema),
-    bygningsType: bygningsTypeKodeSchema,
+    bygningsStatusKode: valgfriSchema(byggningsStatusKodeSchema),
+    bygningsTypeKode: valgfriSchema(bygningsTypeKodeSchema),
     antallBoenheter: valgfriHeltall,
     naeringsgruppe: valgfriString.meta({
       example: "Bolig",
@@ -198,7 +201,36 @@ export const byggEndringSchema = valgfriObjekt({
   }),
 
   // Bruksenheter til endringen
-  bruksenheter: valgfriListe(bruksenhetSchema),
+  bruksenheter: valgfriListe(
+    valgfriObjekt({
+      bruksenhetsNr: valgfriString.meta({
+        description: "Bruksenhetsnummer",
+        example: "H0101",
+      }),
+
+      bruksenhetsTypeKode: bruksenhetsKodeSchema,
+
+      bruksAreal: valgfriNummer.meta({
+        description:
+          "Bruksarealet til bruksenheten gitt endringen. Oppgis i kvadratmeter. ",
+      }),
+
+      antallRom: valgfriNummer,
+      antallBad: valgfriNummer,
+      antallWC: valgfriNummer,
+      kjokkenTilgangKode: kjokkenTilgangKodeSchema,
+      adresse: valgfriString.meta({
+        example: "Postboks 1234 Nydalen 123 OSLO",
+        description: "Adressen til bruksenheten gitt endringen.",
+      }),
+
+      matrikkelNr: z.string().min(1).meta({
+        title: "Matrikkelnummer",
+        example: "5001-12/34/0/2",
+        description: "KommuneNr-GårdsNr/BruksNr/Festenr/SeksjonsNr",
+      }),
+    }),
+  ),
 })
 
 export type ByggEndringsDatoer = NonNullable<
@@ -211,3 +243,6 @@ export type Aktor = NonNullable<NonNullable<BygningsEndring>["aktor"]>
 export type EtasjePlan = NonNullable<BygningsEndring>["etasjePlan"]
 
 export type BygningsEndring = z.infer<typeof byggEndringSchema>
+
+type Bruksenheter = NonNullable<NonNullable<BygningsEndring>["bruksenheter"]>
+export type Bruksenhet = NonNullable<Bruksenheter[number]>

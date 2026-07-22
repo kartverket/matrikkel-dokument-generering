@@ -1,107 +1,45 @@
-import { Card, Divider, Paragraph } from "@kv-designsystem/react"
-import type { TFunction } from "i18next"
+import { Card, Heading, Paragraph, Tag } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import ArealFordeling from "../components/ArealFordeling.tsx"
-import { BruksenhetHeader } from "../components/bruksenheter/BruksenhetHeader.tsx"
-import { Endringskort } from "../components/bruksenheter/Endringskort.tsx"
-import { Hjemmelshavere } from "../components/bruksenheter/Hjemmelshavere.tsx"
-import { RegistrerteVedtak } from "../components/bruksenheter/RegistrerteVedtak.tsx"
-import { Tiltakshavere } from "../components/bruksenheter/Tiltakshavere.tsx"
-import { Detaljgrid, lagDetaljfeltBuilder } from "../components/Detaljfelt.tsx"
 import { Section } from "../components/Section.tsx"
-import type { Bruksenhet } from "../lib/schema/reports/bygg/byg0011/bruksenhet.schema.ts"
 import type {
+  Bruksenhet,
   BygningsEndring,
-  TiltaksHaver,
 } from "../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
-import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
-import { formatArea } from "../lib/utils/formatArea.ts"
-import {
-  finnGjeldendeBygningsendring,
-  isFerdigstilt,
-} from "../lib/utils/isFerdigstilt.ts"
+import { cn } from "../lib/utils/cn.ts"
+
+type BruksenhetEndring = Bruksenhet & {
+  lopeNr: number
+}
 
 interface Props {
   index: number
-  bygning: Bygning
+  byggEndringer: BygningsEndring[]
 }
 
-const bruksenhetFelt = lagDetaljfeltBuilder("rapport.BYG0011.bruksenheter")
+function getBruksenheterEndringer(byggEndringer: BygningsEndring[]) {
+  return byggEndringer.flatMap((byggEndring) => {
+    if (!byggEndring) return []
 
-function getBruksenhetDetaljfelter(bruksenhet: Bruksenhet, t: TFunction) {
-  const kjokkentilgang =
-    bruksenhet.kjokkentilgang === null
-      ? null
-      : t(
-          `rapport.BYG0011.bruksenheter.${bruksenhet.kjokkentilgang ? "jaMedAntall" : "neiMedAntall"}`,
-        )
-
-  return [
-    bruksenhetFelt("adresse", bruksenhet.adresse),
-    bruksenhetFelt("etasje", bruksenhet.etasje),
-    bruksenhetFelt(
-      "bruksareal",
-      formatArea(bruksenhet.arealfordeling.bruksareal.totaltAreal),
-    ),
-    bruksenhetFelt("antallRom", String(bruksenhet.antallRom)),
-    bruksenhetFelt("kjokkentilgang", kjokkentilgang),
-    bruksenhetFelt("antallBad", String(bruksenhet.antallBad)),
-    bruksenhetFelt("antallWc", String(bruksenhet.antallWc)),
-  ]
+    return byggEndring.bruksenheter
+      .filter(
+        (bruksenhet): bruksenhet is NonNullable<typeof bruksenhet> =>
+          bruksenhet !== undefined,
+      )
+      .map((bruksenhet) => ({
+        ...bruksenhet,
+        lopeNr: byggEndring.lopeNr,
+      }))
+  })
 }
 
-function getTiltakshavere(
-  endringer: BygningsEndring[],
-  bruksenhet: Bruksenhet,
-): TiltaksHaver[] {
-  const unikeTiltakshavere = new Map<string, TiltaksHaver>()
-
-  for (const endring of endringer.toSorted(
-    (a, b) => (b?.lopeNr ?? 0) - (a?.lopeNr ?? 0),
-  )) {
-    const tiltakshaver = endring?.tiltaksHaver
-
-    if (!tiltakshaver || isFerdigstilt(endring)) continue
-    if (tiltakshaver.bruksenhetsNr !== bruksenhet.bruksenhetsNr) continue
-
-    const nokkel = JSON.stringify([
-      tiltakshaver.identifikasjonsNr,
-      tiltakshaver.kontaktPersonKode,
-      tiltakshaver.bruksenhetsNr,
-    ])
-
-    if (!unikeTiltakshavere.has(nokkel)) {
-      unikeTiltakshavere.set(nokkel, tiltakshaver)
-    }
-  }
-
-  return Array.from(unikeTiltakshavere.values())
-}
-
-function berorerBruksenhet(
-  endring: BygningsEndring,
-  bruksenhet: Bruksenhet,
-): boolean {
-  return Boolean(
-    bruksenhet.bruksenhetsNr &&
-      endring?.bruksenheter?.some(
-        (berortBruksenhet) =>
-          berortBruksenhet.bruksenhetsNr === bruksenhet.bruksenhetsNr,
-      ),
-  )
-}
-export default function Bruksenheter({ index, bygning }: Props) {
-  const { endringer } = bygning
+export default function Bruksenheter({ index, byggEndringer }: Props) {
   const { t } = useTranslation()
   const i18n = "rapport.BYG0011.bruksenheter"
   const tom = t("tom")
   const ingenOppgittBruksenhet = t(`${i18n}.ingenOppgittBruksenhet`)
-  const gjeldende = finnGjeldendeBygningsendring(endringer)
-  const sorterteBruksenheter = endringer.flatMap(
-    (endring) => endring?.bruksenheter ?? [],
-  )
 
-  if (sorterteBruksenheter.length === 0) return null
+  const bruksenheter: BruksenhetEndring[] =
+    getBruksenheterEndringer(byggEndringer)
 
   return (
     <Section
@@ -110,76 +48,105 @@ export default function Bruksenheter({ index, bygning }: Props) {
       description={t(`${i18n}.description`)}
     >
       <div className="flex flex-col gap-5">
-        {sorterteBruksenheter.map((bruksenhet) => {
-          const bruksenhetsEndringer = endringer.filter((endring) =>
-            berorerBruksenhet(endring, bruksenhet),
-          )
-          const gjeldendeEndringForBruksenhet = berorerBruksenhet(
-            gjeldende,
-            bruksenhet,
-          )
-            ? gjeldende
-            : undefined
-          const tiltakshavere = getTiltakshavere(endringer, bruksenhet)
-
-          return (
-            <Card
-              key={bruksenhet.id}
-              data-bruksenhet={
-                bruksenhet.bruksenhetsNr ?? ingenOppgittBruksenhet
-              }
-              className="break-inside-avoid border border-kv-border"
-            >
-              <Card.Block className="p-7">
-                <BruksenhetHeader
-                  bruksenhetNummer={bruksenhet.bruksenhetsNr ?? null}
-                  bruksenhetTypeChip={bruksenhet.type ?? null}
-                  bruksenhetSeksjon={bruksenhet.seksjon ?? null}
-                  ingenOppgittBruksenhet={ingenOppgittBruksenhet}
-                />
-
-                <Detaljgrid
-                  felter={getBruksenhetDetaljfelter(bruksenhet, t)}
-                  tom={tom}
-                  className="gap-x-8 gap-y-5"
-                />
-
-                <Divider className="my-6" />
-                <RegistrerteVedtak endring={gjeldendeEndringForBruksenhet} />
-
-                <Divider className="my-6" />
-                <Tiltakshavere tiltakshavere={tiltakshavere} />
-
-                <Divider className="my-6" />
-                <ArealFordeling arealfordeling={bruksenhet.arealfordeling} />
-
-                <Divider className="my-6" />
-                <Hjemmelshavere aktor={gjeldendeEndringForBruksenhet?.aktor} />
-
-                <Divider className="my-6" />
-
-                <div>
-                  <Paragraph className="mb-3 font-bold text-kv-subtle text-xs tracking-wide">
-                    {bruksenhetsEndringer.length > 0
-                      ? t(`${i18n}.endringerPaBruksenheten`)
-                      : t(`${i18n}.ingenEndringer`)}
-                  </Paragraph>
-                  {bruksenhetsEndringer.length > 0 && (
-                    <div className="flex flex-col gap-3">
-                      {bruksenhetsEndringer.map((bruksenhetsEndring) => (
-                        <Endringskort
-                          key={bruksenhetsEndring?.lopeNr}
-                          endring={bruksenhetsEndring}
-                          matrikkelNummer={bygning.matrikkelenhetsNr}
-                        />
-                      ))}
-                    </div>
+        {bruksenheter.map((bruksenhet) => (
+          <Card
+            key={`${bruksenhet.bruksenhetsNr ?? "ukjent"}-${bruksenhet.lopeNr}`}
+            data-bruksenhet={bruksenhet.bruksenhetsNr}
+            className="break-inside-avoid border border-kv-border"
+          >
+            <Card.Block className="p-7">
+              <div className="mb-6 flex items-start justify-between gap-4">
+                <div className="flex flex-wrap items-center gap-3">
+                  <Heading
+                    level={3}
+                    data-size="sm"
+                    className={cn(
+                      bruksenhet.bruksenhetsNr === null &&
+                        "font-normal text-kv-subtle",
+                    )}
+                  >
+                    {bruksenhet.bruksenhetsNr ?? ingenOppgittBruksenhet}
+                  </Heading>
+                  {bruksenhet.bruksenhetsTypeKode && (
+                    <Tag data-color="accent" variant="outline">
+                      {t(
+                        `koder.bruksenhetstype.${bruksenhet.bruksenhetsTypeKode}`,
+                      )}
+                    </Tag>
                   )}
                 </div>
-              </Card.Block>
-            </Card>
-          )
-        })}
+
+                <Paragraph className="text-kv-subtle text-sm">
+                  {t(`rapport.BYG0011.utvalgskriterier.felt.lopenr`, {
+                    lopenr: bruksenhet.lopeNr,
+                  })}{" "}
+                  {bruksenhet.lopeNr}
+                </Paragraph>
+              </div>
+
+              <dl className="grid grid-cols-4 gap-x-8 gap-y-5">
+                <div className="col-span-2">
+                  <dt className="text-kv-subtle text-sm">
+                    {t(`${i18n}.adresse`)}
+                  </dt>
+                  <dd className="mt-1 font-medium">
+                    {bruksenhet.adresse ?? tom}
+                  </dd>
+                </div>
+                <div className="col-span-2">
+                  <dt className="text-kv-subtle text-sm">
+                    {t(`${i18n}.matrikkelenhet`)}
+                  </dt>
+                  <dd className="mt-1 font-medium">
+                    {bruksenhet.matrikkelNr ?? tom}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-kv-subtle text-sm">
+                    {t(`${i18n}.bruksareal`)}
+                  </dt>
+                  <dd className="mt-1 font-medium tabular-nums">
+                    {bruksenhet.bruksAreal
+                      ? tom
+                      : `${bruksenhet.bruksAreal} m²`}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-kv-subtle text-sm">
+                    {t(`${i18n}.antallRom`)}
+                  </dt>
+                  <dd className="mt-1 font-medium tabular-nums">
+                    {bruksenhet.antallRom ?? tom}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-kv-subtle text-sm">
+                    {t(`${i18n}.kjokkentilgang`)}
+                  </dt>
+                  <dd className="mt-1 font-medium">
+                    {t(`koder.kjokkentilgang.${bruksenhet.kjokkenTilgangKode}`)}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-kv-subtle text-sm">
+                    {t(`${i18n}.antallBad`)}
+                  </dt>
+                  <dd className="mt-1 font-medium tabular-nums">
+                    {bruksenhet.antallBad ?? tom}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-kv-subtle text-sm">
+                    {t(`${i18n}.antallWc`)}
+                  </dt>
+                  <dd className="mt-1 font-medium tabular-nums">
+                    {bruksenhet.antallWC ?? tom}
+                  </dd>
+                </div>
+              </dl>
+            </Card.Block>
+          </Card>
+        ))}
       </div>
     </Section>
   )

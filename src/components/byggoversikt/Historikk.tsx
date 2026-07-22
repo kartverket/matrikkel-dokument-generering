@@ -1,5 +1,4 @@
 import { Heading, Paragraph, Tag } from "@kv-designsystem/react"
-import { Activity } from "react"
 import { useTranslation } from "react-i18next"
 import { oversettKode } from "../../lib/i18n/koder/oversettKode.ts"
 import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
@@ -52,9 +51,7 @@ export default function Historikk({ byggEndringer }: Props) {
 
       <ul className="space-y-8 border-kv-green border-l-3 pl-6">
         {rader.map(({ endring, dato, beskrivelse }) => {
-          const beroerteBruksenhetsnumre = endring.bruksenheter.flatMap(
-            ({ bruksenhetsNr }) => bruksenhetsNr ?? [],
-          )
+          // TODO: Denne historikken agregeres feil, og må ryddes opp i og standardiseres.
           const endringsKode = endring.byggMetaEndring?.endringsKode
           const milepael = finnSisteMilepael(endring)
 
@@ -87,17 +84,6 @@ export default function Historikk({ byggEndringer }: Props) {
                 )}
               </div>
               {beskrivelse && <Paragraph>{beskrivelse}</Paragraph>}
-              <Activity
-                mode={
-                  beroerteBruksenhetsnumre.length > 0 ? "visible" : "hidden"
-                }
-              >
-                <Paragraph data-size="sm" className="text-kv-subtle">
-                  {t(`${h}.beroerer`, {
-                    bruksenheter: beroerteBruksenhetsnumre.join(" "),
-                  })}
-                </Paragraph>
-              </Activity>
             </li>
           )
         })}

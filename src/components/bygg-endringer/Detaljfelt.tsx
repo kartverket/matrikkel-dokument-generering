@@ -1,7 +1,7 @@
 import type { ParseKeys } from "i18next"
 import { useTranslation } from "react-i18next"
-import { cn } from "../lib/utils/cn"
-import { getValueOrEmpty } from "../lib/utils/getValueOrEmpty.ts"
+import { cn } from "../../lib/utils/cn.ts"
+import { getValueOrEmpty } from "../../lib/utils/getValueOrEmpty.ts"
 
 interface Props {
   label: string
