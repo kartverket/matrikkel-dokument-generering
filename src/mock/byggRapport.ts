@@ -4,7 +4,6 @@ import type {
   BygningsEndring,
 } from "../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 import type { Byg0011Rapport as ByggRapport } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
-import type { BygningsStatusKode } from "../lib/schema/reports/bygg/koder/byggningsStatusKode.schema.ts"
 import type { EndringsKode } from "../lib/schema/reports/bygg/koder/endringsKode.schema.ts"
 
 function isoDatetime(date: string) {
