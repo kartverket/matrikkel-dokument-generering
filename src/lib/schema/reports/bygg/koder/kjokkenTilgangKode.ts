@@ -5,7 +5,7 @@ const kjokkenTilgangKoder = [
   "1", // Har eget kjøkken
   "2", // Har ikke adgang til kjøkken
   "3", // Har adgang til felles kjøkken
-  "9", // Ukjent
+  "4", // Ukjent
 ] as const
 
 // ref: KjokkentilgangKodeId.java
@@ -20,7 +20,7 @@ Koder:
 1: Har eget kjøkken
 2: Har ikke adgang til kjøkken
 3: Har adgang til felles kjøkken
-9: Ukjent
+4: Ukjent
 \`\`\``,
 })
 

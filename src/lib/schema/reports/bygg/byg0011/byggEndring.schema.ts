@@ -239,3 +239,6 @@ export type Aktoer = NonNullable<NonNullable<BygningsEndring>["aktoer"]>
 export type EtasjePlan = NonNullable<BygningsEndring>["etasjePlan"]
 
 export type BygningsEndring = z.infer<typeof byggEndringSchema>
+
+type Bruksenheter = NonNullable<NonNullable<BygningsEndring>["bruksenheter"]>
+export type Bruksenhet = NonNullable<Bruksenheter[number]>
