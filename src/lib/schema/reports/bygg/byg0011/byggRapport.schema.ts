@@ -12,10 +12,10 @@ const bygningSchema = z.object({
     example: "12 345 678",
   }),
 
-  matrikkelenhetsNr: z.string().min(1).meta({
-    title: "Matrikkelenhetsnummer",
-    example: "12/345/0/67",
-    description: "KommuneNr / GårdsNr / BruksNr / Festenr",
+  matrikkelNr: z.string().min(1).meta({
+    title: "Matrikkelnummer",
+    example: "5001-12/34/0/2",
+    description: "KommuneNr-GårdsNr/BruksNr/Festenr/SeksjonsNr",
   }),
 
   endringer: valgfriListe(byggEndringSchema),
