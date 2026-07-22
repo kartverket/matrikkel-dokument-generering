@@ -14,6 +14,14 @@ export const koderNn = {
     "11": "Utanlandsk",
     "12": "Annan eigartype",
   },
+  bruksenhetstype: {
+    "0": "Bustad",
+    "1": "Ikkje godkjend bustad",
+    "2": "Fritidsbustad",
+    "3": "Anna enn bustad",
+    "4": "Unummerert brukseining",
+    "5": "Ukjend",
+  },
   bygningsstatus: {
     RA: "Rammeløyve",
     IG: "Igangsetjingsløyve",
@@ -115,6 +123,13 @@ export const koderNn = {
   kontaktperson: {
     "1": "Tiltakshavar",
     "2": "Kontaktperson",
+  },
+  kjokkentilgang: {
+    " ": "Ikkje oppgitt",
+    "1": "Har eige kjøken",
+    "2": "Har ikkje tilgang til kjøken",
+    "3": "Har tilgang til felles kjøken",
+    "4": "Ukjend",
   },
   koordinat: {
     "1": "NGO1948 Gauss-K. akse 1",

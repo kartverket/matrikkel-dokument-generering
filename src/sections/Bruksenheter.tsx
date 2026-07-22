@@ -55,18 +55,6 @@ export default function Bruksenheter({ index, byggEndringer }: Props) {
             className="break-inside-avoid border border-kv-border"
           >
             <Card.Block className="p-7">
-              {/* <BruksenhetHeader
-                bruksenhetNummer={bruksenhet.bruksenhetsNr ?? null}
-                bruksenhetTypeChip={bruksenhet.bruksenhetsTypeKode}
-                bruksenhetSeksjon={t(
-                  `rapport.BYG0011.utvalgskriterier.felt.lopenr`,
-                  {
-                    lopenr: bruksenhet.lopeNr,
-                  },
-                )}
-                ingenOppgittBruksenhet={ingenOppgittBruksenhet}
-              /> */}
-
               <div className="mb-6 flex items-start justify-between gap-4">
                 <div className="flex flex-wrap items-center gap-3">
                   <Heading
@@ -81,7 +69,9 @@ export default function Bruksenheter({ index, byggEndringer }: Props) {
                   </Heading>
                   {bruksenhet.bruksenhetsTypeKode && (
                     <Tag data-color="accent" variant="outline">
-                      {bruksenhet.bruksenhetsTypeKode}
+                      {t(
+                        `koder.bruksenhetstype.${bruksenhet.bruksenhetsTypeKode}`,
+                      )}
                     </Tag>
                   )}
                 </div>
@@ -134,7 +124,7 @@ export default function Bruksenheter({ index, byggEndringer }: Props) {
                     {t(`${i18n}.kjokkentilgang`)}
                   </dt>
                   <dd className="mt-1 font-medium">
-                    {bruksenhet.kjokkenTilgangKode.trim() || tom}
+                    {t(`koder.kjokkentilgang.${bruksenhet.kjokkenTilgangKode}`)}
                   </dd>
                 </div>
                 <div>
