@@ -4,6 +4,7 @@ import type {
   BygningsEndring,
 } from "../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 import type { Byg0011Rapport as ByggRapport } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
+import type { BygningsStatusKode } from "../lib/schema/reports/bygg/koder/byggningsStatusKode.schema.ts"
 import type { EndringsKode } from "../lib/schema/reports/bygg/koder/endringsKode.schema.ts"
 
 function isoDatetime(date: string) {
@@ -67,6 +68,7 @@ const h0104 = bruksenhet({
 function byggEndring({
   lopeNr,
   endringsKode,
+  bygningsStatusKode,
   boligAreal,
   annetAreal,
   datoer,
@@ -74,6 +76,7 @@ function byggEndring({
 }: {
   lopeNr: number
   endringsKode?: EndringsKode
+  bygningsStatusKode: BygningsStatusKode
   boligAreal: number
   annetAreal: number
   datoer: ByggEndringsDatoer
@@ -83,7 +86,7 @@ function byggEndring({
     lopeNr,
     byggMetaEndring: {
       endringsKode,
-      bygningsStatusKode: "TB",
+      bygningsStatusKode,
       bygningsTypeKode: "111",
       antallBoenheter: 1,
       naeringsgruppe: "Bolig",
@@ -136,6 +139,7 @@ function byggEndring({
 
 const gjeldendeEndring = byggEndring({
   lopeNr: 5,
+  bygningsStatusKode: "TB",
   boligAreal: 140,
   annetAreal: 35,
   datoer: {
@@ -151,6 +155,7 @@ const historiskeEndringer: BygningsEndring[] = [
   byggEndring({
     lopeNr: 4,
     endringsKode: "1",
+    bygningsStatusKode: "FA",
     boligAreal: 121,
     annetAreal: 74,
     datoer: {
@@ -163,6 +168,7 @@ const historiskeEndringer: BygningsEndring[] = [
   byggEndring({
     lopeNr: 3,
     endringsKode: "2",
+    bygningsStatusKode: "IG",
     boligAreal: 121,
     annetAreal: 60,
     datoer: {
@@ -174,6 +180,7 @@ const historiskeEndringer: BygningsEndring[] = [
   byggEndring({
     lopeNr: 2,
     endringsKode: "3",
+    bygningsStatusKode: "RA",
     boligAreal: 102,
     annetAreal: 60,
     datoer: { rammetillatelse: isoDatetime("2016-09-12") },
@@ -182,6 +189,7 @@ const historiskeEndringer: BygningsEndring[] = [
   byggEndring({
     lopeNr: 1,
     endringsKode: "4",
+    bygningsStatusKode: "MB",
     boligAreal: 102,
     annetAreal: 0,
     datoer: {
@@ -191,6 +199,7 @@ const historiskeEndringer: BygningsEndring[] = [
   }),
   byggEndring({
     lopeNr: 0,
+    bygningsStatusKode: "TB",
     boligAreal: 102,
     annetAreal: 0,
     datoer: { tattIBruk: isoDatetime("1998-06-18") },

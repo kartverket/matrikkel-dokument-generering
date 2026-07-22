@@ -297,9 +297,11 @@ export const nb = {
         },
         historikk: {
           title: "Sammendrag av bygningshistorikk",
-          detaljer: "Se flere detaljer under Bruksenheter",
-          beroerer: "Berører bruksenhet {{bruksenheter}}",
+          beroererBruksenheter: "Berører bruksenhet {{bruksenheter}}",
+          beroererEtasje: "Berører etasje {{etasjer}}",
+          beroererEtasjer: "Berører etasjene {{etasjer}}",
           foersteVedtak: "Første registrerte vedtak.",
+          statusRegistrert: "{{status}} er registrert.",
           areal: {
             lagtTil: "{{areal}} m² bruksareal ({{type}}) lagt til.",
             fjernet: "{{areal}} m² bruksareal ({{type}}) fjernet.",

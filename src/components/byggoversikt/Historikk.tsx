@@ -3,105 +3,123 @@ import { useTranslation } from "react-i18next"
 import { oversettKode } from "../../lib/i18n/koder/oversettKode.ts"
 import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 import { formatDate } from "../../lib/utils/formatDate"
-import {
-  finnSisteMilepael,
-  lagHistorikkbeskrivelseForBygningsendring,
-  type Milepael,
-  sorterBygningsendringerKronologisk,
-} from "./byggHistorikk"
+import { byggHistorikk } from "./byggHistorikk"
 
 interface Props {
   byggEndringer: BygningsEndring[]
 }
-
-const groenneMilepaeler = new Set<Milepael>(["ferdigattest", "tattIBruk"])
 
 export default function Historikk({ byggEndringer }: Props) {
   const { i18n, t } = useTranslation()
   const tom = t("tom")
   const h = "rapport.BYG0011.byggoversikt.historikk"
 
-  const endringer = byggEndringer.filter((endring) => endring !== undefined)
-  if (endringer.length === 0) return null
-
-  const kronologiskeEndringer = sorterBygningsendringerKronologisk(endringer)
-
-  const rader = kronologiskeEndringer
-    .map((rad, i) => ({
-      ...rad,
-      beskrivelse: lagHistorikkbeskrivelseForBygningsendring(
-        t,
-        h,
-        rad.endring,
-        kronologiskeEndringer[i - 1]?.endring,
-      ),
-    }))
-    .toReversed()
+  const rader = byggHistorikk(byggEndringer)
+  if (rader.length === 0) return null
 
   return (
     <div className="space-y-4">
-      <div className="flex items-baseline justify-between gap-4">
-        <Heading level={4} data-size="xs">
-          {t(`${h}.title`)}
-        </Heading>
-        <Paragraph data-size="sm" className="text-kv-subtle">
-          {t(`${h}.detaljer`)}
-        </Paragraph>
-      </div>
+      <Heading level={4} data-size="xs">
+        {t(`${h}.title`)}
+      </Heading>
 
       <ul className="space-y-8 border-kv-green border-l-3 pl-6">
-        {rader.map(({ endring, dato, beskrivelse }) => {
-          // TODO: Denne historikken agregeres feil, og må ryddes opp i og standardiseres.
+        {rader.map(
+          ({
+            lopeNr,
+            byggEndringsKode,
+            byggStatusKode,
+            dato,
+            arealEndringer,
+            beroerteEtasjer,
+            beroerteBruksenheter,
+            erFoersteVedtak,
+          }) => {
+            const beskrivelse = erFoersteVedtak
+              ? t(`${h}.foersteVedtak`)
+              : arealEndringer.length > 0
+                ? arealEndringer
+                    .map(({ areal, handling, type }) =>
+                      t(`${h}.areal.${handling}`, {
+                        areal,
+                        type: t(`${h}.typer.${type}`),
+                      }),
+                    )
+                    .join(" ")
+                : byggStatusKode
+                  ? t(`${h}.statusRegistrert`, {
+                      status: oversettKode({
+                        t,
+                        kodeverk: "bygningsstatus",
+                        kode: byggStatusKode,
+                      }),
+                    })
+                  : null
 
-          /*          const beroerteBruksenhetsnumre = endring.bruksenheter.flatMap(
-            ({ bruksenhetsNr }) => bruksenhetsNr ?? [],
-          )*/
-          const endringsKode = endring.byggMetaEndring?.endringsKode
-          const milepael = finnSisteMilepael(endring)
+            const beroerer =
+              beroerteEtasjer.length > 0
+                ? t(
+                    `${h}.${
+                      beroerteEtasjer.length === 1
+                        ? "beroererEtasje"
+                        : "beroererEtasjer"
+                    }`,
+                    {
+                      etasjer: beroerteEtasjer
+                        .map(({ etasje }) => etasje)
+                        .join(", "),
+                    },
+                  )
+                : beroerteBruksenheter.length > 0
+                  ? t(`${h}.beroererBruksenheter`, {
+                      bruksenheter: beroerteBruksenheter.join(", "),
+                    })
+                  : null
 
-          return (
-            <li key={endring.lopeNr} className="space-y-1">
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <div className="flex items-center gap-3">
-                  <span className="font-semibold">
-                    {formatDate(i18n, dato, tom, { dateStyle: "short" })}
-                  </span>
-                  {endringsKode !== undefined && (
-                    <Tag data-color="success" variant="outline">
+            return (
+              <li key={lopeNr} className="space-y-1">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <span className="font-semibold">
+                      {formatDate(i18n, dato, tom, { dateStyle: "short" })}
+                    </span>
+                    {byggEndringsKode !== undefined && (
+                      <Tag data-color="success" variant="outline">
+                        {oversettKode({
+                          t,
+                          kodeverk: "endring",
+                          kode: byggEndringsKode,
+                        })}
+                      </Tag>
+                    )}
+                  </div>
+                  {byggStatusKode && (
+                    <Tag
+                      data-color={
+                        byggStatusKode === "FA" || byggStatusKode === "TB"
+                          ? "success"
+                          : "accent"
+                      }
+                      variant="outline"
+                    >
                       {oversettKode({
                         t,
-                        kodeverk: "endring",
-                        kode: endringsKode,
+                        kodeverk: "bygningsstatus",
+                        kode: byggStatusKode,
                       })}
                     </Tag>
                   )}
                 </div>
-                {milepael && (
-                  <Tag
-                    data-color={
-                      groenneMilepaeler.has(milepael) ? "success" : "accent"
-                    }
-                    variant="outline"
-                  >
-                    {t(`rapport.BYG0011.registrerteVedtak.${milepael}`)}
-                  </Tag>
+                {beskrivelse && <Paragraph>{beskrivelse}</Paragraph>}
+                {beroerer && (
+                  <Paragraph data-size="sm" className="text-kv-subtle">
+                    {beroerer}
+                  </Paragraph>
                 )}
-              </div>
-              {beskrivelse && <Paragraph>{beskrivelse}</Paragraph>}
-              {/*          <Activity
-                mode={
-                  beroerteBruksenhetsnumre.length > 0 ? "visible" : "hidden"
-                }
-              >
-                <Paragraph data-size="sm" className="text-kv-subtle">
-                  {t(`${h}.beroerer`, {
-                    bruksenheter: beroerteBruksenhetsnumre.join(" "),
-                  })}
-                </Paragraph>
-              </Activity>*/}
-            </li>
-          )
-        })}
+              </li>
+            )
+          },
+        )}
       </ul>
     </div>
   )

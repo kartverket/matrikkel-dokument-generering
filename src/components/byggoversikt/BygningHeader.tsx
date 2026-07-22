@@ -15,7 +15,7 @@ export default function BygningHeader({ bygning, gjeldendeEndring }: Props) {
   const key = "rapport.BYG0011.byggoversikt.header"
   const bygningstype = formaterBygningstype(
     t,
-    gjeldendeEndring?.byggMetaEndring?.bygningsType,
+    gjeldendeEndring?.byggMetaEndring?.bygningsTypeKode,
   )
 
   return (
