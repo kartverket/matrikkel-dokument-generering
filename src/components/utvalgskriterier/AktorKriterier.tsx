@@ -3,10 +3,10 @@ import { useTranslation } from "react-i18next"
 import type { ByggUtvalgskriterier as Utvalgskriterier } from "../../lib/schema/reports/bygg/shared/byggUtvalgskriterier.schema.ts"
 
 interface Props {
-  aktoerKriterier: NonNullable<Utvalgskriterier>["aktoer"]
+  aktorKriterier: NonNullable<Utvalgskriterier>["aktor"]
 }
 
-export function AktoerKriterier({ aktoerKriterier }: Props) {
+export function AktorKriterier({ aktorKriterier }: Props) {
   const { t } = useTranslation()
   const uk = "rapport.BYG0011.utvalgskriterier"
   const ikkeAngitt = t(`${uk}.ikkeAngitt`)
@@ -23,19 +23,19 @@ export function AktoerKriterier({ aktoerKriterier }: Props) {
               {t(`${uk}.felt.foedselsEllerOrgnr`)}
             </dt>
             <dd className="mt-1 font-medium">
-              {aktoerKriterier?.identifikasjonsNr ?? ikkeAngitt}
+              {aktorKriterier?.identifikasjonsNr ?? ikkeAngitt}
             </dd>
           </div>
           <div>
             <dt className="text-kv-subtle">{t(`${uk}.felt.etternavn`)}</dt>
             <dd className="mt-1 font-medium">
-              {aktoerKriterier?.etternavn ?? ikkeAngitt}
+              {aktorKriterier?.etternavn ?? ikkeAngitt}
             </dd>
           </div>
           <div>
             <dt className="text-kv-subtle">{t(`${uk}.felt.fornavn`)}</dt>
             <dd className="mt-1 font-medium">
-              {aktoerKriterier?.fornavn ?? ikkeAngitt}
+              {aktorKriterier?.fornavn ?? ikkeAngitt}
             </dd>
           </div>
         </dl>

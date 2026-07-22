@@ -154,9 +154,7 @@ export default function Bruksenheter({ index, bygning }: Props) {
                 <ArealFordeling arealfordeling={bruksenhet.arealfordeling} />
 
                 <Divider className="my-6" />
-                <Hjemmelshavere
-                  aktoer={gjeldendeEndringForBruksenhet?.aktoer}
-                />
+                <Hjemmelshavere aktor={gjeldendeEndringForBruksenhet?.aktor} />
 
                 <Divider className="my-6" />
 
