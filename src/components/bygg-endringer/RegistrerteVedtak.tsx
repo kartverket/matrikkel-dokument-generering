@@ -6,7 +6,7 @@ import type {
   BygningsEndring,
 } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 import { formatDate } from "../../lib/utils/formatDate"
-import { Detaljgrid, lagDetaljfeltBuilder } from "../Detaljfelt"
+import { Detaljgrid, lagDetaljfeltBuilder } from "./Detaljfelt.tsx"
 
 interface Props {
   endring: BygningsEndring | undefined
