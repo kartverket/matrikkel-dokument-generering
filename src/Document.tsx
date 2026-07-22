@@ -6,11 +6,11 @@ import { buildPageCss } from "./lib/pdf/buildPageCss"
 import { buildByggPagePlan } from "./lib/pdf/plans/bygg0011"
 import type { Byg0011Rapport } from "./lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 import { formatDate } from "./lib/utils/formatDate"
+import Bruksenheter from "./sections/Bruksenheter.tsx"
 import ByggEndringer from "./sections/ByggEndringer.tsx"
 import Byggoversikt from "./sections/Byggoversikt.tsx"
 import { ByggUtvalgskriterier } from "./sections/ByggUtvalgskriterier.tsx"
 import { Metadata } from "./sections/Metadata.tsx"
-import Bruksenheter from "./sections/Bruksenheter.tsx"
 
 export function DocumentComponent({ rapport }: { rapport: Byg0011Rapport }) {
   return (
