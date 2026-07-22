@@ -5,8 +5,8 @@ import BygningHeader from "../components/byggoversikt/BygningHeader"
 import Historikk from "../components/byggoversikt/Historikk"
 import Nokkeltall from "../components/byggoversikt/Nokkeltall"
 import Oversiktsfelt from "../components/byggoversikt/Oversiktsfelt"
-import { Section } from "../components/Section"
 import { finnGjeldendeBygningsendring } from "../components/byggoversikt/utils/gjeldendeBygg.ts"
+import { Section } from "../components/Section"
 import type { BygningsEndring } from "../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 
 interface Props {
