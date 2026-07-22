@@ -165,7 +165,7 @@ const senestFerdigstilteEndring = byggEndring({
     igangsettingstillatelse: isoDatetime("2021-05-03"),
     tattIBruk: isoDatetime("2022-09-01"),
   },
-  bruksenheter: [h0101, h0102, h0103, h0104, h0105, h0104, h0201],
+  bruksenheter: [h0101, h0102, h0103, h0104, h0105, h0106, h0201],
 })
 
 const andreEndringer: BygningsEndring[] = [

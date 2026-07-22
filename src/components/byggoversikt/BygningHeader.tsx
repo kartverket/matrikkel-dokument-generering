@@ -19,8 +19,8 @@ export default function BygningHeader({ gjeldendeStatusKode, byggNr }: Props) {
           })}
         </p>
       </div>
-      <div className="flex flex-row gap-2 items-center">
-        <h3 className="text-2xl font-medium">
+      <div className="flex flex-row items-center gap-2">
+        <h3 className="font-medium text-2xl">
           {/* Formatterings Regex på formen XX XXX XXX */}
           {byggNr
             .replace(/\s/g, "")
