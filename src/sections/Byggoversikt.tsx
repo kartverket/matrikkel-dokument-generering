@@ -23,7 +23,7 @@ export default function Byggoversikt({ byggEndringer, index, byggNr }: Props) {
 
   return (
     <Section index={index} title={t("rapport.BYG0011.byggoversikt.title")}>
-      <div className="mt-8 space-y-8 rounded-xl border border-kv-blue-subtle p-8">
+      <div className="mt-8 space-y-8 rounded-xl border border-kv-blue-subtle">
         <BygningHeader
           byggNr={byggNr}
           gjeldendeTypeKode={
@@ -35,17 +35,19 @@ export default function Byggoversikt({ byggEndringer, index, byggNr }: Props) {
         />
         <Divider />
 
-        {gjeldendeTilstand && (
-          <>
-            <Nokkeltall gjeldendeEndring={gjeldendeTilstand} />
-            <Oversiktsfelt
-              byggNr={byggNr}
-              gjeldendeEndring={gjeldendeTilstand}
-            />
-            <ArealFordeling etasjePlan={gjeldendeTilstand.etasjePlan} />
-          </>
-        )}
-        <Historikk byggEndringer={byggEndringer} />
+        <div className="flex flex-col gap-8 p-8">
+          {gjeldendeTilstand && (
+            <>
+              <Nokkeltall gjeldendeEndring={gjeldendeTilstand} />
+              <Oversiktsfelt
+                byggNr={byggNr}
+                gjeldendeEndring={gjeldendeTilstand}
+              />
+              <ArealFordeling etasjePlan={gjeldendeTilstand.etasjePlan} />
+            </>
+          )}
+          <Historikk byggEndringer={byggEndringer} />
+        </div>
       </div>
     </Section>
   )

@@ -278,7 +278,7 @@ export const nb = {
         koordinatsystem: "Koordinatsystem",
         bygningsnr: "Bygningsnummer",
         header: {
-          bygningsNr: "Bygningsnr. {{bygningsnr}}",
+          bygningsNr: "Bygningsnr.",
           ferdigattest: "Ferdigattest: {{dato}}",
         },
         nokkeltall: {

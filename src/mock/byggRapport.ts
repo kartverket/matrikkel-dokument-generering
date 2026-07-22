@@ -227,7 +227,7 @@ const mockByggRapport: ByggRapport = {
       inkluderFrededeBygninger: true,
     },
     bygning: {
-      bygningsNr: "12345678",
+      bygningsNr: "18 520 621",
       bygningstyper: ["111"],
     },
     adresse: {
@@ -264,7 +264,7 @@ const mockByggRapport: ByggRapport = {
   },
   bygninger: [
     {
-      bygningsnr: "12345678",
+      bygningsnr: "18 520 621",
       matrikkelNr: "3201/208/12/0",
       endringer: [senestFerdigstilteEndring, ...andreEndringer],
     },
