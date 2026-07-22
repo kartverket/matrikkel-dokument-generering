@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test"
-import mockByggRapport from "../../../../src/mock/byggRapport"
 import { byggHistorikk } from "../../../../src/components/byggoversikt/utils/byggHistorikk"
 import type { BygningsEndring } from "../../../../src/lib/schema/reports/bygg/byg0011/byggEndring.schema"
+import mockByggRapport from "../../../../src/mock/byggRapport"
 
 describe("byggHistorikk", () => {
   test("lager et kompakt sammendrag av alle viktige endringer", () => {
