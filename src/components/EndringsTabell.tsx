@@ -6,10 +6,17 @@ export interface EndringsRad {
   celler: readonly ReactNode[]
 }
 
+export interface SumRad {
+  key: string
+  header: ReactNode
+  celler: readonly ReactNode[]
+}
+
 export interface EndringsGruppe {
   key: string
   header: ReactNode
   rader: readonly EndringsRad[]
+  sumRad?: SumRad
 }
 
 interface Props {
@@ -36,25 +43,42 @@ export default function EndringsTabell({
         </Table.Row>
       </Table.Head>
       {grupper.map((gruppe) => (
-        <Table.Body key={gruppe.key}>
-          {gruppe.rader.map((rad, i) => (
-            <Table.Row key={rad.key}>
-              {i === 0 && (
-                <Table.HeaderCell
-                  scope="row"
-                  rowSpan={gruppe.rader.length}
-                  className="align-top"
-                >
-                  {gruppe.header}
-                </Table.HeaderCell>
-              )}
+        <Table.Body key={gruppe.key} className="even:bg-kv-green-subtle">
+          {gruppe.rader.map((rad, i) => {
+            return (
+              <Table.Row key={rad.key}>
+                {i === 0 && (
+                  <Table.HeaderCell
+                    scope="row"
+                    rowSpan={gruppe.rader.length}
+                    className="align-top"
+                  >
+                    {gruppe.header}
+                  </Table.HeaderCell>
+                )}
+                {kolonner.map((kolonne, j) => (
+                  <Table.Cell
+                    className="truncate text-kv-default"
+                    key={kolonne}
+                  >
+                    {rad.celler[j] ?? null}
+                  </Table.Cell>
+                ))}
+              </Table.Row>
+            )
+          })}
+          {gruppe.sumRad && (
+            <Table.Row key={gruppe.sumRad.key}>
+              <Table.HeaderCell scope="row">
+                {gruppe.sumRad.header}
+              </Table.HeaderCell>
               {kolonner.map((kolonne, j) => (
                 <Table.Cell className="truncate text-kv-default" key={kolonne}>
-                  {rad.celler[j] ?? null}
+                  {gruppe.sumRad?.celler[j] ?? null}
                 </Table.Cell>
               ))}
             </Table.Row>
-          ))}
+          )}
         </Table.Body>
       ))}
     </Table>

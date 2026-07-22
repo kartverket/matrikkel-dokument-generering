@@ -32,41 +32,27 @@ interface Kategori {
 }
 
 /**
- * En kategori som viser én rad per endring. Nøkkelen matcher et
- * feltnavn i byggEndringSchema (f.eks. "byggMetaEndring"), og
- * `felter` peker på underfelt i samme gruppe. `ekstraFelter` peker
- * på felt på rot-nivå i byggEndringer-namespacet (f.eks. "sefrakId").
+ * En kategori som viser én rad per endring. `felter` er i18n-stier
+ * relativt til `BE` og bestemmer kolonneoverskrifter og -rekkefølge.
+ * `celler` må returnere verdier i samme rekkefølge som `felter`.
  */
 interface Gruppe {
   felter: readonly string[]
-  ekstraFelter?: readonly string[]
   celler: (e: Endring, t: TFunction, i18n: I18n) => ReactNode[]
 }
 
-const harData = (celler: readonly ReactNode[]) =>
-  celler.some((v) => v !== null && v !== undefined && v !== "")
-
-const endringLabel = (t: TFunction, lopeNr: number) =>
-  `${t(`${BE}.lopeNr`)} ${lopeNr}`
-
-const jaNei = (t: TFunction, v: boolean | undefined) =>
-  v === undefined ? null : t(`${BE}.${v ? "ja" : "nei"}` as const)
-
-const formatNum = (i18n: I18n, n: number | undefined) =>
-  n === undefined ? null : new Intl.NumberFormat(i18n.language).format(n)
-
-const formatKortDato = (i18n: I18n, d: string | undefined) =>
-  d === undefined ? null : formatDate(i18n, d, "", { dateStyle: "short" })
+const kortDato = { dateStyle: "short" } as const
 
 const grupper = {
   byggMetaEndring: {
     felter: [
-      "endringsKode",
-      "bygningsType",
-      "naeringsgruppe",
-      "antallBoenheter",
+      "byggMetaEndring.endringsKode",
+      "byggMetaEndring.bygningsType",
+      "byggMetaEndring.naeringsgruppe",
+      "byggMetaEndring.antallBoenheter",
+      "sefrakId",
+      "harKulturminne",
     ],
-    ekstraFelter: ["sefrakId", "harKulturminne"],
     celler: (e, t) => {
       const m = e.byggMetaEndring
       return [
@@ -77,40 +63,51 @@ const grupper = {
         m?.naeringsgruppe ?? null,
         m?.antallBoenheter === undefined ? null : String(m.antallBoenheter),
         e.sefrakId ?? null,
-        jaNei(t, e.harKulturminne),
+        e.harKulturminne === undefined
+          ? null
+          : t(`${BE}.${e.harKulturminne ? "ja" : "nei"}` as const),
       ]
     },
   },
   byggKoordinatEndring: {
-    felter: ["nord", "ost"],
-    celler: (e, _t, i18n) => [
-      formatNum(i18n, e.byggKoordinatEndring?.nord),
-      formatNum(i18n, e.byggKoordinatEndring?.ost),
-    ],
+    felter: ["byggKoordinatEndring.nord", "byggKoordinatEndring.ost"],
+    celler: (e, _t, i18n) => {
+      const fmt = new Intl.NumberFormat(i18n.language)
+      const k = e.byggKoordinatEndring
+      return [
+        k?.nord === undefined ? null : fmt.format(k.nord),
+        k?.ost === undefined ? null : fmt.format(k.ost),
+      ]
+    },
   },
   byggDatoEndring: {
     felter: [
-      "rammetillatelse",
-      "igangsettingstillatelse",
-      "midlertidigBrukstillatelse",
-      "ferdigattest",
-      "tattIBruk",
-      "utgaattRevet",
+      "byggDatoEndring.rammetillatelse",
+      "byggDatoEndring.igangsettingstillatelse",
+      "byggDatoEndring.midlertidigBrukstillatelse",
+      "byggDatoEndring.ferdigattest",
+      "byggDatoEndring.tattIBruk",
+      "byggDatoEndring.utgaattRevet",
     ],
     celler: (e, _t, i18n) => {
       const d = e.byggDatoEndring
       return [
-        formatKortDato(i18n, d?.rammetillatelse),
-        formatKortDato(i18n, d?.igangsettingstillatelse),
-        formatKortDato(i18n, d?.midlertidigBrukstillatelse),
-        formatKortDato(i18n, d?.ferdigattest),
-        formatKortDato(i18n, d?.tattIBruk),
-        formatKortDato(i18n, d?.utgaattRevet),
+        formatDate(i18n, d?.rammetillatelse, "", kortDato),
+        formatDate(i18n, d?.igangsettingstillatelse, "", kortDato),
+        formatDate(i18n, d?.midlertidigBrukstillatelse, "", kortDato),
+        formatDate(i18n, d?.ferdigattest, "", kortDato),
+        formatDate(i18n, d?.tattIBruk, "", kortDato),
+        formatDate(i18n, d?.utgaattRevet, "", kortDato),
       ]
     },
   },
   aktor: {
-    felter: ["navn", "identifikasjonsNr", "andel", "adresse"],
+    felter: [
+      "aktor.navn",
+      "aktor.identifikasjonsNr",
+      "aktor.andel",
+      "aktor.adresse",
+    ],
     celler: (e) => {
       const a = e.aktor
       return [
@@ -122,7 +119,12 @@ const grupper = {
     },
   },
   tiltaksHaver: {
-    felter: ["kontaktPersonKode", "navn", "identifikasjonsNr", "adresse"],
+    felter: [
+      "tiltaksHaver.kontaktPersonKode",
+      "tiltaksHaver.navn",
+      "tiltaksHaver.identifikasjonsNr",
+      "tiltaksHaver.adresse",
+    ],
     celler: (e, t) => {
       const th = e.tiltaksHaver
       return [
@@ -149,21 +151,19 @@ function lagKategori(
 ): Kategori {
   const g: Gruppe = grupper[key]
   const tr = t as (path: string) => string
-  const kolonner = [
-    ...g.felter.map((f) => tr(`${BE}.${key}.${f}`)),
-    ...(g.ekstraFelter ?? []).map((f) => tr(`${BE}.${f}`)),
-  ]
+  const kolonner = g.felter.map((f) => tr(`${BE}.${f}`))
   const endringsGrupper = endringer.flatMap<EndringsGruppe>((e) => {
     const celler = g.celler(e, t, i18n)
-    return harData(celler)
-      ? [
-          {
-            key: String(e.lopeNr),
-            header: endringLabel(t, e.lopeNr),
-            rader: [{ key: String(e.lopeNr), celler }],
-          },
-        ]
-      : []
+    if (!celler.some((v) => v !== null && v !== undefined && v !== "")) {
+      return []
+    }
+    return [
+      {
+        key: String(e.lopeNr),
+        header: `${tr(`${BE}.lopeNr`)} ${e.lopeNr}`,
+        rader: [{ key: String(e.lopeNr), celler }],
+      },
+    ]
   })
   return {
     key,
@@ -195,17 +195,15 @@ function lagArealer(endringer: Endring[], t: TFunction): Kategori {
   ]
 
   const sumTall = (values: (number | undefined)[]): number | undefined => {
-    const definerte = values.filter((v): v is number => v !== undefined)
+    const definerte = values.filter((v) => v !== undefined)
     return definerte.length === 0
       ? undefined
       : definerte.reduce((x, y) => x + y, 0)
   }
 
   const endringsGrupper = endringer.flatMap<EndringsGruppe>((e) => {
-    const eLabel = endringLabel(t, e.lopeNr)
-    const etasjer = e.etasjePlan.filter(
-      (et): et is NonNullable<typeof et> => et !== undefined,
-    )
+    const eLabel = `${tr(`${BE}.lopeNr`)} ${e.lopeNr}`
+    const etasjer = e.etasjePlan.filter((et) => et !== undefined)
     const bya = e.byggArealEndring?.bebygdAreal
 
     if (etasjer.length === 0 && bya === undefined) return []
@@ -226,26 +224,39 @@ function lagArealer(endringer: Endring[], t: TFunction): Kategori {
     }))
 
     const boenSum = sumTall(etasjer.map((et) => et.antallBoenheter))
-    const sumRad: EndringsRad = {
-      key: `${e.lopeNr}-sum`,
-      celler: [
-        tr(`${a}.sum`),
-        boenSum === undefined ? null : String(boenSum),
-        formatArea(sumTall(etasjer.map((et) => et.bruksareal.boligAreal))),
-        formatArea(sumTall(etasjer.map((et) => et.bruksareal.annetAreal))),
-        formatArea(sumTall(etasjer.map((et) => et.bruksareal.totaltAreal))),
-        formatArea(sumTall(etasjer.map((et) => et.bruttoareal.boligAreal))),
-        formatArea(sumTall(etasjer.map((et) => et.bruttoareal.annetAreal))),
-        formatArea(sumTall(etasjer.map((et) => et.bruttoareal.totaltAreal))),
-        formatArea(bya),
-      ],
+    const sumCeller: ReactNode[] = [
+      etasjer.length === 0 ? null : String(etasjer.length),
+      boenSum === undefined ? null : String(boenSum),
+      formatArea(sumTall(etasjer.map((et) => et.bruksareal.boligAreal))),
+      formatArea(sumTall(etasjer.map((et) => et.bruksareal.annetAreal))),
+      formatArea(sumTall(etasjer.map((et) => et.bruksareal.totaltAreal))),
+      formatArea(sumTall(etasjer.map((et) => et.bruttoareal.boligAreal))),
+      formatArea(sumTall(etasjer.map((et) => et.bruttoareal.annetAreal))),
+      formatArea(sumTall(etasjer.map((et) => et.bruttoareal.totaltAreal))),
+      formatArea(bya),
+    ]
+
+    // Uten etasjer: én rad med alt under "Endring X" — ingen egen sumRad
+    if (etasjeRader.length === 0) {
+      return [
+        {
+          key: String(e.lopeNr),
+          header: eLabel,
+          rader: [{ key: `${e.lopeNr}-sum`, celler: sumCeller }],
+        },
+      ]
     }
 
     return [
       {
         key: String(e.lopeNr),
         header: eLabel,
-        rader: [...etasjeRader, sumRad],
+        rader: etasjeRader,
+        sumRad: {
+          key: `${e.lopeNr}-sum`,
+          header: tr(`${a}.sum`),
+          celler: sumCeller,
+        },
       },
     ]
   })
@@ -262,7 +273,7 @@ export default function ByggEndringer({ index, bygning }: Props) {
   const { i18n, t } = useTranslation()
 
   const endringer = bygning.endringer
-    .filter((e): e is Endring => e !== undefined)
+    .filter((e) => e !== undefined)
     .toSorted((a, b) => a.lopeNr - b.lopeNr)
 
   // Rekkefølge følger schema; arealer slår sammen etasjer + arealendring per endring.

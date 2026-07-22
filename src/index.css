@@ -1,7 +1,7 @@
 @layer theme, base, components, designsystem, utilities;
 
 @import "tailwindcss";
-@import "@kv-designsystem/react/blue" layer(designsystem);
+@import "@kv-designsystem/react/green" layer(designsystem);
 
 @theme {
   --color-kv-subtle: var(--ds-color-neutral-text-subtle);
@@ -18,9 +18,13 @@
 
 body {
   font-family: "Inter", sans-serif;
-  font-optical-sizing: auto;
   font-feature-settings: "cv05" 1;
 }
+
+th {
+  font-weight: 400;
+}
+
 
 /*
  * PDF-skalering: Gotenberg/Chromium bruker print-emulering ved konvertering,
@@ -41,8 +45,9 @@ body {
  * @digdir/designsystemet-css sin table.css
  */
 .ds-table {
-  --dsc-table-border-width: 1px;
-  --dsc-table-divider-border-width: 1px;
+  --dsc-table-border-width: 0px;
+  --dsc-table-divider-border-width: 0px;
   --dsc-table-border-color: var(--color-kv-green-border);
   --dsc-table-divider-border-color: var(--color-kv-green-border);
 }
+
