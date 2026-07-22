@@ -1,5 +1,5 @@
-import type { Bruksenhet } from "../lib/schema/reports/bygg/byg0011/bruksenhet.schema"
 import type {
+  Bruksenhet,
   ByggEndringsDatoer,
   BygningsEndring,
 } from "../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
@@ -20,66 +20,46 @@ function arealFordeling(boligAreal: number, annetAreal: number) {
 
 function bruksenhet({
   id,
-  etasje,
   antallRom,
   boligAreal,
 }: {
   id: string
-  etasje: string
   antallRom: number
   boligAreal: number
 }): Bruksenhet {
   return {
-    id,
     bruksenhetsNr: id,
-    type: "Bolig",
-    seksjon: `Seksjon 3201-94/309/0/${id.at(-1)}`,
+    bruksenhetsTypeKode: "0",
+    bruksAreal: boligAreal,
     adresse: `Belsetveien 114 ${id}, 1348 Rykkinn`,
-    etasje,
+    matrikkelNr: "3201/208/12/0",
     antallRom,
-    kjokkentilgang: true,
     antallBad: 1,
-    antallWc: 1,
-    arealfordeling: {
-      bebygdAreal: boligAreal,
-      bruksareal: arealFordeling(boligAreal, 0),
-      etasjeplan: [
-        {
-          etasjeplan: etasje,
-          etasje: 1,
-          antallBoenheter: 1,
-          bruksareal: arealFordeling(boligAreal, 0),
-          bruttoareal: arealFordeling(Math.ceil(boligAreal * 1.1), 0),
-        },
-      ],
-    },
+    antallWC: 1,
+    kjokkenTilgangKode: "1",
   }
 }
 
 const h0101 = bruksenhet({
   id: "H0101",
-  etasje: "Hovedetasje",
   antallRom: 3,
   boligAreal: 74,
 })
 
 const h0102 = bruksenhet({
   id: "H0102",
-  etasje: "Loft",
   antallRom: 2,
   boligAreal: 28,
 })
 
 const h0103 = bruksenhet({
   id: "H0103",
-  etasje: "Kjeller",
   antallRom: 2,
   boligAreal: 40,
 })
 
 const h0104 = bruksenhet({
   id: "H0104",
-  etasje: "Underetasje",
   antallRom: 2,
   boligAreal: 42,
 })
@@ -273,7 +253,7 @@ const mockByggRapport: ByggRapport = {
   bygninger: [
     {
       bygningsnr: "12345678",
-      matrikkelenhetsNr: "3201/208/12/0",
+      matrikkelNr: "3201/208/12/0",
       endringer: [gjeldendeEndring, ...historiskeEndringer],
     },
   ],

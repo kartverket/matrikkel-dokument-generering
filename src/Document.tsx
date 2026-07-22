@@ -26,7 +26,7 @@ export function DocumentComponent({ rapport }: { rapport: Byg0011Rapport }) {
               <Byggoversikt index={2} bygning={bygning} />
             </div>
             <div className={`pg-bygg-${nr}-bruksenhet`}>
-              <Bruksenheter index={3} bygning={bygning} />
+              <Bruksenheter index={3} byggEndringer={bygning.endringer} />
             </div>
           </Fragment>
         )

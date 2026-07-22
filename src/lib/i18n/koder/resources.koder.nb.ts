@@ -14,6 +14,14 @@ export const koderNb = {
     "11": "Utenlandsk",
     "12": "Annen eiertype",
   },
+  bruksenhetstype: {
+    "0": "Bolig",
+    "1": "Ikke godkjent bolig",
+    "2": "Fritidsbolig",
+    "3": "Annet enn bolig",
+    "4": "Unummerert bruksenhet",
+    "5": "Ukjent",
+  },
   bygningsstatus: {
     RA: "Rammetillatelse",
     IG: "Igangsettingstillatelse",
@@ -177,6 +185,13 @@ export const koderNb = {
   kontaktperson: {
     "1": "Tiltakshaver",
     "2": "Kontaktperson",
+  },
+  kjokkentilgang: {
+    " ": "Ikke oppgitt",
+    "1": "Har eget kjøkken",
+    "2": "Har ikke adgang til kjøkken",
+    "3": "Har adgang til felles kjøkken",
+    "4": "Ukjent",
   },
   koordinat: {
     "1": "NGO1948 Gauss-K. akse 1",
