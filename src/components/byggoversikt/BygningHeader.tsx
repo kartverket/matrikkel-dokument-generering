@@ -1,22 +1,22 @@
-import { Heading } from "@digdir/designsystemet-react"
-import { Paragraph } from "@kv-designsystem/react"
-import { useTranslation } from "react-i18next"
-import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
-import type { Bygning } from "../../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
-import { formaterBygningstype } from "../../lib/utils/formaterBygningstype.ts"
+import { Heading } from "@digdir/designsystemet-react";
+import { Paragraph } from "@kv-designsystem/react";
+import { useTranslation } from "react-i18next";
+import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts";
+import type { Bygning } from "../../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts";
+import { formaterBygningstype } from "../../lib/utils/formaterBygningstype.ts";
 
 interface Props {
-  bygning: Bygning
-  gjeldendeEndring: BygningsEndring
+  bygning: Bygning;
+  gjeldendeEndring: BygningsEndring;
 }
 
 export default function BygningHeader({ bygning, gjeldendeEndring }: Props) {
-  const { t } = useTranslation()
-  const key = "rapport.BYG0011.byggoversikt.header"
+  const { t } = useTranslation();
+  const key = "rapport.BYG0011.byggoversikt.header";
   const bygningstype = formaterBygningstype(
     t,
-    gjeldendeEndring?.byggMetaEndring?.bygningsType,
-  )
+    gjeldendeEndring?.byggMetaEndring?.bygningsTypeKode,
+  );
 
   return (
     <div className="flex items-center justify-between">
@@ -36,5 +36,5 @@ export default function BygningHeader({ bygning, gjeldendeEndring }: Props) {
         </Paragraph>
       </div>
     </div>
-  )
+  );
 }

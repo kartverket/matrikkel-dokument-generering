@@ -1,34 +1,34 @@
-import { Label, Paragraph } from "@kv-designsystem/react"
-import { useTranslation } from "react-i18next"
-import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
-import type { Bygning } from "../../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
-import { formaterBygningstype } from "../../lib/utils/formaterBygningstype.ts"
+import { Label, Paragraph } from "@kv-designsystem/react";
+import { useTranslation } from "react-i18next";
+import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts";
+import type { Bygning } from "../../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts";
+import { formaterBygningstype } from "../../lib/utils/formaterBygningstype.ts";
 
 interface Props {
-  bygning: Bygning
-  gjeldendeEndring: NonNullable<BygningsEndring>
+  bygning: Bygning;
+  gjeldendeEndring: NonNullable<BygningsEndring>;
 }
 
 export default function Oversiktsfelt({ bygning, gjeldendeEndring }: Props) {
-  const { t } = useTranslation()
-  const key = "rapport.BYG0011.byggoversikt"
-  const tom = t("tom")
+  const { t } = useTranslation();
+  const key = "rapport.BYG0011.byggoversikt";
+  const tom = t("tom");
 
-  const koordinat = gjeldendeEndring.byggKoordinatEndring
+  const koordinat = gjeldendeEndring.byggKoordinatEndring;
   const koordinater =
     koordinat?.nord === undefined || koordinat.ost === undefined
       ? null
-      : `${koordinat.nord} N / ${koordinat.ost} Ø`
+      : `${koordinat.nord} N / ${koordinat.ost} Ø`;
 
   const etasjer = gjeldendeEndring.etasjePlan
     .filter((etasje) => etasje !== undefined)
     .map((etasje) => `${etasje.etasjeplan} (${etasje.etasje})`)
-    .join(", ")
+    .join(", ");
 
   const oversikt = {
     bygningstype: formaterBygningstype(
       t,
-      gjeldendeEndring.byggMetaEndring?.bygningsType,
+      gjeldendeEndring.byggMetaEndring?.bygningsTypeKode,
     ),
     antallBruksenheter: gjeldendeEndring.bruksenheter.length,
     antallBoenheter: gjeldendeEndring.byggMetaEndring?.antallBoenheter,
@@ -36,7 +36,7 @@ export default function Oversiktsfelt({ bygning, gjeldendeEndring }: Props) {
     koordinater,
     etasjer,
     bygningsnr: bygning.bygningsnr,
-  }
+  };
 
   return (
     <ul className="grid grid-cols-2 gap-4">
@@ -53,5 +53,5 @@ export default function Oversiktsfelt({ bygning, gjeldendeEndring }: Props) {
         </li>
       ))}
     </ul>
-  )
+  );
 }
