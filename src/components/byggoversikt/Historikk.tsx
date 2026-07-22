@@ -9,6 +9,8 @@ interface Props {
   byggEndringer: BygningsEndring[]
 }
 
+const MAKS_ANTALL_BERORTE = 5
+
 export default function Historikk({ byggEndringer }: Props) {
   const { i18n, t } = useTranslation()
   const tom = t("tom")
@@ -56,7 +58,18 @@ export default function Historikk({ byggEndringer }: Props) {
                     })
                   : null
 
-            const beroerer =
+            const berorteVerdier =
+              beroerteEtasjer.length > 0
+                ? beroerteEtasjer.map(({ etasje }) => etasje)
+                : beroerteBruksenheter
+            const synligeBerorteVerdier = berorteVerdier.slice(
+              0,
+              MAKS_ANTALL_BERORTE,
+            )
+            const antallFlereBerorte =
+              berorteVerdier.length - synligeBerorteVerdier.length
+
+            const berorteEtasjerOgBruksenheter =
               beroerteEtasjer.length > 0
                 ? t(
                     `${h}.${
@@ -65,21 +78,14 @@ export default function Historikk({ byggEndringer }: Props) {
                         : "beroererEtasjer"
                     }`,
                     {
-                      etasjer: beroerteEtasjer
-                        .map(({ etasje }) => etasje)
-                        .join(", "),
+                      etasjer: synligeBerorteVerdier.join(", "),
                     },
                   )
                 : beroerteBruksenheter.length > 0
                   ? t(`${h}.beroererBruksenheter`, {
-                      bruksenheter: beroerteBruksenheter.join(", "),
+                      bruksenheter: synligeBerorteVerdier.join(", "),
                     })
                   : null
-
-            const trunctateBruksenheter =
-              beroerteBruksenheter.length > 5
-                ? [...beroerteBruksenheter.slice(0, 5), "..."]
-                : beroerteBruksenheter
 
             return (
               <div key={lopeNr}>
@@ -126,13 +132,23 @@ export default function Historikk({ byggEndringer }: Props) {
                     </div>
                   </div>
                   {beskrivelse && <Paragraph>{beskrivelse}</Paragraph>}
-                  {beroerer && (
-                    <Paragraph
-                      data-size="sm"
-                      className="truncate text-kv-subtle"
-                    >
-                      {beroerer}...<span className="text-xs">+14</span>
-                    </Paragraph>
+                  {berorteEtasjerOgBruksenheter && (
+                    <div className="flex flex-wrap items-center gap-2 text-kv-subtle">
+                      <Paragraph data-size="sm">
+                        {berorteEtasjerOgBruksenheter}
+                      </Paragraph>
+                      {antallFlereBerorte > 0 && (
+                        <Tag
+                          data-size="sm"
+                          className="shrink-0"
+                          variant="outline"
+                        >
+                          {t(`${h}.flereBerorte`, {
+                            antall: antallFlereBerorte,
+                          })}
+                        </Tag>
+                      )}
+                    </div>
                   )}
                 </li>
               </div>

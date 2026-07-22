@@ -26,9 +26,6 @@ export default function Byggoversikt({ byggEndringer, index, byggNr }: Props) {
       <div className="mt-8 space-y-8 rounded-xl border border-kv-blue-subtle">
         <BygningHeader
           byggNr={byggNr}
-          gjeldendeTypeKode={
-            gjeldendeTilstand?.byggMetaEndring?.bygningsTypeKode
-          }
           gjeldendeStatusKode={
             gjeldendeTilstand?.byggMetaEndring?.bygningsStatusKode
           }

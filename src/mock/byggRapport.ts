@@ -65,6 +65,23 @@ const h0104 = bruksenhet({
   boligAreal: 42,
 })
 
+const h0105 = bruksenhet({
+  id: "H0105",
+  antallRom: 69,
+  boligAreal: 42,
+})
+const h0106 = bruksenhet({
+  id: "H0106",
+  antallRom: 69,
+  boligAreal: 42,
+})
+
+const h0201 = bruksenhet({
+  id: "H0201",
+  antallRom: 2,
+  boligAreal: 2,
+})
+
 function byggEndring({
   lopeNr,
   endringsKode,
@@ -148,7 +165,7 @@ const senestFerdigstilteEndring = byggEndring({
     igangsettingstillatelse: isoDatetime("2021-05-03"),
     tattIBruk: isoDatetime("2022-09-01"),
   },
-  bruksenheter: [h0101, h0102, h0103],
+  bruksenheter: [h0101, h0102, h0103, h0104, h0105, h0104, h0201],
 })
 
 const andreEndringer: BygningsEndring[] = [

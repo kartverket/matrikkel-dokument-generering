@@ -301,6 +301,7 @@ export const nn = {
           beroererBruksenheter: "Rører ved brukseining {{bruksenheter}}",
           beroererEtasje: "Rører ved etasje {{etasjer}}",
           beroererEtasjer: "Rører ved etasjane {{etasjer}}",
+          flereBerorte: "+{{antall}} til",
           foersteVedtak: "Første registrerte vedtak.",
           statusRegistrert: "{{status}} er registrert.",
           areal: {
