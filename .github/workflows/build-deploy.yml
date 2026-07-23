@@ -153,3 +153,23 @@ jobs:
           resource: ".skip/dev.yaml"
           var: |
             image=${{ needs.version.outputs.image }},version=${{ needs.version.outputs.version }}
+
+  deploy-prodtest:
+    name: "Deploy Prodtest"
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    needs:
+      - version
+      - deploy-dev
+    permissions:
+      actions: read
+      contents: read
+      id-token: write
+    steps:
+      - name: Deploy to prodtest
+        uses: kartverket/matrikkel-actions/heimdall-deploy@main
+        with:
+          cluster: "atkv3-prod"
+          resource: ".skip/prodtest.yaml"
+          var: |
+            image=${{ needs.version.outputs.image }},version=${{ needs.version.outputs.version }}
