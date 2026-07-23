@@ -148,7 +148,7 @@ function byggEndring({
         ),
       },
       {
-        etasjeplanKode: "H",
+        etasjeplanKode: "K",
         etasje: 2,
         antallBoenheter: 0,
         bruksareal: arealFordeling(
@@ -185,7 +185,7 @@ function byggEndring({
 
 const senestFerdigstilteEndring = byggEndring({
   lopeNr: 5,
-  endringsKode: "4",
+  endringsKode: "P",
   bygningsStatusKode: "TB",
   boligAreal: 140,
   annetAreal: 35,

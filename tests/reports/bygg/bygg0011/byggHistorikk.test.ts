@@ -11,12 +11,12 @@ describe("byggHistorikk", () => {
 
     expect(historikk.map(({ lopeNr }) => lopeNr)).toEqual([5, 4, 3, 2, 1, 0])
     expect(historikk.find(({ lopeNr }) => lopeNr === 5)).toMatchObject({
-      byggEndringsKode: "4",
+      byggEndringsKode: "P",
       byggStatusKode: "TB",
       dato: "2022-09-01T00:00:00Z",
     })
     expect(historikk.find(({ lopeNr }) => lopeNr === 4)).toMatchObject({
-      byggEndringsKode: "1",
+      byggEndringsKode: "T",
       byggStatusKode: "FA",
       dato: "2020-08-20T00:00:00Z",
       totalBruksArealEndring: 14,
@@ -143,7 +143,7 @@ describe("byggHistorikk", () => {
 
   test("finner etasjene som faktisk er endret", () => {
     const etasje = (annetAreal: number) => ({
-      etasjeplanKode: "1" as const,
+      etasjeplanKode: "H" as const,
       etasje: 1,
       bruksareal: {
         boligAreal: 80,
@@ -168,7 +168,7 @@ describe("byggHistorikk", () => {
     ]
 
     expect(byggHistorikk(endringer)[0]?.berorteEtasjer).toEqual([
-      { etasje: 1, etasjeplanKode: "1" },
+      { etasje: 1, etasjeplanKode: "H" },
     ])
   })
 

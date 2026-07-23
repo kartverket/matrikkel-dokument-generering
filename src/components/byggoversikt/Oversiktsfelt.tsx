@@ -1,14 +1,14 @@
 import { Label, Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { Bygningstypekode } from "../../lib/schema/reports/bygg/koder/bygningsTypeKodeSchema.ts"
-import type { Naringsgruppekode } from "../../lib/schema/reports/bygg/koder/naringsgruppeKodeSchema.ts"
+import type { NaringsgruppeKode } from "../../lib/schema/reports/bygg/koder/naringsgruppeKode.schema.ts"
 
 interface Props {
   byggTypeKode?: Bygningstypekode
   antallBoenheter?: number
   antallBruksenheter?: number
   antallEtasjer?: number
-  naringsgruppeKode?: Naringsgruppekode
+  naringsgruppeKode?: NaringsgruppeKode
   koordinater?: {
     nord?: number
     ost?: number

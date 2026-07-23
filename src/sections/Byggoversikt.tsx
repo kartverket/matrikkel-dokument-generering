@@ -46,8 +46,8 @@ export default function Byggoversikt({ byggEndringer, index, byggNr }: Props) {
                 }
                 antallBruksenheter={gjeldendeTilstand?.bruksenheter.length}
                 antallEtasjer={gjeldendeTilstand?.etasjePlan?.length}
-                neringsgruppe={
-                  gjeldendeTilstand?.byggMetaEndring?.naeringsgruppe
+                naringsgruppeKode={
+                  gjeldendeTilstand?.byggMetaEndring?.naringsgruppeKode
                 }
                 koordinater={gjeldendeTilstand?.byggKoordinatEndring}
               />
