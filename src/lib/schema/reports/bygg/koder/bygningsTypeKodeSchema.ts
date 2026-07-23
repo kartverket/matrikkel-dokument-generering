@@ -139,7 +139,7 @@ export const bygningsTypeKodeSchema = z
 Koder:
 
 \`\`\`
-' ': Ikke valgt
+<blank>: Ikke valgt
 111: Enebolig
 112: Enebolig med hybelleilighet, sokkelleilighet o.l.
 113: Våningshus

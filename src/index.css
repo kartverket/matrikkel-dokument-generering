@@ -5,15 +5,18 @@
 
 @theme {
   --color-kv-subtle: var(--ds-color-neutral-text-subtle);
+  --color-kv-tinted: var(--ds-color-neutral-background-tinted);
   --color-kv-default: var(--ds-color-neutral-text-default);
   --color-kv-border: var(--ds-color-neutral-border-subtle);
   --color-kv-surface: var(--ds-color-neutral-background-default);
   --color-kv-gray: var(--ds-color-neutral-background-tinted);
   --color-kv-blue: var(--ds-color-accent-base-default);
   --color-kv-blue-subtle: var(--ds-color-accent-surface-tinted);
-  --color-kv-green: #156c30;
   --color-kv-green-subtle: #f6faf7;
   --color-kv-green-border: #97c7a6;
+  --color-kv-green: var(--ds-color-success-base-default);
+  --color-kv-green-tinted: #edf6f0;
+  --color-kv-background-tinted: #daeed7;
 }
 
 body {
