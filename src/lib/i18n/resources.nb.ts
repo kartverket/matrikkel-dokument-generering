@@ -281,11 +281,6 @@ export const nb = {
           bygningsNr: "Bygningsnr.",
           ferdigattest: "Ferdigattest: {{dato}}",
         },
-        nokkeltall: {
-          braBeskrivelse: "Bruksareal, per nå",
-          btaBeskrivelse: "Bruttoareal",
-          byaBeskrivelse: "Bebygd areal",
-        },
         arealfordeling: {
           title: "Areal per etasje",
           etasje: "Etasje",
@@ -294,6 +289,7 @@ export const nb = {
           annet: "Annet (m²)",
           bra: "BRA (m²)",
           bta: "BTA (m²)",
+          bya: "BYA (m²)",
           sum: "Sum",
         },
         historikk: {
