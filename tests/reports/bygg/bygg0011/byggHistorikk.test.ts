@@ -71,6 +71,76 @@ describe("byggHistorikk", () => {
     ])
   })
 
+  test("sorterer på løpenummer synkende, uavhengig av dato", () => {
+    const endringer: BygningsEndring[] = [
+      {
+        lopeNr: 2,
+        byggDatoEndring: { ferdigattest: "2025-06-27" },
+        etasjePlan: [],
+        bruksenheter: [],
+      },
+      {
+        lopeNr: 0,
+        byggDatoEndring: { tattIBruk: "2022-07-07" },
+        etasjePlan: [],
+        bruksenheter: [],
+      },
+      {
+        lopeNr: 1,
+        byggDatoEndring: { utgaattRevet: "2007-03-16" },
+        etasjePlan: [],
+        bruksenheter: [],
+      },
+      {
+        lopeNr: 4,
+        byggDatoEndring: { midlertidigBrukstillatelse: "2002-06-17" },
+        etasjePlan: [],
+        bruksenheter: [],
+      },
+      {
+        lopeNr: 3,
+        byggMetaEndring: { bygningsStatusKode: "GR" },
+        etasjePlan: [],
+        bruksenheter: [],
+      },
+    ]
+
+    expect(byggHistorikk(endringer).map(({ lopeNr }) => lopeNr)).toEqual([
+      4, 3, 2, 1, 0,
+    ])
+  })
+
+  test("avrunder arealendringer til maksimalt to desimaler", () => {
+    const endring = (
+      lopeNr: number,
+      annetAreal: number,
+    ): NonNullable<BygningsEndring> => ({
+      lopeNr,
+      byggDatoEndring: { ferdigattest: `202${lopeNr}-01-01` },
+      byggArealEndring: {
+        bruksarealBolig: {
+          annetAreal,
+          totaltAreal: annetAreal,
+        },
+        bruttoarealBolig: {},
+      },
+      etasjePlan: [],
+      bruksenheter: [],
+    })
+    const historikk = byggHistorikk([
+      endring(0, 0),
+      endring(1, 50.800000000000004),
+      endring(2, 13.674),
+    ])
+
+    expect(
+      historikk.find(({ lopeNr }) => lopeNr === 1)?.arealEndringer,
+    ).toEqual([{ type: "annet", areal: 50.8, handling: "lagtTil" }])
+    expect(
+      historikk.find(({ lopeNr }) => lopeNr === 2)?.arealEndringer,
+    ).toEqual([{ type: "annet", areal: 37.13, handling: "fjernet" }])
+  })
+
   test("finner etasjene som faktisk er endret", () => {
     const etasje = (annetAreal: number) => ({
       etasjeplanKode: "1" as const,

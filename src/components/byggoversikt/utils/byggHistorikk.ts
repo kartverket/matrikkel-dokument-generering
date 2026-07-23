@@ -44,7 +44,12 @@ function finnDifferanse(
   foer: number | undefined,
 ): number | undefined {
   if (naa === undefined || foer === undefined) return undefined
-  return naa - foer
+
+  const differanse = naa - foer
+  const avrundetDifferanse =
+    Math.round((Math.abs(differanse) + Number.EPSILON) * 100) / 100
+
+  return Math.sign(differanse) * avrundetDifferanse
 }
 
 function finnArealhandling(
@@ -214,17 +219,7 @@ export function byggHistorikk(
     }
   })
 
-  // Fjerner duplikater og sorterer på dato og løpenummer
-  return historikkRader.filter(harViktigInnhold).toSorted((a, b) => {
-    if (a.dato && b.dato) {
-      const datoForskjell = b.dato.localeCompare(a.dato)
-      if (datoForskjell !== 0) return datoForskjell
-    } else if (a.dato) {
-      return -1
-    } else if (b.dato) {
-      return 1
-    }
-
-    return b.lopeNr - a.lopeNr
-  })
+  return historikkRader
+    .filter(harViktigInnhold)
+    .toSorted((a, b) => b.lopeNr - a.lopeNr)
 }
