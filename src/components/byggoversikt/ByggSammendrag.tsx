@@ -18,8 +18,7 @@ export default function ByggSammendrag({ byggEndringer }: Props) {
   const tom = t("tom")
   const h = "rapport.BYG0011.byggoversikt.historikk"
 
-  const rader = byggHistorikk(byggEndringer)
-  if (rader.length === 0) return null
+  const historikk = byggHistorikk(byggEndringer)
 
   return (
     <div className="space-y-4">
@@ -27,22 +26,15 @@ export default function ByggSammendrag({ byggEndringer }: Props) {
         {t(`${h}.title`)}
       </Heading>
 
-      <ul className="space-y-8 border-kv-green border-l-3 pl-6">
-        {rader.map(
-          ({
-            lopeNr,
-            byggEndringsKode,
-            byggStatusKode,
-            dato,
-            arealEndringer,
-            berorteEtasjer,
-            berorteBruksenheter,
-            erForsteVedtak,
-          }) => {
-            const beskrivelse = erForsteVedtak
+      {historikk.length === 0 ? (
+        <p>{t(`${h}.ingenHistorikk`)}</p>
+      ) : (
+        <ul className="space-y-8 border-kv-green border-l-3 pl-6">
+          {historikk.map((historikk) => {
+            const beskrivelse = historikk.erForsteVedtak
               ? null
-              : arealEndringer.length > 0
-                ? arealEndringer
+              : historikk.arealEndringer.length > 0
+                ? historikk.arealEndringer
                     .map(({ areal, handling, type }) =>
                       t(`${h}.areal.${handling}`, {
                         areal,
@@ -50,20 +42,20 @@ export default function ByggSammendrag({ byggEndringer }: Props) {
                       }),
                     )
                     .join(" ")
-                : byggStatusKode
+                : historikk.byggStatusKode
                   ? t(`${h}.statusRegistrert`, {
                       status: oversettKode({
                         t,
                         kodeverk: "bygningsstatus",
-                        kode: byggStatusKode,
+                        kode: historikk.byggStatusKode,
                       }),
                     })
                   : null
 
             const berorteVerdier =
-              berorteEtasjer.length > 0
-                ? berorteEtasjer.map(({ etasje }) => etasje)
-                : berorteBruksenheter
+              historikk.berorteEtasjer.length > 0
+                ? historikk.berorteEtasjer.map(({ etasje }) => etasje)
+                : historikk.berorteBruksenheter
             const synligeBerorteVerdier = berorteVerdier.slice(
               0,
               MAKS_ANTALL_BERORTE,
@@ -72,10 +64,10 @@ export default function ByggSammendrag({ byggEndringer }: Props) {
               berorteVerdier.length - synligeBerorteVerdier.length
 
             const berorteEtasjerOgBruksenheter =
-              berorteEtasjer.length > 0
+              historikk.berorteEtasjer.length > 0
                 ? t(
                     `${h}.${
-                      berorteEtasjer.length === 1
+                      historikk.berorteEtasjer.length === 1
                         ? "berorteEtasje"
                         : "berorteEtasjer"
                     }`,
@@ -83,38 +75,40 @@ export default function ByggSammendrag({ byggEndringer }: Props) {
                       etasjer: synligeBerorteVerdier.join(", "),
                     },
                   )
-                : berorteBruksenheter.length > 0
+                : historikk.berorteBruksenheter.length > 0
                   ? t(`${h}.berorteBruksenheter`, {
                       bruksenheter: synligeBerorteVerdier.join(", "),
                     })
                   : null
 
             return (
-              <div key={lopeNr}>
+              <div key={historikk.lopeNr}>
                 <li className="space-y-1">
                   <div className="flex flex-wrap items-center gap-3">
                     <div className="flex w-full justify-between">
                       <div className="flex gap-2">
                         <p className="font-semibold">
-                          {lopeNr === 0
+                          {historikk.lopeNr === 0
                             ? t(`${h}.forsteVedtak`)
-                            : `Endring ${lopeNr}`}
+                            : `Endring ${historikk.lopeNr}`}
                         </p>
 
-                        {byggEndringsKode !== undefined && (
+                        {historikk.byggEndringsKode !== undefined && (
                           <Tag data-color="success" variant="outline">
                             {oversettKode({
                               t,
                               kodeverk: "endring",
-                              kode: byggEndringsKode,
+                              kode: historikk.byggEndringsKode,
                             })}
                           </Tag>
                         )}
 
-                        {byggStatusKode && (
+                        {historikk.byggStatusKode && (
                           <Tag
                             data-color={
-                              successStatuskoder.includes(byggStatusKode)
+                              successStatuskoder.includes(
+                                historikk.byggStatusKode,
+                              )
                                 ? "success"
                                 : "accent"
                             }
@@ -123,13 +117,15 @@ export default function ByggSammendrag({ byggEndringer }: Props) {
                             {oversettKode({
                               t,
                               kodeverk: "bygningsstatus",
-                              kode: byggStatusKode,
+                              kode: historikk.byggStatusKode,
                             })}
                           </Tag>
                         )}
                       </div>
                       <span className="flex items-center gap-1">
-                        {formatDate(i18n, dato, tom, { dateStyle: "short" })}
+                        {formatDate(i18n, historikk.dato, tom, {
+                          dateStyle: "short",
+                        })}
                       </span>
                     </div>
                   </div>
@@ -155,9 +151,9 @@ export default function ByggSammendrag({ byggEndringer }: Props) {
                 </li>
               </div>
             )
-          },
-        )}
-      </ul>
+          })}
+        </ul>
+      )}
     </div>
   )
 }

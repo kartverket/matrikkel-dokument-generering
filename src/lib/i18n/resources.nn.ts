@@ -295,6 +295,7 @@ export const nn = {
         },
         historikk: {
           title: "Samandrag av bygningshistorikk",
+          ingenHistorikk: "Ingen registrerte matrikkelføringar på bygget.",
           berorteBruksenheter: "Rører ved brukseining {{bruksenheter}}",
           berorteEtasje: "Rører ved etasje {{etasjer}}",
           berorteEtasjer: "Rører ved etasjane {{etasjer}}",
