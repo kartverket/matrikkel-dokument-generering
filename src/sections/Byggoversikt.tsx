@@ -1,40 +1,61 @@
 import { Divider } from "@digdir/designsystemet-react"
 import { useTranslation } from "react-i18next"
-import ArealFordeling from "../components/byggoversikt/ArealFordeling"
+import ByggOversiktAreal from "../components/byggoversikt/ByggOversiktAreal.tsx"
+import ByggSammendrag from "../components/byggoversikt/ByggSammendrag"
 import BygningHeader from "../components/byggoversikt/BygningHeader"
-import Historikk from "../components/byggoversikt/Historikk"
 import Nokkeltall from "../components/byggoversikt/Nokkeltall"
 import Oversiktsfelt from "../components/byggoversikt/Oversiktsfelt"
+import { aggregerGjeldendeTilstand } from "../components/byggoversikt/utils/gjeldendeTilstand.ts"
 import { Section } from "../components/Section"
-import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
-import { finnGjeldendeBygningsendring } from "../lib/utils/isFerdigstilt"
+import type { BygningsEndring } from "../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 
 interface Props {
   index: number
-  bygning: Bygning
+  byggNr: string
+  byggEndringer: BygningsEndring[]
 }
 
-export default function Byggoversikt({ bygning, index }: Props) {
+export default function Byggoversikt({ byggEndringer, index, byggNr }: Props) {
   const { t } = useTranslation()
-  const gjeldendeEndring = finnGjeldendeBygningsendring(bygning.endringer)
+
+  // Den gjeldende tilstanden til bygget aggregert fra basisregistreringen og ferdigstilte/tatte-i-bruk endringer
+  // Dette vil si hvordan bygget ser ut i dag, med alle endringer som er registrert i matrikkelen.
+  const gjeldendeTilstand = aggregerGjeldendeTilstand(byggEndringer)
 
   return (
     <Section index={index} title={t("rapport.BYG0011.byggoversikt.title")}>
-      <div className="mt-8 space-y-8 rounded-xl border border-kv-blue-subtle p-8">
-        <BygningHeader bygning={bygning} gjeldendeEndring={gjeldendeEndring} />
+      <div className="mt-8 space-y-8">
+        <BygningHeader
+          byggNr={byggNr}
+          gjeldendeStatusKode={
+            gjeldendeTilstand?.byggMetaEndring?.bygningsStatusKode
+          }
+        />
         <Divider />
 
-        {gjeldendeEndring && (
-          <>
-            <Nokkeltall gjeldendeEndring={gjeldendeEndring} />
-            <Oversiktsfelt
-              bygning={bygning}
-              gjeldendeEndring={gjeldendeEndring}
-            />
-            <ArealFordeling etasjePlan={gjeldendeEndring.etasjePlan} />
-          </>
-        )}
-        <Historikk byggEndringer={bygning.endringer} />
+        <div className="flex flex-col gap-8 p-8">
+          {gjeldendeTilstand && (
+            <>
+              <Nokkeltall gjeldendeEndring={gjeldendeTilstand} />
+              <Oversiktsfelt
+                byggTypeKode={
+                  gjeldendeTilstand?.byggMetaEndring?.bygningsTypeKode
+                }
+                antallBoenheter={
+                  gjeldendeTilstand?.byggMetaEndring?.antallBoenheter
+                }
+                antallBruksenheter={gjeldendeTilstand?.bruksenheter.length}
+                antallEtasjer={gjeldendeTilstand?.etasjePlan?.length}
+                naringsgruppeKode={
+                  gjeldendeTilstand?.byggMetaEndring?.naringsgruppeKode
+                }
+                koordinater={gjeldendeTilstand?.byggKoordinatEndring}
+              />
+              <ByggOversiktAreal etasjePlan={gjeldendeTilstand.etasjePlan} />
+            </>
+          )}
+          <ByggSammendrag byggEndringer={byggEndringer} />
+        </div>
       </div>
     </Section>
   )
