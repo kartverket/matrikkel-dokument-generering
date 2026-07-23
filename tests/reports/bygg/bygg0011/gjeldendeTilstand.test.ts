@@ -34,13 +34,11 @@ describe("aggregerGjeldendeTilstand", () => {
     const ferdigstilt = endring(1, "TB", {
       tattIBruk: "2020-01-01T00:00:00Z",
     })
-    const paagaaende = endring(2, "IG", {
+    const pagaende = endring(2, "IG", {
       igangsettingstillatelse: "2022-01-01T00:00:00Z",
     })
 
-    expect(aggregerGjeldendeTilstand([ferdigstilt, paagaaende])).toBe(
-      ferdigstilt,
-    )
+    expect(aggregerGjeldendeTilstand([ferdigstilt, pagaende])).toBe(ferdigstilt)
   })
 
   test("regner midlertidig brukstillatelse som gjeldende tilstand", () => {
@@ -57,7 +55,7 @@ describe("aggregerGjeldendeTilstand", () => {
   })
 
   test("bruker ferdigdato fremfor løpenummer for å finne nyeste tilstand", () => {
-    const hoeyereLoepenummer = endring(2, "FA", {
+    const hoyereLopenummer = endring(2, "FA", {
       ferdigattest: "2020-01-01T00:00:00Z",
     })
     const senestFerdigstilt = endring(1, "FA", {
@@ -65,7 +63,7 @@ describe("aggregerGjeldendeTilstand", () => {
     })
 
     expect(
-      aggregerGjeldendeTilstand([hoeyereLoepenummer, senestFerdigstilt]),
+      aggregerGjeldendeTilstand([hoyereLopenummer, senestFerdigstilt]),
     ).toBe(senestFerdigstilt)
   })
 
@@ -73,10 +71,10 @@ describe("aggregerGjeldendeTilstand", () => {
     const basis = endring(0, "TB", {
       tattIBruk: "2010-01-01T00:00:00Z",
     })
-    const meldingssakFullfoert = endring(1, "MF", {})
+    const meldingssakFullfort = endring(1, "MF", {})
 
-    expect(aggregerGjeldendeTilstand([basis, meldingssakFullfoert])).toBe(
-      meldingssakFullfoert,
+    expect(aggregerGjeldendeTilstand([basis, meldingssakFullfort])).toBe(
+      meldingssakFullfort,
     )
   })
 
@@ -84,11 +82,11 @@ describe("aggregerGjeldendeTilstand", () => {
     const basis = endring(0, "RA", {
       rammetillatelse: "2018-01-01T00:00:00Z",
     })
-    const paagaaende = endring(1, "IG", {
+    const pagaende = endring(1, "IG", {
       igangsettingstillatelse: "2020-01-01T00:00:00Z",
     })
 
-    expect(aggregerGjeldendeTilstand([paagaaende, basis])).toBe(basis)
-    expect(aggregerGjeldendeTilstand([paagaaende])).toBeUndefined()
+    expect(aggregerGjeldendeTilstand([pagaende, basis])).toBe(basis)
+    expect(aggregerGjeldendeTilstand([pagaende])).toBeUndefined()
   })
 })

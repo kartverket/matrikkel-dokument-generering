@@ -7,7 +7,7 @@ interface Props {
   antallBoenheter?: number
   antallBruksenheter?: number
   antallEtasjer?: number
-  naeringsgruppe?: string
+  neringsgruppe?: string
   koordinater?: {
     nord?: number
     ost?: number
@@ -46,8 +46,8 @@ export default function Oversiktsfelt(props: Props) {
       </li>
 
       <li>
-        <Label>{t(`${key}.naeringsgruppe`)}</Label>
-        <Paragraph data-size="sm">{props.naeringsgruppe ?? tom}</Paragraph>
+        <Label>{t(`${key}.neringsgruppe`)}</Label>
+        <Paragraph data-size="sm">{props.neringsgruppe ?? tom}</Paragraph>
       </li>
 
       <li>

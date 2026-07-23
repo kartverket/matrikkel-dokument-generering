@@ -35,11 +35,11 @@ export default function ByggSammendrag({ byggEndringer }: Props) {
             byggStatusKode,
             dato,
             arealEndringer,
-            beroerteEtasjer,
-            beroerteBruksenheter,
-            erFoersteVedtak,
+            berorteEtasjer,
+            berorteBruksenheter,
+            erForsteVedtak,
           }) => {
-            const beskrivelse = erFoersteVedtak
+            const beskrivelse = erForsteVedtak
               ? null
               : arealEndringer.length > 0
                 ? arealEndringer
@@ -61,9 +61,9 @@ export default function ByggSammendrag({ byggEndringer }: Props) {
                   : null
 
             const berorteVerdier =
-              beroerteEtasjer.length > 0
-                ? beroerteEtasjer.map(({ etasje }) => etasje)
-                : beroerteBruksenheter
+              berorteEtasjer.length > 0
+                ? berorteEtasjer.map(({ etasje }) => etasje)
+                : berorteBruksenheter
             const synligeBerorteVerdier = berorteVerdier.slice(
               0,
               MAKS_ANTALL_BERORTE,
@@ -72,19 +72,19 @@ export default function ByggSammendrag({ byggEndringer }: Props) {
               berorteVerdier.length - synligeBerorteVerdier.length
 
             const berorteEtasjerOgBruksenheter =
-              beroerteEtasjer.length > 0
+              berorteEtasjer.length > 0
                 ? t(
                     `${h}.${
-                      beroerteEtasjer.length === 1
-                        ? "beroererEtasje"
-                        : "beroererEtasjer"
+                      berorteEtasjer.length === 1
+                        ? "berorteEtasje"
+                        : "berorteEtasjer"
                     }`,
                     {
                       etasjer: synligeBerorteVerdier.join(", "),
                     },
                   )
-                : beroerteBruksenheter.length > 0
-                  ? t(`${h}.beroererBruksenheter`, {
+                : berorteBruksenheter.length > 0
+                  ? t(`${h}.berorteBruksenheter`, {
                       bruksenheter: synligeBerorteVerdier.join(", "),
                     })
                   : null

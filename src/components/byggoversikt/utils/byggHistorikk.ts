@@ -27,9 +27,9 @@ export type ByggHistorikk = {
   totalBruksArealEndring?: number
   totalBruttoArealEndring?: number
   arealEndringer: HistorikkArealendring[]
-  beroerteEtasjer: BerortEtasje[]
-  beroerteBruksenheter: string[]
-  erFoersteVedtak: boolean
+  berorteEtasjer: BerortEtasje[]
+  berorteBruksenheter: string[]
+  erForsteVedtak: boolean
 }
 
 function finnNyesteRegistrerteDato(endring: Endring): string | undefined {
@@ -40,12 +40,12 @@ function finnNyesteRegistrerteDato(endring: Endring): string | undefined {
 }
 
 function finnDifferanse(
-  naa: number | undefined,
-  foer: number | undefined,
+  naVerdi: number | undefined,
+  forrigeVerdi: number | undefined,
 ): number | undefined {
-  if (naa === undefined || foer === undefined) return undefined
+  if (naVerdi === undefined || forrigeVerdi === undefined) return undefined
 
-  const differanse = naa - foer
+  const differanse = naVerdi - forrigeVerdi
   const avrundetDifferanse =
     Math.round((Math.abs(differanse) + Number.EPSILON) * 100) / 100
 
@@ -68,14 +68,14 @@ function lagArealEndringer(
   if (forrigeEndring === undefined) return []
 
   const arealEndringer: HistorikkArealendring[] = []
-  const naa = endring.byggArealEndring?.bruksarealBolig
-  const foer = forrigeEndring.byggArealEndring?.bruksarealBolig
+  const na = endring.byggArealEndring?.bruksarealBolig
+  const forrige = forrigeEndring.byggArealEndring?.bruksarealBolig
 
   for (const [type, felt] of [
     ["bolig", "boligAreal"],
     ["annet", "annetAreal"],
   ] as const) {
-    const differanse = finnDifferanse(naa?.[felt], foer?.[felt])
+    const differanse = finnDifferanse(na?.[felt], forrige?.[felt])
     if (differanse === undefined || differanse === 0) continue
 
     arealEndringer.push({
@@ -91,7 +91,7 @@ function lagArealEndringer(
   // Totalen brukes kun som reserve når bolig/annet ikke kan gi en forklaring.
   // Ellers ville samme arealendring blitt vist både som type og som total.
   if (arealEndringer.length === 0) {
-    const differanse = finnDifferanse(naa?.totaltAreal, foer?.totaltAreal)
+    const differanse = finnDifferanse(na?.totaltAreal, forrige?.totaltAreal)
     if (differanse !== undefined && differanse !== 0) {
       arealEndringer.push({
         type: "totalt",
@@ -108,47 +108,47 @@ function lagArealEndringer(
 }
 
 function erSammeEtasje(
-  naa: NonNullable<Endring["etasjePlan"]>[number],
-  foer: NonNullable<Endring["etasjePlan"]>[number],
+  na: NonNullable<Endring["etasjePlan"]>[number],
+  forrige: NonNullable<Endring["etasjePlan"]>[number],
 ): boolean {
-  if (naa === undefined || foer === undefined) return naa === foer
+  if (na === undefined || forrige === undefined) return na === forrige
 
   return (
-    naa.etasjeplanKode === foer.etasjeplanKode &&
-    naa.antallBoenheter === foer.antallBoenheter &&
-    naa.bruksareal.boligAreal === foer.bruksareal.boligAreal &&
-    naa.bruksareal.annetAreal === foer.bruksareal.annetAreal &&
-    naa.bruksareal.totaltAreal === foer.bruksareal.totaltAreal &&
-    naa.bruttoareal.boligAreal === foer.bruttoareal.boligAreal &&
-    naa.bruttoareal.annetAreal === foer.bruttoareal.annetAreal &&
-    naa.bruttoareal.totaltAreal === foer.bruttoareal.totaltAreal
+    na.etasjeplanKode === forrige.etasjeplanKode &&
+    na.antallBoenheter === forrige.antallBoenheter &&
+    na.bruksareal.boligAreal === forrige.bruksareal.boligAreal &&
+    na.bruksareal.annetAreal === forrige.bruksareal.annetAreal &&
+    na.bruksareal.totaltAreal === forrige.bruksareal.totaltAreal &&
+    na.bruttoareal.boligAreal === forrige.bruttoareal.boligAreal &&
+    na.bruttoareal.annetAreal === forrige.bruttoareal.annetAreal &&
+    na.bruttoareal.totaltAreal === forrige.bruttoareal.totaltAreal
   )
 }
 
-function finnBeroerteEtasjer(
+function finnBerorteEtasjer(
   endring: Endring,
   forrigeEndring: Endring | undefined,
 ): BerortEtasje[] {
   if (forrigeEndring === undefined) return []
 
-  const naaPerEtasje = new Map(
+  const naPerEtasje = new Map(
     (endring.etasjePlan ?? []).flatMap((etasje) =>
       etasje === undefined ? [] : [[etasje.etasje, etasje] as const],
     ),
   )
-  const foerPerEtasje = new Map(
+  const forrigePerEtasje = new Map(
     (forrigeEndring.etasjePlan ?? []).flatMap((etasje) =>
       etasje === undefined ? [] : [[etasje.etasje, etasje] as const],
     ),
   )
 
-  return [...new Set([...naaPerEtasje.keys(), ...foerPerEtasje.keys()])]
+  return [...new Set([...naPerEtasje.keys(), ...forrigePerEtasje.keys()])]
     .flatMap((etasje) => {
-      const naa = naaPerEtasje.get(etasje)
-      const foer = foerPerEtasje.get(etasje)
-      if (erSammeEtasje(naa, foer)) return []
+      const na = naPerEtasje.get(etasje)
+      const forrige = forrigePerEtasje.get(etasje)
+      if (erSammeEtasje(na, forrige)) return []
 
-      const berort = naa ?? foer
+      const berort = na ?? forrige
       return berort === undefined
         ? []
         : [
@@ -161,7 +161,7 @@ function finnBeroerteEtasjer(
     .toSorted((a, b) => a.etasje - b.etasje)
 }
 
-function finnBeroerteBruksenheter(endring: Endring): string[] {
+function finnBerorteBruksenheter(endring: Endring): string[] {
   return [
     ...new Set(
       (endring.bruksenheter ?? []).flatMap((bruksenhet) =>
@@ -179,8 +179,8 @@ function harViktigInnhold(rad: ByggHistorikk): boolean {
     rad.byggEndringsKode !== undefined ||
     rad.byggStatusKode !== undefined ||
     rad.arealEndringer.length > 0 ||
-    rad.beroerteEtasjer.length > 0 ||
-    rad.beroerteBruksenheter.length > 0
+    rad.berorteEtasjer.length > 0 ||
+    rad.berorteBruksenheter.length > 0
   )
 }
 
@@ -213,9 +213,9 @@ export function byggHistorikk(
         forrigeBruttoareal?.totaltAreal,
       ),
       arealEndringer: lagArealEndringer(endring, forrigeEndring),
-      beroerteEtasjer: finnBeroerteEtasjer(endring, forrigeEndring),
-      beroerteBruksenheter: finnBeroerteBruksenheter(endring),
-      erFoersteVedtak: forrigeEndring === undefined,
+      berorteEtasjer: finnBerorteEtasjer(endring, forrigeEndring),
+      berorteBruksenheter: finnBerorteBruksenheter(endring),
+      erForsteVedtak: forrigeEndring === undefined,
     }
   })
 

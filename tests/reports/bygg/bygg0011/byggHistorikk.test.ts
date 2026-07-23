@@ -21,7 +21,7 @@ describe("byggHistorikk", () => {
       dato: "2020-08-20T00:00:00Z",
       totalBruksArealEndring: 14,
       arealEndringer: [{ type: "annet", areal: 14, handling: "lagtTil" }],
-      beroerteBruksenheter: ["H0103"],
+      berorteBruksenheter: ["H0103"],
     })
     expect(historikk.find(({ lopeNr }) => lopeNr === 3)).toMatchObject({
       byggStatusKode: "IG",
@@ -38,7 +38,7 @@ describe("byggHistorikk", () => {
     expect(historikk.find(({ lopeNr }) => lopeNr === 0)).toMatchObject({
       byggStatusKode: "TB",
       arealEndringer: [],
-      erFoersteVedtak: true,
+      erForsteVedtak: true,
     })
   })
 
@@ -167,7 +167,7 @@ describe("byggHistorikk", () => {
       },
     ]
 
-    expect(byggHistorikk(endringer)[0]?.beroerteEtasjer).toEqual([
+    expect(byggHistorikk(endringer)[0]?.berorteEtasjer).toEqual([
       { etasje: 1, etasjeplanKode: "1" },
     ])
   })

@@ -21,11 +21,11 @@ function arealFordeling(boligAreal: number, annetAreal: number) {
 
 function fordelArealMellomEtasjer(
   totaltAreal: number,
-  arealIFoersteEtasje: number,
+  arealIForsteEtasje: number,
 ) {
-  const foersteEtasje = Math.min(totaltAreal, arealIFoersteEtasje)
+  const forsteEtasje = Math.min(totaltAreal, arealIForsteEtasje)
 
-  return [foersteEtasje, totaltAreal - foersteEtasje] as const
+  return [forsteEtasje, totaltAreal - forsteEtasje] as const
 }
 
 function bruksenhet({
@@ -110,13 +110,13 @@ function byggEndring({
 }): BygningsEndring {
   const bruttoBoligAreal = Math.ceil(boligAreal * 1.13)
   const bruttoAnnetAreal = Math.ceil(annetAreal * 1.2)
-  const [boligArealFoersteEtasje, boligArealAndreEtasje] =
+  const [boligArealForsteEtasje, boligArealAndreEtasje] =
     fordelArealMellomEtasjer(boligAreal, 80)
-  const [annetArealFoersteEtasje, annetArealAndreEtasje] =
+  const [annetArealForsteEtasje, annetArealAndreEtasje] =
     fordelArealMellomEtasjer(annetAreal, 10)
-  const [bruttoBoligArealFoersteEtasje, bruttoBoligArealAndreEtasje] =
+  const [bruttoBoligArealForsteEtasje, bruttoBoligArealAndreEtasje] =
     fordelArealMellomEtasjer(bruttoBoligAreal, 90)
-  const [bruttoAnnetArealFoersteEtasje, bruttoAnnetArealAndreEtasje] =
+  const [bruttoAnnetArealForsteEtasje, bruttoAnnetArealAndreEtasje] =
     fordelArealMellomEtasjer(bruttoAnnetAreal, 12)
 
   return {
@@ -139,12 +139,12 @@ function byggEndring({
         etasje: 1,
         antallBoenheter: 1,
         bruksareal: arealFordeling(
-          boligArealFoersteEtasje,
-          annetArealFoersteEtasje,
+          boligArealForsteEtasje,
+          annetArealForsteEtasje,
         ),
         bruttoareal: arealFordeling(
-          bruttoBoligArealFoersteEtasje,
-          bruttoAnnetArealFoersteEtasje,
+          bruttoBoligArealForsteEtasje,
+          bruttoAnnetArealForsteEtasje,
         ),
       },
       {
