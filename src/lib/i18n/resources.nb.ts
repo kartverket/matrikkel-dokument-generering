@@ -28,7 +28,7 @@ export const nb = {
       rapportTittel: "Bygg Rapport",
       title: "Bygning {{bygningsnr}} – {{bygningstype}}",
       utvalgskriterier: {
-        title: "ByggUtvalgskriterier",
+        title: "Utvalgskriterier",
         ja: "Ja",
         nei: "Nei",
         ikkeAngitt: "Ikke angitt",
