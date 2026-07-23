@@ -65,10 +65,10 @@ function parseDate(value: string | number | Date, locale: string): Date | null {
 export function formatDate(
   i18n: Pick<I18n, "language" | "t">,
   value: string | number | Date | null | undefined,
-  fallback: string,
+  fallback?: string,
   options: Intl.DateTimeFormatOptions = defaultOptions,
-): string {
-  if (value == null) return fallback
+): string | undefined {
+  if (value == null) return fallback ? fallback : undefined
 
   const date = parseDate(value, i18n.language)
   if (date === null) return fallback

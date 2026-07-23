@@ -34,12 +34,16 @@ export default function Nokkeltall({ gjeldendeEndring }: Props) {
   return (
     <ul className="grid grid-cols-3 gap-4">
       {kort.map(({ id, areal, label }) => (
-        <li key={id}>
-          <Card>
-            <Paragraph className="text-3xl">{formatArea(areal)}</Paragraph>
-            <Label>{label}</Label>
-          </Card>
-        </li>
+        <>
+          {areal ? (
+            <li key={id}>
+              <Card>
+                <Paragraph className="text-3xl">{formatArea(areal)}</Paragraph>
+                <Label>{label}</Label>
+              </Card>
+            </li>
+          ) : null}
+        </>
       ))}
     </ul>
   )

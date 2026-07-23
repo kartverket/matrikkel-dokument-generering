@@ -23,7 +23,7 @@ function formatCell(
         : i18n.t(`rapport.BYG0011.byggEndringer.nei`)
     case "string":
       return /^\d{4}-\d{2}-\d{2}/.test(value) // Sjekker om strengen ser ut som en dato (YYYY-MM-DD)
-        ? formatDate(i18n, value, value)
+        ? (formatDate(i18n, value, value) ?? value)
         : value
     case "number":
       return String(value)

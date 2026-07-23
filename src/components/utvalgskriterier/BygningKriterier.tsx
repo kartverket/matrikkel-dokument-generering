@@ -2,6 +2,7 @@ import { Heading, Table, Tag } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import { oversettKode } from "../../lib/i18n/koder/oversettKode.ts"
 import type { ByggUtvalgskriterier as Utvalgskriterier } from "../../lib/schema/reports/bygg/shared/byggUtvalgskriterier.schema.ts"
+import { erAngitt, harAngittVerdi } from "./utils/erAngitt.ts"
 
 interface Props {
   bygningKriterier: NonNullable<Utvalgskriterier>["bygning"]
@@ -10,7 +11,8 @@ interface Props {
 export function BygningKriterier({ bygningKriterier }: Props) {
   const { t } = useTranslation()
   const uk = "rapport.BYG0011.utvalgskriterier"
-  const ikkeAngitt = t(`${uk}.ikkeAngitt`)
+
+  if (!harAngittVerdi(bygningKriterier)) return null
 
   return (
     <section className="break-inside-avoid">
@@ -19,27 +21,28 @@ export function BygningKriterier({ bygningKriterier }: Props) {
       </Heading>
       <Table zebra border className="w-full table-fixed">
         <Table.Body>
-          <Table.Row>
-            <Table.HeaderCell scope="row" className="w-1/3">
-              {t(`${uk}.bygning.bygningsNr`)}
-            </Table.HeaderCell>
-            <Table.Cell>
-              {bygningKriterier?.bygningsNr ?? ikkeAngitt}
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.HeaderCell scope="row">
-              {t(`${uk}.bygning.lopeNr`)}
-            </Table.HeaderCell>
-            <Table.Cell>{bygningKriterier?.lopeNr ?? ikkeAngitt}</Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.HeaderCell scope="row">
-              {t(`${uk}.bygning.bygningstyper`)}
-            </Table.HeaderCell>
-            <Table.Cell>
-              {bygningKriterier?.bygningstyper &&
-              bygningKriterier.bygningstyper.length > 0 ? (
+          {erAngitt(bygningKriterier?.bygningsNr) && (
+            <Table.Row>
+              <Table.HeaderCell scope="row" className="w-1/3">
+                {t(`${uk}.bygning.bygningsNr`)}
+              </Table.HeaderCell>
+              <Table.Cell>{bygningKriterier.bygningsNr}</Table.Cell>
+            </Table.Row>
+          )}
+          {erAngitt(bygningKriterier?.lopeNr) && (
+            <Table.Row>
+              <Table.HeaderCell scope="row" className="w-1/3">
+                {t(`${uk}.bygning.lopeNr`)}
+              </Table.HeaderCell>
+              <Table.Cell>{bygningKriterier.lopeNr}</Table.Cell>
+            </Table.Row>
+          )}
+          {erAngitt(bygningKriterier?.bygningstyper) && (
+            <Table.Row>
+              <Table.HeaderCell scope="row" className="w-1/3">
+                {t(`${uk}.bygning.bygningstyper`)}
+              </Table.HeaderCell>
+              <Table.Cell>
                 <span className="flex flex-wrap gap-2">
                   {bygningKriterier.bygningstyper.map((kode) => (
                     <Tag key={kode} data-color="accent" variant="outline">
@@ -47,11 +50,9 @@ export function BygningKriterier({ bygningKriterier }: Props) {
                     </Tag>
                   ))}
                 </span>
-              ) : (
-                ikkeAngitt
-              )}
-            </Table.Cell>
-          </Table.Row>
+              </Table.Cell>
+            </Table.Row>
+          )}
         </Table.Body>
       </Table>
     </section>
