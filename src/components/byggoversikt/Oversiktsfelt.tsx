@@ -1,13 +1,14 @@
 import { Label, Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { Bygningstypekode } from "../../lib/schema/reports/bygg/koder/bygningsTypeKodeSchema.ts"
+import type { Naringsgruppekode } from "../../lib/schema/reports/bygg/koder/naringsgruppeKodeSchema.ts"
 
 interface Props {
   byggTypeKode?: Bygningstypekode
   antallBoenheter?: number
   antallBruksenheter?: number
   antallEtasjer?: number
-  neringsgruppe?: string
+  naringsgruppeKode?: Naringsgruppekode
   koordinater?: {
     nord?: number
     ost?: number
@@ -46,8 +47,12 @@ export default function Oversiktsfelt(props: Props) {
       </li>
 
       <li>
-        <Label>{t(`${key}.neringsgruppe`)}</Label>
-        <Paragraph data-size="sm">{props.neringsgruppe ?? tom}</Paragraph>
+        <Label>{t(`${key}.naringsgruppe`)}</Label>
+        <Paragraph data-size="sm">
+          {props.naringsgruppeKode
+            ? t(`koder.naringsgruppe.${props.naringsgruppeKode}`)
+            : tom}
+        </Paragraph>
       </li>
 
       <li>

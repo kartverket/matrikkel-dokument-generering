@@ -82,7 +82,7 @@ export const nb = {
         },
       },
       matrikkelenhet: "Matrikkelenhet",
-      naeringsgruppe: "Næringsgruppe",
+      naringsgruppe: "Næringsgruppe",
       arealfordeling: {
         title: "Areal og beliggenhet",
         bebygdAreal: "Bebygd areal",
@@ -273,7 +273,7 @@ export const nb = {
         antallBoenheter: "Boenheter",
         antallEtasjer: "Etasjer",
         bygningstype: "Bygningstype",
-        neringsgruppe: "Næringsgruppe",
+        naringsgruppe: "Næringsgruppe",
         etasjer: "Etasjer",
         koordinater: "Koordinater",
         koordinatsystem: "Koordinatsystem",

@@ -39,7 +39,7 @@ function bruksenhet({
 }): Bruksenhet {
   return {
     bruksenhetsNr: id,
-    bruksenhetsTypeKode: "0",
+    bruksenhetsTypeKode: "B",
     bruksAreal: boligAreal,
     adresse: `Belsetveien 114 ${id}, 1348 Rykkinn`,
     matrikkelNr: "3201/208/12/0",
@@ -126,7 +126,7 @@ function byggEndring({
       bygningsStatusKode,
       bygningsTypeKode: "111",
       antallBoenheter: 1,
-      naeringsgruppe: "Bolig",
+      naringsgruppeKode: "X",
     },
     byggArealEndring: {
       bruksarealBolig: arealFordeling(boligAreal, annetAreal),
@@ -135,7 +135,7 @@ function byggEndring({
     },
     etasjePlan: [
       {
-        etasjeplanKode: "1",
+        etasjeplanKode: "H",
         etasje: 1,
         antallBoenheter: 1,
         bruksareal: arealFordeling(
@@ -148,7 +148,7 @@ function byggEndring({
         ),
       },
       {
-        etasjeplanKode: "1",
+        etasjeplanKode: "H",
         etasje: 2,
         antallBoenheter: 0,
         bruksareal: arealFordeling(
@@ -165,7 +165,7 @@ function byggEndring({
     byggDatoEndring: datoer,
     aktuellEier: {
       bruksenhetsNr: "H0101",
-      eierforholdKode: "1",
+      eierforholdKode: "H",
       identifikasjonsNr: "12051978",
       erAvdoed: false,
       navn: "Ola Nordmann",
@@ -174,7 +174,7 @@ function byggEndring({
     },
     tiltaksHaver: {
       bruksenhetsNr: "H0101",
-      kontaktPersonKode: "1",
+      kontaktPersonKode: "T",
       identifikasjonsNr: "01019012345",
       navn: "Fredrik Nordmann",
       adresse: "Storgata 1, 0155 Oslo",
@@ -200,7 +200,7 @@ const senestFerdigstilteEndring = byggEndring({
 const andreEndringer: BygningsEndring[] = [
   byggEndring({
     lopeNr: 4,
-    endringsKode: "1",
+    endringsKode: "T",
     bygningsStatusKode: "FA",
     boligAreal: 121,
     annetAreal: 74,
@@ -214,7 +214,7 @@ const andreEndringer: BygningsEndring[] = [
   }),
   byggEndring({
     lopeNr: 3,
-    endringsKode: "2",
+    endringsKode: "P",
     bygningsStatusKode: "IG",
     boligAreal: 121,
     annetAreal: 60,
@@ -226,7 +226,7 @@ const andreEndringer: BygningsEndring[] = [
   }),
   byggEndring({
     lopeNr: 2,
-    endringsKode: "3",
+    endringsKode: "U",
     bygningsStatusKode: "RA",
     boligAreal: 102,
     annetAreal: 60,
@@ -235,7 +235,7 @@ const andreEndringer: BygningsEndring[] = [
   }),
   byggEndring({
     lopeNr: 1,
-    endringsKode: "4",
+    endringsKode: "O",
     bygningsStatusKode: "MB",
     boligAreal: 102,
     annetAreal: 0,
