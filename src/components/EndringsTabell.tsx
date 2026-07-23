@@ -70,13 +70,13 @@ export default function EndringsTabell({
         <Table.Body>
           {endringer.map((rad, i) => (
             <Table.Row key={String(i)} className="even:bg-kv-green-subtle">
-              <Table.HeaderCell scope="row" className="align-top">
+              <Table.HeaderCell scope="row" className="align-top w-32">
                 {`${tr(`${ENDRING}.lopeNr`)} ${rad.lopeNr}`}
               </Table.HeaderCell>
               {kolonner.map((k) => (
                 <Table.Cell
                   key={k}
-                  className="max-w-96 whitespace-normal break-words align-top text-kv-default"
+                  className="max-w-96 whitespace-normal align-top text-kv-default"
                 >
                   {formatCell(rad[k], i18n, tr)}
                 </Table.Cell>

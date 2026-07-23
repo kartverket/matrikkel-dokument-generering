@@ -1,6 +1,5 @@
 import { Heading, Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import { formatArea } from "../lib/utils/formatArea.ts"
 
 const BE = "rapport.BYG0011.byggEndringer" as const
 const AREAL = `${BE}.areal` as const
@@ -73,19 +72,19 @@ export default function ArealTabell({ grupper }: Props) {
                   <Table.HeaderCell
                     scope="row"
                     rowSpan={rader.length}
-                    className="align-top"
+                    className="align-top w-32"
                   >
                     {`${tr(`${BE}.lopeNr`)} ${lopeNr}`}
                   </Table.HeaderCell>
                 )}
                 <Table.Cell>{r.etasjeplan}</Table.Cell>
                 <Table.Cell>{num(r.antallBoenheter)}</Table.Cell>
-                <Table.Cell>{formatArea(r.boligBra)}</Table.Cell>
-                <Table.Cell>{formatArea(r.annetBra)}</Table.Cell>
-                <Table.Cell>{formatArea(r.sumBra)}</Table.Cell>
-                <Table.Cell>{formatArea(r.boligBta)}</Table.Cell>
-                <Table.Cell>{formatArea(r.annetBta)}</Table.Cell>
-                <Table.Cell>{formatArea(r.sumBta)}</Table.Cell>
+                <Table.Cell>{r.boligBra}</Table.Cell>
+                <Table.Cell>{r.annetBra}</Table.Cell>
+                <Table.Cell>{r.sumBra}</Table.Cell>
+                <Table.Cell>{r.boligBta}</Table.Cell>
+                <Table.Cell>{r.annetBta}</Table.Cell>
+                <Table.Cell>{r.sumBta}</Table.Cell>
                 <Table.Cell />
               </Table.Row>
             ))}
@@ -96,13 +95,13 @@ export default function ArealTabell({ grupper }: Props) {
               </Table.HeaderCell>
               <Table.Cell>{num(rader.length)}</Table.Cell>
               <Table.Cell>{num(sum.antallBoenheter)}</Table.Cell>
-              <Table.Cell>{formatArea(sum.boligBra)}</Table.Cell>
-              <Table.Cell>{formatArea(sum.annetBra)}</Table.Cell>
-              <Table.Cell>{formatArea(sum.sumBra)}</Table.Cell>
-              <Table.Cell>{formatArea(sum.boligBta)}</Table.Cell>
-              <Table.Cell>{formatArea(sum.annetBta)}</Table.Cell>
-              <Table.Cell>{formatArea(sum.sumBta)}</Table.Cell>
-              <Table.Cell>{formatArea(sum.bya)}</Table.Cell>
+              <Table.Cell>{sum.boligBra}</Table.Cell>
+              <Table.Cell>{sum.annetBra}</Table.Cell>
+              <Table.Cell>{sum.sumBra}</Table.Cell>
+              <Table.Cell>{sum.boligBta}</Table.Cell>
+              <Table.Cell>{sum.annetBta}</Table.Cell>
+              <Table.Cell>{sum.sumBta}</Table.Cell>
+              <Table.Cell>{sum.bya}</Table.Cell>
             </Table.Row>
           </Table.Body>
         ))}

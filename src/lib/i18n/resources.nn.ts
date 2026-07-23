@@ -243,7 +243,7 @@ export const nn = {
           identifikasjonsNr: "Føds.dato/org.nr",
           andel: "Part",
           adresse: "Adresse",
-          bruksenhetsNr: "Bruksenhetsnr",
+          bruksenhetsNr: "Brukseining",
           erAvdoed: "Avdød",
         },
         tiltaksHaver: {
@@ -252,11 +252,11 @@ export const nn = {
           navn: "Namn",
           identifikasjonsNr: "Føds.dato/org.nr",
           adresse: "Adresse",
-          bruksenhetsNr: "Bruksenhetsnr",
+          bruksenhetsNr: "Brukseining",
         },
         bruksenheter: {
           tittel: "Berørte brukseiningar",
-          bruksenhetsNr: "Bruksenhet",
+          bruksenhetsNr: "Brukseining",
           bruksenhetsTypeKode: "Type",
           bruksAreal: "BRA",
           antallRom: "Rom",

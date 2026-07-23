@@ -243,7 +243,7 @@ export const nb = {
           identifikasjonsNr: "Føds.dato/org.nr",
           andel: "Andel",
           adresse: "Adresse",
-          bruksenhetsNr: "Bruksenhetsnr",
+          bruksenhetsNr: "Bruksenhet",
           erAvdoed: "Avdød",
         },
         tiltaksHaver: {
@@ -253,7 +253,7 @@ export const nb = {
           identifikasjonsNr: "Føds.dato/org.nr",
           aktorKode: "Rolle",
           adresse: "Adresse",
-          bruksenhetsNr: "Bruksenhetsnr",
+          bruksenhetsNr: "Bruksenhet",
         },
         bruksenheter: {
           tittel: "Berørte bruksenheter",
