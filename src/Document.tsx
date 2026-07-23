@@ -38,14 +38,7 @@ export function DocumentComponent({ rapport }: { rapport: Byg0011Rapport }) {
 
 export function renderDocument(rapport: Byg0011Rapport, css = ""): string {
   const i18n = createI18n(rapport.locale)
-  const pageCss = buildPageCss(
-    buildByg0011PagePlan(
-      rapport.locale,
-      rapport.rapportKode,
-      rapport.metadata,
-      i18n,
-    ),
-  )
+  const pageCss = buildPageCss(buildByg0011PagePlan(rapport, i18n))
   const body = renderToStaticMarkup(
     <I18nextProvider i18n={i18n}>
       <DocumentComponent rapport={rapport} />

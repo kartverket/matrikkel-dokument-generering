@@ -1,39 +1,67 @@
 import type { TFunction } from "i18next"
-import type { Byg0011Rapport } from "../../../schema/reports/bygg/byg0011/byggRapport.schema.ts"
-import type { PageDef } from "../../pagePlan"
+import { oversettKode } from "../../../i18n/koder/oversettKode.ts"
+import type { RapportMeta } from "../../../schema/core/meta.schema.ts"
+import type {
+  Byg0011Rapport,
+  Bygning,
+} from "../../../schema/reports/bygg/byg0011/byggRapport.schema.ts"
+import type { PageBoxes, PageDef } from "../../pagePlan"
+
+function buildHeader(
+  metadata: RapportMeta,
+  bygning: Bygning | undefined,
+  t: TFunction,
+): PageBoxes {
+  const { kommune, koordinatSystemKode } = metadata
+  const koordinatSystemNavn = oversettKode({
+    t,
+    kodeverk: "koordinat",
+    kode: koordinatSystemKode,
+  })
+
+  const venstre = [
+    t("pdf.header.kommune", {
+      kommuneNr: kommune.kommuneNr,
+      kommuneNavn: kommune.kommuneNavn,
+    }),
+    t("pdf.header.koordinatsystem", {
+      kode: koordinatSystemKode,
+      navn: koordinatSystemNavn,
+    }),
+  ]
+
+  const right = bygning
+    ? t("pdf.header.bygg", { bygningsnr: bygning.bygningsnr })
+    : undefined
+
+  return {
+    left: venstre.join("   "),
+    right,
+  }
+}
 
 export function buildByg0011HeaderPages(
   rapport: Byg0011Rapport,
   t: TFunction,
 ): PageDef[] {
-  const total = rapport.bygninger.length
-  const utvalgTitle = t("rapport.BYG0011.utvalgskriterier.title")
-  const oversiktTitle = t("rapport.BYG0011.byggoversikt.title")
-  const byggEndringTitle = t("rapport.BYG0011.byggEndringer.tittel")
-
-  return [
+  const { metadata, bygninger } = rapport
+  const enesteBygning = bygninger.length === 1 ? bygninger[0] : undefined
+  const pages: PageDef[] = [
     {
       name: "utvalgskriterier",
-      header: { right: `01 ${utvalgTitle}` },
+      header: buildHeader(metadata, enesteBygning, t),
     },
-    ...rapport.bygninger.flatMap((bygning, index): PageDef[] => {
-      const byggNr = index + 1
-      const byggLabel = t("pdf.header.bygg", {
-        nr: byggNr,
-        total,
-        bygningsnr: bygning.bygningsnr,
-      })
-
-      return [
-        {
-          name: `bygg-${byggNr}-oversikt`,
-          header: { left: byggLabel, right: `02 ${oversiktTitle}` },
-        },
-        {
-          name: `bygg-${byggNr}-bruksenhet`,
-          header: { left: byggLabel, right: `03 ${byggEndringTitle}` },
-        },
-      ]
-    }),
   ]
+
+  bygninger.forEach((bygning, index) => {
+    const pagePrefix = `bygg-${index + 1}`
+    const header = buildHeader(metadata, bygning, t)
+
+    pages.push(
+      { name: `${pagePrefix}-oversikt`, header },
+      { name: `${pagePrefix}-bruksenhet`, header },
+    )
+  })
+
+  return pages
 }
