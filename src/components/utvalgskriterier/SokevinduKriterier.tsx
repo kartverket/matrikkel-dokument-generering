@@ -13,7 +13,6 @@ interface Props {
 export function SokevinduKriterier({ sokevinduKriterier }: Props) {
   const { t } = useTranslation()
   const uk = "rapport.BYG0011.utvalgskriterier"
-  const ikkeAngitt = t(`${uk}.ikkeAngitt`)
 
   if (!sokevinduKriterier) return null
 

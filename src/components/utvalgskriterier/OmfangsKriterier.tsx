@@ -6,7 +6,7 @@ interface Props {
   omfangsKriterier: NonNullable<Utvalgskriterier>["omfang"]
 }
 
-export function RapportutvalgKriterier({ omfangsKriterier }: Props) {
+export function OmfangsKriterier({ omfangsKriterier }: Props) {
   const { t } = useTranslation()
   const uk = "rapport.BYG0011.utvalgskriterier"
 

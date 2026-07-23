@@ -31,7 +31,6 @@ export const nb = {
         title: "ByggUtvalgskriterier",
         ja: "Ja",
         nei: "Nei",
-        ikkeAngitt: "Ikke angitt",
         grupper: {
           omfang: "Rapportutvalg",
           bygning: "Bygning",

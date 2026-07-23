@@ -5,7 +5,7 @@ import { AktorKriterier } from "../components/utvalgskriterier/AktorKriterier.ts
 import { BygningKriterier } from "../components/utvalgskriterier/BygningKriterier"
 import { BygningsstatusKriterier } from "../components/utvalgskriterier/BygningsstatusKriterier"
 import { MatrikkelenhetKriterier } from "../components/utvalgskriterier/MatrikkelenhetKriterier"
-import { RapportutvalgKriterier } from "../components/utvalgskriterier/RapportutvalgKriterier"
+import { OmfangsKriterier } from "../components/utvalgskriterier/OmfangsKriterier.tsx"
 import { SokevinduKriterier } from "../components/utvalgskriterier/SokevinduKriterier"
 import { SubrapporterKriterier } from "../components/utvalgskriterier/SubrapporterKriterier"
 import type { ByggUtvalgskriterier as UtvalgskriterierType } from "../lib/schema/reports/bygg/shared/byggUtvalgskriterier.schema.ts"
@@ -22,7 +22,7 @@ export function ByggUtvalgskriterier({ index, kriterier }: Props) {
     <Section index={index} title={t("rapport.BYG0011.utvalgskriterier.title")}>
       {kriterier && (
         <div className="flex flex-col gap-10">
-          <RapportutvalgKriterier omfangsKriterier={kriterier.omfang} />
+          <OmfangsKriterier omfangsKriterier={kriterier.omfang} />
           <BygningKriterier bygningKriterier={kriterier.bygning} />
           <AdresseKriterier adresseKriterier={kriterier.adresse} />
 

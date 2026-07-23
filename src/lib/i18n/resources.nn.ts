@@ -31,7 +31,6 @@ export const nn = {
         title: "Utvalskriterier",
         ja: "Ja",
         nei: "Nei",
-        ikkeAngitt: "Ikkje oppgitt",
         grupper: {
           omfang: "Rapportutval",
           bygning: "Bygning",
