@@ -67,6 +67,7 @@ export default function EndringsTabell({
             ))}
           </Table.Row>
         </Table.Head>
+
         <Table.Body>
           {endringer.map((rad, i) => (
             <Table.Row key={String(i)} className="even:bg-kv-green-subtle">
