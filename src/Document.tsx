@@ -17,8 +17,7 @@ export function DocumentComponent({ rapport }: { rapport: Byg0011Rapport }) {
       <Metadata metadata={rapport.metadata} rapportKode={rapport.rapportKode} />
       <ByggUtvalgskriterier index={1} kriterier={rapport.utvalgskriterier} />
 
-      {rapport.bygninger.map((bygning, i) => {
-        const nr = i + 1
+      {rapport.bygninger.map((bygning) => {
         return (
           <Fragment key={bygning.bygningsnr}>
             <Byggoversikt index={2} bygning={bygning} />
