@@ -143,7 +143,7 @@ export const byggEndringSchema = valgfriObjekt({
 
     identifikasjonsNr: valgfriString.meta({
       title: "Fødselsdato/org.nr",
-      description: "Fødselsdato eller Org. nummer for tiltakshaver",
+      description: "Fødselsdato eller Org. nummer for den aktuelle eieren",
     }),
 
     // Samme felt som Status i dag, eneste gyldige verdier for status er enten død eller tom -> Derfor navn-endring
@@ -155,17 +155,17 @@ export const byggEndringSchema = valgfriObjekt({
 
     navn: valgfriString.meta({
       description:
-        "Navnet til aktøren. Kan være et selskapsnavn eller personnavn",
+        "Navnet til den aktuelle eieren. Kan være et selskapsnavn eller personnavn",
       example: "Bygg AS",
     }),
 
     adresse: valgfriString.meta({
-      description: "Adressen til aktøren",
+      description: "Adressen til den aktuelle eieren.",
       example: "Postboks 1350 Vika 113 OSLO",
     }),
 
     andel: valgfriString.meta({
-      description: "Andel aktøren eier av bruksenhetetn",
+      description: "Andel den aktuelle eieren eventuelt eier av bruksenheten",
       example: "2/5",
     }),
   }),
