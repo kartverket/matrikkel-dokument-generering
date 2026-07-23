@@ -203,6 +203,7 @@ export const nb = {
         harKulturminne: "Kulturminne",
         byggMetaEndring: {
           tittel: "Grunnopplysninger",
+          ingenEndring: "Ingen endringer registrert på bygget.",
           endringsKode: "Endringskode",
           bygningsTypeKode: "Bygningstype",
           bygningsStatusKode: "Bygningsstatus",
@@ -211,6 +212,7 @@ export const nb = {
         },
         areal: {
           tittel: "Arealendring",
+          ingenArealendring: "Ingen arealendringer registrert på bygget.",
           sum: "Sum",
           etasjeplan: "Etasjeplan",
           antallBoenheter: "Boenheter",
@@ -223,12 +225,14 @@ export const nb = {
           bya: "BYA",
         },
         byggKoordinatEndring: {
+          ingenEndring: "Ingen koordinatendringer registrert på bygget.",
           tittel: "Koordinater",
           nord: "Nord",
           ost: "Øst",
         },
         byggDatoEndring: {
           tittel: "Registrerte vedtak",
+          ingenEndring: "Ingen registrerte vedtak på bygget.",
           rammetillatelse: "Rammetillatelse",
           igangsettingstillatelse: "Igangsettingstillatelse",
           midlertidigBrukstillatelse: "Midlertidig brukstillatelse",
@@ -238,6 +242,7 @@ export const nb = {
         },
         aktuellEier: {
           tittel: "Aktuell eier",
+          ingenEndring: "Ingen endringer registrert på bygget.",
           eierforholdKode: "Rolle",
           navn: "Navn",
           identifikasjonsNr: "Føds.dato/org.nr",
@@ -248,6 +253,7 @@ export const nb = {
         },
         tiltaksHaver: {
           tittel: "Tiltakshaver",
+          ingenEndring: "Ingen endringer registrert på bygget.",
           kontaktPersonKode: "Rolle",
           navn: "Navn",
           identifikasjonsNr: "Føds.dato/org.nr",
@@ -257,6 +263,7 @@ export const nb = {
         },
         bruksenheter: {
           tittel: "Berørte bruksenheter",
+          ingenEndring: "Ingen endringer registrert på bygget.",
           bruksenhetsNr: "Bruksenhet",
           bruksenhetsTypeKode: "Type",
           bruksAreal: "BRA",

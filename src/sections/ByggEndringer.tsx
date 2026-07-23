@@ -1,12 +1,11 @@
 import { Heading, Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import ArealTabell, { type ArealGruppe } from "../components/ArealTabell.tsx"
+import ArealTabell, { type ArealEndring } from "../components/ArealTabell.tsx"
 import EndringsTabell from "../components/EndringsTabell.tsx"
 import { Section } from "../components/Section.tsx"
-import { oversettKode } from "../lib/i18n/koder/oversettKode.ts"
 import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 
-const BE = "rapport.BYG0011.byggEndringer" as const
+const tKey = "rapport.BYG0011.byggEndringer" as const
 
 type Props = {
   index: number
@@ -23,44 +22,36 @@ export default function ByggEndringer({ index, bygning }: Props) {
   // Enkeltfelt: én rad per endring (der feltet finnes)
   const metaEndringer = endringer
     .filter((e) => e.byggMetaEndring !== undefined)
-    .map((e) => ({
-      lopeNr: e.lopeNr,
-      ...e.byggMetaEndring,
-      bygningsTypeKode: e.byggMetaEndring?.bygningsTypeKode
-        ? oversettKode({
-            t,
-            kodeverk: "bygningstype",
-            kode: e.byggMetaEndring.bygningsTypeKode,
-          })
-        : undefined,
-      bygningsStatusKode: e.byggMetaEndring?.bygningsStatusKode
-        ? oversettKode({
-            t,
-            kodeverk: "bygningsstatus",
-            kode: e.byggMetaEndring.bygningsStatusKode,
-          })
-        : undefined,
-      endringsKode: e.byggMetaEndring?.endringsKode
-        ? oversettKode({
-            t,
-            kodeverk: "endring",
-            kode: e.byggMetaEndring.endringsKode,
-          })
-        : undefined,
-    }))
+    .map((e) => {
+      const meta = e.byggMetaEndring
+      return {
+        lopeNr: e.lopeNr,
+        ...meta,
+        bygningsTypeKode: meta?.bygningsTypeKode
+          ? t(`koder.bygningstype.${meta.bygningsTypeKode}`)
+          : undefined,
+        bygningsStatusKode: meta?.bygningsStatusKode
+          ? t(`koder.bygningsstatus.${meta.bygningsStatusKode}`)
+          : undefined,
+        endringsKode: meta?.endringsKode
+          ? t(`koder.endring.${meta.endringsKode}`)
+          : undefined,
+      }
+    })
 
   // Areal + etasjeplan slås sammen til én gruppert tabell per endring
-  const arealGrupper: ArealGruppe[] = endringer
+  const arealEndringer: ArealEndring[] = endringer
     .filter(
       (e) =>
         e.byggArealEndring !== undefined || (e.etasjePlan?.length ?? 0) > 0,
     )
     .map((e) => ({
       lopeNr: e.lopeNr,
-      rader: (e.etasjePlan ?? [])
+      etasjeRader: (e.etasjePlan ?? [])
         .filter((ep) => ep !== undefined)
         .map((ep) => ({
           etasjeplan: ep.etasjeplanKode,
+          etasje: ep.etasje,
           antallBoenheter: ep.antallBoenheter,
           boligBra: ep.bruksareal?.boligAreal,
           annetBra: ep.bruksareal?.annetAreal,
@@ -95,11 +86,7 @@ export default function ByggEndringer({ index, bygning }: Props) {
       lopeNr: e.lopeNr,
       ...e.aktuellEier,
       eierforholdKode: e.aktuellEier?.eierforholdKode
-        ? oversettKode({
-            t,
-            kodeverk: "eierforhold",
-            kode: e.aktuellEier.eierforholdKode,
-          })
+        ? t(`koder.eierforhold.${e.aktuellEier.eierforholdKode}`)
         : undefined,
     }))
 
@@ -109,11 +96,7 @@ export default function ByggEndringer({ index, bygning }: Props) {
       lopeNr: e.lopeNr,
       ...e.tiltaksHaver,
       kontaktPersonKode: e.tiltaksHaver?.kontaktPersonKode
-        ? oversettKode({
-            t,
-            kodeverk: "kontaktperson",
-            kode: e.tiltaksHaver.kontaktPersonKode,
-          })
+        ? t(`koder.kontaktperson.${e.tiltaksHaver.kontaktPersonKode}`)
         : undefined,
     }))
 
@@ -124,69 +107,50 @@ export default function ByggEndringer({ index, bygning }: Props) {
         lopeNr: e.lopeNr,
         ...b,
         bruksenhetsTypeKode: b.bruksenhetsTypeKode
-          ? oversettKode({
-              t,
-              kodeverk: "bruksenhetstype",
-              kode: b.bruksenhetsTypeKode,
-            })
+          ? t(`koder.bruksenhetstype.${b.bruksenhetsTypeKode}`)
           : undefined,
         kjokkenTilgangKode: b.kjokkenTilgangKode
-          ? oversettKode({
-              t,
-              kodeverk: "kjokkentilgang",
-              kode: b.kjokkenTilgangKode,
-            })
+          ? t(`koder.kjokkentilgang.${b.kjokkenTilgangKode}`)
           : undefined,
       })),
   )
 
-  console.log("ByggEndringer", {
-    endringer,
-    metaEndringer,
-    arealGrupper,
-    koordinatEndringer,
-    datoEndringer,
-    aktuellEierEndringer,
-    tiltaksHaverEndringer,
-    bruksenhetEndringer,
-  })
-
   return (
-    <Section index={index} title={t(`${BE}.tittel`)}>
+    <Section index={index} title={t(`${tKey}.tittel`)}>
       <Heading level={3} className="bg-kv-green-subtle p-2">
-        {t(`${BE}.bygningsnr`, { bygningsnr: bygning.bygningsnr })}
+        {t(`${tKey}.bygningsnr`, { bygningsnr: bygning.bygningsnr })}
       </Heading>
 
       {endringer.length === 0 ? (
         <Paragraph className="text-kv-subtle">
-          {t(`${BE}.ingenEndringer`)}
+          {t(`${tKey}.ingenEndringer`)}
         </Paragraph>
       ) : (
         <div className="flex flex-col gap-8">
           <EndringsTabell
             endringer={metaEndringer}
-            translationPrefix={`${BE}.byggMetaEndring`}
+            tKey={`${tKey}.byggMetaEndring`}
           />
-          <ArealTabell grupper={arealGrupper} />
+          <ArealTabell arealEndringer={arealEndringer} />
           <EndringsTabell
             endringer={koordinatEndringer}
-            translationPrefix={`${BE}.byggKoordinatEndring`}
+            tKey={`${tKey}.byggKoordinatEndring`}
           />
           <EndringsTabell
             endringer={datoEndringer}
-            translationPrefix={`${BE}.byggDatoEndring`}
+            tKey={`${tKey}.byggDatoEndring`}
           />
           <EndringsTabell
             endringer={aktuellEierEndringer}
-            translationPrefix={`${BE}.aktuellEier`}
+            tKey={`${tKey}.aktuellEier`}
           />
           <EndringsTabell
             endringer={tiltaksHaverEndringer}
-            translationPrefix={`${BE}.tiltaksHaver`}
+            tKey={`${tKey}.tiltaksHaver`}
           />
           <EndringsTabell
             endringer={bruksenhetEndringer}
-            translationPrefix={`${BE}.bruksenheter`}
+            tKey={`${tKey}.bruksenheter`}
           />
         </div>
       )}

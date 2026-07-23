@@ -203,6 +203,7 @@ export const nn = {
         harKulturminne: "Kulturminne",
         byggMetaEndring: {
           tittel: "Grunnopplysningar",
+          ingenEndring: "Ingen endringar registrerte på bygget.",
           endringsKode: "Endringskode",
           bygningsTypeKode: "Bygningstype",
           bygningsStatusKode: "Bygningsstatus",
@@ -211,6 +212,7 @@ export const nn = {
         },
         areal: {
           tittel: "Arealendring",
+          ingenArealendring: "Ingen arealendringar registrerte på bygget.",
           sum: "Sum",
           etasjeplan: "Etasjeplan",
           antallBoenheter: "Bueiningar",
@@ -223,11 +225,13 @@ export const nn = {
           bya: "BYA",
         },
         byggKoordinatEndring: {
+          ingenEndring: "Ingen koordinatendringar registrerte på bygget.",
           tittel: "Koordinatar",
           nord: "Nord",
           ost: "Aust",
         },
         byggDatoEndring: {
+          ingenEndring: "Ingen registrerte vedtak på bygget.",
           tittel: "Registrerte vedtak",
           rammetillatelse: "Rammeløyve",
           igangsettingstillatelse: "Igangsetjingsløyve",
@@ -237,6 +241,7 @@ export const nn = {
           utgaattRevet: "Utgått / rive",
         },
         aktuellEier: {
+          ingenEndring: "Ingen endringar registrerte på bygget.",
           tittel: "Aktuell eigar",
           eierforholdKode: "Rolle",
           navn: "Namn",
@@ -247,6 +252,7 @@ export const nn = {
           erAvdoed: "Avdød",
         },
         tiltaksHaver: {
+          ingenEndring: "Ingen endringar registrerte på bygget.",
           tittel: "Tiltakshavar",
           kontaktPersonKode: "Rolle",
           navn: "Namn",
@@ -255,6 +261,7 @@ export const nn = {
           bruksenhetsNr: "Brukseining",
         },
         bruksenheter: {
+          ingenEndring: "Ingen endringar registrerte på bygget.",
           tittel: "Berørte brukseiningar",
           bruksenhetsNr: "Brukseining",
           bruksenhetsTypeKode: "Type",
