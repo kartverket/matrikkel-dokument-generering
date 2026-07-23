@@ -8,6 +8,7 @@ export type PageContent =
       type: "pageCounter"
       pageLabel: string
       totalLabel: string
+      boldCurrentPage?: boolean
     }
 
 export interface PageBoxes {
@@ -36,10 +37,12 @@ export interface PagePlan {
 export function pageCounterContent(
   pageLabel: string,
   totalLabel: string,
+  boldCurrentPage = false,
 ): PageContent {
   return {
     type: "pageCounter",
     pageLabel,
     totalLabel,
+    boldCurrentPage,
   }
 }

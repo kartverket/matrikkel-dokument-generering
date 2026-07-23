@@ -3,6 +3,8 @@ import type { PageBoxes, PageContent, PageDef, PagePlan } from "./pagePlan"
 // Genererer CSS med navngitte `@page`-blokker og tilhørende CSS-klasser fra en rapport-uavhengig `PagePlan`.
 
 const PAGE_LAYOUT = "size: A4; margin: 22mm 18mm 22mm 18mm;"
+const BOLD_PAGE_COUNTER =
+  '@counter-style bold-page { system: numeric; symbols: "𝟎" "𝟏" "𝟐" "𝟑" "𝟒" "𝟓" "𝟔" "𝟕" "𝟖" "𝟗"; }'
 
 function escapeCssString(value: string): string {
   return value.replace(/\\/g, "\\\\").replace(/"/g, '\\"')
@@ -11,8 +13,12 @@ function escapeCssString(value: string): string {
 function contentExpression(value: PageContent): string {
   if (typeof value === "string") return `"${escapeCssString(value)}"`
 
+  const pageCounter = value.boldCurrentPage
+    ? "counter(page, bold-page)"
+    : "counter(page)"
+
   return (
-    `"${escapeCssString(value.pageLabel)} " counter(page) ` +
+    `"${escapeCssString(value.pageLabel)} " ${pageCounter} ` +
     `" ${escapeCssString(value.totalLabel)} " counter(pages)`
   )
 }
@@ -67,5 +73,5 @@ export function buildPageCss(plan: PagePlan): string {
     })
     .join("\n")
 
-  return `${defaultBlock}\n${namedBlocks}`.trim()
+  return `${BOLD_PAGE_COUNTER}\n${defaultBlock}\n${namedBlocks}`.trim()
 }

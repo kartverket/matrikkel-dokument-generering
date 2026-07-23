@@ -29,6 +29,6 @@ export function buildFooter(
       dato: generertDato,
       tid: generertTid,
     }),
-    right: pageCounterContent(t("pdf.footer.side"), t("pdf.footer.av")),
+    right: pageCounterContent(t("pdf.footer.side"), t("pdf.footer.av"), true),
   }
 }
