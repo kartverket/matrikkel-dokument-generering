@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi"
 
-const aktorKoder = [
+const personKategoriKoder = [
   "0", // Ikke oppgitt
   "1", // Aksjeselskap
   "2", // Boligbyggelag Borettslag
@@ -17,10 +17,10 @@ const aktorKoder = [
 ] as const
 
 // ref: PersonKategoriKodeId.java
-export const aktorKodeSchema = z.enum(aktorKoder).meta({
-  id: "AktorKode",
+export const personKategoriKodeSchema = z.enum(personKategoriKoder).meta({
+  id: "PersonKategoriKode",
   description:
-    "Rollen til aktøren. Koder: \n" +
+    "Kategorien til personen. Koder: \n" +
     "0: Ikke oppgitt \n" +
     "1: Aksjeselskap \n" +
     "2: Boligbyggelag Borettslag \n" +
@@ -36,4 +36,4 @@ export const aktorKodeSchema = z.enum(aktorKoder).meta({
     "12: Annen Eiertype \n",
 })
 
-export type AktorKode = z.infer<typeof aktorKodeSchema>
+export type PersonKategoriKode = z.infer<typeof personKategoriKodeSchema>
