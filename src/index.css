@@ -56,8 +56,9 @@ th {
 
   @top-right {
     @apply text-pdf-label;
-    color: #278a46;
+    color: #5d5d5d;
     text-decoration-line: underline;
+    text-decoration-color: #278a46;
     text-decoration-thickness: 1px;
     text-underline-offset: 3px;
   }
