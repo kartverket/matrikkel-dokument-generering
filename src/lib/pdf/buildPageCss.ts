@@ -2,20 +2,24 @@ import type { PageBoxes, PageContent, PageDef, PagePlan } from "./pagePlan"
 
 // Genererer CSS med navngitte `@page`-blokker og tilhørende CSS-klasser fra en rapport-uavhengig `PagePlan`.
 
-const MARGINS = "size: A4; margin: 22mm 18mm 22mm 18mm;"
-const LABEL = "font-size: 9pt; color: #555;"
+const PAGE_LAYOUT = "size: A4; margin: 22mm 18mm 22mm 18mm;"
 
 function escapeCssString(value: string): string {
   return value.replace(/\\/g, "\\\\").replace(/"/g, '\\"')
 }
 
 function contentExpression(value: PageContent): string {
-  return typeof value === "string" ? `"${escapeCssString(value)}"` : value.raw
+  if (typeof value === "string") return `"${escapeCssString(value)}"`
+
+  return (
+    `"${escapeCssString(value.pageLabel)} " counter(page) ` +
+    `" ${escapeCssString(value.totalLabel)} " counter(pages)`
+  )
 }
 
 function box(name: string, value: PageContent | undefined): string {
   if (value === undefined) return ""
-  return `@${name} { content: ${contentExpression(value)}; ${LABEL} }`
+  return `@${name} { content: ${contentExpression(value)}; }`
 }
 
 function boxes(prefix: "top" | "bottom", value: PageBoxes | undefined): string {
@@ -40,7 +44,7 @@ function mergeBoxes(
 }
 
 function pageBody(page: { header?: PageBoxes; footer?: PageBoxes }): string {
-  return [MARGINS, boxes("top", page.header), boxes("bottom", page.footer)]
+  return [PAGE_LAYOUT, boxes("top", page.header), boxes("bottom", page.footer)]
     .filter(Boolean)
     .join(" ")
 }

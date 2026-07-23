@@ -17,6 +17,7 @@
   --color-kv-green: var(--ds-color-success-base-default);
   --color-kv-green-tinted: #edf6f0;
   --color-kv-background-tinted: #daeed7;
+  --text-pdf-label: 9pt;
 }
 
 body {
@@ -39,6 +40,28 @@ th {
 @media print {
   :root {
     font-size: calc(10px);
+  }
+}
+
+/*
+ * Topp- og bunntekst rendres i CSS-sidebokser og er derfor ikke DOM-elementer
+ * som kan få className.
+ */
+@page {
+  @top-left {
+    @apply text-kv-subtle text-pdf-label;
+  }
+
+  @top-right {
+    @apply text-kv-subtle text-pdf-label;
+  }
+
+  @bottom-left {
+    @apply text-kv-subtle text-pdf-label;
+  }
+
+  @bottom-right {
+    @apply text-kv-subtle text-pdf-label;
   }
 }
 
