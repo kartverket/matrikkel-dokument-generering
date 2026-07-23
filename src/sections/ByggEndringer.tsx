@@ -60,7 +60,7 @@ export default function ByggEndringer({ index, bygning }: Props) {
       rader: (e.etasjePlan ?? [])
         .filter((ep) => ep !== undefined)
         .map((ep) => ({
-          etasjeplan: ep.etasjeplan,
+          etasjeplan: ep.etasjeplanKode,
           antallBoenheter: ep.antallBoenheter,
           boligBra: ep.bruksareal?.boligAreal,
           annetBra: ep.bruksareal?.annetAreal,
@@ -89,13 +89,17 @@ export default function ByggEndringer({ index, bygning }: Props) {
     .filter((e) => e.byggDatoEndring !== undefined)
     .map((e) => ({ lopeNr: e.lopeNr, ...e.byggDatoEndring }))
 
-  const aktorEndringer = endringer
-    .filter((e) => e.aktor !== undefined)
+  const aktuellEierEndringer = endringer
+    .filter((e) => e.aktuellEier !== undefined)
     .map((e) => ({
       lopeNr: e.lopeNr,
-      ...e.aktor,
-      aktorKode: e.aktor?.aktorKode
-        ? oversettKode({ t, kodeverk: "aktor", kode: e.aktor.aktorKode })
+      ...e.aktuellEier,
+      eierforholdKode: e.aktuellEier?.eierforholdKode
+        ? oversettKode({
+            t,
+            kodeverk: "eierforhold",
+            kode: e.aktuellEier.eierforholdKode,
+          })
         : undefined,
     }))
 
@@ -142,7 +146,7 @@ export default function ByggEndringer({ index, bygning }: Props) {
     arealGrupper,
     koordinatEndringer,
     datoEndringer,
-    aktorEndringer,
+    aktuellEierEndringer,
     tiltaksHaverEndringer,
     bruksenhetEndringer,
   })
@@ -173,8 +177,8 @@ export default function ByggEndringer({ index, bygning }: Props) {
             translationPrefix={`${BE}.byggDatoEndring`}
           />
           <EndringsTabell
-            endringer={aktorEndringer}
-            translationPrefix={`${BE}.aktor`}
+            endringer={aktuellEierEndringer}
+            translationPrefix={`${BE}.aktuellEier`}
           />
           <EndringsTabell
             endringer={tiltaksHaverEndringer}

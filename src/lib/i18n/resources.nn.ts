@@ -236,9 +236,9 @@ export const nn = {
           tattIBruk: "Teke i bruk",
           utgaattRevet: "Utgått / rive",
         },
-        aktor: {
-          tittel: "Aktør",
-          aktorKode: "Rolle",
+        aktuellEier: {
+          tittel: "Aktuell eigar",
+          eierforholdKode: "Rolle",
           navn: "Namn",
           identifikasjonsNr: "Føds.dato/org.nr",
           andel: "Part",
