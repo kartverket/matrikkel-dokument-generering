@@ -22,7 +22,9 @@ function buildHeader(
   const venstre = [
     t("pdf.header.kommune", {
       kommuneNr: kommune.kommuneNr,
-      kommuneNavn: kommune.kommuneNavn,
+      kommuneNavn:
+        kommune.kommuneNavn.charAt(0).toUpperCase() +
+        kommune.kommuneNavn.slice(1).toLowerCase(),
     }),
     t("pdf.header.koordinatsystem", {
       kode: koordinatSystemKode,

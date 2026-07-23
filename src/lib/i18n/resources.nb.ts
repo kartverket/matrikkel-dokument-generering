@@ -8,7 +8,7 @@ export const nb = {
   pdf: {
     header: {
       matrikkelenhet: "Matrikkelenhet {{matrikkelNr}}",
-      kommune: "{{kommuneNr}} {{kommuneNavn}} kommune",
+      kommune: "{{kommuneNr}} {{kommuneNavn}}",
       koordinatsystem: "{{kode}} - {{navn}}",
       bygg: "Bygningsnr. {{bygningsnr}}",
     },
