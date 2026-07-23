@@ -38,8 +38,17 @@ export default function Byggoversikt({ byggEndringer, index, byggNr }: Props) {
             <>
               <Nokkeltall gjeldendeEndring={gjeldendeTilstand} />
               <Oversiktsfelt
-                byggNr={byggNr}
-                gjeldendeEndring={gjeldendeTilstand}
+                byggTypeKode={
+                  gjeldendeTilstand?.byggMetaEndring?.bygningsTypeKode
+                }
+                antallBoenheter={
+                  gjeldendeTilstand?.byggMetaEndring?.antallBoenheter
+                }
+                antallBruksenheter={gjeldendeTilstand?.bruksenheter.length}
+                naeringsgruppe={
+                  gjeldendeTilstand?.byggMetaEndring?.naeringsgruppe
+                }
+                koordinater={gjeldendeTilstand?.byggKoordinatEndring}
               />
               <ArealFordeling etasjePlan={gjeldendeTilstand.etasjePlan} />
             </>
