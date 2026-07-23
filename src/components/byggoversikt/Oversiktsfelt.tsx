@@ -22,7 +22,10 @@ export default function Oversiktsfelt({ bygning, gjeldendeEndring }: Props) {
 
   const etasjer = gjeldendeEndring.etasjePlan
     .filter((etasje) => etasje !== undefined)
-    .map((etasje) => `${etasje.etasjeplan} (${etasje.etasje})`)
+    .map(
+      (etasje) =>
+        `${t(`koder.etasjeplan.${etasje.etasjeplanKode}`)} (${etasje.etasje})`,
+    )
     .join(", ")
 
   const oversikt = {

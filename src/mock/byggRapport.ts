@@ -98,14 +98,14 @@ function byggEndring({
     },
     etasjePlan: [
       {
-        etasjeplan: "Hovedetasje",
+        etasjeplanKode: "1",
         etasje: 1,
         antallBoenheter: 1,
         bruksareal: arealFordeling(80, 10),
         bruttoareal: arealFordeling(90, 12),
       },
       {
-        etasjeplan: "Annenetasje",
+        etasjeplanKode: "1",
         etasje: 2,
         antallBoenheter: 0,
         bruksareal: arealFordeling(60, 10),
@@ -114,9 +114,9 @@ function byggEndring({
     ],
     byggKoordinatEndring: { nord: 6642100, ost: 597400 },
     byggDatoEndring: datoer,
-    aktor: {
+    aktuellEier: {
       bruksenhetsNr: "H0101",
-      aktorKode: "4",
+      eierforholdKode: "1",
       identifikasjonsNr: "12051978",
       erAvdoed: false,
       navn: "Ola Nordmann",

@@ -42,8 +42,10 @@ export default function ArealFordeling({ etasjePlan }: Props) {
         </Table.Head>
         <Table.Body>
           {etasjer.map((e) => (
-            <Table.Row key={`${e.etasjeplan}-${e.etasje}`}>
-              <Table.Cell>{e.etasjeplan}</Table.Cell>
+            <Table.Row key={`${e.etasjeplanKode}-${e.etasje}`}>
+              <Table.Cell>
+                {t(`koder.etasjeplan.${e.etasjeplanKode}`)}
+              </Table.Cell>
               <Table.Cell>{e.antallBoenheter}</Table.Cell>
               <Table.Cell>{formatArea(e.bruksareal.boligAreal)}</Table.Cell>
               <Table.Cell>{formatArea(e.bruksareal.annetAreal)}</Table.Cell>

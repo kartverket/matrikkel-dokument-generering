@@ -9,11 +9,12 @@ import {
   valgfriSchema,
   valgfriString,
 } from "../../../core/utils/zodUtils.ts"
-import { aktorKodeSchema } from "../koder/aktorKode.schema.ts"
 import { bruksenhetsKodeSchema } from "../koder/bruksenhetsTypeKode.schema.ts"
 import { byggningsStatusKodeSchema } from "../koder/byggningsStatusKode.schema.ts"
 import { bygningsTypeKodeSchema } from "../koder/bygningsTypeKodeSchema.ts"
+import { eierforholdKodeSchema } from "../koder/eierforholdKode.schema.ts"
 import { endringsKodeSchema } from "../koder/endringsKode.schema.ts"
+import { etasjeplanKodeSchema } from "../koder/etasjeplanKode.schema.ts"
 import { kjokkenTilgangKodeSchema } from "../koder/kjokkenTilgangKode.ts"
 import { kontaktPersonKodeSchema } from "../koder/kontaktPersonKode.schema.ts"
 import { arealFordelingSchema } from "../shared/arealFordeling.schema.ts"
@@ -50,9 +51,7 @@ export const byggEndringSchema = valgfriObjekt({
 
   etasjePlan: valgfriListe(
     valgfriObjekt({
-      etasjeplan: z.string().min(1).meta({
-        example: "Hovedetasje",
-      }),
+      etasjeplanKode: etasjeplanKodeSchema,
       etasje: z.number().int().nonnegative().meta({
         example: 1,
       }),
@@ -134,16 +133,16 @@ export const byggEndringSchema = valgfriObjekt({
   }),
 
   // Tidligere Hjemmelshaver/aktuell eier/kontaktinstans
-  aktor: valgfriObjekt({
+  aktuellEier: valgfriObjekt({
     bruksenhetsNr: valgfriString.meta({
       title: "Bruksenhetsnummer",
       example: "H0101",
     }),
-    aktorKode: aktorKodeSchema,
+    eierforholdKode: eierforholdKodeSchema,
 
     identifikasjonsNr: valgfriString.meta({
       title: "Fødselsdato/org.nr",
-      description: "Fødselsdato eller Org. nummer for tiltakshaver",
+      description: "Fødselsdato eller Org. nummer for den aktuelle eieren",
     }),
 
     // Samme felt som Status i dag, eneste gyldige verdier for status er enten død eller tom -> Derfor navn-endring
@@ -155,17 +154,17 @@ export const byggEndringSchema = valgfriObjekt({
 
     navn: valgfriString.meta({
       description:
-        "Navnet til aktøren. Kan være et selskapsnavn eller personnavn",
+        "Navnet til den aktuelle eieren. Kan være et selskapsnavn eller personnavn",
       example: "Bygg AS",
     }),
 
     adresse: valgfriString.meta({
-      description: "Adressen til aktøren",
+      description: "Adressen til den aktuelle eieren.",
       example: "Postboks 1350 Vika 113 OSLO",
     }),
 
     andel: valgfriString.meta({
-      description: "Andel aktøren eier av bruksenhetetn",
+      description: "Andel den aktuelle eieren eventuelt eier av bruksenheten",
       example: "2/5",
     }),
   }),
@@ -239,7 +238,9 @@ export type ByggEndringsDatoer = NonNullable<
 export type TiltaksHaver = NonNullable<
   NonNullable<BygningsEndring>["tiltaksHaver"]
 >
-export type Aktor = NonNullable<NonNullable<BygningsEndring>["aktor"]>
+export type AktuellEier = NonNullable<
+  NonNullable<BygningsEndring>["aktuellEier"]
+>
 export type EtasjePlan = NonNullable<BygningsEndring>["etasjePlan"]
 
 export type BygningsEndring = z.infer<typeof byggEndringSchema>
