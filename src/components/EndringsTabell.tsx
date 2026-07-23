@@ -18,11 +18,10 @@ function formatCell(
   value: unknown,
   i18n: Pick<I18n, "language" | "t">,
   t: (key: string) => string,
-  translationPrefix: string,
 ): string {
   if (value == null || value === "") return ""
   if (typeof value === "boolean")
-    return value ? t(`${translationPrefix}.ja`) : t(`${translationPrefix}.nei`)
+    return value ? t(`${ENDRING}.ja`) : t(`${ENDRING}.nei`)
   if (typeof value === "string" && ISO_DATE.test(value))
     return formatDate(i18n, value, "")
   if (typeof value === "number") return String(value)
@@ -76,7 +75,7 @@ export default function EndringsTabell({
               </Table.HeaderCell>
               {kolonner.map((k) => (
                 <Table.Cell className="truncate text-kv-default" key={k}>
-                  {formatCell(rad[k], i18n, tr, translationPrefix)}
+                  {formatCell(rad[k], i18n, tr)}
                 </Table.Cell>
               ))}
             </Table.Row>
