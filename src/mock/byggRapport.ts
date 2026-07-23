@@ -114,9 +114,9 @@ function byggEndring({
     ],
     byggKoordinatEndring: { nord: 6642100, ost: 597400 },
     byggDatoEndring: datoer,
-    aktor: {
+    aktuellEier: {
       bruksenhetsNr: "H0101",
-      aktorKode: "4",
+      eierforholdKode: "1",
       identifikasjonsNr: "12051978",
       erAvdoed: false,
       navn: "Ola Nordmann",
