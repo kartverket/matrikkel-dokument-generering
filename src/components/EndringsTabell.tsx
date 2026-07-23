@@ -7,10 +7,8 @@ type EndringsRad = { lopeNr: number } & Record<string, unknown>
 
 type Props = {
   endringer: EndringsRad[]
-  tKey: string
+  seksjon: string
 }
-
-const BE = "rapport.BYG0011.byggEndringer" as const
 
 function formatCell(
   value: unknown,
@@ -20,7 +18,9 @@ function formatCell(
 
   switch (typeof value) {
     case "boolean":
-      return value ? i18n.t(`${BE}.ja`) : i18n.t(`${BE}.nei`)
+      return value
+        ? i18n.t(`rapport.BYG0011.byggEndringer.ja`)
+        : i18n.t(`rapport.BYG0011.byggEndringer.nei`)
     case "string":
       return /^\d{4}-\d{2}-\d{2}/.test(value) // Sjekker om strengen ser ut som en dato (YYYY-MM-DD)
         ? formatDate(i18n, value, value)
@@ -32,9 +32,9 @@ function formatCell(
   }
 }
 
-export default function EndringsTabell({ endringer, tKey }: Props) {
+export default function EndringsTabell({ endringer, seksjon }: Props) {
   const { t, i18n } = useTranslation()
-  const tr = t as (path: string) => string // Typecaste t til en funksjon som tar en string literal
+  const tKey = `rapport.BYG0011.byggEndringer.${seksjon}` as const
 
   const kolonner = Array.from(
     endringer.reduce((set, rad) => {
@@ -49,21 +49,23 @@ export default function EndringsTabell({ endringer, tKey }: Props) {
     <div className="my-4 space-y-4">
       <span className="flex items-center gap-4">
         <Heading level={3} data-size="sm" className="min-w-max font-medium">
-          {tr(`${tKey}.tittel`)}
+          {t(`${tKey}.tittel`, { defaultValue: "" })}
         </Heading>
         <hr className="w-full border border-kv-green-border" />
       </span>
 
       {endringer.length === 0 ? (
-        <p className="text-kv-subtle">{tr(`${tKey}.ingenEndring`)}</p>
+        <p className="text-kv-subtle">
+          {t(`${tKey}.ingenEndring`, { defaultValue: "" })}
+        </p>
       ) : (
         <Table className="w-full">
           <Table.Head>
             <Table.Row className="font-regular text-kv-subtle">
               <Table.HeaderCell />
-              {kolonner.map((k) => (
-                <Table.HeaderCell key={k}>
-                  {tr(`${tKey}.${k}`)}
+              {kolonner.map((kolonne) => (
+                <Table.HeaderCell key={kolonne}>
+                  {t(`${tKey}.${kolonne}`, { defaultValue: kolonne })}
                 </Table.HeaderCell>
               ))}
             </Table.Row>
@@ -73,7 +75,7 @@ export default function EndringsTabell({ endringer, tKey }: Props) {
             {endringer.map((rad, i) => (
               <Table.Row key={String(i)} className="even:bg-kv-green-subtle">
                 <Table.HeaderCell scope="row" className="w-32 align-top">
-                  {`${tr(`${BE}.lopeNr`)} ${rad.lopeNr}`}
+                  {`${t(`rapport.BYG0011.byggEndringer.lopeNr`)} ${rad.lopeNr}`}
                 </Table.HeaderCell>
                 {kolonner.map((k) => (
                   <Table.Cell

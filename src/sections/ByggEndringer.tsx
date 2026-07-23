@@ -5,8 +5,6 @@ import EndringsTabell from "../components/EndringsTabell.tsx"
 import { Section } from "../components/Section.tsx"
 import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 
-const tKey = "rapport.BYG0011.byggEndringer" as const
-
 type Props = {
   index: number
   bygning: Bygning
@@ -14,6 +12,7 @@ type Props = {
 
 export default function ByggEndringer({ index, bygning }: Props) {
   const { t } = useTranslation()
+  const tKey = "rapport.BYG0011.byggEndringer" as const
 
   const endringer = bygning.endringer
     .filter((e) => e !== undefined)
@@ -130,30 +129,24 @@ export default function ByggEndringer({ index, bygning }: Props) {
         </Paragraph>
       ) : (
         <div className="flex flex-col gap-8">
-          <EndringsTabell
-            endringer={metaEndringer}
-            tKey={`${tKey}.byggMetaEndring`}
-          />
+          <EndringsTabell endringer={metaEndringer} seksjon="byggMetaEndring" />
           <ArealTabell arealEndringer={arealEndringer} />
           <EndringsTabell
             endringer={koordinatEndringer}
-            tKey={`${tKey}.byggKoordinatEndring`}
+            seksjon="byggKoordinatEndring"
           />
-          <EndringsTabell
-            endringer={datoEndringer}
-            tKey={`${tKey}.byggDatoEndring`}
-          />
+          <EndringsTabell endringer={datoEndringer} seksjon="byggDatoEndring" />
           <EndringsTabell
             endringer={aktuellEierEndringer}
-            tKey={`${tKey}.aktuellEier`}
+            seksjon="aktuellEier"
           />
           <EndringsTabell
             endringer={tiltaksHaverEndringer}
-            tKey={`${tKey}.tiltaksHaver`}
+            seksjon="tiltaksHaver"
           />
           <EndringsTabell
             endringer={bruksenhetEndringer}
-            tKey={`${tKey}.bruksenheter`}
+            seksjon="bruksenheter"
           />
         </div>
       )}
