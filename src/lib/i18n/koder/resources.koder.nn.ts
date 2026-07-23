@@ -126,9 +126,9 @@ export const koderNn = {
   },
   kjokkentilgang: {
     " ": "Ikkje oppgitt",
-    "1": "Har eige kjøken",
-    "2": "Har ikkje tilgang til kjøken",
-    "3": "Har tilgang til felles kjøken",
+    "1": "Ja",
+    "2": "Nei",
+    "3": "Felles",
     "4": "Ukjend",
   },
   koordinat: {

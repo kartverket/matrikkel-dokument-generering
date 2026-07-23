@@ -74,7 +74,10 @@ export default function EndringsTabell({
                 {`${tr(`${ENDRING}.lopeNr`)} ${rad.lopeNr}`}
               </Table.HeaderCell>
               {kolonner.map((k) => (
-                <Table.Cell className="truncate text-kv-default" key={k}>
+                <Table.Cell
+                  key={k}
+                  className="max-w-96 whitespace-normal break-words align-top text-kv-default"
+                >
                   {formatCell(rad[k], i18n, tr)}
                 </Table.Cell>
               ))}

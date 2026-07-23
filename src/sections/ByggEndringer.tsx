@@ -136,6 +136,17 @@ export default function ByggEndringer({ index, bygning }: Props) {
       })),
   )
 
+  console.log("ByggEndringer", {
+    endringer,
+    metaEndringer,
+    arealGrupper,
+    koordinatEndringer,
+    datoEndringer,
+    aktorEndringer,
+    tiltaksHaverEndringer,
+    bruksenhetEndringer,
+  })
+
   return (
     <Section index={index} title={t(`${BE}.tittel`)}>
       <Heading level={3} className="bg-kv-green-subtle p-2">

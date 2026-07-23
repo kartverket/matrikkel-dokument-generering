@@ -256,9 +256,9 @@ export const nn = {
         },
         bruksenheter: {
           tittel: "Berørte brukseiningar",
-          bruksenhetsNr: "Bruksenhetsnr",
+          bruksenhetsNr: "Bruksenhet",
           bruksenhetsTypeKode: "Type",
-          bruksAreal: "Bruksareal",
+          bruksAreal: "BRA",
           antallRom: "Rom",
           antallBad: "Bad",
           antallWC: "WC",
