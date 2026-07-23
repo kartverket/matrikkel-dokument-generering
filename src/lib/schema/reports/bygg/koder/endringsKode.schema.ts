@@ -1,11 +1,11 @@
 import { z } from "@hono/zod-openapi"
 
 const endringsKoder = [
-  "1", // Tilbygg
-  "2", // Påbygg
-  "3", // Underbygg
-  "4", // Ombygging
-  "5", // Ukjent
+  "T", // Tilbygg
+  "P", // Påbygg
+  "U", // Underbygg
+  "O", // Ombygging
+  "X", // Ukjent
 ] as const
 
 // ref: BygningsendringsKodeId.java
@@ -16,11 +16,11 @@ export const endringsKodeSchema = z.enum(endringsKoder).meta({
 Koder:
 
 \`\`\`
-1: Tilbygg
-2: Påbygg
-3: Underbygg
-4: Ombygging
-5: Ukjent
+T: Tilbygg
+P: Påbygg
+U: Underbygg
+O: Ombygging
+X: Ukjent
 \`\`\``,
 })
 
