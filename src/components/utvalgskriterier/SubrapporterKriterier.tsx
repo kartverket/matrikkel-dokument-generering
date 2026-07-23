@@ -16,14 +16,14 @@ export function SubrapporterKriterier({ subrapporterKriterier }: Props) {
   return (
     <section className="break-inside-avoid">
       <Heading level={3} data-size="sm" className="mb-4 font-medium">
-        {t(`${uk}.grupper.subrapporter`)}
+        {t(`${uk}.subrapporter.tittel`)}
       </Heading>
       <Table zebra border className="w-full table-fixed">
         <Table.Body>
           {erAngitt(subrapporterKriterier?.inkluderEtasjer) && (
             <Table.Row>
               <Table.HeaderCell scope="row" className="w-1/3">
-                {t(`${uk}.subrapporter.etasjer`)}
+                {t(`${uk}.subrapporter.inkluderEtasjer`)}
               </Table.HeaderCell>
               <Table.Cell>
                 {t(
@@ -35,7 +35,7 @@ export function SubrapporterKriterier({ subrapporterKriterier }: Props) {
           {erAngitt(subrapporterKriterier?.inkluderBruksenheter) && (
             <Table.Row>
               <Table.HeaderCell scope="row" className="w-1/3">
-                {t(`${uk}.subrapporter.bruksenheter`)}
+                {t(`${uk}.subrapporter.inkluderBruksenheter`)}
               </Table.HeaderCell>
               <Table.Cell>
                 {t(
@@ -47,7 +47,7 @@ export function SubrapporterKriterier({ subrapporterKriterier }: Props) {
           {erAngitt(subrapporterKriterier?.inkluderTiltakshavere) && (
             <Table.Row>
               <Table.HeaderCell scope="row" className="w-1/3">
-                {t(`${uk}.subrapporter.tiltakshavere`)}
+                {t(`${uk}.subrapporter.inkluderTiltakshavere`)}
               </Table.HeaderCell>
               <Table.Cell>
                 {t(
@@ -59,7 +59,7 @@ export function SubrapporterKriterier({ subrapporterKriterier }: Props) {
           {erAngitt(subrapporterKriterier?.inkluderKontaktpersoner) && (
             <Table.Row>
               <Table.HeaderCell scope="row" className="w-1/3">
-                {t(`${uk}.subrapporter.kontaktpersoner`)}
+                {t(`${uk}.subrapporter.inkluderKontaktpersoner`)}
               </Table.HeaderCell>
               <Table.Cell>
                 {t(
@@ -71,7 +71,7 @@ export function SubrapporterKriterier({ subrapporterKriterier }: Props) {
           {erAngitt(subrapporterKriterier?.inkluderHjemmelshavere) && (
             <Table.Row>
               <Table.HeaderCell scope="row" className="w-1/3">
-                {t(`${uk}.subrapporter.hjemmelshavere`)}
+                {t(`${uk}.subrapporter.inkluderHjemmelshavere`)}
               </Table.HeaderCell>
               <Table.Cell>
                 {t(
@@ -83,7 +83,7 @@ export function SubrapporterKriterier({ subrapporterKriterier }: Props) {
           {erAngitt(subrapporterKriterier?.inkluderKulturminner) && (
             <Table.Row>
               <Table.HeaderCell scope="row" className="w-1/3">
-                {t(`${uk}.subrapporter.kulturminner`)}
+                {t(`${uk}.subrapporter.inkluderKulturminner`)}
               </Table.HeaderCell>
               <Table.Cell>
                 {t(

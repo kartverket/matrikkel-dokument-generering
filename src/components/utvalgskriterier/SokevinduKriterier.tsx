@@ -29,7 +29,7 @@ export function SokevinduKriterier({ sokevinduKriterier }: Props) {
   return (
     <section className="break-inside-avoid">
       <Heading level={3} data-size="sm" className="mb-4 font-medium">
-        {t(`${uk}.grupper.sokevindu`)}
+        {t(`${uk}.sokevindu.tittel`)}
       </Heading>
       <Card variant="tinted" className="border border-kv-border">
         <Card.Block className="p-6">
@@ -37,7 +37,7 @@ export function SokevinduKriterier({ sokevinduKriterier }: Props) {
             {(erAngitt(ost) || erAngitt(vest)) && (
               <div>
                 <dt className="font-medium text-kv-subtle">
-                  {t(`${uk}.felt.ost`)}
+                  {t(`${uk}.sokevindu.ost`)}
                 </dt>
                 <dd className="mt-3 flex items-center gap-3 font-medium tabular-nums">
                   {erAngitt(ost) && <span>{formaterKoordinat(ost)}</span>}
@@ -58,7 +58,7 @@ export function SokevinduKriterier({ sokevinduKriterier }: Props) {
             {(erAngitt(nord) || erAngitt(syd)) && (
               <div>
                 <dt className="font-medium text-kv-subtle">
-                  {t(`${uk}.felt.nord`)}
+                  {t(`${uk}.sokevindu.nord`)}
                 </dt>
                 <dd className="mt-3 flex items-center gap-3 font-medium tabular-nums">
                   {erAngitt(nord) && <span>{formaterKoordinat(nord)}</span>}

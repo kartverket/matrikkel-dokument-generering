@@ -16,14 +16,14 @@ export function OmfangsKriterier({ omfangsKriterier }: Props) {
   return (
     <section className="break-inside-avoid">
       <Heading level={3} data-size="sm" className="mb-4 font-medium">
-        {t(`${uk}.grupper.omfang`)}
+        {t(`${uk}.omfang.tittel`)}
       </Heading>
       <Table zebra border className="w-full table-fixed">
         <Table.Body>
           {erAngitt(omfangsKriterier?.inkluderBestaaendeBygg) && (
             <Table.Row>
               <Table.HeaderCell scope="row" className="w-1/3">
-                {t(`${uk}.felt.bestaaendeBygg`)}
+                {t(`${uk}.omfang.inkluderBestaaendeBygg`)}
               </Table.HeaderCell>
               <Table.Cell>
                 {t(
@@ -35,7 +35,7 @@ export function OmfangsKriterier({ omfangsKriterier }: Props) {
           {erAngitt(omfangsKriterier?.inkluderUtgaatteBygg) && (
             <Table.Row>
               <Table.HeaderCell scope="row" className="w-1/3">
-                {t(`${uk}.felt.utgaatteBygg`)}
+                {t(`${uk}.omfang.inkluderUtgaatteBygg`)}
               </Table.HeaderCell>
               <Table.Cell>
                 {t(
@@ -47,7 +47,7 @@ export function OmfangsKriterier({ omfangsKriterier }: Props) {
           {erAngitt(omfangsKriterier?.inkluderBygninger) && (
             <Table.Row>
               <Table.HeaderCell scope="row" className="w-1/3">
-                {t(`${uk}.felt.bygninger`)}
+                {t(`${uk}.omfang.inkluderBygninger`)}
               </Table.HeaderCell>
               <Table.Cell>
                 {t(
@@ -59,7 +59,7 @@ export function OmfangsKriterier({ omfangsKriterier }: Props) {
           {erAngitt(omfangsKriterier?.inkluderBygningsendringer) && (
             <Table.Row>
               <Table.HeaderCell scope="row" className="w-1/3">
-                {t(`${uk}.felt.bygningsendringer`)}
+                {t(`${uk}.omfang.inkluderBygningsendringer`)}
               </Table.HeaderCell>
               <Table.Cell>
                 {t(
@@ -71,7 +71,7 @@ export function OmfangsKriterier({ omfangsKriterier }: Props) {
           {erAngitt(omfangsKriterier?.inkluderFrededeBygninger) && (
             <Table.Row>
               <Table.HeaderCell scope="row" className="w-1/3">
-                {t(`${uk}.felt.frededeBygninger`)}
+                {t(`${uk}.omfang.inkluderFrededeBygninger`)}
               </Table.HeaderCell>
               <Table.Cell>
                 {t(

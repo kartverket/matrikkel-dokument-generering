@@ -18,14 +18,14 @@ export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {
   return (
     <section className="break-inside-avoid">
       <Heading level={3} data-size="sm" className="mb-4 font-medium">
-        {t(`${uk}.grupper.bygningsstatus`)}
+        {t(`${uk}.bygningsstatus.tittel`)}
       </Heading>
       <Table zebra border className="w-full table-fixed">
         <Table.Body>
           {erAngitt(bygningsstatusKriterier?.naavaerende) && (
             <Table.Row>
               <Table.HeaderCell scope="row" className="w-1/3">
-                {t(`${uk}.felt.naavaerende`)}
+                {t(`${uk}.bygningsstatus.naavaerende`)}
               </Table.HeaderCell>
               <Table.Cell>
                 <span className="flex flex-wrap gap-2">
@@ -45,7 +45,7 @@ export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {
           {erAngitt(bygningsstatusKriterier?.tidligere) && (
             <Table.Row>
               <Table.HeaderCell scope="row" className="w-1/3">
-                {t(`${uk}.felt.tidligere`)}
+                {t(`${uk}.bygningsstatus.tidligere`)}
               </Table.HeaderCell>
               <Table.Cell>
                 <span className="flex flex-wrap gap-2">
@@ -65,7 +65,7 @@ export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {
           {erAngitt(bygningsstatusKriterier?.periodeFra) && (
             <Table.Row>
               <Table.HeaderCell scope="row" className="w-1/3">
-                {t(`${uk}.felt.periodeFra`)}
+                {t(`${uk}.bygningsstatus.periodeFra`)}
               </Table.HeaderCell>
               <Table.Cell>
                 {formatDate(i18n, bygningsstatusKriterier.periodeFra)}
@@ -75,7 +75,7 @@ export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {
           {erAngitt(bygningsstatusKriterier?.periodeTil) && (
             <Table.Row>
               <Table.HeaderCell scope="row" className="w-1/3">
-                {t(`${uk}.felt.periodeTil`)}
+                {t(`${uk}.bygningsstatus.periodeTil`)}
               </Table.HeaderCell>
               <Table.Cell>
                 {formatDate(i18n, bygningsstatusKriterier.periodeTil)}

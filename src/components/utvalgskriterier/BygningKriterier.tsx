@@ -17,14 +17,14 @@ export function BygningKriterier({ bygningKriterier }: Props) {
   return (
     <section className="break-inside-avoid">
       <Heading level={3} data-size="sm" className="mb-4 font-medium">
-        {t(`${uk}.grupper.bygning`)}
+        {t(`${uk}.bygning.tittel`)}
       </Heading>
       <Table zebra border className="w-full table-fixed">
         <Table.Body>
           {erAngitt(bygningKriterier?.bygningsNr) && (
             <Table.Row>
               <Table.HeaderCell scope="row" className="w-1/3">
-                {t(`${uk}.felt.bygningsnr`)}
+                {t(`${uk}.bygning.bygningsNr`)}
               </Table.HeaderCell>
               <Table.Cell>{bygningKriterier.bygningsNr}</Table.Cell>
             </Table.Row>
@@ -32,7 +32,7 @@ export function BygningKriterier({ bygningKriterier }: Props) {
           {erAngitt(bygningKriterier?.lopeNr) && (
             <Table.Row>
               <Table.HeaderCell scope="row" className="w-1/3">
-                {t(`${uk}.felt.lopenr`)}
+                {t(`${uk}.bygning.lopeNr`)}
               </Table.HeaderCell>
               <Table.Cell>{bygningKriterier.lopeNr}</Table.Cell>
             </Table.Row>
@@ -40,7 +40,7 @@ export function BygningKriterier({ bygningKriterier }: Props) {
           {erAngitt(bygningKriterier?.bygningstyper) && (
             <Table.Row>
               <Table.HeaderCell scope="row" className="w-1/3">
-                {t(`${uk}.felt.bygningstyper`)}
+                {t(`${uk}.bygning.bygningstyper`)}
               </Table.HeaderCell>
               <Table.Cell>
                 <span className="flex flex-wrap gap-2">

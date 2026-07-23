@@ -17,12 +17,14 @@ export function MatrikkelenhetKriterier({ matrikkelenhetKriterier }: Props) {
     <Card variant="tinted" className="border border-kv-border">
       <Card.Block className="p-6">
         <Heading level={3} data-size="sm" className="mb-5 font-medium">
-          {t(`${uk}.grupper.matrikkelenhet`)}
+          {t(`${uk}.matrikkelenhet.tittel`)}
         </Heading>
         <dl className="grid grid-cols-2 gap-x-6 gap-y-5">
           {erAngitt(matrikkelenhetKriterier?.gnr) && (
             <div>
-              <dt className="text-kv-subtle">{t(`${uk}.felt.gnr`)}</dt>
+              <dt className="text-kv-subtle">
+                {t(`${uk}.matrikkelenhet.gnr`)}
+              </dt>
               <dd className="mt-1 font-medium">
                 {matrikkelenhetKriterier.gnr}
               </dd>
@@ -30,7 +32,9 @@ export function MatrikkelenhetKriterier({ matrikkelenhetKriterier }: Props) {
           )}
           {erAngitt(matrikkelenhetKriterier?.bnr) && (
             <div>
-              <dt className="text-kv-subtle">{t(`${uk}.felt.bnr`)}</dt>
+              <dt className="text-kv-subtle">
+                {t(`${uk}.matrikkelenhet.bnr`)}
+              </dt>
               <dd className="mt-1 font-medium">
                 {matrikkelenhetKriterier.bnr}
               </dd>
@@ -38,7 +42,9 @@ export function MatrikkelenhetKriterier({ matrikkelenhetKriterier }: Props) {
           )}
           {erAngitt(matrikkelenhetKriterier?.fnr) && (
             <div>
-              <dt className="text-kv-subtle">{t(`${uk}.felt.fnr`)}</dt>
+              <dt className="text-kv-subtle">
+                {t(`${uk}.matrikkelenhet.fnr`)}
+              </dt>
               <dd className="mt-1 font-medium">
                 {matrikkelenhetKriterier.fnr}
               </dd>
@@ -46,7 +52,9 @@ export function MatrikkelenhetKriterier({ matrikkelenhetKriterier }: Props) {
           )}
           {erAngitt(matrikkelenhetKriterier?.snr) && (
             <div>
-              <dt className="text-kv-subtle">{t(`${uk}.felt.snr`)}</dt>
+              <dt className="text-kv-subtle">
+                {t(`${uk}.matrikkelenhet.snr`)}
+              </dt>
               <dd className="mt-1 font-medium">
                 {matrikkelenhetKriterier.snr}
               </dd>
