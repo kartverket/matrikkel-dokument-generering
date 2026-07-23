@@ -238,7 +238,7 @@ export const nn = {
         },
         aktor: {
           tittel: "Aktør",
-          aktorKode: "Rolle",  
+          aktorKode: "Rolle",
           navn: "Namn",
           identifikasjonsNr: "Føds.dato/org.nr",
           andel: "Part",
