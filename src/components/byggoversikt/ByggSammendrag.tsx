@@ -2,7 +2,7 @@ import { Heading, Paragraph, Tag } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import { oversettKode } from "../../lib/i18n/koder/oversettKode.ts"
 import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
-import { formatDate } from "../../lib/utils/formatDate"
+import { formatDate } from "../../lib/utils/formatDate.ts"
 import { byggHistorikk } from "./utils/byggHistorikk.ts"
 
 interface Props {
@@ -11,7 +11,9 @@ interface Props {
 
 const MAKS_ANTALL_BERORTE = 5
 
-export default function Historikk({ byggEndringer }: Props) {
+const successStatuskoder = ["FA", "TB"]
+
+export default function ByggSammendrag({ byggEndringer }: Props) {
   const { i18n, t } = useTranslation()
   const tom = t("tom")
   const h = "rapport.BYG0011.byggoversikt.historikk"
@@ -38,7 +40,7 @@ export default function Historikk({ byggEndringer }: Props) {
             erFoersteVedtak,
           }) => {
             const beskrivelse = erFoersteVedtak
-              ? t(`${h}.foersteVedtak`)
+              ? null
               : arealEndringer.length > 0
                 ? arealEndringer
                     .map(({ areal, handling, type }) =>
@@ -95,8 +97,8 @@ export default function Historikk({ byggEndringer }: Props) {
                       <div className="flex gap-2">
                         <p className="font-semibold">
                           {lopeNr === 0
-                            ? "Første matrikkelføring"
-                            : "Endring " + lopeNr}
+                            ? t(`${h}.forsteVedtak`)
+                            : `Endring ${lopeNr}`}
                         </p>
 
                         {byggEndringsKode !== undefined && (
@@ -112,7 +114,7 @@ export default function Historikk({ byggEndringer }: Props) {
                         {byggStatusKode && (
                           <Tag
                             data-color={
-                              byggStatusKode === "FA" || byggStatusKode === "TB"
+                              successStatuskoder.includes(byggStatusKode)
                                 ? "success"
                                 : "accent"
                             }
