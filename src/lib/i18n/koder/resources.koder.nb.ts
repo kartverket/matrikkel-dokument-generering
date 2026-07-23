@@ -224,7 +224,7 @@ export const koderNb = {
     "1": "Ja",
     "2": "Nei",
     "3": "Felles",
-    "4": "Ukjent",
+    "9": "Ukjent",
   },
   naringsgruppe: {
     " ": "Ikke oppgitt",

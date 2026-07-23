@@ -208,7 +208,7 @@ export const nn = {
           bygningsTypeKode: "Bygningstype",
           bygningsStatusKode: "Bygningsstatus",
           antallBoenheter: "Antall bueiningar",
-          naeringsgruppe: "Næringsgruppe",
+          naringsgruppeKode: "Næringsgruppe",
         },
         areal: {
           tittel: "Arealendring",

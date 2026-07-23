@@ -36,6 +36,9 @@ export default function ByggEndringer({ index, bygning }: Props) {
         endringsKode: meta?.endringsKode
           ? t(`koder.endring.${meta.endringsKode}`)
           : undefined,
+        naringsgruppeKode: meta?.naringsgruppeKode
+          ? t(`koder.naringsgruppe.${meta.naringsgruppeKode}`)
+          : undefined,
       }
     })
 

@@ -162,7 +162,7 @@ export const koderNn = {
     "1": "Ja",
     "2": "Nei",
     "3": "Felles",
-    "4": "Ukjend",
+    "9": "Ukjend",
   },
   naringsgruppe: {
     " ": "Ikkje oppgitt",
