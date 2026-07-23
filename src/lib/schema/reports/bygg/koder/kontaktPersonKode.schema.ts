@@ -1,8 +1,8 @@
 import { z } from "@hono/zod-openapi"
 
 const kontaktPersonKoder = [
-  "1", // Tiltakshaver
-  "2", // Kontaktperson
+  "T", // Tiltakshaver
+  "K", // Kontaktperson
 ] as const
 
 // ref: KontaktpersonKodeId.java
@@ -13,8 +13,8 @@ export const kontaktPersonKodeSchema = z.enum(kontaktPersonKoder).meta({
 Koder:
 
 \`\`\`
-1: Tiltakshaver
-2: Kontaktperson
+T: Tiltakshaver
+K: Kontaktperson
 \`\`\``,
 })
 

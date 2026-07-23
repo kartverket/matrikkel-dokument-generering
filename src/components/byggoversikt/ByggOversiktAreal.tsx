@@ -1,13 +1,13 @@
 import { Heading, Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { EtasjePlan } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
-import { formatArea } from "../../lib/utils/formatArea"
+import { formatArea } from "../../lib/utils/formatArea.ts"
 
 interface Props {
   etasjePlan: EtasjePlan
 }
 
-export default function ArealFordeling({ etasjePlan }: Props) {
+export default function ByggOversiktAreal({ etasjePlan }: Props) {
   const { t } = useTranslation()
   const af = "rapport.BYG0011.byggoversikt.arealfordeling"
 

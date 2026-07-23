@@ -1,60 +1,68 @@
 import { Label, Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
-import type { Bygning } from "../../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
-import { formaterBygningstype } from "../../lib/utils/formaterBygningstype.ts"
+import type { Bygningstypekode } from "../../lib/schema/reports/bygg/koder/bygningsTypeKodeSchema.ts"
+import type { NaringsgruppeKode } from "../../lib/schema/reports/bygg/koder/naringsgruppeKode.schema.ts"
 
 interface Props {
-  bygning: Bygning
-  gjeldendeEndring: NonNullable<BygningsEndring>
+  byggTypeKode?: Bygningstypekode
+  antallBoenheter?: number
+  antallBruksenheter?: number
+  antallEtasjer?: number
+  naringsgruppeKode?: NaringsgruppeKode
+  koordinater?: {
+    nord?: number
+    ost?: number
+  }
 }
 
-export default function Oversiktsfelt({ bygning, gjeldendeEndring }: Props) {
+export default function Oversiktsfelt(props: Props) {
   const { t } = useTranslation()
   const key = "rapport.BYG0011.byggoversikt"
   const tom = t("tom")
 
-  const koordinat = gjeldendeEndring.byggKoordinatEndring
-  const koordinater =
-    koordinat?.nord === undefined || koordinat.ost === undefined
-      ? null
-      : `${koordinat.nord} N / ${koordinat.ost} Ø`
-
-  const etasjer = gjeldendeEndring.etasjePlan
-    .filter((etasje) => etasje !== undefined)
-    .map(
-      (etasje) =>
-        `${t(`koder.etasjeplan.${etasje.etasjeplanKode}`)} (${etasje.etasje})`,
-    )
-    .join(", ")
-
-  const oversikt = {
-    bygningstype: formaterBygningstype(
-      t,
-      gjeldendeEndring.byggMetaEndring?.bygningsTypeKode,
-    ),
-    antallBruksenheter: gjeldendeEndring.bruksenheter.length,
-    antallBoenheter: gjeldendeEndring.byggMetaEndring?.antallBoenheter,
-    naeringsgruppe: gjeldendeEndring.byggMetaEndring?.naeringsgruppe,
-    koordinater,
-    etasjer,
-    bygningsnr: bygning.bygningsnr,
-  }
-
   return (
-    <ul className="grid grid-cols-2 gap-4">
-      {(
-        Object.entries(oversikt) as Array<
-          [keyof typeof oversikt, string | number | null | undefined]
-        >
-      ).map(([k, value]) => (
-        <li key={k}>
-          <Label>{t(`${key}.${k}`)}</Label>
-          <Paragraph data-size="sm">
-            {value == null || value === "" ? tom : value}
-          </Paragraph>
-        </li>
-      ))}
+    <ul className="flex flex-row justify-between gap-4">
+      <li>
+        <Label>{t(`${key}.bygningstype`)}</Label>
+        <Paragraph data-size="sm">
+          {props.byggTypeKode
+            ? t(`koder.bygningstype.${props.byggTypeKode}`)
+            : tom}
+        </Paragraph>
+      </li>
+
+      <li>
+        <Label>{t(`${key}.antallBruksenheter`)}</Label>
+        <Paragraph data-size="sm">{props.antallBruksenheter ?? tom}</Paragraph>
+      </li>
+
+      <li>
+        <Label>{t(`${key}.antallBoenheter`)}</Label>
+        <Paragraph data-size="sm">{props.antallBoenheter ?? tom}</Paragraph>
+      </li>
+
+      <li>
+        <Label>{t(`${key}.antallEtasjer`)}</Label>
+        <Paragraph data-size="sm">{props.antallEtasjer ?? tom}</Paragraph>
+      </li>
+
+      <li>
+        <Label>{t(`${key}.naringsgruppe`)}</Label>
+        <Paragraph data-size="sm">
+          {props.naringsgruppeKode
+            ? t(`koder.naringsgruppe.${props.naringsgruppeKode}`)
+            : tom}
+        </Paragraph>
+      </li>
+
+      <li>
+        <Label>{t(`${key}.koordinater`)}</Label>
+        <Paragraph data-size="sm">
+          {props.koordinater?.nord && props.koordinater?.ost
+            ? `${props.koordinater.nord}, ${props.koordinater.ost}`
+            : tom}
+        </Paragraph>
+      </li>
     </ul>
   )
 }

@@ -17,6 +17,7 @@ import { endringsKodeSchema } from "../koder/endringsKode.schema.ts"
 import { etasjeplanKodeSchema } from "../koder/etasjeplanKode.schema.ts"
 import { kjokkenTilgangKodeSchema } from "../koder/kjokkenTilgangKode.ts"
 import { kontaktPersonKodeSchema } from "../koder/kontaktPersonKode.schema.ts"
+import { naringsgruppeKodeSchema } from "../koder/naringsgruppeKode.schema.ts"
 import { arealFordelingSchema } from "../shared/arealFordeling.schema.ts"
 
 export const byggEndringSchema = valgfriObjekt({
@@ -35,9 +36,7 @@ export const byggEndringSchema = valgfriObjekt({
     bygningsStatusKode: valgfriSchema(byggningsStatusKodeSchema),
     bygningsTypeKode: valgfriSchema(bygningsTypeKodeSchema),
     antallBoenheter: valgfriHeltall,
-    naeringsgruppe: valgfriString.meta({
-      example: "Bolig",
-    }),
+    naringsgruppeKode: valgfriSchema(naringsgruppeKodeSchema),
   }),
 
   byggArealEndring: valgfriObjekt({

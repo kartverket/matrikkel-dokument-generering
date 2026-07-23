@@ -4,6 +4,7 @@ import type {
   BygningsEndring,
 } from "../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 import type { Byg0011Rapport as ByggRapport } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
+import type { BygningsStatusKode } from "../lib/schema/reports/bygg/koder/byggningsStatusKode.schema.ts"
 import type { EndringsKode } from "../lib/schema/reports/bygg/koder/endringsKode.schema.ts"
 
 function isoDatetime(date: string) {
@@ -18,6 +19,15 @@ function arealFordeling(boligAreal: number, annetAreal: number) {
   }
 }
 
+function fordelArealMellomEtasjer(
+  totaltAreal: number,
+  arealIForsteEtasje: number,
+) {
+  const forsteEtasje = Math.min(totaltAreal, arealIForsteEtasje)
+
+  return [forsteEtasje, totaltAreal - forsteEtasje] as const
+}
+
 function bruksenhet({
   id,
   antallRom,
@@ -29,7 +39,7 @@ function bruksenhet({
 }): Bruksenhet {
   return {
     bruksenhetsNr: id,
-    bruksenhetsTypeKode: "0",
+    bruksenhetsTypeKode: "B",
     bruksAreal: boligAreal,
     adresse: `Belsetveien 114 ${id}, 1348 Rykkinn`,
     matrikkelNr: "3201/208/12/0",
@@ -64,9 +74,27 @@ const h0104 = bruksenhet({
   boligAreal: 42,
 })
 
+const h0105 = bruksenhet({
+  id: "H0105",
+  antallRom: 69,
+  boligAreal: 42,
+})
+const h0106 = bruksenhet({
+  id: "H0106",
+  antallRom: 69,
+  boligAreal: 42,
+})
+
+const h0201 = bruksenhet({
+  id: "H0201",
+  antallRom: 2,
+  boligAreal: 2,
+})
+
 function byggEndring({
   lopeNr,
   endringsKode,
+  bygningsStatusKode,
   boligAreal,
   annetAreal,
   datoer,
@@ -74,49 +102,70 @@ function byggEndring({
 }: {
   lopeNr: number
   endringsKode?: EndringsKode
+  bygningsStatusKode: BygningsStatusKode
   boligAreal: number
   annetAreal: number
   datoer: ByggEndringsDatoer
   bruksenheter: Bruksenhet[]
 }): BygningsEndring {
+  const bruttoBoligAreal = Math.ceil(boligAreal * 1.13)
+  const bruttoAnnetAreal = Math.ceil(annetAreal * 1.2)
+  const [boligArealForsteEtasje, boligArealAndreEtasje] =
+    fordelArealMellomEtasjer(boligAreal, 80)
+  const [annetArealForsteEtasje, annetArealAndreEtasje] =
+    fordelArealMellomEtasjer(annetAreal, 10)
+  const [bruttoBoligArealForsteEtasje, bruttoBoligArealAndreEtasje] =
+    fordelArealMellomEtasjer(bruttoBoligAreal, 90)
+  const [bruttoAnnetArealForsteEtasje, bruttoAnnetArealAndreEtasje] =
+    fordelArealMellomEtasjer(bruttoAnnetAreal, 12)
+
   return {
     lopeNr,
     byggMetaEndring: {
       endringsKode,
-      bygningsStatusKode: "TB",
+      bygningsStatusKode,
       bygningsTypeKode: "111",
       antallBoenheter: 1,
-      naeringsgruppe: "Bolig",
+      naringsgruppeKode: "X",
     },
     byggArealEndring: {
       bruksarealBolig: arealFordeling(boligAreal, annetAreal),
-      bruttoarealBolig: arealFordeling(
-        Math.ceil(boligAreal * 1.13),
-        Math.ceil(annetAreal * 1.2),
-      ),
+      bruttoarealBolig: arealFordeling(bruttoBoligAreal, bruttoAnnetAreal),
       bebygdAreal: 95,
     },
     etasjePlan: [
       {
-        etasjeplanKode: "1",
+        etasjeplanKode: "H",
         etasje: 1,
         antallBoenheter: 1,
-        bruksareal: arealFordeling(80, 10),
-        bruttoareal: arealFordeling(90, 12),
+        bruksareal: arealFordeling(
+          boligArealForsteEtasje,
+          annetArealForsteEtasje,
+        ),
+        bruttoareal: arealFordeling(
+          bruttoBoligArealForsteEtasje,
+          bruttoAnnetArealForsteEtasje,
+        ),
       },
       {
-        etasjeplanKode: "1",
+        etasjeplanKode: "K",
         etasje: 2,
         antallBoenheter: 0,
-        bruksareal: arealFordeling(60, 10),
-        bruttoareal: arealFordeling(68, 12),
+        bruksareal: arealFordeling(
+          boligArealAndreEtasje,
+          annetArealAndreEtasje,
+        ),
+        bruttoareal: arealFordeling(
+          bruttoBoligArealAndreEtasje,
+          bruttoAnnetArealAndreEtasje,
+        ),
       },
     ],
     byggKoordinatEndring: { nord: 6642100, ost: 597400 },
     byggDatoEndring: datoer,
     aktuellEier: {
       bruksenhetsNr: "H0101",
-      eierforholdKode: "1",
+      eierforholdKode: "H",
       identifikasjonsNr: "12051978",
       erAvdoed: false,
       navn: "Ola Nordmann",
@@ -125,7 +174,7 @@ function byggEndring({
     },
     tiltaksHaver: {
       bruksenhetsNr: "H0101",
-      kontaktPersonKode: "1",
+      kontaktPersonKode: "T",
       identifikasjonsNr: "01019012345",
       navn: "Fredrik Nordmann",
       adresse: "Storgata 1, 0155 Oslo",
@@ -134,46 +183,51 @@ function byggEndring({
   }
 }
 
-const gjeldendeEndring = byggEndring({
+const senestFerdigstilteEndring = byggEndring({
   lopeNr: 5,
+  endringsKode: "P",
+  bygningsStatusKode: "TB",
   boligAreal: 140,
   annetAreal: 35,
   datoer: {
-    rammetillatelse: isoDatetime("2019-03-15"),
-    igangsettingstillatelse: isoDatetime("2019-05-01"),
-    ferdigattest: isoDatetime("2020-08-20"),
-    tattIBruk: isoDatetime("2020-09-01"),
+    rammetillatelse: isoDatetime("2021-03-15"),
+    igangsettingstillatelse: isoDatetime("2021-05-03"),
+    tattIBruk: isoDatetime("2022-09-01"),
   },
-  bruksenheter: [h0101, h0102, h0103],
+  bruksenheter: [h0101, h0102, h0103, h0104, h0105, h0106, h0201],
 })
 
-const historiskeEndringer: BygningsEndring[] = [
+const andreEndringer: BygningsEndring[] = [
   byggEndring({
     lopeNr: 4,
-    endringsKode: "1",
+    endringsKode: "T",
+    bygningsStatusKode: "FA",
     boligAreal: 121,
     annetAreal: 74,
     datoer: {
-      rammetillatelse: isoDatetime("2016-09-12"),
-      igangsettingstillatelse: isoDatetime("2017-03-06"),
-      ferdigattest: isoDatetime("2020-01-22"),
+      rammetillatelse: isoDatetime("2019-02-12"),
+      igangsettingstillatelse: isoDatetime("2019-05-06"),
+      midlertidigBrukstillatelse: isoDatetime("2020-01-22"),
+      ferdigattest: isoDatetime("2020-08-20"),
     },
     bruksenheter: [h0103],
   }),
   byggEndring({
     lopeNr: 3,
-    endringsKode: "2",
+    endringsKode: "P",
+    bygningsStatusKode: "IG",
     boligAreal: 121,
     annetAreal: 60,
     datoer: {
-      rammetillatelse: isoDatetime("2016-09-12"),
-      igangsettingstillatelse: isoDatetime("2017-03-06"),
+      rammetillatelse: isoDatetime("2018-02-01"),
+      igangsettingstillatelse: isoDatetime("2018-06-15"),
     },
     bruksenheter: [h0103],
   }),
   byggEndring({
     lopeNr: 2,
-    endringsKode: "3",
+    endringsKode: "U",
+    bygningsStatusKode: "RA",
     boligAreal: 102,
     annetAreal: 60,
     datoer: { rammetillatelse: isoDatetime("2016-09-12") },
@@ -181,16 +235,20 @@ const historiskeEndringer: BygningsEndring[] = [
   }),
   byggEndring({
     lopeNr: 1,
-    endringsKode: "4",
+    endringsKode: "O",
+    bygningsStatusKode: "MB",
     boligAreal: 102,
     annetAreal: 0,
     datoer: {
+      rammetillatelse: isoDatetime("2007-02-15"),
+      igangsettingstillatelse: isoDatetime("2007-05-04"),
       midlertidigBrukstillatelse: isoDatetime("2008-09-12"),
     },
     bruksenheter: [h0103],
   }),
   byggEndring({
     lopeNr: 0,
+    bygningsStatusKode: "TB",
     boligAreal: 102,
     annetAreal: 0,
     datoer: { tattIBruk: isoDatetime("1998-06-18") },
@@ -215,7 +273,7 @@ const mockByggRapport: ByggRapport = {
       inkluderFrededeBygninger: true,
     },
     bygning: {
-      bygningsNr: "12345678",
+      bygningsNr: "18 520 621",
       bygningstyper: ["111"],
     },
     adresse: {
@@ -252,9 +310,9 @@ const mockByggRapport: ByggRapport = {
   },
   bygninger: [
     {
-      bygningsnr: "12345678",
+      bygningsnr: "18 520 621",
       matrikkelNr: "3201/208/12/0",
-      endringer: [gjeldendeEndring, ...historiskeEndringer],
+      endringer: [senestFerdigstilteEndring, ...andreEndringer],
     },
   ],
 }

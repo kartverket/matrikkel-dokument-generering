@@ -2,51 +2,51 @@ import { z } from "@hono/zod-openapi"
 
 const eierforholdKoder = [
   // Hjemmelshaver: Den som grunnboken utpeker som hjemmelshaver (eier).
-  "0",
+  "H",
   // Fester: Andelshaveren har inngått festekontrakt med hjemmelshaver.
-  "1",
+  "F",
   // Framfester: Andelshaveren har inngått festekontrakt med fester.
-  "2",
+  "F1",
   // Framfester 2: Andelshaveren har inngått festekontrakt med framfester.
-  "3",
+  "F2",
   // Framfester 3: Andelshaveren har inngått festekontrakt med framfester 2.
-  "4",
+  "F3",
   // Framfester 4: Andelshaveren har inngått festekontrakt med framfester 3.
-  "5",
+  "F4",
   // Framfester 5: Andelshaveren har inngått festekontrakt med framfester 4.
-  "6",
+  "F5",
   // Framfester 6: Andelshaveren har inngått festekontrakt med framfester 5.
-  "7",
+  "F6",
   // Framfester 7: Andelshaveren har inngått festekontrakt med framfester 6.
-  "8",
+  "F7",
   // Framfester 8: Andelshaveren har inngått festekontrakt med framfester 7.
-  "9",
+  "F8",
   // Framfester 9: Andelshaveren har inngått festekontrakt med framfester 8.
-  "10",
+  "F9",
   // Aktuell eier: Tilsvarer hjemmelshaver, men er ikke tinglyst.
-  "11",
+  "AE",
   // Aktuell fester: Tilsvarer fester, men er ikke tinglyst.
-  "12",
+  "AF",
   // Kontaktinstans eier: Kontaktinstans for eier.
-  "13",
+  "KE",
   // Kontaktinstans fester: Kontaktinstans for fester.
-  "14",
+  "KF",
   // Kommunal person 1: Første kommunale kontaktinstans. Kommunen bestemmer betydningen av de kommunale kontaktinstansene.
-  "15",
+  "K1",
   // Kommunal person 2: Andre kommunale kontaktinstans. Kommunen bestemmer betydningen av de kommunale kontaktinstansene.
-  "16",
+  "K2",
   // Kommunal person 3: Tredje kommunale kontaktinstans. Kommunen bestemmer betydningen av de kommunale kontaktinstansene.
-  "17",
+  "K3",
   // Skatteregistrert eier: Rettighetshaver til eiendomsrett registrert hos Skatteetaten.
-  "18",
+  "SE",
   // Skatteregistrert fester: Rettighetshaver til festerett registrert hos Skatteetaten.
-  "19",
+  "SF",
   // Skatteregistrert framfester: Rettighetshaver til framfesterett registrert hos Skatteetaten.
-  "20",
+  "SF1",
   // Skatteregistrert framfester 2: Rettighetshaver til framfesterett 2 registrert hos Skatteetaten.
-  "21",
+  "SF2",
   // Skatteregistrert framfester 3: Rettighetshaver til framfesterett 3 registrert hos Skatteetaten.
-  "22",
+  "SF3",
 ] as const
 
 // ref: EierforholdKodeId.java
@@ -57,29 +57,29 @@ export const eierforholdKodeSchema = z.enum(eierforholdKoder).meta({
 Koder:
 
 \`\`\`
-0: Hjemmelshaver
-1: Fester
-2: Framfester
-3: Framfester 2
-4: Framfester 3
-5: Framfester 4
-6: Framfester 5
-7: Framfester 6
-8: Framfester 7
-9: Framfester 8
-10: Framfester 9
-11: Aktuell eier
-12: Aktuell fester
-13: Kontaktinstans eier
-14: Kontaktinstans fester
-15: Kommunal person 1
-16: Kommunal person 2
-17: Kommunal person 3
-18: Skatteregistrert eier
-19: Skatteregistrert fester
-20: Skatteregistrert framfester
-21: Skatteregistrert framfester 2
-22: Skatteregistrert framfester 3
+H: Hjemmelshaver
+F: Fester
+F1: Framfester
+F2: Framfester 2
+F3: Framfester 3
+F4: Framfester 4
+F5: Framfester 5
+F6: Framfester 6
+F7: Framfester 7
+F8: Framfester 8
+F9: Framfester 9
+AE: Aktuell eier
+AF: Aktuell fester
+KE: Kontaktinstans eier
+KF: Kontaktinstans fester
+K1: Kommunal person 1
+K2: Kommunal person 2
+K3: Kommunal person 3
+SE: Skatteregistrert eier
+SF: Skatteregistrert fester
+SF1: Skatteregistrert framfester
+SF2: Skatteregistrert framfester 2
+SF3: Skatteregistrert framfester 3
 \`\`\``,
 })
 
