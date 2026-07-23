@@ -7,12 +7,15 @@ export const nb = {
   koder: koderNb,
   pdf: {
     header: {
-      bygg: "Bygningsnr. {{bygningsnr}} · Bygg {{nr}} av {{total}}",
+      matrikkelenhet: "Matrikkelenhet {{matrikkelNr}}",
+      kommune: "{{kommuneNr}} {{kommuneNavn}} kommune",
+      koordinatsystem: "{{kode}} - {{navn}}",
+      bygg: "Bygningsnr. {{bygningsnr}}",
     },
     footer: {
       side: "Side",
       av: "av",
-      rapportGenerert: "Rapport {{type}} · Generert {{dato}}",
+      rapportGenerert: "Rapport {{type}}   Generert {{dato}} kl. {{tid}}",
     },
   },
   rapport: {

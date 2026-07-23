@@ -12,14 +12,22 @@ export function buildFooter(
 ): PageBoxes {
   const generertDato =
     formatDate(i18n, generertTidspunkt, "", {
-      dateStyle: "long",
-      timeStyle: "short",
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    }) ?? ""
+  const generertTid =
+    formatDate(i18n, generertTidspunkt, "", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hourCycle: "h23",
     }) ?? ""
 
   return {
     left: t("pdf.footer.rapportGenerert", {
       type: rapportKode,
       dato: generertDato,
+      tid: generertTid,
     }),
     right: pageCounterContent(t("pdf.footer.side"), t("pdf.footer.av")),
   }

@@ -49,19 +49,28 @@ th {
  */
 @page {
   @top-left {
-    @apply text-kv-subtle text-pdf-label;
+    @apply text-pdf-label;
+    color: #5d5d5d;
+    white-space: pre;
   }
 
   @top-right {
-    @apply text-kv-subtle text-pdf-label;
+    @apply text-pdf-label;
+    color: #278a46;
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
   }
 
   @bottom-left {
-    @apply text-kv-subtle text-pdf-label;
+    @apply text-pdf-label;
+    color: #5d5d5d;
+    white-space: pre;
   }
 
   @bottom-right {
-    @apply text-kv-subtle text-pdf-label;
+    @apply text-pdf-label;
+    color: #5d5d5d;
   }
 }
 

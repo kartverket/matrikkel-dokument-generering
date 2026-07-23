@@ -8,12 +8,10 @@ import type { Byg0011Rapport } from "./lib/schema/reports/bygg/byg0011/byggRappo
 import ByggEndringer from "./sections/ByggEndringer.tsx"
 import Byggoversikt from "./sections/Byggoversikt.tsx"
 import { ByggUtvalgskriterier } from "./sections/ByggUtvalgskriterier.tsx"
-import { Metadata } from "./sections/Metadata.tsx"
 
 export function DocumentComponent({ rapport }: { rapport: Byg0011Rapport }) {
   return (
     <main className="mx-auto max-w-6xl">
-      <Metadata metadata={rapport.metadata} rapportKode={rapport.rapportKode} />
       <div className="pg-utvalgskriterier">
         <ByggUtvalgskriterier index={1} kriterier={rapport.utvalgskriterier} />
       </div>
@@ -40,7 +38,14 @@ export function DocumentComponent({ rapport }: { rapport: Byg0011Rapport }) {
 
 export function renderDocument(rapport: Byg0011Rapport, css = ""): string {
   const i18n = createI18n(rapport.locale)
-  const pageCss = buildPageCss(buildByg0011PagePlan(rapport, i18n))
+  const pageCss = buildPageCss(
+    buildByg0011PagePlan(
+      rapport.locale,
+      rapport.rapportKode,
+      rapport.metadata,
+      i18n,
+    ),
+  )
   const body = renderToStaticMarkup(
     <I18nextProvider i18n={i18n}>
       <DocumentComponent rapport={rapport} />
