@@ -19,7 +19,7 @@ function buildHeader(
     kode: koordinatSystemKode,
   })
 
-  const venstre = [
+  const venstreSide = [
     t("pdf.header.kommune", {
       kommuneNr: kommune.kommuneNr,
       kommuneNavn:
@@ -30,15 +30,15 @@ function buildHeader(
       kode: koordinatSystemKode,
       navn: koordinatSystemNavn,
     }),
-  ]
+  ].join(" ")
 
-  const right = bygning
+  const hoyreSide = bygning
     ? t("pdf.header.bygg", { bygningsnr: bygning.bygningsnr })
     : undefined
 
   return {
-    left: venstre.join("   "),
-    right,
+    left: venstreSide,
+    right: hoyreSide,
   }
 }
 
