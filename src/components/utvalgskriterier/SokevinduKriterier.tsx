@@ -25,14 +25,14 @@ export function SokevinduKriterier({ sokevinduKriterier }: Props) {
   return (
     <section>
       <Heading level={3} data-size="sm" className="mb-4 font-medium">
-        {t(`${uk}.grupper.sokevindu`)}
+        {t(`${uk}.sokevindu.tittel`)}
       </Heading>
       <Card variant="tinted" className="border border-kv-border">
         <Card.Block className="p-6">
           <dl className="grid grid-cols-2 gap-8">
             <div>
               <dt className="font-medium text-kv-subtle">
-                {t(`${uk}.felt.ost`)}
+                {t(`${uk}.sokevindu.ost`)}
               </dt>
               <dd className="mt-3 flex items-center gap-3 font-medium tabular-nums">
                 <span>{formatCoordinate(sokevinduKriterier.ost)}</span>
@@ -46,7 +46,7 @@ export function SokevinduKriterier({ sokevinduKriterier }: Props) {
             </div>
             <div>
               <dt className="font-medium text-kv-subtle">
-                {t(`${uk}.felt.nord`)}
+                {t(`${uk}.sokevindu.nord`)}
               </dt>
               <dd className="mt-3 flex items-center gap-3 font-medium tabular-nums">
                 <span>{formatCoordinate(sokevinduKriterier.nord)}</span>

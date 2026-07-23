@@ -17,13 +17,13 @@ export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {
   return (
     <section>
       <Heading level={3} data-size="sm" className="mb-4 font-medium">
-        {t(`${uk}.grupper.bygningsstatus`)}
+        {t(`${uk}.bygningsstatus.tittel`)}
       </Heading>
       <Table zebra border className="w-full table-fixed">
         <Table.Body>
           <Table.Row>
             <Table.HeaderCell scope="row" className="w-1/3">
-              {t(`${uk}.felt.naavaerende`)}
+              {t(`${uk}.bygningsstatus.naavaerende`)}
             </Table.HeaderCell>
             <Table.Cell>
               {bygningsstatusKriterier?.naavaerende &&
@@ -46,7 +46,7 @@ export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {
           </Table.Row>
           <Table.Row>
             <Table.HeaderCell scope="row">
-              {t(`${uk}.felt.tidligere`)}
+              {t(`${uk}.bygningsstatus.tidligere`)}
             </Table.HeaderCell>
             <Table.Cell>
               {bygningsstatusKriterier?.tidligere &&
@@ -69,7 +69,7 @@ export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {
           </Table.Row>
           <Table.Row>
             <Table.HeaderCell scope="row">
-              {t(`${uk}.felt.periodeFra`)}
+              {t(`${uk}.bygningsstatus.periodeFra`)}
             </Table.HeaderCell>
             <Table.Cell>
               {formatDate(
@@ -81,7 +81,7 @@ export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {
           </Table.Row>
           <Table.Row>
             <Table.HeaderCell scope="row">
-              {t(`${uk}.felt.periodeTil`)}
+              {t(`${uk}.bygningsstatus.periodeTil`)}
             </Table.HeaderCell>
             <Table.Cell>
               {formatDate(

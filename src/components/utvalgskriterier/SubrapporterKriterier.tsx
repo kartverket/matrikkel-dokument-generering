@@ -13,13 +13,13 @@ export function SubrapporterKriterier({ subrapporterKriterier }: Props) {
   return (
     <section>
       <Heading level={3} data-size="sm" className="mb-4 font-medium">
-        {t(`${uk}.grupper.subrapporter`)}
+        {t(`${uk}.subrapporter.tittel`)}
       </Heading>
       <Table zebra border className="w-full table-fixed">
         <Table.Body>
           <Table.Row>
             <Table.HeaderCell scope="row" className="w-1/3">
-              {t(`${uk}.subrapporter.etasjer`)}
+              {t(`${uk}.subrapporter.inkluderEtasjer`)}
             </Table.HeaderCell>
             <Table.Cell>
               {t(
@@ -29,7 +29,7 @@ export function SubrapporterKriterier({ subrapporterKriterier }: Props) {
           </Table.Row>
           <Table.Row>
             <Table.HeaderCell scope="row">
-              {t(`${uk}.subrapporter.bruksenheter`)}
+              {t(`${uk}.subrapporter.inkluderBruksenheter`)}
             </Table.HeaderCell>
             <Table.Cell>
               {t(
@@ -39,7 +39,7 @@ export function SubrapporterKriterier({ subrapporterKriterier }: Props) {
           </Table.Row>
           <Table.Row>
             <Table.HeaderCell scope="row">
-              {t(`${uk}.subrapporter.tiltakshavere`)}
+              {t(`${uk}.subrapporter.inkluderTiltakshavere`)}
             </Table.HeaderCell>
             <Table.Cell>
               {t(
@@ -49,7 +49,7 @@ export function SubrapporterKriterier({ subrapporterKriterier }: Props) {
           </Table.Row>
           <Table.Row>
             <Table.HeaderCell scope="row">
-              {t(`${uk}.subrapporter.kontaktpersoner`)}
+              {t(`${uk}.subrapporter.inkluderKontaktpersoner`)}
             </Table.HeaderCell>
             <Table.Cell>
               {t(
@@ -59,7 +59,7 @@ export function SubrapporterKriterier({ subrapporterKriterier }: Props) {
           </Table.Row>
           <Table.Row>
             <Table.HeaderCell scope="row">
-              {t(`${uk}.subrapporter.hjemmelshavere`)}
+              {t(`${uk}.subrapporter.inkluderHjemmelshavere`)}
             </Table.HeaderCell>
             <Table.Cell>
               {t(
@@ -69,7 +69,7 @@ export function SubrapporterKriterier({ subrapporterKriterier }: Props) {
           </Table.Row>
           <Table.Row>
             <Table.HeaderCell scope="row">
-              {t(`${uk}.subrapporter.kulturminner`)}
+              {t(`${uk}.subrapporter.inkluderKulturminner`)}
             </Table.HeaderCell>
             <Table.Cell>
               {t(
