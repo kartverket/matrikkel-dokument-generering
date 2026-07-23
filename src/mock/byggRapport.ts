@@ -29,7 +29,7 @@ function bruksenhet({
 }): Bruksenhet {
   return {
     bruksenhetsNr: id,
-    bruksenhetsTypeKode: "0",
+    bruksenhetsTypeKode: "B",
     bruksAreal: boligAreal,
     adresse: `Belsetveien 114 ${id}, 1348 Rykkinn`,
     matrikkelNr: "3201/208/12/0",
@@ -98,14 +98,14 @@ function byggEndring({
     },
     etasjePlan: [
       {
-        etasjeplanKode: "1",
+        etasjeplanKode: "H",
         etasje: 1,
         antallBoenheter: 1,
         bruksareal: arealFordeling(80, 10),
         bruttoareal: arealFordeling(90, 12),
       },
       {
-        etasjeplanKode: "1",
+        etasjeplanKode: "H",
         etasje: 2,
         antallBoenheter: 0,
         bruksareal: arealFordeling(60, 10),
@@ -116,7 +116,7 @@ function byggEndring({
     byggDatoEndring: datoer,
     aktuellEier: {
       bruksenhetsNr: "H0101",
-      eierforholdKode: "1",
+      eierforholdKode: "H",
       identifikasjonsNr: "12051978",
       erAvdoed: false,
       navn: "Ola Nordmann",
@@ -125,7 +125,7 @@ function byggEndring({
     },
     tiltaksHaver: {
       bruksenhetsNr: "H0101",
-      kontaktPersonKode: "1",
+      kontaktPersonKode: "T",
       identifikasjonsNr: "01019012345",
       navn: "Fredrik Nordmann",
       adresse: "Storgata 1, 0155 Oslo",
@@ -150,7 +150,7 @@ const gjeldendeEndring = byggEndring({
 const historiskeEndringer: BygningsEndring[] = [
   byggEndring({
     lopeNr: 4,
-    endringsKode: "1",
+    endringsKode: "T",
     boligAreal: 121,
     annetAreal: 74,
     datoer: {
@@ -162,7 +162,7 @@ const historiskeEndringer: BygningsEndring[] = [
   }),
   byggEndring({
     lopeNr: 3,
-    endringsKode: "2",
+    endringsKode: "P",
     boligAreal: 121,
     annetAreal: 60,
     datoer: {
@@ -173,7 +173,7 @@ const historiskeEndringer: BygningsEndring[] = [
   }),
   byggEndring({
     lopeNr: 2,
-    endringsKode: "3",
+    endringsKode: "U",
     boligAreal: 102,
     annetAreal: 60,
     datoer: { rammetillatelse: isoDatetime("2016-09-12") },
@@ -181,7 +181,7 @@ const historiskeEndringer: BygningsEndring[] = [
   }),
   byggEndring({
     lopeNr: 1,
-    endringsKode: "4",
+    endringsKode: "O",
     boligAreal: 102,
     annetAreal: 0,
     datoer: {

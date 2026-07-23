@@ -1,11 +1,11 @@
 import { z } from "@hono/zod-openapi"
 
 const etasjeplanKoder = [
-  "0", // Ikke oppgitt
-  "1", // Hovedetasje
-  "2", // Kjelleretasje
-  "3", // Loft
-  "4", // Underetasje
+  " ", // Ikke oppgitt
+  "H", // Hovedetasje
+  "K", // Kjelleretasje
+  "L", // Loft
+  "U", // Underetasje
 ] as const
 
 // ref: EtasjeplanKodeId.java
@@ -16,11 +16,11 @@ export const etasjeplanKodeSchema = z.enum(etasjeplanKoder).meta({
 Koder:
 
 \`\`\`
-0: Ikke oppgitt
-1: Hovedetasje
-2: Kjelleretasje
-3: Loft
-4: Underetasje
+<blank>: Ikke oppgitt
+H: Hovedetasje
+K: Kjelleretasje
+L: Loft
+U: Underetasje
 \`\`\``,
 })
 
