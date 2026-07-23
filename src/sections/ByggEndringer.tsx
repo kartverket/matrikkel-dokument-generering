@@ -52,7 +52,7 @@ export default function ByggEndringer({ index, bygning }: Props) {
       etasjeRader: (e.etasjePlan ?? [])
         .filter((ep) => ep !== undefined)
         .map((ep) => ({
-          etasjeplan: ep.etasjeplanKode,
+          etasjeplan: t(`koder.etasjeplan.${ep.etasjeplanKode}`),
           etasje: ep.etasje,
           antallBoenheter: ep.antallBoenheter,
           boligBra: ep.bruksareal?.boligAreal,

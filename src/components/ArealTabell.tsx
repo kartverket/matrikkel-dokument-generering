@@ -1,9 +1,6 @@
 import { Heading, Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 
-const BE = "rapport.BYG0011.byggEndringer" as const
-const AREAL = `${BE}.areal` as const
-
 export type ArealRad = {
   etasjeplan: string
   etasje: number
@@ -32,34 +29,37 @@ type Props = {
 
 export default function ArealTabell({ arealEndringer }: Props) {
   const { t } = useTranslation()
+  const tKey = `rapport.BYG0011.byggEndringer.areal` as const
 
   return (
     <div className="my-4 space-y-4">
       <span className="flex items-center gap-4">
         <Heading level={3} data-size="sm" className="min-w-max font-medium">
-          {t(`${AREAL}.tittel`)}
+          {t(`${tKey}.tittel`)}
         </Heading>
         <hr className="w-full border border-kv-green-border" />
       </span>
 
       {arealEndringer.length === 0 ? (
-        <p className="text-kv-subtle">{t(`${AREAL}.ingenArealendring`)}</p>
+        <p className="text-kv-subtle">{t(`${tKey}.ingenArealendring`)}</p>
       ) : (
         <Table className="w-full">
           <Table.Head>
             <Table.Row className="font-regular text-kv-subtle">
-              <Table.HeaderCell>{t(`${BE}.lopeNr`)}</Table.HeaderCell>
-              <Table.HeaderCell>{t(`${AREAL}.etasjeplan`)}</Table.HeaderCell>
               <Table.HeaderCell>
-                {t(`${AREAL}.antallBoenheter`)}
+                {t(`rapport.BYG0011.byggEndringer.lopeNr`)}
               </Table.HeaderCell>
-              <Table.HeaderCell>{t(`${AREAL}.boligBra`)}</Table.HeaderCell>
-              <Table.HeaderCell>{t(`${AREAL}.annetBra`)}</Table.HeaderCell>
-              <Table.HeaderCell>{t(`${AREAL}.sumBra`)}</Table.HeaderCell>
-              <Table.HeaderCell>{t(`${AREAL}.boligBta`)}</Table.HeaderCell>
-              <Table.HeaderCell>{t(`${AREAL}.annetBta`)}</Table.HeaderCell>
-              <Table.HeaderCell>{t(`${AREAL}.sumBta`)}</Table.HeaderCell>
-              <Table.HeaderCell>{t(`${AREAL}.bya`)}</Table.HeaderCell>
+              <Table.HeaderCell>{t(`${tKey}.etasjeplan`)}</Table.HeaderCell>
+              <Table.HeaderCell>
+                {t(`${tKey}.antallBoenheter`)}
+              </Table.HeaderCell>
+              <Table.HeaderCell>{t(`${tKey}.boligBra`)}</Table.HeaderCell>
+              <Table.HeaderCell>{t(`${tKey}.annetBra`)}</Table.HeaderCell>
+              <Table.HeaderCell>{t(`${tKey}.sumBra`)}</Table.HeaderCell>
+              <Table.HeaderCell>{t(`${tKey}.boligBta`)}</Table.HeaderCell>
+              <Table.HeaderCell>{t(`${tKey}.annetBta`)}</Table.HeaderCell>
+              <Table.HeaderCell>{t(`${tKey}.sumBta`)}</Table.HeaderCell>
+              <Table.HeaderCell>{t(`${tKey}.bya`)}</Table.HeaderCell>
             </Table.Row>
           </Table.Head>
 
@@ -73,7 +73,7 @@ export default function ArealTabell({ arealEndringer }: Props) {
                       rowSpan={etasjeRader.length}
                       className="w-32 align-top"
                     >
-                      {`${t(`${BE}.lopeNr`)} ${lopeNr}`}
+                      {`${t(`rapport.BYG0011.byggEndringer.lopeNr`)} ${lopeNr}`}
                     </Table.HeaderCell>
                   )}
                   <Table.Cell>{r.etasjeplan}</Table.Cell>
@@ -90,7 +90,7 @@ export default function ArealTabell({ arealEndringer }: Props) {
 
               <Table.Row className="font-medium">
                 <Table.HeaderCell scope="row" className="align-top">
-                  {t(`${AREAL}.sum`)}
+                  {t(`${tKey}.sum`)}
                 </Table.HeaderCell>
                 <Table.Cell>{etasjeRader.length}</Table.Cell>
                 <Table.Cell>{sum.antallBoenheter}</Table.Cell>
