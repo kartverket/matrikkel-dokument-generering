@@ -72,7 +72,7 @@ export default function ArealTabell({ grupper }: Props) {
                   <Table.HeaderCell
                     scope="row"
                     rowSpan={rader.length}
-                    className="align-top w-32"
+                    className="w-32 align-top"
                   >
                     {`${tr(`${BE}.lopeNr`)} ${lopeNr}`}
                   </Table.HeaderCell>
