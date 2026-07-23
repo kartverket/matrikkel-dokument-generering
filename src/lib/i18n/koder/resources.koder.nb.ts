@@ -221,9 +221,9 @@ export const koderNb = {
   },
   kjokkentilgang: {
     " ": "Ikke oppgitt",
-    "1": "Har eget kjøkken",
-    "2": "Har ikke adgang til kjøkken",
-    "3": "Har adgang til felles kjøkken",
+    "1": "Ja",
+    "2": "Nei",
+    "3": "Felles",
     "9": "Ukjent",
   },
   naringsgruppe: {

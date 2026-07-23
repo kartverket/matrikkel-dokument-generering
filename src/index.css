@@ -1,7 +1,7 @@
 @layer theme, base, components, designsystem, utilities;
 
 @import "tailwindcss";
-@import "@kv-designsystem/react/blue" layer(designsystem);
+@import "@kv-designsystem/react/green" layer(designsystem);
 
 @theme {
   --color-kv-subtle: var(--ds-color-neutral-text-subtle);
@@ -12,6 +12,8 @@
   --color-kv-gray: var(--ds-color-neutral-background-tinted);
   --color-kv-blue: var(--ds-color-accent-base-default);
   --color-kv-blue-subtle: var(--ds-color-accent-surface-tinted);
+  --color-kv-green-subtle: #f6faf7;
+  --color-kv-green-border: #97c7a6;
   --color-kv-green: var(--ds-color-success-base-default);
   --color-kv-green-tinted: #edf6f0;
   --color-kv-background-tinted: #daeed7;
@@ -19,8 +21,11 @@
 
 body {
   font-family: "Inter", sans-serif;
-  font-optical-sizing: auto;
   font-feature-settings: "cv05" 1;
+}
+
+th {
+  font-weight: 400;
 }
 
 /*
@@ -35,4 +40,15 @@ body {
   :root {
     font-size: calc(10px);
   }
+}
+
+/*
+ * Fjerne streker i alle KV-tabeller. Overstyrer variablene fra
+ * @digdir/designsystemet-css sin table.css
+ */
+.ds-table {
+  --dsc-table-border-width: 0px;
+  --dsc-table-divider-border-width: 0px;
+  --dsc-table-border-color: var(--color-kv-green-border);
+  --dsc-table-divider-border-color: var(--color-kv-green-border);
 }
