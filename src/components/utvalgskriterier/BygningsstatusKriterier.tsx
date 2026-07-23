@@ -15,7 +15,7 @@ export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {
   const ikkeAngitt = t(`${uk}.ikkeAngitt`)
 
   return (
-    <section className="break-inside-avoid">
+    <section>
       <Heading level={3} data-size="sm" className="mb-4 font-medium">
         {t(`${uk}.grupper.bygningsstatus`)}
       </Heading>

@@ -52,7 +52,7 @@ export default function Bruksenheter({ index, byggEndringer }: Props) {
           <Card
             key={`${bruksenhet.bruksenhetsNr ?? "ukjent"}-${bruksenhet.lopeNr}`}
             data-bruksenhet={bruksenhet.bruksenhetsNr}
-            className="break-inside-avoid border border-kv-border"
+            className="border border-kv-border"
           >
             <Card.Block className="p-7">
               <div className="mb-6 flex items-start justify-between gap-4">

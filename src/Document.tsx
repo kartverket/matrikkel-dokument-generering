@@ -15,19 +15,14 @@ export function DocumentComponent({ rapport }: { rapport: Byg0011Rapport }) {
   return (
     <>
       <Metadata metadata={rapport.metadata} rapportKode={rapport.rapportKode} />
-      <div className="pg-utvalgskriterier">
-        <ByggUtvalgskriterier index={1} kriterier={rapport.utvalgskriterier} />
-      </div>
+      <ByggUtvalgskriterier index={1} kriterier={rapport.utvalgskriterier} />
+
       {rapport.bygninger.map((bygning, i) => {
         const nr = i + 1
         return (
           <Fragment key={bygning.bygningsnr}>
-            <div className={`pg-bygg-${nr}-oversikt`}>
-              <Byggoversikt index={2} bygning={bygning} />
-            </div>
-            <div className={`pg-bygg-${nr}-bruksenhet`}>
-              <Bruksenheter index={3} byggEndringer={bygning.endringer} />
-            </div>
+            <Byggoversikt index={2} bygning={bygning} />
+            <Bruksenheter index={3} byggEndringer={bygning.endringer} />
           </Fragment>
         )
       })}
