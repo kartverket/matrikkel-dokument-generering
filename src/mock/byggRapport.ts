@@ -86,7 +86,7 @@ function byggEndring({
       bygningsStatusKode: "TB",
       bygningsTypeKode: "111",
       antallBoenheter: 1,
-      naeringsgruppe: "Bolig",
+      naringsgruppeKode: "X",
     },
     byggArealEndring: {
       bruksarealBolig: arealFordeling(boligAreal, annetAreal),

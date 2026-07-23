@@ -35,7 +35,12 @@ export default function Oversiktsfelt({ bygning, gjeldendeEndring }: Props) {
     ),
     antallBruksenheter: gjeldendeEndring.bruksenheter.length,
     antallBoenheter: gjeldendeEndring.byggMetaEndring?.antallBoenheter,
-    naeringsgruppe: gjeldendeEndring.byggMetaEndring?.naeringsgruppe,
+    naringsgruppe:
+      gjeldendeEndring.byggMetaEndring?.naringsgruppeKode === undefined
+        ? undefined
+        : t(
+            `koder.naringsgruppe.${gjeldendeEndring.byggMetaEndring.naringsgruppeKode}`,
+          ),
     koordinater,
     etasjer,
     bygningsnr: bygning.bygningsnr,
