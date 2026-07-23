@@ -7,23 +7,18 @@ export const nn = {
   koder: koderNn,
   pdf: {
     header: {
-      bygg: "Bygningsnr. {{bygningsnr}} · Bygg {{nr}} av {{total}}",
+      matrikkelenhet: "Matrikkeleining {{matrikkelNr}}",
+      kommune: "{{kommuneNr}} {{kommuneNavn}} kommune",
+      koordinatsystem: "{{kode}} - {{navn}}",
+      bygg: "Bygningsnr. {{bygningsnr}}",
     },
     footer: {
       side: "Side",
       av: "av",
-      rapportGenerert: "Rapport {{type}} · Generert {{dato}}",
+      rapportGenerert: "Rapport {{type}}   Generert {{dato}} kl. {{tid}}",
     },
   },
   rapport: {
-    metaData: {
-      rapportType: "Rapporttype",
-      rapportNr: "Rapportnr",
-      kommune: "Kommune",
-      kommuneNr: "Kommunenr",
-      koordinatsystem: "Koordinatsystem",
-      generertTidspunkt: "Generert tidspunkt",
-    },
     BYG0011: {
       rapportTittel: "Bygg Rapport",
       title: "Bygning {{bygningsnr}} – {{bygningstype}}",

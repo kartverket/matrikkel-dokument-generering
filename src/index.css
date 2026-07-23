@@ -17,6 +17,7 @@
   --color-kv-green: var(--ds-color-success-base-default);
   --color-kv-green-tinted: #edf6f0;
   --color-kv-background-tinted: #daeed7;
+  --text-pdf-label: 9pt;
 }
 
 body {
@@ -39,6 +40,38 @@ th {
 @media print {
   :root {
     font-size: calc(10px);
+  }
+}
+
+/*
+ * Topp- og bunntekst rendres i CSS-sidebokser og er derfor ikke DOM-elementer
+ * som kan få className.
+ */
+@page {
+  @top-left {
+    @apply text-pdf-label;
+    color: #5d5d5d;
+    white-space: pre;
+  }
+
+  @top-right {
+    @apply text-pdf-label;
+    color: #5d5d5d;
+    text-decoration-line: underline;
+    text-decoration-color: #278a46;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  @bottom-left {
+    @apply text-pdf-label;
+    color: #5d5d5d;
+    white-space: pre;
+  }
+
+  @bottom-right {
+    @apply text-pdf-label;
+    color: #5d5d5d;
   }
 }
 

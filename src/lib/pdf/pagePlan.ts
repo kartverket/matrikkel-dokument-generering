@@ -1,8 +1,15 @@
-// Rapport-uavhengig beskrivelse av topp- og bunntezster for en PDF-side.
-// Hver rapportKode leverer sin egen `PagePlan`
+// Rapportuavhengig beskrivelse av topp- og bunntekster for en PDF-side.
+// Hver rapportkode leverer sin egen `PagePlan`.
 // `buildPageCss` oversetter planen til CSS med `@page`-margin­bokser (som Chromium/Gotenberg støtter).
 
-export type PageContent = string | { raw: string }
+export type PageContent =
+  | string
+  | {
+      type: "pageCounter"
+      pageLabel: string
+      totalLabel: string
+      boldCurrentPage?: boolean
+    }
 
 export interface PageBoxes {
   left?: PageContent
@@ -27,20 +34,15 @@ export interface PagePlan {
   pages: PageDef[]
 }
 
-function escapeCssString(value: string): string {
-  return value.replace(/\\/g, "\\\\").replace(/"/g, '\\"')
-}
-
-// Viser "Side X av Y" ved hjelp av CSS-tellerne `counter(page)` og `counter(pages)`.
-// Returverdien er ment å legges direkte inn i `PageBoxes` (som `PageContent`).
-
 export function pageCounterContent(
-  sideLabel: string,
-  avLabel: string,
+  pageLabel: string,
+  totalLabel: string,
+  boldCurrentPage = false,
 ): PageContent {
   return {
-    raw:
-      `"${escapeCssString(sideLabel)} " counter(page) ` +
-      `" ${escapeCssString(avLabel)} " counter(pages)`,
+    type: "pageCounter",
+    pageLabel,
+    totalLabel,
+    boldCurrentPage,
   }
 }
