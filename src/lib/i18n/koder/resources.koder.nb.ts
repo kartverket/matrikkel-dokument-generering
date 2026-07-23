@@ -207,6 +207,13 @@ export const koderNb = {
     "21": "Skatteregistrert framfester 2",
     "22": "Skatteregistrert framfester 3",
   },
+  etasjeplan: {
+    "0": "Ikke oppgitt",
+    "1": "Hovedetasje",
+    "2": "Kjelleretasje",
+    "3": "Loft",
+    "4": "Underetasje",
+  },
   kontaktperson: {
     "1": "Tiltakshaver",
     "2": "Kontaktperson",
