@@ -1,6 +1,6 @@
 import { Divider } from "@digdir/designsystemet-react"
 import { useTranslation } from "react-i18next"
-import ArealFordeling from "../components/byggoversikt/ArealFordeling"
+import ByggOversiktAreal from "../components/byggoversikt/ByggOversiktAreal.tsx"
 import ByggSammendrag from "../components/byggoversikt/ByggSammendrag"
 import BygningHeader from "../components/byggoversikt/BygningHeader"
 import Nokkeltall from "../components/byggoversikt/Nokkeltall"
@@ -45,12 +45,13 @@ export default function Byggoversikt({ byggEndringer, index, byggNr }: Props) {
                   gjeldendeTilstand?.byggMetaEndring?.antallBoenheter
                 }
                 antallBruksenheter={gjeldendeTilstand?.bruksenheter.length}
+                antallEtasjer={gjeldendeTilstand?.etasjePlan?.length}
                 naeringsgruppe={
                   gjeldendeTilstand?.byggMetaEndring?.naeringsgruppe
                 }
                 koordinater={gjeldendeTilstand?.byggKoordinatEndring}
               />
-              <ArealFordeling etasjePlan={gjeldendeTilstand.etasjePlan} />
+              <ByggOversiktAreal etasjePlan={gjeldendeTilstand.etasjePlan} />
             </>
           )}
           <ByggSammendrag byggEndringer={byggEndringer} />
