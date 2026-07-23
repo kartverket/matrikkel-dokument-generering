@@ -1,6 +1,7 @@
 import type { BygningsEndring } from "../../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 import type { BygningsStatusKode } from "../../../lib/schema/reports/bygg/koder/byggningsStatusKode.schema.ts"
 import type { EndringsKode } from "../../../lib/schema/reports/bygg/koder/endringsKode.schema.ts"
+import type { EtasjeplanKode } from "../../../lib/schema/reports/bygg/koder/etasjeplanKode.schema.ts"
 
 type Endring = NonNullable<BygningsEndring>
 
@@ -14,7 +15,7 @@ type HistorikkArealendring = {
 
 type BerortEtasje = {
   etasje: number
-  etasjeplan: string
+  etasjeplanKode: EtasjeplanKode
 }
 
 // Et sammendrag av de viktigste endringene som har skjedd et bygg, og hvilke etasjer og bruksenheter som er berørt av endringen.
@@ -108,7 +109,7 @@ function erSammeEtasje(
   if (naa === undefined || foer === undefined) return naa === foer
 
   return (
-    naa.etasjeplan === foer.etasjeplan &&
+    naa.etasjeplanKode === foer.etasjeplanKode &&
     naa.antallBoenheter === foer.antallBoenheter &&
     naa.bruksareal.boligAreal === foer.bruksareal.boligAreal &&
     naa.bruksareal.annetAreal === foer.bruksareal.annetAreal &&
@@ -145,7 +146,12 @@ function finnBeroerteEtasjer(
       const berort = naa ?? foer
       return berort === undefined
         ? []
-        : [{ etasje: berort.etasje, etasjeplan: berort.etasjeplan }]
+        : [
+            {
+              etasje: berort.etasje,
+              etasjeplanKode: berort.etasjeplanKode,
+            },
+          ]
     })
     .toSorted((a, b) => a.etasje - b.etasje)
 }

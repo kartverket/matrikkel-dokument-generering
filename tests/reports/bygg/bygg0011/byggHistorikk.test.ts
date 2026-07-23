@@ -73,7 +73,7 @@ describe("byggHistorikk", () => {
 
   test("finner etasjene som faktisk er endret", () => {
     const etasje = (annetAreal: number) => ({
-      etasjeplan: "Hovedetasje",
+      etasjeplanKode: "1" as const,
       etasje: 1,
       bruksareal: {
         boligAreal: 80,
@@ -98,7 +98,7 @@ describe("byggHistorikk", () => {
     ]
 
     expect(byggHistorikk(endringer)[0]?.beroerteEtasjer).toEqual([
-      { etasje: 1, etasjeplan: "Hovedetasje" },
+      { etasje: 1, etasjeplanKode: "1" },
     ])
   })
 

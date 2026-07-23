@@ -19,6 +19,15 @@ function arealFordeling(boligAreal: number, annetAreal: number) {
   }
 }
 
+function fordelArealMellomEtasjer(
+  totaltAreal: number,
+  arealIFoersteEtasje: number,
+) {
+  const foersteEtasje = Math.min(totaltAreal, arealIFoersteEtasje)
+
+  return [foersteEtasje, totaltAreal - foersteEtasje] as const
+}
+
 function bruksenhet({
   id,
   antallRom,
@@ -99,6 +108,17 @@ function byggEndring({
   datoer: ByggEndringsDatoer
   bruksenheter: Bruksenhet[]
 }): BygningsEndring {
+  const bruttoBoligAreal = Math.ceil(boligAreal * 1.13)
+  const bruttoAnnetAreal = Math.ceil(annetAreal * 1.2)
+  const [boligArealFoersteEtasje, boligArealAndreEtasje] =
+    fordelArealMellomEtasjer(boligAreal, 80)
+  const [annetArealFoersteEtasje, annetArealAndreEtasje] =
+    fordelArealMellomEtasjer(annetAreal, 10)
+  const [bruttoBoligArealFoersteEtasje, bruttoBoligArealAndreEtasje] =
+    fordelArealMellomEtasjer(bruttoBoligAreal, 90)
+  const [bruttoAnnetArealFoersteEtasje, bruttoAnnetArealAndreEtasje] =
+    fordelArealMellomEtasjer(bruttoAnnetAreal, 12)
+
   return {
     lopeNr,
     byggMetaEndring: {
@@ -110,10 +130,7 @@ function byggEndring({
     },
     byggArealEndring: {
       bruksarealBolig: arealFordeling(boligAreal, annetAreal),
-      bruttoarealBolig: arealFordeling(
-        Math.ceil(boligAreal * 1.13),
-        Math.ceil(annetAreal * 1.2),
-      ),
+      bruttoarealBolig: arealFordeling(bruttoBoligAreal, bruttoAnnetAreal),
       bebygdAreal: 95,
     },
     etasjePlan: [
@@ -121,15 +138,27 @@ function byggEndring({
         etasjeplanKode: "1",
         etasje: 1,
         antallBoenheter: 1,
-        bruksareal: arealFordeling(80, 10),
-        bruttoareal: arealFordeling(90, 12),
+        bruksareal: arealFordeling(
+          boligArealFoersteEtasje,
+          annetArealFoersteEtasje,
+        ),
+        bruttoareal: arealFordeling(
+          bruttoBoligArealFoersteEtasje,
+          bruttoAnnetArealFoersteEtasje,
+        ),
       },
       {
         etasjeplanKode: "1",
         etasje: 2,
         antallBoenheter: 0,
-        bruksareal: arealFordeling(60, 10),
-        bruttoareal: arealFordeling(68, 12),
+        bruksareal: arealFordeling(
+          boligArealAndreEtasje,
+          annetArealAndreEtasje,
+        ),
+        bruttoareal: arealFordeling(
+          bruttoBoligArealAndreEtasje,
+          bruttoAnnetArealAndreEtasje,
+        ),
       },
     ],
     byggKoordinatEndring: { nord: 6642100, ost: 597400 },
