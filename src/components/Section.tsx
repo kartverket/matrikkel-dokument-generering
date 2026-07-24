@@ -9,8 +9,8 @@ interface Props {
 
 export function Section({ index, title, description, children }: Props) {
   return (
-    <section className="mb-12">
-      <div className="mb-2 flex items-baseline gap-4 border-kv-green border-b-2 pb-3">
+    <section className="mt-20">
+      <div className="mb-2 flex items-baseline gap-4 break-after-avoid border-kv-green border-b-2 pb-3">
         <Heading level={2} data-size="md" className="flex items-baseline gap-2">
           <span className="text-kv-green tabular-nums tracking-widest">
             {index.toString().padStart(2, "0")}
