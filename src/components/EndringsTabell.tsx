@@ -76,7 +76,7 @@ export default function EndringsTabell({ endringer, seksjon }: Props) {
               <Table.Row key={String(i)} className="even:bg-kv-green-subtle">
                 <Table.HeaderCell
                   scope="row"
-                  className="w-32 align-top break-inside-avoid"
+                  className="w-32 break-inside-avoid align-top"
                 >
                   {`${t(`rapport.BYG0011.byggEndringer.lopeNr`)} ${rad.lopeNr}`}
                 </Table.HeaderCell>

@@ -1,4 +1,4 @@
-import { Tag, Heading } from "@kv-designsystem/react"
+import { Heading, Tag } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 
 interface Props {
