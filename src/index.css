@@ -64,3 +64,16 @@ th {
 .ds-table tr {
   break-inside: avoid;
 }
+
+/*
+ * Unngå at en overskrift eller tabell-header blir stående alene nederst
+ * på en side.
+ */
+h2,
+h3,
+h4,
+h5,
+h6,
+.ds-table thead {
+  break-after: avoid;
+}
