@@ -4,90 +4,78 @@ import type { ByggUtvalgskriterier as Utvalgskriterier } from "../../lib/schema/
 import { erAngitt, harAngittVerdi } from "./utils/erAngitt.ts"
 
 interface Props {
-  subrapporterKriterier: NonNullable<Utvalgskriterier>["subrapporter"]
+  omfangsKriterier: NonNullable<Utvalgskriterier>["omfang"]
 }
 
-export function SubrapporterKriterier({ subrapporterKriterier }: Props) {
+export function OmfangsKriterier({ omfangsKriterier }: Props) {
   const { t } = useTranslation()
   const uk = "rapport.BYG0011.utvalgskriterier"
 
-  if (!harAngittVerdi(subrapporterKriterier)) return null
+  if (!harAngittVerdi(omfangsKriterier)) return null
 
   return (
-    <section>
+    <section className="break-inside-avoid">
       <Heading level={3} data-size="sm" className="mb-4 font-medium">
-        {t(`${uk}.subrapporter.tittel`)}
+        {t(`${uk}.omfang.tittel`)}
       </Heading>
       <Table zebra border className="w-full table-fixed">
         <Table.Body>
-          {erAngitt(subrapporterKriterier?.inkluderEtasjer) && (
+          {erAngitt(omfangsKriterier?.inkluderBestaaendeBygg) && (
             <Table.Row>
               <Table.HeaderCell scope="row" className="w-1/3">
-                {t(`${uk}.subrapporter.inkluderEtasjer`)}
+                {t(`${uk}.omfang.inkluderBestaaendeBygg`)}
               </Table.HeaderCell>
               <Table.Cell>
                 {t(
-                  `${uk}.${subrapporterKriterier.inkluderEtasjer ? "ja" : "nei"}`,
+                  `${uk}.${omfangsKriterier.inkluderBestaaendeBygg ? "ja" : "nei"}`,
                 )}
               </Table.Cell>
             </Table.Row>
           )}
-          {erAngitt(subrapporterKriterier?.inkluderBruksenheter) && (
+          {erAngitt(omfangsKriterier?.inkluderUtgaatteBygg) && (
             <Table.Row>
               <Table.HeaderCell scope="row" className="w-1/3">
-                {t(`${uk}.subrapporter.inkluderBruksenheter`)}
+                {t(`${uk}.omfang.inkluderUtgaatteBygg`)}
               </Table.HeaderCell>
               <Table.Cell>
                 {t(
-                  `${uk}.${subrapporterKriterier.inkluderBruksenheter ? "ja" : "nei"}`,
+                  `${uk}.${omfangsKriterier.inkluderUtgaatteBygg ? "ja" : "nei"}`,
                 )}
               </Table.Cell>
             </Table.Row>
           )}
-          {erAngitt(subrapporterKriterier?.inkluderTiltakshavere) && (
+          {erAngitt(omfangsKriterier?.inkluderBygninger) && (
             <Table.Row>
               <Table.HeaderCell scope="row" className="w-1/3">
-                {t(`${uk}.subrapporter.inkluderTiltakshavere`)}
+                {t(`${uk}.omfang.inkluderBygninger`)}
               </Table.HeaderCell>
               <Table.Cell>
                 {t(
-                  `${uk}.${subrapporterKriterier.inkluderTiltakshavere ? "ja" : "nei"}`,
+                  `${uk}.${omfangsKriterier.inkluderBygninger ? "ja" : "nei"}`,
                 )}
               </Table.Cell>
             </Table.Row>
           )}
-          {erAngitt(subrapporterKriterier?.inkluderKontaktpersoner) && (
+          {erAngitt(omfangsKriterier?.inkluderBygningsendringer) && (
             <Table.Row>
               <Table.HeaderCell scope="row" className="w-1/3">
-                {t(`${uk}.subrapporter.inkluderKontaktpersoner`)}
+                {t(`${uk}.omfang.inkluderBygningsendringer`)}
               </Table.HeaderCell>
               <Table.Cell>
                 {t(
-                  `${uk}.${subrapporterKriterier.inkluderKontaktpersoner ? "ja" : "nei"}`,
+                  `${uk}.${omfangsKriterier.inkluderBygningsendringer ? "ja" : "nei"}`,
                 )}
               </Table.Cell>
             </Table.Row>
           )}
-          {erAngitt(subrapporterKriterier?.inkluderHjemmelshavere) && (
+          {erAngitt(omfangsKriterier?.inkluderFrededeBygninger) && (
             <Table.Row>
               <Table.HeaderCell scope="row" className="w-1/3">
-                {t(`${uk}.subrapporter.inkluderHjemmelshavere`)}
+                {t(`${uk}.omfang.inkluderFrededeBygninger`)}
               </Table.HeaderCell>
               <Table.Cell>
                 {t(
-                  `${uk}.${subrapporterKriterier.inkluderHjemmelshavere ? "ja" : "nei"}`,
-                )}
-              </Table.Cell>
-            </Table.Row>
-          )}
-          {erAngitt(subrapporterKriterier?.inkluderKulturminner) && (
-            <Table.Row>
-              <Table.HeaderCell scope="row" className="w-1/3">
-                {t(`${uk}.subrapporter.inkluderKulturminner`)}
-              </Table.HeaderCell>
-              <Table.Cell>
-                {t(
-                  `${uk}.${subrapporterKriterier.inkluderKulturminner ? "ja" : "nei"}`,
+                  `${uk}.${omfangsKriterier.inkluderFrededeBygninger ? "ja" : "nei"}`,
                 )}
               </Table.Cell>
             </Table.Row>

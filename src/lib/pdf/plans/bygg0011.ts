@@ -18,7 +18,7 @@ export function buildByggPagePlan(
 
   const utvalgTitle = t("rapport.BYG0011.utvalgskriterier.title")
   const oversiktTitle = t("rapport.BYG0011.byggoversikt.title")
-  const bruksenhTitle = t("rapport.BYG0011.bruksenheter.title")
+  const byggEndringTitle = t("rapport.BYG0011.byggEndringer.tittel")
 
   const pages: PageDef[] = [
     {
@@ -39,7 +39,7 @@ export function buildByggPagePlan(
         },
         {
           name: `bygg-${nr}-bruksenhet`,
-          header: { left: byggHeader, right: `03 ${bruksenhTitle}` },
+          header: { left: byggHeader, right: `03 ${byggEndringTitle}` },
         },
       ]
     }),

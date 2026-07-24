@@ -38,10 +38,11 @@ export function renderDocument(rapport: Byg0011Rapport, css = ""): string {
   const t = i18n.getFixedT(rapport.locale)
   const generertLabel = t("pdf.footer.rapportGenerert", {
     type: rapport.rapportKode,
-    dato: formatDate(i18n, rapport.metadata.generertTidspunkt, "", {
-      dateStyle: "long",
-      timeStyle: "short",
-    }),
+    dato:
+      formatDate(i18n, rapport.metadata.generertTidspunkt, "", {
+        dateStyle: "long",
+        timeStyle: "short",
+      }) ?? "",
   })
   const pageCss = buildPageCss(buildByggPagePlan(rapport, t, generertLabel))
   const body = renderToStaticMarkup(

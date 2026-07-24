@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next"
 import { oversettKode } from "../../lib/i18n/koder/oversettKode.ts"
 import type { ByggUtvalgskriterier as Utvalgskriterier } from "../../lib/schema/reports/bygg/shared/byggUtvalgskriterier.schema.ts"
 import { formatDate } from "../../lib/utils/formatDate"
+import { erAngitt, harAngittVerdi } from "./utils/erAngitt.ts"
 
 interface Props {
   bygningsstatusKriterier: NonNullable<Utvalgskriterier>["bygningsstatus"]
@@ -12,7 +13,7 @@ export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {
   const { i18n, t } = useTranslation()
   const uk = "rapport.BYG0011.utvalgskriterier"
 
-  const ikkeAngitt = t(`${uk}.ikkeAngitt`)
+  if (!harAngittVerdi(bygningsstatusKriterier)) return null
 
   return (
     <section>
@@ -21,15 +22,14 @@ export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {
       </Heading>
       <Table zebra border className="w-full table-fixed">
         <Table.Body>
-          <Table.Row>
-            <Table.HeaderCell scope="row" className="w-1/3">
-              {t(`${uk}.bygningsstatus.naavaerende`)}
-            </Table.HeaderCell>
-            <Table.Cell>
-              {bygningsstatusKriterier?.naavaerende &&
-              bygningsstatusKriterier.naavaerende.length > 0 ? (
+          {erAngitt(bygningsstatusKriterier?.naavaerende) && (
+            <Table.Row>
+              <Table.HeaderCell scope="row" className="w-1/3">
+                {t(`${uk}.bygningsstatus.naavaerende`)}
+              </Table.HeaderCell>
+              <Table.Cell>
                 <span className="flex flex-wrap gap-2">
-                  {bygningsstatusKriterier?.naavaerende?.map((status) => (
+                  {bygningsstatusKriterier.naavaerende.map((status) => (
                     <Tag key={status} data-color="success" variant="outline">
                       {oversettKode({
                         t,
@@ -39,20 +39,17 @@ export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {
                     </Tag>
                   ))}
                 </span>
-              ) : (
-                ikkeAngitt
-              )}
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.HeaderCell scope="row">
-              {t(`${uk}.bygningsstatus.tidligere`)}
-            </Table.HeaderCell>
-            <Table.Cell>
-              {bygningsstatusKriterier?.tidligere &&
-              bygningsstatusKriterier.tidligere.length > 0 ? (
+              </Table.Cell>
+            </Table.Row>
+          )}
+          {erAngitt(bygningsstatusKriterier?.tidligere) && (
+            <Table.Row>
+              <Table.HeaderCell scope="row" className="w-1/3">
+                {t(`${uk}.bygningsstatus.tidligere`)}
+              </Table.HeaderCell>
+              <Table.Cell>
                 <span className="flex flex-wrap gap-2">
-                  {bygningsstatusKriterier?.tidligere?.map((status) => (
+                  {bygningsstatusKriterier.tidligere.map((status) => (
                     <Tag key={status} data-color="accent" variant="outline">
                       {oversettKode({
                         t,
@@ -62,35 +59,29 @@ export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {
                     </Tag>
                   ))}
                 </span>
-              ) : (
-                ikkeAngitt
-              )}
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.HeaderCell scope="row">
-              {t(`${uk}.bygningsstatus.periodeFra`)}
-            </Table.HeaderCell>
-            <Table.Cell>
-              {formatDate(
-                i18n,
-                bygningsstatusKriterier?.periodeFra,
-                ikkeAngitt,
-              )}
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.HeaderCell scope="row">
-              {t(`${uk}.bygningsstatus.periodeTil`)}
-            </Table.HeaderCell>
-            <Table.Cell>
-              {formatDate(
-                i18n,
-                bygningsstatusKriterier?.periodeTil,
-                ikkeAngitt,
-              )}
-            </Table.Cell>
-          </Table.Row>
+              </Table.Cell>
+            </Table.Row>
+          )}
+          {erAngitt(bygningsstatusKriterier?.periodeFra) && (
+            <Table.Row>
+              <Table.HeaderCell scope="row" className="w-1/3">
+                {t(`${uk}.bygningsstatus.periodeFra`)}
+              </Table.HeaderCell>
+              <Table.Cell>
+                {formatDate(i18n, bygningsstatusKriterier.periodeFra)}
+              </Table.Cell>
+            </Table.Row>
+          )}
+          {erAngitt(bygningsstatusKriterier?.periodeTil) && (
+            <Table.Row>
+              <Table.HeaderCell scope="row" className="w-1/3">
+                {t(`${uk}.bygningsstatus.periodeTil`)}
+              </Table.HeaderCell>
+              <Table.Cell>
+                {formatDate(i18n, bygningsstatusKriterier.periodeTil)}
+              </Table.Cell>
+            </Table.Row>
+          )}
         </Table.Body>
       </Table>
     </section>
