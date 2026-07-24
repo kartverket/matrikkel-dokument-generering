@@ -21,7 +21,7 @@ export default function Oversiktsfelt(props: Props) {
   const tom = t("tom")
 
   return (
-    <ul className="flex flex-row justify-between gap-4 break-inside-avoid">
+    <ul className="flex break-inside-avoid flex-row justify-between gap-4">
       <li>
         <Label>{t(`${key}.bygningstype`)}</Label>
         <Paragraph data-size="sm">

@@ -25,7 +25,7 @@ export default function Byggoversikt({ byggEndringer, index, byggNr }: Props) {
   return (
     <Section index={index} title={t("rapport.BYG0011.byggoversikt.title")}>
       <div className="space-y-8">
-        <div className="space-y-8 break-inside-avoid">
+        <div className="break-inside-avoid space-y-8">
           <BygningHeader
             byggNr={byggNr}
             gjeldendeStatusKode={
