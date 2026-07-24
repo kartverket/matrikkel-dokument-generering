@@ -15,23 +15,17 @@ export function DocumentComponent({ rapport }: { rapport: Byg0011Rapport }) {
   return (
     <main className="mx-auto max-w-6xl">
       <Metadata metadata={rapport.metadata} rapportKode={rapport.rapportKode} />
-      <div className="pg-utvalgskriterier">
-        <ByggUtvalgskriterier index={1} kriterier={rapport.utvalgskriterier} />
-      </div>
-      {rapport.bygninger.map((bygning, i) => {
-        const nr = i + 1
+      <ByggUtvalgskriterier index={1} kriterier={rapport.utvalgskriterier} />
+
+      {rapport.bygninger.map((bygning) => {
         return (
           <Fragment key={bygning.bygningsnr}>
-            <div className={`pg-bygg-${nr}-oversikt`}>
-              <Byggoversikt
-                index={2}
-                byggNr={bygning.bygningsnr}
-                byggEndringer={bygning.endringer}
-              />
-            </div>
-            <div className={`pg-bygg-${nr}-bruksenhet`}>
-              <ByggEndringer index={3} bygning={bygning} />
-            </div>
+            <Byggoversikt
+              index={2}
+              byggNr={bygning.bygningsnr}
+              byggEndringer={bygning.endringer}
+            />
+            <ByggEndringer index={3} bygning={bygning} />
           </Fragment>
         )
       })}
