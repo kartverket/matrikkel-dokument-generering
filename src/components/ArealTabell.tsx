@@ -64,7 +64,10 @@ export default function ArealTabell({ arealEndringer }: Props) {
           </Table.Head>
 
           {arealEndringer.map(({ lopeNr, etasjeRader, sum }) => (
-            <Table.Body key={lopeNr} className="even:bg-kv-green-subtle">
+            <Table.Body
+              key={lopeNr}
+              className="even:bg-kv-green-subtle break-inside-avoid"
+            >
               {etasjeRader.map((r, i) => (
                 <Table.Row key={`${lopeNr}-${r.etasjeplan}-${r.etasje}`}>
                   {i === 0 && (

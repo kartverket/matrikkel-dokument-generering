@@ -82,7 +82,7 @@ export default function ByggSammendrag({ byggEndringer }: Props) {
                   : null
 
             return (
-              <div key={historikk.lopeNr}>
+              <div key={historikk.lopeNr} className="break-inside-avoid">
                 <li className="space-y-1">
                   <div className="flex flex-wrap items-center gap-3">
                     <div className="flex w-full justify-between">

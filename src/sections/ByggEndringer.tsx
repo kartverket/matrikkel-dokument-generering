@@ -128,7 +128,7 @@ export default function ByggEndringer({ index, bygning }: Props) {
           {t(`${tKey}.ingenEndringer`)}
         </Paragraph>
       ) : (
-        <div className="flex flex-col gap-8">
+        <div className="space-y-8">
           <EndringsTabell endringer={metaEndringer} seksjon="byggMetaEndring" />
           <ArealTabell arealEndringer={arealEndringer} />
           <EndringsTabell

@@ -5,12 +5,21 @@ interface Props {
   title: string
   description?: string
   children?: React.ReactNode
+  breakBefore?: boolean
 }
 
-export function Section({ index, title, description, children }: Props) {
+export function Section({
+  index,
+  title,
+  description,
+  children,
+  breakBefore,
+}: Props) {
   return (
-    <section className="mb-12">
-      <div className="mb-7 flex items-baseline gap-4 border-kv-green border-b-2 pb-3">
+    <section
+      className={`mb-12 ${breakBefore ? "break-before-page" : "break-before-avoid"}`}
+    >
+      <div className="mb-2 flex items-baseline gap-4 border-kv-green border-b-2 pb-3">
         <Heading level={2} data-size="md" className="flex items-baseline gap-2">
           <span className="text-kv-green tabular-nums tracking-widest">
             {index.toString().padStart(2, "0")}
@@ -23,7 +32,6 @@ export function Section({ index, title, description, children }: Props) {
           </Paragraph>
         )}
       </div>
-
       {children}
     </section>
   )

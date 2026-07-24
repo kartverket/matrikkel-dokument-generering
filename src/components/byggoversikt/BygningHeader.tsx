@@ -1,4 +1,4 @@
-import { Tag } from "@kv-designsystem/react"
+import { Tag, Heading } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 
 interface Props {
@@ -11,33 +11,27 @@ export default function BygningHeader({ gjeldendeStatusKode, byggNr }: Props) {
   const key = "rapport.BYG0011.byggoversikt"
 
   return (
-    <div className="flex flex-col gap-2 bg-kv-green-tinted py-2">
-      <div>
-        <p className="text-kv-subtle">
+    <div className="flex justify-between bg-kv-green-tinted px-4 py-2">
+      <div className="flex gap-4">
+        <Heading level={2} className="font-medium">
           {t(`${key}.header.bygningsNr`, {
             bygningsnr: byggNr,
-          })}
-        </p>
-      </div>
-      <div className="flex flex-row items-center gap-2">
-        <h3 className="font-medium text-2xl">
-          {/* Formatterings Regex på formen XX XXX XXX */}
+          })}{" "}
           {byggNr
             .replace(/\s/g, "")
             .replace(/^(\d{2})(?=\d)/, "$1 ")
             .replace(/(\d{3})(?=\d)/g, "$1 ")}
-        </h3>
-
-        <div className="flex flex-col gap-4">
-          <Tag data-size="sm" data-color={"success"}>
-            {gjeldendeStatusKode
-              ? t(`koder.bygningsstatus.${gjeldendeStatusKode}`, {
-                  defaultValue: gjeldendeStatusKode,
-                })
-              : t(`${key}.ukjentBygningsStatus`)}
-          </Tag>
-        </div>
+        </Heading>
+        <Tag data-size="sm" data-color={"success"}>
+          {gjeldendeStatusKode
+            ? t(`koder.bygningsstatus.${gjeldendeStatusKode}`, {
+                defaultValue: gjeldendeStatusKode,
+              })
+            : t(`${key}.ukjentBygningsStatus`)}
+        </Tag>
       </div>
+
+      {/* <div>Bygg x av y</div> */}
     </div>
   )
 }
