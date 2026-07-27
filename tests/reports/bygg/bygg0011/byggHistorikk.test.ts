@@ -54,6 +54,7 @@ describe("byggHistorikk", () => {
         etasjePlan: [],
         bruksenheter: [],
         kulturminner: [],
+        sefrakIder: [],
       },
       {
         lopeNr: 1,
@@ -65,6 +66,7 @@ describe("byggHistorikk", () => {
         etasjePlan: [],
         bruksenheter: [],
         kulturminner: [],
+        sefrakIder: [],
       },
     ]
 
@@ -81,6 +83,7 @@ describe("byggHistorikk", () => {
         etasjePlan: [],
         bruksenheter: [],
         kulturminner: [],
+        sefrakIder: [],
       },
       {
         lopeNr: 0,
@@ -88,6 +91,7 @@ describe("byggHistorikk", () => {
         etasjePlan: [],
         bruksenheter: [],
         kulturminner: [],
+        sefrakIder: [],
       },
       {
         lopeNr: 1,
@@ -95,6 +99,7 @@ describe("byggHistorikk", () => {
         etasjePlan: [],
         bruksenheter: [],
         kulturminner: [],
+        sefrakIder: [],
       },
       {
         lopeNr: 4,
@@ -102,6 +107,7 @@ describe("byggHistorikk", () => {
         etasjePlan: [],
         bruksenheter: [],
         kulturminner: [],
+        sefrakIder: [],
       },
       {
         lopeNr: 3,
@@ -109,6 +115,7 @@ describe("byggHistorikk", () => {
         etasjePlan: [],
         bruksenheter: [],
         kulturminner: [],
+        sefrakIder: [],
       },
     ]
 
@@ -134,6 +141,7 @@ describe("byggHistorikk", () => {
       etasjePlan: [],
       bruksenheter: [],
       kulturminner: [],
+      sefrakIder: [],
     })
     const historikk = byggHistorikk([
       endring(0, 0),
@@ -167,6 +175,7 @@ describe("byggHistorikk", () => {
         etasjePlan: [etasje(0)],
         bruksenheter: [],
         kulturminner: [],
+        sefrakIder: [],
       },
       {
         lopeNr: 1,
@@ -174,6 +183,7 @@ describe("byggHistorikk", () => {
         etasjePlan: [etasje(14)],
         bruksenheter: [],
         kulturminner: [],
+        sefrakIder: [],
       },
     ]
 
@@ -186,7 +196,13 @@ describe("byggHistorikk", () => {
     expect(
       byggHistorikk([
         undefined,
-        { lopeNr: 0, etasjePlan: [], bruksenheter: [], kulturminner: [] },
+        {
+          lopeNr: 0,
+          etasjePlan: [],
+          bruksenheter: [],
+          kulturminner: [],
+          sefrakIder: [],
+        },
       ]),
     ).toEqual([])
   })

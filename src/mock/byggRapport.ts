@@ -101,6 +101,7 @@ function byggEndring({
   datoer,
   bruksenheter,
   kulturminner = [],
+  sefrakIder = [],
 }: {
   lopeNr: number
   endringsKode?: EndringsKode
@@ -110,6 +111,7 @@ function byggEndring({
   datoer: ByggEndringsDatoer
   bruksenheter: Bruksenhet[]
   kulturminner?: Kulturminne[]
+  sefrakIder?: string[]
 }): BygningsEndring {
   const bruttoBoligAreal = Math.ceil(boligAreal * 1.13)
   const bruttoAnnetAreal = Math.ceil(annetAreal * 1.2)
@@ -184,6 +186,7 @@ function byggEndring({
     },
     bruksenheter,
     kulturminner,
+    sefrakIder,
   }
 }
 
@@ -257,6 +260,7 @@ const andreEndringer: BygningsEndring[] = [
     annetAreal: 0,
     datoer: { tattIBruk: isoDatetime("1998-06-18") },
     bruksenheter: [h0101, h0102],
+    sefrakIder: ["3201-0103-058", "3201-0103-059"],
     kulturminner: [
       {
         enkeltminneNr: "86121-1",

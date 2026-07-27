@@ -16,6 +16,7 @@ function endring(
     etasjePlan: [],
     bruksenheter: [],
     kulturminner: [],
+    sefrakIder: [],
   }
 }
 

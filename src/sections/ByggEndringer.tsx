@@ -120,6 +120,12 @@ export default function ByggEndringer({ index, bygning }: Props) {
       })),
   )
 
+  const sefrakEndringer = endringer.flatMap((e) =>
+    (e.sefrakIder ?? [])
+      .filter((s) => s != null)
+      .map((sefrakId) => ({ lopeNr: e.lopeNr, sefrakId })),
+  )
+
   const kulturminneEndringer = endringer.flatMap((e) =>
     (e.kulturminner ?? [])
       .filter((k) => k !== undefined)
@@ -175,6 +181,7 @@ export default function ByggEndringer({ index, bygning }: Props) {
             endringer={kulturminneEndringer}
             seksjon="kulturminner"
           />
+          <EndringsTabell endringer={sefrakEndringer} seksjon="sefrak" />
         </div>
       )}
     </Section>

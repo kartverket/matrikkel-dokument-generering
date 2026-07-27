@@ -217,6 +217,11 @@ export const nb = {
           vernetypeKode: "Vernetype",
           kulturminnekategoriKode: "Kategori",
         },
+        sefrak: {
+          tittel: "SEFRAK-minner",
+          ingenEndring: "Ingen SEFRAK-minner registrert på bygget.",
+          sefrakId: "Sefrak-ID",
+        },
       },
       kontaktpersoner: {
         title: "Kontaktpersoner",
