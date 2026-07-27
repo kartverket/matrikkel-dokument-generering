@@ -51,13 +51,12 @@ export function buildPageCss(plan: PagePlan): string {
 
   const namedBlocks = plan.pages
     .map((page: PageDef) => {
-      const breakDecl = page.breakBefore === false ? "" : " break-before: page;"
       const merged = {
         header: mergeBoxes(defaults.header, page.header),
         footer: mergeBoxes(defaults.footer, page.footer),
       }
       return (
-        `.pg-${page.name} { page: ${page.name};${breakDecl} }\n` +
+        `.pg-${page.name} { page: ${page.name}; }\n` +
         `@page ${page.name} { ${pageBody(merged)} }`
       )
     })

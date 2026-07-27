@@ -27,8 +27,8 @@ export function SokevinduKriterier({ sokevinduKriterier }: Props) {
   const formaterKoordinat = (verdi: number) => numberFormatter.format(verdi)
 
   return (
-    <section className="break-inside-avoid">
-      <Heading level={3} className="mb-4">
+    <section>
+      <Heading level={3} data-size="sm" className="mb-4 font-medium">
         {t(`${uk}.sokevindu.tittel`)}
       </Heading>
       <Card variant="tinted" className="border border-kv-border">

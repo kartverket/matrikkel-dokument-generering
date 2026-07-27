@@ -16,8 +16,8 @@ export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {
   if (!harAngittVerdi(bygningsstatusKriterier)) return null
 
   return (
-    <section className="break-inside-avoid">
-      <Heading level={3} className="mb-4">
+    <section>
+      <Heading level={3} data-size="sm" className="mb-4 font-medium">
         {t(`${uk}.bygningsstatus.tittel`)}
       </Heading>
       <Table zebra border className="w-full table-fixed">
