@@ -7,7 +7,9 @@ import { erAngitt } from "./utils/erAngitt.ts"
 
 export type Kriterium = {
   label: string
-  value: boolean | string | number | null | undefined
+  // boolean rendres som checkbox, lister avkortes til maks 5 verdier
+  // med en "+N"-chip for resten, alt annet rendres som tekst
+  value: boolean | string | number | string[] | null | undefined
   fullBredde?: boolean
   // Trengs bare når flere kriterier i samme gruppe deler label
   key?: string
@@ -25,6 +27,7 @@ type Props = {
 )
 
 const uk = "rapport.BYG0011.utvalgskriterier"
+const MAKS_VISTE_VERDIER = 5
 
 export function Utvalg(props: Props) {
   const { t } = useTranslation()
@@ -66,7 +69,22 @@ export function Utvalg(props: Props) {
               )}
             >
               <span className="text-kv-subtle">{label}</span>
-              <span>{value}</span>
+              {Array.isArray(value) ? (
+                <span>
+                  {value.slice(0, MAKS_VISTE_VERDIER).join(", ")}
+                  {value.length > MAKS_VISTE_VERDIER && (
+                    <>
+                      <span>...</span>
+                      <span className="ml-2 text-kv-subtle">
+                        {`+ `}
+                        {value.length - MAKS_VISTE_VERDIER}
+                      </span>
+                    </>
+                  )}
+                </span>
+              ) : (
+                <span>{value}</span>
+              )}
             </span>
           ),
         )}

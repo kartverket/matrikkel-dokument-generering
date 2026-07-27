@@ -1,7 +1,6 @@
 import { useTranslation } from "react-i18next"
 import type { ByggUtvalgskriterier as Utvalgskriterier } from "../../lib/schema/reports/bygg/shared/byggUtvalgskriterier.schema.ts"
 import { Utvalg } from "./Utvalg.tsx"
-import { erAngitt } from "./utils/erAngitt.ts"
 
 interface Props {
   omfangsKriterier: NonNullable<Utvalgskriterier>["omfang"]
@@ -52,11 +51,9 @@ export function OmfangsKriterier({
         {
           label: t(`${uk}.bygning.bygningstyper`),
           fullBredde: true,
-          value: erAngitt(bygningKriterier?.bygningstyper)
-            ? bygningKriterier.bygningstyper
-                .map((kode) => t(`koder.bygningstype.${kode}`))
-                .join(", ")
-            : undefined,
+          value: bygningKriterier?.bygningstyper?.map((kode) =>
+            t(`koder.bygningstype.${kode}`),
+          ),
         },
       ]}
     />
