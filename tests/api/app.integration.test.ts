@@ -1,15 +1,23 @@
 import { describe, expect, spyOn, test } from "bun:test"
 import { createApp } from "../../src/api/app.ts"
 import { byggRapportSchema } from "../../src/lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
+import { massivuttrekkRapportSchema } from "../../src/lib/schema/reports/bygg/byg0012/massivuttrekkRapport.schema.ts"
 import mockByggRapport from "../../src/mock/byggRapport.ts"
+import mockMassivuttrekkRapport from "../../src/mock/massivuttrekkRapport.ts"
 
 const app = createApp()
 
 describe("HTTP API", () => {
   test("accepts the JSON representation documented by OpenAPI", () => {
-    const jsonPayload = JSON.parse(JSON.stringify(mockByggRapport))
+    const byggPayload = JSON.parse(JSON.stringify(mockByggRapport))
+    const massivuttrekkPayload = JSON.parse(
+      JSON.stringify(mockMassivuttrekkRapport),
+    )
 
-    expect(byggRapportSchema.safeParse(jsonPayload).success).toBe(true)
+    expect(byggRapportSchema.safeParse(byggPayload).success).toBe(true)
+    expect(
+      massivuttrekkRapportSchema.safeParse(massivuttrekkPayload).success,
+    ).toBe(true)
   })
 
   test.each([
@@ -72,6 +80,10 @@ describe("HTTP API", () => {
       openApi.components.schemas.ByggUtvalgskriterier.properties.bygning
         .properties.bygningstyper.example,
     ).toEqual(["111"])
+    expect(openApi.components.schemas.BYG0011).toBeDefined()
+    expect(openApi.components.schemas.BYG0012).toBeDefined()
+    expect(openApi.components.schemas.VannforsyningsKode).toBeDefined()
+    expect(openApi.components.schemas.AvlopsKode).toBeDefined()
     expect(openApi.servers).toEqual([
       { url: "/", description: "Gjeldende miljø" },
     ])

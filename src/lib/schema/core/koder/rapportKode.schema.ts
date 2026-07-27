@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-export const supportedReportTypes = ["BYG0011"] as const
+export const supportedReportTypes = ["BYG0011", "BYG0012"] as const
 
 export const rapportKodeSchema = z.enum(supportedReportTypes).meta({
   example: "BYG0011",

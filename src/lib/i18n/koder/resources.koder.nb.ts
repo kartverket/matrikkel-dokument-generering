@@ -249,6 +249,23 @@ export const koderNb = {
     "3": "Felles",
     "9": "Ukjent",
   },
+  vannforsyning: {
+    " ": "Ikke oppgitt",
+    "1": "Tilknyttet offentlig vannverk",
+    "2": "Tilknyttet privat vannverk",
+    "3": "Privat innlagt vann",
+    "4": "Privat ikke innlagt vann",
+  },
+  avlop: {
+    " ": "Ikke oppgitt",
+    "1": "Offentlig kloakk",
+    "2": "Privat kloakk",
+    "3": "Ingen kloakk",
+  },
+  byggtype: {
+    Bygning: "Bygning",
+    Bygningsendring: "Bygningsendring",
+  },
   naringsgruppe: {
     " ": "Ikke oppgitt",
     X: "Bolig",

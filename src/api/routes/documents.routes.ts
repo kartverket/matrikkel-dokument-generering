@@ -3,10 +3,17 @@ import { renderDocument } from "../../Document.tsx"
 import { htmlToPdf } from "../../lib/pdf/gotenberg.ts"
 import { getDocumentCss } from "../../lib/pdf/styles.ts"
 import { byggRapportSchema } from "../../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
+import { massivuttrekkRapportSchema } from "../../lib/schema/reports/bygg/byg0012/massivuttrekkRapport.schema.ts"
 import {
+  notImplementedResponseSchema,
   pdfErrorResponseSchema,
   validationErrorResponseSchema,
 } from "../openapi/response.schemas.ts"
+
+const rapportRequestSchema = z.discriminatedUnion("rapportKode", [
+  byggRapportSchema,
+  massivuttrekkRapportSchema,
+])
 
 const createDocumentRoute = createRoute({
   method: "post",
@@ -20,7 +27,7 @@ const createDocumentRoute = createRoute({
     body: {
       required: true,
       content: {
-        "application/json": { schema: byggRapportSchema },
+        "application/json": { schema: rapportRequestSchema },
       },
     },
   },
@@ -39,6 +46,13 @@ const createDocumentRoute = createRoute({
         "application/json": { schema: validationErrorResponseSchema },
       },
     },
+    501: {
+      description:
+        "Rapporten validerte, men dokumentgenerering for rapporttypen er ikke implementert ennå.",
+      content: {
+        "application/json": { schema: notImplementedResponseSchema },
+      },
+    },
     502: {
       description: "PDF-generering via Gotenberg feilet.",
       content: {
@@ -51,6 +65,16 @@ const createDocumentRoute = createRoute({
 export function registerDocumentRoutes(app: OpenAPIHono) {
   app.openapi(createDocumentRoute, async (c) => {
     const data = c.req.valid("json")
+
+    if (data.rapportKode === "BYG0012") {
+      return c.json(
+        {
+          error: "Rapporttypen er ikke implementert",
+          details: "Dokumentgenerering er ikke klar ennå.",
+        },
+        501,
+      )
+    }
 
     try {
       const css = await getDocumentCss()
