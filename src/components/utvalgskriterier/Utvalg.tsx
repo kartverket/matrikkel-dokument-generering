@@ -59,7 +59,7 @@ export function Utvalg(props: Props) {
               checked={value}
               data-size="sm"
               className={cn(
-                "[&_.ds-input]:[--dsc-input-size--toggle:14px] [&_.ds-input]:[--dsc-input-stroke-width:0.6px] [&_.ds-input]:translate-y-0", // Hack for å få checkbox til å se bra ut i PDF
+                "[&_.ds-input]:translate-y-0 [&_.ds-input]:[--dsc-input-size--toggle:14px] [&_.ds-input]:[--dsc-input-stroke-width:0.6px]", // Hack for å få checkbox til å se bra ut i PDF
                 fullBredde && "col-span-full",
               )}
             />
