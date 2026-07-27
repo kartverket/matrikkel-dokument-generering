@@ -31,7 +31,7 @@ describe("HTTP API", () => {
   })
 
   test("validates create-document requests through the route schema", async () => {
-    const response = await app.request("/create-document", {
+    const response = await app.request("/create-document/BYG0011", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: "{}",
@@ -52,7 +52,7 @@ describe("HTTP API", () => {
   })
 
   test("returns the documented error format for malformed JSON", async () => {
-    const response = await app.request("/create-document", {
+    const response = await app.request("/create-document/BYG0011", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: "{",
@@ -73,7 +73,8 @@ describe("HTTP API", () => {
 
     expect(openApiResponse.status).toBe(200)
     expect(openApi.openapi).toBe("3.0.3")
-    expect(openApi.paths["/create-document"].post).toBeDefined()
+    expect(openApi.paths["/create-document/BYG0011"].post).toBeDefined()
+    expect(openApi.paths["/create-document/BYG0012"].post).toBeDefined()
     expect(openApi.components.schemas.ValidationErrorResponse).toBeDefined()
     expect(openApi.components.schemas.PdfErrorResponse).toBeDefined()
     expect(
