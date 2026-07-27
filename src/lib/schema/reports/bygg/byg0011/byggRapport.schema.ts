@@ -23,6 +23,11 @@ const bygningSchema = z.object({
 
 export const byggRapportSchema = rapportSchema
   .extend({
+    // Literal (ikke felles enum) slik at rapportKode kan brukes som diskriminator i API-et
+    rapportKode: z.literal("BYG0011").meta({
+      description: "Rapportkoden for byggrapport.",
+      example: "BYG0011",
+    }),
     utvalgskriterier: byggUtvalgskriterierSchema,
     bygninger: valgfriListe(bygningSchema),
   })

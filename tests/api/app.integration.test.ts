@@ -1,15 +1,23 @@
 import { describe, expect, spyOn, test } from "bun:test"
 import { createApp } from "../../src/api/app.ts"
+import { bygningMassivRapportSchema } from "../../src/lib/schema/reports/bygg/byg0001/bygningMassivRapport.schema.ts"
 import { byggRapportSchema } from "../../src/lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 import mockByggRapport from "../../src/mock/byggRapport.ts"
+import mockBygningMassivRapport from "../../src/mock/bygningMassivRapport.ts"
 
 const app = createApp()
 
 describe("HTTP API", () => {
   test("accepts the JSON representation documented by OpenAPI", () => {
-    const jsonPayload = JSON.parse(JSON.stringify(mockByggRapport))
+    const byggPayload = JSON.parse(JSON.stringify(mockByggRapport))
+    const bygningMassivPayload = JSON.parse(
+      JSON.stringify(mockBygningMassivRapport),
+    )
 
-    expect(byggRapportSchema.safeParse(jsonPayload).success).toBe(true)
+    expect(byggRapportSchema.safeParse(byggPayload).success).toBe(true)
+    expect(
+      bygningMassivRapportSchema.safeParse(bygningMassivPayload).success,
+    ).toBe(true)
   })
 
   test.each([
@@ -23,7 +31,7 @@ describe("HTTP API", () => {
   })
 
   test("validates create-document requests through the route schema", async () => {
-    const response = await app.request("/create-document", {
+    const response = await app.request("/create-document/BYG0011", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: "{}",
@@ -44,7 +52,7 @@ describe("HTTP API", () => {
   })
 
   test("returns the documented error format for malformed JSON", async () => {
-    const response = await app.request("/create-document", {
+    const response = await app.request("/create-document/BYG0011", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: "{",
@@ -65,13 +73,14 @@ describe("HTTP API", () => {
 
     expect(openApiResponse.status).toBe(200)
     expect(openApi.openapi).toBe("3.0.3")
-    expect(openApi.paths["/create-document"].post).toBeDefined()
+    expect(openApi.paths["/create-document/BYG0011"].post).toBeDefined()
     expect(openApi.components.schemas.ValidationErrorResponse).toBeDefined()
     expect(openApi.components.schemas.PdfErrorResponse).toBeDefined()
     expect(
       openApi.components.schemas.ByggUtvalgskriterier.properties.bygning
         .properties.bygningstyper.example,
     ).toEqual(["111"])
+    expect(openApi.components.schemas.BYG0011).toBeDefined()
     expect(openApi.servers).toEqual([
       { url: "/", description: "Gjeldende miljø" },
     ])
