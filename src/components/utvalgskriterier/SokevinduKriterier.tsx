@@ -1,4 +1,4 @@
-import { Heading, Table } from "@kv-designsystem/react"
+import { Heading, Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { ByggUtvalgskriterier as Utvalgskriterier } from "../../lib/schema/reports/bygg/shared/byggUtvalgskriterier.schema.ts"
 import { erAngitt, harAngittVerdi } from "./utils/erAngitt.ts"
@@ -33,48 +33,48 @@ export function SokevinduKriterier({ sokevinduKriterier }: Props) {
         <hr className="w-full border border-kv-green-border" />
       </span>
 
-      <Table>
-        <Table.Head>
-          <Table.Row>
-            {erAngitt(nord) && (
-              <Table.HeaderCell>{t(`${uk}.sokevindu.nord`)}</Table.HeaderCell>
-            )}
-            {erAngitt(ost) && (
-              <Table.HeaderCell>{t(`${uk}.sokevindu.ost`)}</Table.HeaderCell>
-            )}
-            {erAngitt(syd) && (
-              <Table.HeaderCell>{t(`${uk}.sokevindu.syd`)}</Table.HeaderCell>
-            )}
-            {erAngitt(vest) && (
-              <Table.HeaderCell>{t(`${uk}.sokevindu.vest`)}</Table.HeaderCell>
-            )}
-          </Table.Row>
-        </Table.Head>
-        <Table.Body>
-          <Table.Row>
-            {erAngitt(nord) && (
-              <Table.Cell className="tabular-nums">
-                {formaterKoordinat(nord)}
-              </Table.Cell>
-            )}
-            {erAngitt(ost) && (
-              <Table.Cell className="tabular-nums">
-                {formaterKoordinat(ost)}
-              </Table.Cell>
-            )}
-            {erAngitt(syd) && (
-              <Table.Cell className="tabular-nums">
-                {formaterKoordinat(syd)}
-              </Table.Cell>
-            )}
-            {erAngitt(vest) && (
-              <Table.Cell className="tabular-nums">
-                {formaterKoordinat(vest)}
-              </Table.Cell>
-            )}
-          </Table.Row>
-        </Table.Body>
-      </Table>
+      <dl className="grid grid-cols-2 gap-8">
+        {(erAngitt(ost) || erAngitt(vest)) && (
+          <div>
+            <Paragraph className="text-kv-subtle" asChild>
+              <dt>{t(`${uk}.sokevindu.ost`)}</dt>
+            </Paragraph>
+            <Paragraph className="mt-1 font-medium" asChild>
+              <dd className="flex items-center gap-3 tabular-nums">
+                {erAngitt(ost) && <span>{formaterKoordinat(ost)}</span>}
+                {erAngitt(ost) && erAngitt(vest) && (
+                  <span className="flex flex-1 items-center" aria-hidden="true">
+                    <span className="size-2 rounded-full bg-kv-blue" />
+                    <span className="h-0.5 flex-1 bg-kv-blue" />
+                    <span className="size-2 rounded-full bg-kv-blue" />
+                  </span>
+                )}
+                {erAngitt(vest) && <span>{formaterKoordinat(vest)}</span>}
+              </dd>
+            </Paragraph>
+          </div>
+        )}
+        {(erAngitt(nord) || erAngitt(syd)) && (
+          <div>
+            <Paragraph className="text-kv-subtle" asChild>
+              <dt>{t(`${uk}.sokevindu.nord`)}</dt>
+            </Paragraph>
+            <Paragraph className="mt-1 font-medium" asChild>
+              <dd className="flex items-center gap-3 tabular-nums">
+                {erAngitt(nord) && <span>{formaterKoordinat(nord)}</span>}
+                {erAngitt(nord) && erAngitt(syd) && (
+                  <span className="flex flex-1 items-center" aria-hidden="true">
+                    <span className="size-2 rounded-full bg-kv-blue" />
+                    <span className="h-0.5 flex-1 bg-kv-blue" />
+                    <span className="size-2 rounded-full bg-kv-blue" />
+                  </span>
+                )}
+                {erAngitt(syd) && <span>{formaterKoordinat(syd)}</span>}
+              </dd>
+            </Paragraph>
+          </div>
+        )}
+      </dl>
     </section>
   )
 }
