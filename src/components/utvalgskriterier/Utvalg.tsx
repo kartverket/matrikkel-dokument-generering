@@ -5,10 +5,10 @@ import { cn } from "../../lib/utils/cn.ts"
 import { SubSection } from "../SubSection.tsx"
 import { erAngitt } from "./utils/erAngitt.ts"
 
-export type Kriterium = {
+export type Kriterie = {
   label: string
   // boolean rendres som checkbox, lister avkortes til maks 5 verdier
-  // med en "+N"-chip for resten, alt annet rendres som tekst
+  // med en "+N"-chip for resten.
   value: boolean | string | number | string[] | null | undefined
   fullBredde?: boolean
   // Trengs bare når flere kriterier i samme gruppe deler label
@@ -22,7 +22,7 @@ type Props = {
   // Legger label og verdi på samme linje i stedet for stablet over hverandre
   inlineVerdier?: boolean
 } & (
-  | { title: string; gruppe?: never; kriterier: Kriterium[] }
+  | { title: string; gruppe?: never; kriterier: Kriterie[] }
   | { title?: string; gruppe: string; kriterier: Felter | null | undefined }
 )
 
@@ -36,7 +36,7 @@ export function Utvalg(props: Props) {
   const oversett = (felt: string) =>
     t(`${uk}.${props.gruppe}.${felt}` as ParseKeys)
 
-  const angitte: Kriterium[] = (
+  const angitte: Kriterie[] = (
     Array.isArray(props.kriterier)
       ? props.kriterier
       : Object.entries(props.kriterier ?? {}).map(([felt, value]) => ({
