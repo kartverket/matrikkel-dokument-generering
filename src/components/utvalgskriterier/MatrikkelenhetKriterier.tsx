@@ -15,7 +15,7 @@ export function MatrikkelenhetKriterier({ matrikkelenhetKriterier }: Props) {
 
   return (
     <div>
-      <span className="flex items-center gap-4 mb-2">
+      <span className="mb-2 flex items-center gap-4">
         <Heading level={3}>{t(`${uk}.matrikkelenhet.tittel`)}</Heading>
         <hr className="w-full border border-kv-green-border" />
       </span>

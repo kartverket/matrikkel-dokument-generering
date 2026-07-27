@@ -15,7 +15,7 @@ export function AktorKriterier({ aktorKriterier }: Props) {
 
   return (
     <div>
-      <span className="flex items-center gap-4 mb-2">
+      <span className="mb-2 flex items-center gap-4">
         <Heading level={3}>{t(`${uk}.aktor.tittel`)}</Heading>
         <hr className="w-full border border-kv-green-border" />
       </span>

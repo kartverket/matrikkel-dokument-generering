@@ -22,7 +22,7 @@ export default function ByggSammendrag({ byggEndringer }: Props) {
 
   return (
     <div className="space-y-4">
-      <span className="flex items-center gap-4 mb-4">
+      <span className="mb-4 flex items-center gap-4">
         <Heading className="min-w-max" level={3}>
           {t(`${h}.title`)}
         </Heading>
