@@ -31,7 +31,6 @@ export function ByggUtvalgskriterier({ index, kriterier }: Props) {
 
           <BygningKriterier bygningKriterier={kriterier.bygning} />
 
-
           <div className="grid grid-cols-2 gap-10">
             <MatrikkelenhetKriterier
               matrikkelenhetKriterier={kriterier.matrikkelenhet}
