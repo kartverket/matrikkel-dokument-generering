@@ -135,7 +135,7 @@ const enkeltminneArtKoder = [
   "10224", // Fort, del av festning
 ] as const
 
-// ref: EnkeltminneArtKode.java / kodeverk-kulturminne.xml (Askeladden, RA)
+// ref: EnkeltminneArtKode.java / kodeverk-kulturminne.xml
 // NB: I M22 er kodeverdi 2719 registrert for både «Klostertuft» og «Synagoge».
 export const enkeltminneArtKodeSchema = z.enum(enkeltminneArtKoder).meta({
   id: "EnkeltminneArtKode",

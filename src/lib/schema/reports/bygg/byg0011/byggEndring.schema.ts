@@ -134,7 +134,7 @@ export const byggEndringSchema = valgfriObjekt({
       "å ha kulturminner vil så at endringen er knyttet et registrert kulturminne i Riksantikvarens database Askeladden",
   }),
 
-  // Enkeltminner (fredete/verneverdige bygninger) knyttet til bygningen, jf. FredetBygning i matrikkelen
+  // Kulturminner
   kulturminner: valgfriListe(
     valgfriObjekt({
       enkeltminneNr: valgfriString.meta({
@@ -149,9 +149,8 @@ export const byggEndringSchema = valgfriObjekt({
     }),
   ).meta({
     title: "Kulturminner",
-    description:
-      "Kulturminner (enkeltminner) registrert på bygningen i Riksantikvarens database Askeladden. \n" +
-      "En bygning kan være knyttet til flere enkeltminner.",
+    description: `Kulturminner (enkeltminner) registrert på bygningen i Riksantikvarens database Askeladden.
+      "En bygning kan være knyttet til flere enkeltminner.`,
   }),
 
   // Tidligere Hjemmelshaver/aktuell eier/kontaktinstans

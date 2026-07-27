@@ -15,7 +15,7 @@ const kulturminnekategoriKoder = [
   "E-UTE", // Utomhuselement
 ] as const
 
-// ref: KulturminnekategoriKode.java / kodeverk-kulturminne.xml (Askeladden, RA)
+// ref: KulturminnekategoriKode.java / kodeverk-kulturminne.xml
 export const kulturminnekategoriKodeSchema = z
   .enum(kulturminnekategoriKoder)
   .meta({

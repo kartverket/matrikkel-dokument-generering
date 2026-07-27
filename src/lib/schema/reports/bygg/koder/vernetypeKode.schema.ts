@@ -18,7 +18,7 @@ const vernetypeKoder = [
   "SAM", // Sammensatt
 ] as const
 
-// ref: VernetypeKode.java / kodeverk-kulturminne.xml (Askeladden, RA)
+// ref: VernetypeKode.java / kodeverk-kulturminne.xml
 export const vernetypeKodeSchema = z.enum(vernetypeKoder).meta({
   id: "VernetypeKode",
   description: `Kode for vernestatus. Angir hvilken type vern kulturminnet eventuelt har.
