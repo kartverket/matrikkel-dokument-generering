@@ -13,7 +13,7 @@ export async function htmlToPdf(
 ): Promise<ArrayBuffer> {
   const form = new FormData()
   form.append("files", new Blob([html], { type: "text/html" }), "index.html")
-  
+
   if (headerHtml) {
     form.append(
       "files",
