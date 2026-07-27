@@ -19,6 +19,7 @@ import { kontaktPersonKodeSchema } from "../koder/kontaktPersonKode.schema.ts"
 import { naringsgruppeKodeSchema } from "../koder/naringsgruppeKode.schema.ts"
 import { arealFordelingSchema } from "../shared/arealFordeling.schema.ts"
 
+// TODO: gjenbruke med BYG0011
 // ref: BygningRapportInfo.java
 const byggDatoerSchema = valgfriObjekt({
   rammetillatelse: valgfriDato.meta({
@@ -57,6 +58,7 @@ const byggDatoerSchema = valgfriObjekt({
     "Datoene da bygningen nådde ulike statuser i byggesaks- og registreringsforløpet.",
 })
 
+// TODO: gjenbruke med BYG0011
 // ref: bygning_total_bruksenheter.jrxml
 const bruksenhetSchema = valgfriObjekt({
   bruksenhetsNr: valgfriString.meta({
@@ -94,6 +96,7 @@ const bruksenhetSchema = valgfriObjekt({
   description: "Bruksenhet i bygningen eller bygningsendringen.",
 })
 
+// TODO: gjenbruke med BYG0011
 // ref: bygning_total_kontaktpersoner.jrxml / bygning_total_tiltakshavere.jrxml
 const kontaktpersonSchema = valgfriObjekt({
   kontaktPersonKode: valgfriSchema(kontaktPersonKodeSchema),
@@ -124,6 +127,7 @@ const kontaktpersonSchema = valgfriObjekt({
     "Kontaktperson eller kontaktinstans for bygningen, for eksempel en tiltakshaver.",
 })
 
+// TODO gjebruke med BYG0011
 // ref: bygning_total_hjemmelshavere.jrxml
 const hjemmelshaverSchema = valgfriObjekt({
   bruksenhetsNr: valgfriString.meta({
@@ -164,6 +168,7 @@ const hjemmelshaverSchema = valgfriObjekt({
   description: "Hjemmelshaver eller aktuell eier for bygningen.",
 })
 
+// TODO gjebruke med BYG0011
 // ref: bygning_enkeltminne.jrxml
 const enkeltminneSchema = valgfriObjekt({
   enkeltminneNr: valgfriString.meta({
@@ -185,6 +190,7 @@ const enkeltminneSchema = valgfriObjekt({
   }),
 
   vernetypeKode: valgfriString.meta({
+    // TODO: sette opp enum liste og oversettelser
     title: "Vernetype",
     description:
       "Kodeverdien for vernetypen, for eksempel automatisk fredet eller vedtaksfredet.",
@@ -195,6 +201,7 @@ const enkeltminneSchema = valgfriObjekt({
     "Kulturminne registrert på bygningen i Riksantikvarens database Askeladden.",
 })
 
+// TODO gjebruke med BYG0011
 // ref: bygning_massiv_bygningsendring.jrxml
 const bygningsendringSchema = valgfriObjekt({
   lopeNr: valgfriHeltall.meta({
