@@ -1,6 +1,5 @@
 import { Heading, Paragraph, Tag } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import { oversettKode } from "../../lib/i18n/koder/oversettKode.ts"
 import type { BygningsEndring } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 import { formatDate } from "../../lib/utils/formatDate.ts"
 import { byggHistorikk } from "./utils/byggHistorikk.ts"
@@ -47,11 +46,9 @@ export default function ByggSammendrag({ byggEndringer }: Props) {
                     .join(" ")
                 : historikk.byggStatusKode
                   ? t(`${h}.statusRegistrert`, {
-                      status: oversettKode({
-                        t,
-                        kodeverk: "bygningsstatus",
-                        kode: historikk.byggStatusKode,
-                      }),
+                      status: t(
+                        `koder.bygningsstatus.${historikk.byggStatusKode}`,
+                      ),
                     })
                   : null
 
@@ -97,12 +94,8 @@ export default function ByggSammendrag({ byggEndringer }: Props) {
                         </Heading>
 
                         {historikk.byggEndringsKode !== undefined && (
-                          <Tag data-color="success">
-                            {oversettKode({
-                              t,
-                              kodeverk: "endring",
-                              kode: historikk.byggEndringsKode,
-                            })}
+                          <Tag data-color="success" variant="outline">
+                            {t(`koder.endring.${historikk.byggEndringsKode}`)}
                           </Tag>
                         )}
 
@@ -116,11 +109,9 @@ export default function ByggSammendrag({ byggEndringer }: Props) {
                                 : "accent"
                             }
                           >
-                            {oversettKode({
-                              t,
-                              kodeverk: "bygningsstatus",
-                              kode: historikk.byggStatusKode,
-                            })}
+                            {t(
+                              `koder.bygningsstatus.${historikk.byggStatusKode}`,
+                            )}
                           </Tag>
                         )}
                       </div>
