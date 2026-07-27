@@ -23,23 +23,25 @@ export function ByggUtvalgskriterier({ index, kriterier }: Props) {
       {kriterier && (
         <div className="flex flex-col gap-10">
           <OmfangsKriterier omfangsKriterier={kriterier.omfang} />
-          <BygningKriterier bygningKriterier={kriterier.bygning} />
+          <SubrapporterKriterier
+            subrapporterKriterier={kriterier.subrapporter}
+          />
+
           <AdresseKriterier adresseKriterier={kriterier.adresse} />
 
-          <div className="grid grid-cols-2 gap-6">
+          <BygningKriterier bygningKriterier={kriterier.bygning} />
+
+
+          <div className="grid grid-cols-2 gap-10">
             <MatrikkelenhetKriterier
               matrikkelenhetKriterier={kriterier.matrikkelenhet}
             />
             <AktorKriterier aktorKriterier={kriterier.aktor} />
+            <BygningsstatusKriterier
+              bygningsstatusKriterier={kriterier.bygningsstatus}
+            />
+            <SokevinduKriterier sokevinduKriterier={kriterier.sokevindu} />
           </div>
-
-          <BygningsstatusKriterier
-            bygningsstatusKriterier={kriterier.bygningsstatus}
-          />
-          <SokevinduKriterier sokevinduKriterier={kriterier.sokevindu} />
-          <SubrapporterKriterier
-            subrapporterKriterier={kriterier.subrapporter}
-          />
         </div>
       )}
     </Section>
