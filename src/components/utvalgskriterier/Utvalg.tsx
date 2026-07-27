@@ -63,23 +63,23 @@ export function Utvalg(props: Props) {
             <span
               key={key ?? label}
               className={cn(
-                "flex",
+                "flex min-w-0",
                 inlineVerdier ? "items-baseline gap-2" : "flex-col gap-1",
                 fullBredde && "col-span-full",
               )}
             >
               <span className="text-kv-subtle">{label}</span>
               {Array.isArray(value) ? (
-                <span>
-                  {value.slice(0, MAKS_VISTE_VERDIER).join(", ")}
+                <span className="flex min-w-0">
+                  <span className="truncate">
+                    {value.slice(0, MAKS_VISTE_VERDIER).join(", ")}
+                    {value.length > MAKS_VISTE_VERDIER && "..."}
+                  </span>
                   {value.length > MAKS_VISTE_VERDIER && (
-                    <>
-                      <span>...</span>
-                      <span className="ml-2 text-kv-subtle">
-                        {`+ `}
-                        {value.length - MAKS_VISTE_VERDIER}
-                      </span>
-                    </>
+                    <span className="ml-2 shrink-0 text-kv-subtle">
+                      {`+ `}
+                      {value.length - MAKS_VISTE_VERDIER}
+                    </span>
                   )}
                 </span>
               ) : (

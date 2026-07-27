@@ -20,7 +20,7 @@ export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {
           label: t(`${uk}.bygningsstatus.naavaerende`),
           value: erAngitt(bygningsstatusKriterier?.naavaerende)
             ? bygningsstatusKriterier.naavaerende
-                .map((kode) => t(`koder.bygningsstatus.${kode}`))
+                .map((kode) => t(`koder.bygningsstatusKort.${kode}`))
                 .join(", ")
             : undefined,
         },
@@ -28,7 +28,7 @@ export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {
           label: t(`${uk}.bygningsstatus.tidligere`),
           value: erAngitt(bygningsstatusKriterier?.tidligere)
             ? bygningsstatusKriterier.tidligere
-                .map((kode) => t(`koder.bygningsstatus.${kode}`))
+                .map((kode) => t(`koder.bygningsstatusKort.${kode}`))
                 .join(", ")
             : undefined,
         },
