@@ -1,6 +1,5 @@
 import { z } from "@hono/zod-openapi"
 import {
-  valgfriBool,
   valgfriDato,
   valgfriHeltall,
   valgfriListe,
@@ -12,12 +11,13 @@ import {
 import { bruksenhetsKodeSchema } from "../koder/bruksenhetsTypeKode.schema.ts"
 import { byggningsStatusKodeSchema } from "../koder/byggningsStatusKode.schema.ts"
 import { bygningsTypeKodeSchema } from "../koder/bygningsTypeKodeSchema.ts"
-import { eierforholdKodeSchema } from "../koder/eierforholdKode.schema.ts"
 import { endringsKodeSchema } from "../koder/endringsKode.schema.ts"
 import { kjokkenTilgangKodeSchema } from "../koder/kjokkenTilgangKode.ts"
 import { kontaktPersonKodeSchema } from "../koder/kontaktPersonKode.schema.ts"
 import { naringsgruppeKodeSchema } from "../koder/naringsgruppeKode.schema.ts"
+import { aktuellEierSchema } from "../shared/aktuellEier.schema.ts"
 import { arealFordelingSchema } from "../shared/arealFordeling.schema.ts"
+import { enkeltminneSchema } from "../shared/enkeltminne.schema.ts"
 
 // TODO: gjenbruke med BYG0011
 // ref: BygningRapportInfo.java
@@ -128,80 +128,6 @@ const kontaktpersonSchema = valgfriObjekt({
 })
 
 // TODO gjebruke med BYG0011
-// ref: bygning_total_hjemmelshavere.jrxml
-const hjemmelshaverSchema = valgfriObjekt({
-  bruksenhetsNr: valgfriString.meta({
-    title: "Bruksenhetsnummer",
-    example: "H0101",
-  }),
-
-  eierforholdKode: valgfriSchema(eierforholdKodeSchema),
-
-  identifikasjonsNr: valgfriString.meta({
-    title: "Fødselsdato/org.nr",
-    description: "Fødselsdato eller organisasjonsnummer for hjemmelshaveren.",
-  }),
-
-  erAvdoed: valgfriBool.default(false).meta({
-    title: "Avdødd",
-    description: "Er vedkommende død? \n" + "Standardverdi: false",
-    example: true,
-  }),
-
-  navn: valgfriString.meta({
-    description:
-      "Navnet til hjemmelshaveren. Kan være et selskapsnavn eller personnavn",
-    example: "Bygg AS",
-  }),
-
-  adresse: valgfriString.meta({
-    description: "Adressen til hjemmelshaveren.",
-    example: "Postboks 1350 Vika 113 OSLO",
-  }),
-
-  andel: valgfriString.meta({
-    description: "Andel hjemmelshaveren eventuelt eier av matrikkelenheten",
-    example: "2/5",
-  }),
-}).meta({
-  title: "Hjemmelshaver",
-  description: "Hjemmelshaver eller aktuell eier for bygningen.",
-})
-
-// TODO gjebruke med BYG0011
-// ref: bygning_enkeltminne.jrxml
-const enkeltminneSchema = valgfriObjekt({
-  enkeltminneNr: valgfriString.meta({
-    title: "Enkeltminnenummer",
-    description:
-      "Kulturminnets identifikasjon i Riksantikvarens database Askeladden.",
-    example: "86155-1",
-  }),
-
-  enkeltminneArt: valgfriString.meta({
-    title: "Enkeltminneart",
-    description: "Arten til enkeltminnet, for eksempel bolig eller uthus.",
-    example: "Bolig",
-  }),
-
-  kulturminneKategoriKode: valgfriString.meta({
-    title: "Kulturminnekategori",
-    description: "Kodeverdien for kulturminnekategorien.",
-  }),
-
-  vernetypeKode: valgfriString.meta({
-    // TODO: sette opp enum liste og oversettelser
-    title: "Vernetype",
-    description:
-      "Kodeverdien for vernetypen, for eksempel automatisk fredet eller vedtaksfredet.",
-  }),
-}).meta({
-  title: "Enkeltminne",
-  description:
-    "Kulturminne registrert på bygningen i Riksantikvarens database Askeladden.",
-})
-
-// TODO gjebruke med BYG0011
 // ref: bygning_massiv_bygningsendring.jrxml
 const bygningsendringSchema = valgfriObjekt({
   lopeNr: valgfriHeltall.meta({
@@ -265,7 +191,10 @@ export const bygningMassivSchema = valgfriObjekt({
 
   bruksenheter: valgfriListe(bruksenhetSchema),
   bygningsendringer: valgfriListe(bygningsendringSchema),
-  hjemmelshavere: valgfriListe(hjemmelshaverSchema),
+  aktuelleEiere: valgfriListe(aktuellEierSchema).meta({
+    title: "Hjemmelshaver",
+    description: "Hjemmelshaver eller aktuell eier for bygningen.",
+  }),
   tiltakshavere: valgfriListe(kontaktpersonSchema),
   kontaktpersoner: valgfriListe(kontaktpersonSchema),
   enkeltminner: valgfriListe(enkeltminneSchema),
@@ -276,25 +205,12 @@ export const bygningMassivSchema = valgfriObjekt({
 })
 
 export type BygningMassiv = z.infer<typeof bygningMassivSchema>
-
-export type MassivDatoer = NonNullable<NonNullable<BygningMassiv>["datoer"]>
-
 type MassivBruksenheter = NonNullable<
   NonNullable<BygningMassiv>["bruksenheter"]
 >
 export type MassivBruksenhet = NonNullable<MassivBruksenheter[number]>
 
-type MassivBygningsendringer = NonNullable<
-  NonNullable<BygningMassiv>["bygningsendringer"]
->
-export type MassivBygningsendring = NonNullable<MassivBygningsendringer[number]>
-
 type MassivKontaktpersoner = NonNullable<
   NonNullable<BygningMassiv>["kontaktpersoner"]
 >
 export type MassivKontaktperson = NonNullable<MassivKontaktpersoner[number]>
-
-type MassivHjemmelshavere = NonNullable<
-  NonNullable<BygningMassiv>["hjemmelshavere"]
->
-export type MassivHjemmelshaver = NonNullable<MassivHjemmelshavere[number]>
