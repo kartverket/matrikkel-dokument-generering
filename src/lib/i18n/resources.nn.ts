@@ -64,8 +64,8 @@ export const nn = {
           snr: "Snr",
         },
         aktor: {
-          tittel: "Heimelshavar",
-          identifikasjonsNr: "Fødsels- eller orgnr",
+          tittel: "Heimelshavar/kontaktperson",
+          identifikasjonsNr: "Fød.nr/org.nr",
           etternavn: "Etternamn",
           fornavn: "Fornamn",
         },
@@ -73,8 +73,8 @@ export const nn = {
           tittel: "Bygningsstatus",
           naavaerende: "Noverande",
           tidligere: "Tidlegare",
-          periodeFra: "Periode frå",
-          periodeTil: "Periode til",
+          periodeFra: "I periode frå",
+          periodeTil: "Til",
         },
         sokevindu: {
           tittel: "Søkjevindauge",

@@ -14,9 +14,10 @@ type Props = {
   title: string
   kriterier: Kriterium[]
   className?: string
+  inlineVerdier?: boolean
 }
 
-export function Utvalg({ title, kriterier, className }: Props) {
+export function Utvalg({ title, kriterier, className, inlineVerdier }: Props) {
   const angitte = kriterier.filter((kriterium): kriterium is AngittKriterium =>
     erAngitt(kriterium.value),
   )
@@ -30,7 +31,13 @@ export function Utvalg({ title, kriterier, className }: Props) {
           typeof value === "boolean" ? (
             <Checkbox key={label} label={label} checked={value} />
           ) : (
-            <span key={label} className="flex flex-col gap-1">
+            <span
+              key={label}
+              className={cn(
+                "flex",
+                inlineVerdier ? "items-baseline gap-2" : "flex-col gap-1",
+              )}
+            >
               <span className="text-kv-subtle">{label}</span>
               <span>{value}</span>
             </span>

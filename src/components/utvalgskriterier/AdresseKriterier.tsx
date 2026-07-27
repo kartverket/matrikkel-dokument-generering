@@ -1,7 +1,6 @@
 import { useTranslation } from "react-i18next"
 import type { ByggUtvalgskriterier as Utvalgskriterier } from "../../lib/schema/reports/bygg/shared/byggUtvalgskriterier.schema.ts"
 import { Utvalg } from "./Utvalg.tsx"
-import { erAngitt } from "./utils/erAngitt.ts"
 
 interface Props {
   adresseKriterier: NonNullable<Utvalgskriterier>["adresse"]
@@ -42,9 +41,7 @@ export function AdresseKriterier({ adresseKriterier }: Props) {
         },
         {
           label: t(`${uk}.adresse.utenBokstav`),
-          value: erAngitt(adresseKriterier?.utenBokstav)
-            ? t(`${uk}.${adresseKriterier.utenBokstav ? "ja" : "nei"}`)
-            : undefined,
+          value: adresseKriterier?.utenBokstav,
         },
       ]}
     />

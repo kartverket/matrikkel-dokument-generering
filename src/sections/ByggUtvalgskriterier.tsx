@@ -2,7 +2,6 @@ import { useTranslation } from "react-i18next"
 import { Section } from "../components/Section.tsx"
 import { AdresseKriterier } from "../components/utvalgskriterier/AdresseKriterier"
 import { AktorKriterier } from "../components/utvalgskriterier/AktorKriterier.tsx"
-import { BygningKriterier } from "../components/utvalgskriterier/BygningKriterier"
 import { BygningsstatusKriterier } from "../components/utvalgskriterier/BygningsstatusKriterier"
 import { MatrikkelenhetKriterier } from "../components/utvalgskriterier/MatrikkelenhetKriterier"
 import { OmfangsKriterier } from "../components/utvalgskriterier/OmfangsKriterier.tsx"
@@ -22,14 +21,15 @@ export function ByggUtvalgskriterier({ index, kriterier }: Props) {
     <Section index={index} title={t("rapport.BYG0011.utvalgskriterier.title")}>
       {kriterier && (
         <div className="flex flex-col gap-10">
-          <OmfangsKriterier omfangsKriterier={kriterier.omfang} />
+          <OmfangsKriterier
+            omfangsKriterier={kriterier.omfang}
+            bygningKriterier={kriterier.bygning}
+          />
           <SubrapporterKriterier
             subrapporterKriterier={kriterier.subrapporter}
           />
 
           <AdresseKriterier adresseKriterier={kriterier.adresse} />
-
-          <BygningKriterier bygningKriterier={kriterier.bygning} />
 
           <div className="grid grid-cols-2 gap-10">
             <MatrikkelenhetKriterier

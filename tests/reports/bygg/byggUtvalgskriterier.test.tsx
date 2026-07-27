@@ -40,7 +40,8 @@ describe("ByggUtvalgskriterier", () => {
     expect(html).not.toContain("Bygningsstatus")
     expect(html).toContain("Bruksenheter")
     expect(html).toContain(">0<")
-    expect(html).toContain(">Nei<")
+    expect(html.match(/type="checkbox"/g)).toHaveLength(3)
+    expect(html).not.toContain('checked=""')
     expect(html.toLocaleLowerCase("nb-NO")).not.toContain("ikke angitt")
   })
 
@@ -75,7 +76,7 @@ describe("ByggUtvalgskriterier", () => {
       },
     })
 
-    expect(html).toContain("Periode fra")
+    expect(html).toContain("I periode fra")
     expect(html).toContain("1. januar 2019")
   })
 
