@@ -119,7 +119,7 @@ export default function ByggEndringer({ index, bygning }: Props) {
 
   return (
     <Section index={index} title={t(`${tKey}.tittel`)}>
-      <Heading level={3} className="bg-kv-green-subtle p-2">
+      <Heading level={2} className="bg-kv-green-subtle p-2">
         {t(`${tKey}.bygningsnr`, { bygningsnr: bygning.bygningsnr })}
       </Heading>
 

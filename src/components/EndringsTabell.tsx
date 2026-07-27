@@ -1,4 +1,4 @@
-import { Table } from "@kv-designsystem/react"
+import { Paragraph, Table } from "@kv-designsystem/react"
 import type { i18n as I18n } from "i18next"
 import { useTranslation } from "react-i18next"
 import { formatDate } from "../lib/utils/formatDate.ts"
@@ -52,9 +52,9 @@ export default function EndringsTabell({ endringer, seksjon }: Props) {
       className="my-4"
     >
       {endringer.length === 0 ? (
-        <p className="text-kv-subtle">
+        <Paragraph className="text-kv-subtle">
           {t(`${tKey}.ingenEndring`, { defaultValue: "" })}
-        </p>
+        </Paragraph>
       ) : (
         <Table className="w-full">
           <Table.Head>
@@ -71,7 +71,7 @@ export default function EndringsTabell({ endringer, seksjon }: Props) {
           <Table.Body>
             {endringer.map((rad, i) => (
               <Table.Row key={String(i)} className="even:bg-kv-green-subtle">
-                <Table.HeaderCell scope="row" className="w-32 align-top">
+                <Table.HeaderCell scope="row" className="w-20 align-top">
                   {`${t(`rapport.BYG0011.byggEndringer.lopeNr`)} ${rad.lopeNr}`}
                 </Table.HeaderCell>
                 {kolonner.map((k) => (

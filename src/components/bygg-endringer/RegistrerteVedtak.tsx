@@ -44,11 +44,11 @@ export function RegistrerteVedtak({ endring }: Props) {
 
   return (
     <div>
-      <Heading level={4} data-size="xs" className="mb-4">
+      <Heading level={4} className="mb-4">
         {t(`${translationKey}.title`)}
       </Heading>
       {datoer === undefined ? (
-        <Paragraph className="text-kv-subtle text-sm">{tom}</Paragraph>
+        <Paragraph className="text-kv-subtle">{tom}</Paragraph>
       ) : (
         <Detaljgrid felter={getVedtakDetaljfelter(datoer, i18n)} tom={tom} />
       )}

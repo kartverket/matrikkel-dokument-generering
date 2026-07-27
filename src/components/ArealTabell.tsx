@@ -68,7 +68,7 @@ export default function ArealTabell({ arealEndringer }: Props) {
                     <Table.HeaderCell
                       scope="row"
                       rowSpan={etasjeRader.length}
-                      className="w-32 align-top"
+                      className="w-20 align-top"
                     >
                       {`${t(`rapport.BYG0011.byggEndringer.lopeNr`)} ${lopeNr}`}
                     </Table.HeaderCell>
