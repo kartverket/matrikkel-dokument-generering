@@ -16,12 +16,12 @@ export default function Nokkeltall({ gjeldendeEndring }: Props) {
   const kort = [
     {
       id: "bra",
-      areal: areal?.bruksarealBolig.totaltAreal,
+      areal: areal?.bruksarealBolig?.totaltAreal,
       label: t(`${key}.bra`),
     },
     {
       id: "bta",
-      areal: areal?.bruttoarealBolig.totaltAreal,
+      areal: areal?.bruttoarealBolig?.totaltAreal,
       label: t(`${key}.bta`),
     },
     {

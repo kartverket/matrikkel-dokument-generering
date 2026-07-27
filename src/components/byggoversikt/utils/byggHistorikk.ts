@@ -116,12 +116,12 @@ function erSammeEtasje(
   return (
     na.etasjeplanKode === forrige.etasjeplanKode &&
     na.antallBoenheter === forrige.antallBoenheter &&
-    na.bruksareal.boligAreal === forrige.bruksareal.boligAreal &&
-    na.bruksareal.annetAreal === forrige.bruksareal.annetAreal &&
-    na.bruksareal.totaltAreal === forrige.bruksareal.totaltAreal &&
-    na.bruttoareal.boligAreal === forrige.bruttoareal.boligAreal &&
-    na.bruttoareal.annetAreal === forrige.bruttoareal.annetAreal &&
-    na.bruttoareal.totaltAreal === forrige.bruttoareal.totaltAreal
+    na.bruksareal?.boligAreal === forrige.bruksareal?.boligAreal &&
+    na.bruksareal?.annetAreal === forrige.bruksareal?.annetAreal &&
+    na.bruksareal?.totaltAreal === forrige.bruksareal?.totaltAreal &&
+    na.bruttoareal?.boligAreal === forrige.bruttoareal?.boligAreal &&
+    na.bruttoareal?.annetAreal === forrige.bruttoareal?.annetAreal &&
+    na.bruttoareal?.totaltAreal === forrige.bruttoareal?.totaltAreal
   )
 }
 
@@ -133,12 +133,12 @@ function finnBerorteEtasjer(
 
   const naPerEtasje = new Map(
     (endring.etasjePlan ?? []).flatMap((etasje) =>
-      etasje === undefined ? [] : [[etasje.etasje, etasje] as const],
+      etasje?.etasje === undefined ? [] : [[etasje.etasje, etasje] as const],
     ),
   )
   const forrigePerEtasje = new Map(
     (forrigeEndring.etasjePlan ?? []).flatMap((etasje) =>
-      etasje === undefined ? [] : [[etasje.etasje, etasje] as const],
+      etasje?.etasje === undefined ? [] : [[etasje.etasje, etasje] as const],
     ),
   )
 
@@ -149,14 +149,16 @@ function finnBerorteEtasjer(
       if (erSammeEtasje(na, forrige)) return []
 
       const berort = na ?? forrige
-      return berort === undefined
-        ? []
-        : [
-            {
-              etasje: berort.etasje,
-              etasjeplanKode: berort.etasjeplanKode,
-            },
-          ]
+      if (berort?.etasje === undefined || berort.etasjeplanKode === undefined) {
+        return []
+      }
+
+      return [
+        {
+          etasje: berort.etasje,
+          etasjeplanKode: berort.etasjeplanKode,
+        },
+      ]
     })
     .toSorted((a, b) => a.etasje - b.etasje)
 }

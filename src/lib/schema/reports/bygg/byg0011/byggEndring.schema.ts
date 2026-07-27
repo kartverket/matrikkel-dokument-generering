@@ -40,8 +40,8 @@ export const byggEndringSchema = valgfriObjekt({
   }),
 
   byggArealEndring: valgfriObjekt({
-    bruksarealBolig: arealFordelingSchema, // bolig/annet/totalt
-    bruttoarealBolig: arealFordelingSchema, //bolig/annet/totalt
+    bruksarealBolig: valgfriSchema(arealFordelingSchema), // bolig/annet/totalt
+    bruttoarealBolig: valgfriSchema(arealFordelingSchema), //bolig/annet/totalt
     bebygdAreal: valgfriNummer.meta({
       description: "Bebygd areal i kvadratmeter.",
       example: 123,
@@ -50,13 +50,13 @@ export const byggEndringSchema = valgfriObjekt({
 
   etasjePlan: valgfriListe(
     valgfriObjekt({
-      etasjeplanKode: etasjeplanKodeSchema,
-      etasje: z.number().int().nonnegative().meta({
+      etasjeplanKode: valgfriSchema(etasjeplanKodeSchema),
+      etasje: valgfriHeltall.meta({
         example: 1,
       }),
       antallBoenheter: valgfriNummer,
-      bruksareal: arealFordelingSchema,
-      bruttoareal: arealFordelingSchema,
+      bruksareal: valgfriSchema(arealFordelingSchema),
+      bruttoareal: valgfriSchema(arealFordelingSchema),
     }),
   ),
 
@@ -137,7 +137,7 @@ export const byggEndringSchema = valgfriObjekt({
       title: "Bruksenhetsnummer",
       example: "H0101",
     }),
-    eierforholdKode: eierforholdKodeSchema,
+    eierforholdKode: valgfriSchema(eierforholdKodeSchema),
 
     identifikasjonsNr: valgfriString.meta({
       title: "Fødselsdato/org.nr",
@@ -206,7 +206,7 @@ export const byggEndringSchema = valgfriObjekt({
         example: "H0101",
       }),
 
-      bruksenhetsTypeKode: bruksenhetsKodeSchema,
+      bruksenhetsTypeKode: valgfriSchema(bruksenhetsKodeSchema),
 
       bruksAreal: valgfriNummer.meta({
         description:
@@ -216,17 +216,19 @@ export const byggEndringSchema = valgfriObjekt({
       antallRom: valgfriNummer,
       antallBad: valgfriNummer,
       antallWC: valgfriNummer,
-      kjokkenTilgangKode: kjokkenTilgangKodeSchema,
+      kjokkenTilgangKode: valgfriSchema(kjokkenTilgangKodeSchema),
       adresse: valgfriString.meta({
         example: "Postboks 1234 Nydalen 123 OSLO",
         description: "Adressen til bruksenheten gitt endringen.",
       }),
 
-      matrikkelNr: z.string().min(1).meta({
-        title: "Matrikkelnummer",
-        example: "5001-12/34/0/2",
-        description: "KommuneNr-GårdsNr/BruksNr/Festenr/SeksjonsNr",
-      }),
+      matrikkelNr: valgfriSchema(
+        z.string().min(1).meta({
+          title: "Matrikkelnummer",
+          example: "5001-12/34/0/2",
+          description: "KommuneNr-GårdsNr/BruksNr/Festenr/SeksjonsNr",
+        }),
+      ),
     }),
   ),
 })

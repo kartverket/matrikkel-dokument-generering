@@ -2,8 +2,8 @@ import { Heading, Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 
 export type ArealRad = {
-  etasjeplan: string
-  etasje: number
+  etasjeplan?: string
+  etasje?: number
   antallBoenheter?: number
   boligBra?: number
   annetBra?: number
