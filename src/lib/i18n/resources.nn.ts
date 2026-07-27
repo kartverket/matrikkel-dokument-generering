@@ -122,7 +122,6 @@ export const nn = {
       byggEndringer: {
         tittel: "Bygningsendringar",
         ingenEndringer: "Ingen endringar registrerte på bygget.",
-        endringerForBygg: "Endringar for bygg {{indeks}} av {{antall}}",
         lopeNr: "Endring",
         ja: "Ja",
         nei: "Nei",
