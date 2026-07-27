@@ -28,46 +28,40 @@ export default function Byggoversikt({
 
   const innhold = (
     <div className="space-y-8">
-      <div className="break-inside-avoid space-y-8">
-        <BygningHeader
-          byggNr={bygning.bygningsnr}
-          bygningIndeks={bygningIndeks}
-          antallBygninger={antallBygninger}
-          bygningsTypeKode={
-            gjeldendeTilstand?.byggMetaEndring?.bygningsTypeKode
-          }
-          gjeldendeStatusKode={
-            gjeldendeTilstand?.byggMetaEndring?.bygningsStatusKode
-          }
-        />
+      <BygningHeader
+        byggNr={bygning.bygningsnr}
+        bygningIndeks={bygningIndeks}
+        antallBygninger={antallBygninger}
+        bygningsTypeKode={gjeldendeTilstand?.byggMetaEndring?.bygningsTypeKode}
+        gjeldendeStatusKode={
+          gjeldendeTilstand?.byggMetaEndring?.bygningsStatusKode
+        }
+      />
 
-        {gjeldendeTilstand && (
-          <>
-            <Oversiktsfelt
-              byggTypeKode={
-                gjeldendeTilstand?.byggMetaEndring?.bygningsTypeKode
-              }
-              antallBoenheter={
-                gjeldendeTilstand?.byggMetaEndring?.antallBoenheter
-              }
-              antallBruksenheter={gjeldendeTilstand?.bruksenheter.length}
-              antallEtasjer={gjeldendeTilstand?.etasjePlan?.length}
-              naringsgruppeKode={
-                gjeldendeTilstand?.byggMetaEndring?.naringsgruppeKode
-              }
-              koordinater={gjeldendeTilstand?.byggKoordinatEndring}
-            />
-            <ByggOversiktAreal etasjePlan={gjeldendeTilstand.etasjePlan} />
-          </>
-        )}
-      </div>
+      {gjeldendeTilstand && (
+        <>
+          <Oversiktsfelt
+            byggTypeKode={gjeldendeTilstand?.byggMetaEndring?.bygningsTypeKode}
+            antallBoenheter={
+              gjeldendeTilstand?.byggMetaEndring?.antallBoenheter
+            }
+            antallBruksenheter={gjeldendeTilstand?.bruksenheter.length}
+            antallEtasjer={gjeldendeTilstand?.etasjePlan?.length}
+            naringsgruppeKode={
+              gjeldendeTilstand?.byggMetaEndring?.naringsgruppeKode
+            }
+            koordinater={gjeldendeTilstand?.byggKoordinatEndring}
+          />
+          <ByggOversiktAreal etasjePlan={gjeldendeTilstand.etasjePlan} />
+        </>
+      )}
       <ByggSammendrag byggEndringer={bygning.endringer} />
     </div>
   )
 
   // Seksjonstittelen vises kun for første bygning, ellers vises kun innholdet.
   if (bygningIndeks > 1) {
-    return <section className="mt-20">{innhold}</section>
+    return <section className="mb-20">{innhold}</section>
   }
 
   return (

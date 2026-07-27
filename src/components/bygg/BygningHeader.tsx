@@ -21,7 +21,7 @@ export default function BygningHeader({
   const key = "rapport.BYG0011.byggoversikt"
 
   return (
-    <div className="flex break-inside-avoid items-baseline justify-between bg-kv-green-tinted px-4 py-2">
+    <div className="flex break-inside-avoid break-after-avoid items-baseline justify-between bg-kv-green-tinted px-4 py-2">
       <div className="flex items-baseline gap-4">
         <Heading level={3} className="font-medium">
           {t(`${key}.header.bygningsNr`)}{" "}

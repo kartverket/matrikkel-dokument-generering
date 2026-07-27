@@ -178,7 +178,7 @@ export default function ByggEndringer({
 
   // Seksjonstittelen blir kun vist for første bygning, ellers vises kun innholdet.
   if (bygningIndeks > 1) {
-    return <section className="mt-20">{innhold}</section>
+    return <section className="mb-20">{innhold}</section>
   }
 
   return (

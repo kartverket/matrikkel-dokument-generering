@@ -7,7 +7,7 @@ interface PdfHeaderProps {
   bygning?: Bygning
 }
 
-export function PdfHeader({ metadata, bygning }: PdfHeaderProps) {
+export function PdfHeader({ metadata }: PdfHeaderProps) {
   const { t } = useTranslation()
   const { kommune, koordinatSystemKode } = metadata
 
@@ -17,13 +17,13 @@ export function PdfHeader({ metadata, bygning }: PdfHeaderProps) {
     kommune.kommuneNavn.slice(1).toLowerCase()
 
   return (
-    <header className="flex items-baseline justify-between text-kv-subtle text-pdf-label">
-      <span className="whitespace-pre">{`${kommune.kommuneNr} ${kommuneNavn} ${t(`koder.koordinat.${koordinatSystemKode}`)}`}</span>
-      {bygning && (
-        <span className="underline decoration-1 decoration-kv-accent-border underline-offset-[3px]">
-          {t("pdf.header.bygg", { bygningsnr: bygning.bygningsnr })}
-        </span>
-      )}
-    </header>
+    <div className="flex w-full justify-between px-[18mm] text-kv-subtle text-pdf-label">
+      <span className="whitespace-pre">
+        {`${kommune.kommuneNr} ${kommuneNavn} `}
+      </span>
+      <span className="whitespace-pre">
+        {t(`koder.koordinat.${koordinatSystemKode}`)}
+      </span>
+    </div>
   )
 }
