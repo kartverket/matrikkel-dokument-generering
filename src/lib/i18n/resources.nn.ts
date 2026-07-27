@@ -33,7 +33,7 @@ export const nn = {
         nei: "Nei",
         ikkeAngitt: "Ikkje oppgitt",
         omfang: {
-          tittel: "Rapportutval",
+          tittel: "Bygningar valde",
           inkluderBestaaendeBygg: "Eksisterande bygg",
           inkluderUtgaatteBygg: "Utgåtte bygg",
           inkluderBygninger: "Bygningar",

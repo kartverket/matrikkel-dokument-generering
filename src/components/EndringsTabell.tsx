@@ -1,7 +1,8 @@
-import { Heading, Table } from "@kv-designsystem/react"
+import { Table } from "@kv-designsystem/react"
 import type { i18n as I18n } from "i18next"
 import { useTranslation } from "react-i18next"
 import { formatDate } from "../lib/utils/formatDate.ts"
+import { SubSection } from "./SubSection.tsx"
 
 type EndringsRad = { lopeNr: number } & Record<string, unknown>
 
@@ -46,14 +47,10 @@ export default function EndringsTabell({ endringer, seksjon }: Props) {
   )
 
   return (
-    <div className="my-4 space-y-4">
-      <span className="flex items-center gap-4">
-        <Heading level={3} data-size="sm" className="min-w-max font-medium">
-          {t(`${tKey}.tittel`, { defaultValue: "" })}
-        </Heading>
-        <hr className="w-full border border-kv-green-border" />
-      </span>
-
+    <SubSection
+      title={t(`${tKey}.tittel`, { defaultValue: "" })}
+      className="my-4"
+    >
       {endringer.length === 0 ? (
         <p className="text-kv-subtle">
           {t(`${tKey}.ingenEndring`, { defaultValue: "" })}
@@ -90,6 +87,6 @@ export default function EndringsTabell({ endringer, seksjon }: Props) {
           </Table.Body>
         </Table>
       )}
-    </div>
+    </SubSection>
   )
 }
