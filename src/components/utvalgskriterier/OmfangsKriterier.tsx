@@ -36,14 +36,7 @@ export function OmfangsKriterier({
           label: t(`${uk}.omfang.inkluderBygningsendringer`),
           value: omfangsKriterier?.inkluderBygningsendringer,
         },
-        {
-          label: t(`${uk}.bygning.bygningstyper`),
-          value: erAngitt(bygningKriterier?.bygningstyper)
-            ? bygningKriterier.bygningstyper
-                .map((kode) => t(`koder.bygningstype.${kode}`))
-                .join(", ")
-            : undefined,
-        },
+
         {
           label: t(`${uk}.bygning.bygningsNr`),
           value: bygningKriterier?.bygningsNr,
@@ -55,6 +48,15 @@ export function OmfangsKriterier({
         {
           label: t(`${uk}.omfang.inkluderFrededeBygninger`),
           value: omfangsKriterier?.inkluderFrededeBygninger,
+        },
+                {
+          label: t(`${uk}.bygning.bygningstyper`),
+          fullBredde: true,
+          value: erAngitt(bygningKriterier?.bygningstyper)
+            ? bygningKriterier.bygningstyper
+                .map((kode) => t(`koder.bygningstype.${kode}`))
+                .join(", ")
+            : undefined,
         },
       ]}
     />
