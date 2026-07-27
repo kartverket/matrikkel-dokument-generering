@@ -114,12 +114,6 @@ h6,
 }
 
 /*
- * Typografi-sannhet: binder rapport-tokens til KV/Digdir sine komponenter.
- * Reglene ligger utenfor @layer, slik at de vinner over `layer(designsystem)`
- * uten å måtte matche på `data-size`. Konsekvensen er at `data-size` på
- * <Heading> og <Paragraph> ikke lenger påvirker rapporten — bruk semantisk
- * `level` på <Heading> i stedet.
- *
  * Mapping (fra Figma):
  *   <Heading level={1}>            → h1  → rapport-h1
  *   <Heading level={2}>            → h2  → rapport-h2

@@ -1,4 +1,4 @@
-import { Card, Heading, Paragraph } from "@kv-designsystem/react"
+import { Heading, Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { ByggUtvalgskriterier as Utvalgskriterier } from "../../lib/schema/reports/bygg/shared/byggUtvalgskriterier.schema.ts"
 import { erAngitt, harAngittVerdi } from "./utils/erAngitt.ts"

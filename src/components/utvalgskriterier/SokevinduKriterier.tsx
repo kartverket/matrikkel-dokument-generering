@@ -1,4 +1,4 @@
-import { Heading, Table } from "@kv-designsystem/react"
+import { Table, Heading } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { ByggUtvalgskriterier as Utvalgskriterier } from "../../lib/schema/reports/bygg/shared/byggUtvalgskriterier.schema.ts"
 import { erAngitt, harAngittVerdi } from "./utils/erAngitt.ts"
@@ -24,13 +24,11 @@ export function SokevinduKriterier({ sokevinduKriterier }: Props) {
       maximumFractionDigits: 2,
     },
   )
-
-  const fmt = (v: number | undefined) =>
-    v === undefined ? "" : numberFormatter.format(v)
+  const formaterKoordinat = (verdi: number) => numberFormatter.format(verdi)
 
   return (
     <section>
-      <span className="mb-2 flex items-center gap-4">
+      <span className="flex items-center gap-4 mb-2">
         <Heading level={3}>{t(`${uk}.sokevindu.tittel`)}</Heading>
         <hr className="w-full border border-kv-green-border" />
       </span>
@@ -38,18 +36,42 @@ export function SokevinduKriterier({ sokevinduKriterier }: Props) {
       <Table>
         <Table.Head>
           <Table.Row>
-            <Table.HeaderCell>{t(`${uk}.sokevindu.nord`)}</Table.HeaderCell>
-            <Table.HeaderCell>{t(`${uk}.sokevindu.ost`)}</Table.HeaderCell>
-            <Table.HeaderCell>{t(`${uk}.sokevindu.syd`)}</Table.HeaderCell>
-            <Table.HeaderCell>{t(`${uk}.sokevindu.vest`)}</Table.HeaderCell>
+            {erAngitt(nord) && (
+              <Table.HeaderCell>{t(`${uk}.sokevindu.nord`)}</Table.HeaderCell>
+            )}
+            {erAngitt(ost) && (
+              <Table.HeaderCell>{t(`${uk}.sokevindu.ost`)}</Table.HeaderCell>
+            )}
+            {erAngitt(syd) && (
+              <Table.HeaderCell>{t(`${uk}.sokevindu.syd`)}</Table.HeaderCell>
+            )}
+            {erAngitt(vest) && (
+              <Table.HeaderCell>{t(`${uk}.sokevindu.vest`)}</Table.HeaderCell>
+            )}
           </Table.Row>
         </Table.Head>
         <Table.Body>
           <Table.Row>
-            <Table.Cell>{fmt(nord)}</Table.Cell>
-            <Table.Cell>{fmt(ost)}</Table.Cell>
-            <Table.Cell>{fmt(syd)}</Table.Cell>
-            <Table.Cell>{fmt(vest)}</Table.Cell>
+            {erAngitt(nord) && (
+              <Table.Cell className="tabular-nums">
+                {formaterKoordinat(nord)}
+              </Table.Cell>
+            )}
+            {erAngitt(ost) && (
+              <Table.Cell className="tabular-nums">
+                {formaterKoordinat(ost)}
+              </Table.Cell>
+            )}
+            {erAngitt(syd) && (
+              <Table.Cell className="tabular-nums">
+                {formaterKoordinat(syd)}
+              </Table.Cell>
+            )}
+            {erAngitt(vest) && (
+              <Table.Cell className="tabular-nums">
+                {formaterKoordinat(vest)}
+              </Table.Cell>
+            )}
           </Table.Row>
         </Table.Body>
       </Table>

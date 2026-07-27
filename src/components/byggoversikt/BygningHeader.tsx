@@ -30,8 +30,6 @@ export default function BygningHeader({ gjeldendeStatusKode, byggNr }: Props) {
             : t(`${key}.ukjentBygningsStatus`)}
         </Tag>
       </div>
-
-      {/* <div>Bygg x av y</div> */}
     </div>
   )
 }
