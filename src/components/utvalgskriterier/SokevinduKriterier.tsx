@@ -29,8 +29,8 @@ export function SokevinduKriterier({ sokevinduKriterier }: Props) {
       kriterier={[
         { label: t(`${uk}.sokevindu.nord`), value: formaterKoordinat(nord) },
         { label: t(`${uk}.sokevindu.ost`), value: formaterKoordinat(ost) },
-        { label: t(`${uk}.sokevindu.vest`), value: formaterKoordinat(vest) },
-        { label: t(`${uk}.sokevindu.syd`), value: formaterKoordinat(syd) },
+        { label: t(`${uk}.sokevindu.nord`), value: formaterKoordinat(vest) }, // TODO: Endre schema navngivning til å ikke være vest/syd, men 2 nord og 2 ost koordinater.
+        { label: t(`${uk}.sokevindu.ost`), value: formaterKoordinat(syd) },
       ]}
     />
   )

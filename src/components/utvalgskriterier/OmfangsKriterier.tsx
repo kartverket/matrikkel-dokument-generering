@@ -49,7 +49,7 @@ export function OmfangsKriterier({
           label: t(`${uk}.omfang.inkluderFrededeBygninger`),
           value: omfangsKriterier?.inkluderFrededeBygninger,
         },
-                {
+        {
           label: t(`${uk}.bygning.bygningstyper`),
           fullBredde: true,
           value: erAngitt(bygningKriterier?.bygningstyper)
