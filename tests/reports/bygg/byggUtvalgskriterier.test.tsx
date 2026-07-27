@@ -44,7 +44,42 @@ describe("ByggUtvalgskriterier", () => {
     expect(html.toLocaleLowerCase("nb-NO")).not.toContain("ikke angitt")
   })
 
-  test("beholder intervallvisningen for søkevinduet", () => {
+  test("rendrer booleans som checkbokser med riktig verdi", () => {
+    const html = renderUtvalgskriterier({
+      omfang: {
+        inkluderBestaaendeBygg: true,
+        inkluderUtgaatteBygg: false,
+      },
+    })
+
+    expect(html.match(/type="checkbox"/g)).toHaveLength(2)
+    expect(html.match(/checked=""/g)).toHaveLength(1)
+  })
+
+  test("oversetter kodelister og slår dem sammen", () => {
+    const html = renderUtvalgskriterier({
+      bygning: { bygningstyper: ["111", "131"] },
+      bygningsstatus: { naavaerende: ["TB", "RA"], tidligere: [] },
+    })
+
+    expect(html).toContain("Enebolig, Rekkehus")
+    expect(html).toContain("Tatt i bruk, Rammetillatelse")
+  })
+
+  test("formaterer datoer i bygningsstatus", () => {
+    const html = renderUtvalgskriterier({
+      bygningsstatus: {
+        naavaerende: [],
+        tidligere: [],
+        periodeFra: "2019-01-01T00:00:00Z",
+      },
+    })
+
+    expect(html).toContain("Periode fra")
+    expect(html).toContain("1. januar 2019")
+  })
+
+  test("viser alle koordinatene i søkevinduet", () => {
     const html = renderUtvalgskriterier({
       sokevindu: {
         nord: 6642200,
@@ -54,8 +89,20 @@ describe("ByggUtvalgskriterier", () => {
       },
     })
 
-    expect(html.match(/aria-hidden="true"/g)).toHaveLength(2)
-    expect(html.match(/h-0.5 flex-1 bg-kv-blue/g)).toHaveLength(2)
+    const formatter = new Intl.NumberFormat("nb", {
+      maximumFractionDigits: 2,
+    })
+
+    expect(html).toContain("Søkevindu")
+    for (const [label, verdi] of [
+      ["Nord", 6642200],
+      ["Øst", 597500],
+      ["Syd", 6642000],
+      ["Vest", 597300],
+    ] as const) {
+      expect(html).toContain(label)
+      expect(html).toContain(formatter.format(verdi))
+    }
   })
 
   test("skjuler søkevinduet når alle koordinatene er 0", () => {
