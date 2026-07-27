@@ -200,6 +200,14 @@ export const nn = {
           adresse: "Adresse",
           matrikkelNr: "Matrikkelnr",
         },
+        kulturminner: {
+          tittel: "Kulturminne",
+          ingenEndring: "Ingen kulturminne registrerte på bygget.",
+          enkeltminneNr: "Enkeltminnenr.",
+          enkeltminneArtKode: "Art",
+          vernetypeKode: "Vernetype",
+          kulturminnekategoriKode: "Kategori",
+        },
       },
       kontaktpersoner: {
         title: "Kontaktpersonar",

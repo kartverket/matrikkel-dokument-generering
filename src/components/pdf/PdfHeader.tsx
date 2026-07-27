@@ -19,7 +19,7 @@ export function PdfHeader({ metadata, bygning }: PdfHeaderProps) {
   return (
     <header className="flex items-baseline justify-between text-kv-subtle text-pdf-label">
       <span className="whitespace-pre">{`${kommune.kommuneNr} ${kommuneNavn} ${t(`koder.koordinat.${koordinatSystemKode}`)}`}</span>
-      {bygning && (
+      {bygning?.bygningsnr && (
         <span className="underline decoration-1 decoration-kv-accent-border underline-offset-[3px]">
           {t("pdf.header.bygg", { bygningsnr: bygning.bygningsnr })}
         </span>

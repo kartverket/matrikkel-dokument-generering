@@ -14,10 +14,13 @@ import { byggningsStatusKodeSchema } from "../koder/byggningsStatusKode.schema.t
 import { bygningsTypeKodeSchema } from "../koder/bygningsTypeKodeSchema.ts"
 import { eierforholdKodeSchema } from "../koder/eierforholdKode.schema.ts"
 import { endringsKodeSchema } from "../koder/endringsKode.schema.ts"
+import { enkeltminneArtKodeSchema } from "../koder/enkeltminneArtKode.schema.ts"
 import { etasjeplanKodeSchema } from "../koder/etasjeplanKode.schema.ts"
 import { kjokkenTilgangKodeSchema } from "../koder/kjokkenTilgangKode.ts"
 import { kontaktPersonKodeSchema } from "../koder/kontaktPersonKode.schema.ts"
+import { kulturminnekategoriKodeSchema } from "../koder/kulturminnekategoriKode.schema.ts"
 import { naringsgruppeKodeSchema } from "../koder/naringsgruppeKode.schema.ts"
+import { vernetypeKodeSchema } from "../koder/vernetypeKode.schema.ts"
 import { arealFordelingSchema } from "../shared/arealFordeling.schema.ts"
 
 export const byggEndringSchema = valgfriObjekt({
@@ -129,6 +132,26 @@ export const byggEndringSchema = valgfriObjekt({
     description:
       "Inneholder endringen kulturminne? \n" +
       "å ha kulturminner vil så at endringen er knyttet et registrert kulturminne i Riksantikvarens database Askeladden",
+  }),
+
+  // Enkeltminner (fredete/verneverdige bygninger) knyttet til bygningen, jf. FredetBygning i matrikkelen
+  kulturminner: valgfriListe(
+    valgfriObjekt({
+      enkeltminneNr: valgfriString.meta({
+        title: "Enkeltminnenummer",
+        example: "86121-1",
+        description:
+          "Entydig identifikasjon av kulturminnet (enkeltminnet) knyttet til bygningen, fra Riksantikvarens database Askeladden.",
+      }),
+      enkeltminneArtKode: valgfriSchema(enkeltminneArtKodeSchema),
+      vernetypeKode: valgfriSchema(vernetypeKodeSchema),
+      kulturminnekategoriKode: valgfriSchema(kulturminnekategoriKodeSchema),
+    }),
+  ).meta({
+    title: "Kulturminner",
+    description:
+      "Kulturminner (enkeltminner) registrert på bygningen i Riksantikvarens database Askeladden. \n" +
+      "En bygning kan være knyttet til flere enkeltminner.",
   }),
 
   // Tidligere Hjemmelshaver/aktuell eier/kontaktinstans
@@ -248,3 +271,6 @@ export type BygningsEndring = z.infer<typeof byggEndringSchema>
 
 type Bruksenheter = NonNullable<NonNullable<BygningsEndring>["bruksenheter"]>
 export type Bruksenhet = NonNullable<Bruksenheter[number]>
+
+type Kulturminner = NonNullable<NonNullable<BygningsEndring>["kulturminner"]>
+export type Kulturminne = NonNullable<Kulturminner[number]>

@@ -11,7 +11,7 @@ import type { BygningsEndring } from "../lib/schema/reports/bygg/byg0011/byggEnd
 
 interface Props {
   index: number
-  byggNr: string
+  byggNr?: string
   byggEndringer: BygningsEndring[]
 }
 

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next"
 
 interface Props {
   gjeldendeStatusKode?: string
-  byggNr: string
+  byggNr?: string
 }
 
 export default function BygningHeader({ gjeldendeStatusKode, byggNr }: Props) {
@@ -13,15 +13,17 @@ export default function BygningHeader({ gjeldendeStatusKode, byggNr }: Props) {
   return (
     <div className="flex break-inside-avoid justify-between bg-kv-green-tinted px-4 py-2">
       <div className="flex gap-4">
-        <Heading level={3} className="font-medium">
-          {t(`${key}.header.bygningsNr`, {
-            bygningsnr: byggNr,
-          })}{" "}
-          {byggNr
-            .replace(/\s/g, "")
-            .replace(/^(\d{2})(?=\d)/, "$1 ")
-            .replace(/(\d{3})(?=\d)/g, "$1 ")}
-        </Heading>
+        {byggNr && (
+          <Heading level={3} className="font-medium">
+            {t(`${key}.header.bygningsNr`, {
+              bygningsnr: byggNr,
+            })}{" "}
+            {byggNr
+              .replace(/\s/g, "")
+              .replace(/^(\d{2})(?=\d)/, "$1 ")
+              .replace(/(\d{3})(?=\d)/g, "$1 ")}
+          </Heading>
+        )}
         <Tag data-size="sm" data-color={"success"}>
           {gjeldendeStatusKode
             ? t(`koder.bygningsstatus.${gjeldendeStatusKode}`, {

@@ -15,6 +15,7 @@ function endring(
     byggDatoEndring: datoer,
     etasjePlan: [],
     bruksenheter: [],
+    kulturminner: [],
   }
 }
 

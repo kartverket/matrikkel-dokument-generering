@@ -2,6 +2,7 @@ import type {
   Bruksenhet,
   ByggEndringsDatoer,
   BygningsEndring,
+  Kulturminne,
 } from "../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 import type { Byg0011Rapport as ByggRapport } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 import type { BygningsStatusKode } from "../lib/schema/reports/bygg/koder/byggningsStatusKode.schema.ts"
@@ -99,6 +100,7 @@ function byggEndring({
   annetAreal,
   datoer,
   bruksenheter,
+  kulturminner = [],
 }: {
   lopeNr: number
   endringsKode?: EndringsKode
@@ -107,6 +109,7 @@ function byggEndring({
   annetAreal: number
   datoer: ByggEndringsDatoer
   bruksenheter: Bruksenhet[]
+  kulturminner?: Kulturminne[]
 }): BygningsEndring {
   const bruttoBoligAreal = Math.ceil(boligAreal * 1.13)
   const bruttoAnnetAreal = Math.ceil(annetAreal * 1.2)
@@ -180,6 +183,7 @@ function byggEndring({
       adresse: "Storgata 1, 0155 Oslo",
     },
     bruksenheter,
+    kulturminner,
   }
 }
 
@@ -253,6 +257,20 @@ const andreEndringer: BygningsEndring[] = [
     annetAreal: 0,
     datoer: { tattIBruk: isoDatetime("1998-06-18") },
     bruksenheter: [h0101, h0102],
+    kulturminner: [
+      {
+        enkeltminneNr: "86121-1",
+        enkeltminneArtKode: "10175",
+        vernetypeKode: "VED",
+        kulturminnekategoriKode: "E-BYG",
+      },
+      {
+        enkeltminneNr: "86121-2",
+        enkeltminneArtKode: "10153",
+        vernetypeKode: "ADM",
+        kulturminnekategoriKode: "E-BYG",
+      },
+    ],
   }),
 ]
 

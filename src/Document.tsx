@@ -21,8 +21,8 @@ export function DocumentComponent({ rapport }: { rapport: Byg0011Rapport }) {
       >
         <ByggUtvalgskriterier index={1} kriterier={rapport.utvalgskriterier} />
       </PdfPage>
-      {bygninger.map((bygning) => (
-        <Fragment key={bygning.bygningsnr}>
+      {bygninger.map((bygning, index) => (
+        <Fragment key={bygning.bygningsnr ?? index}>
           <PdfPage header={<PdfHeader metadata={metadata} bygning={bygning} />}>
             <Byggoversikt
               index={2}

@@ -209,6 +209,14 @@ export const nb = {
           adresse: "Adresse",
           matrikkelNr: "Matrikkelnr",
         },
+        kulturminner: {
+          tittel: "Kulturminner",
+          ingenEndring: "Ingen kulturminner registrert på bygget.",
+          enkeltminneNr: "Enkeltminnenr.",
+          enkeltminneArtKode: "Art",
+          vernetypeKode: "Vernetype",
+          kulturminnekategoriKode: "Kategori",
+        },
       },
       kontaktpersoner: {
         title: "Kontaktpersoner",

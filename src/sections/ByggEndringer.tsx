@@ -120,11 +120,31 @@ export default function ByggEndringer({ index, bygning }: Props) {
       })),
   )
 
+  const kulturminneEndringer = endringer.flatMap((e) =>
+    (e.kulturminner ?? [])
+      .filter((k) => k !== undefined)
+      .map((k) => ({
+        lopeNr: e.lopeNr,
+        ...k,
+        enkeltminneArtKode: k.enkeltminneArtKode
+          ? t(`koder.enkeltminneart.${k.enkeltminneArtKode}`)
+          : undefined,
+        vernetypeKode: k.vernetypeKode
+          ? t(`koder.vernetype.${k.vernetypeKode}`)
+          : undefined,
+        kulturminnekategoriKode: k.kulturminnekategoriKode
+          ? t(`koder.kulturminnekategori.${k.kulturminnekategoriKode}`)
+          : undefined,
+      })),
+  )
+
   return (
     <Section index={index} title={t(`${tKey}.tittel`)}>
-      <Heading level={3} className="bg-kv-green-subtle p-2">
-        {t(`${tKey}.bygningsnr`, { bygningsnr: bygning.bygningsnr })}
-      </Heading>
+      {bygning.bygningsnr && (
+        <Heading level={3} className="bg-kv-green-subtle p-2">
+          {t(`${tKey}.bygningsnr`, { bygningsnr: bygning.bygningsnr })}
+        </Heading>
+      )}
 
       {endringer.length === 0 ? (
         <Paragraph className="text-kv-subtle">
@@ -150,6 +170,10 @@ export default function ByggEndringer({ index, bygning }: Props) {
           <EndringsTabell
             endringer={bruksenhetEndringer}
             seksjon="bruksenheter"
+          />
+          <EndringsTabell
+            endringer={kulturminneEndringer}
+            seksjon="kulturminner"
           />
         </div>
       )}
