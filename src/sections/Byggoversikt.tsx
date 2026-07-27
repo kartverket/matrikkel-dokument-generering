@@ -26,47 +26,47 @@ export default function Byggoversikt({
   // Dette vil si hvordan bygget ser ut i dag, med alle endringer som er registrert i matrikkelen.
   const gjeldendeTilstand = aggregerGjeldendeTilstand(bygning.endringer)
 
-  const innhold = (
-    <div className="space-y-8">
-      <BygningHeader
-        byggNr={bygning.bygningsnr}
-        bygningIndeks={bygningIndeks}
-        antallBygninger={antallBygninger}
-        bygningsTypeKode={gjeldendeTilstand?.byggMetaEndring?.bygningsTypeKode}
-        gjeldendeStatusKode={
-          gjeldendeTilstand?.byggMetaEndring?.bygningsStatusKode
-        }
-      />
-
-      {gjeldendeTilstand && (
-        <>
-          <Oversiktsfelt
-            byggTypeKode={gjeldendeTilstand?.byggMetaEndring?.bygningsTypeKode}
-            antallBoenheter={
-              gjeldendeTilstand?.byggMetaEndring?.antallBoenheter
-            }
-            antallBruksenheter={gjeldendeTilstand?.bruksenheter.length}
-            antallEtasjer={gjeldendeTilstand?.etasjePlan?.length}
-            naringsgruppeKode={
-              gjeldendeTilstand?.byggMetaEndring?.naringsgruppeKode
-            }
-            koordinater={gjeldendeTilstand?.byggKoordinatEndring}
-          />
-          <ByggOversiktAreal etasjePlan={gjeldendeTilstand.etasjePlan} />
-        </>
-      )}
-      <ByggSammendrag byggEndringer={bygning.endringer} />
-    </div>
-  )
-
-  // Seksjonstittelen vises kun for første bygning, ellers vises kun innholdet.
-  if (bygningIndeks > 1) {
-    return <section className="mb-20">{innhold}</section>
-  }
-
   return (
-    <Section index={index} title={t("rapport.BYG0011.byggoversikt.title")}>
-      {innhold}
+    <Section
+      index={index}
+      title={t("rapport.BYG0011.byggoversikt.title")}
+      // Seksjonstittelen vises kun for første bygning
+      showTitle={bygningIndeks === 1}
+    >
+      <div className="space-y-8">
+        <BygningHeader
+          byggNr={bygning.bygningsnr}
+          bygningIndeks={bygningIndeks}
+          antallBygninger={antallBygninger}
+          bygningsTypeKode={
+            gjeldendeTilstand?.byggMetaEndring?.bygningsTypeKode
+          }
+          gjeldendeStatusKode={
+            gjeldendeTilstand?.byggMetaEndring?.bygningsStatusKode
+          }
+        />
+
+        {gjeldendeTilstand && (
+          <>
+            <Oversiktsfelt
+              byggTypeKode={
+                gjeldendeTilstand?.byggMetaEndring?.bygningsTypeKode
+              }
+              antallBoenheter={
+                gjeldendeTilstand?.byggMetaEndring?.antallBoenheter
+              }
+              antallBruksenheter={gjeldendeTilstand?.bruksenheter.length}
+              antallEtasjer={gjeldendeTilstand?.etasjePlan?.length}
+              naringsgruppeKode={
+                gjeldendeTilstand?.byggMetaEndring?.naringsgruppeKode
+              }
+              koordinater={gjeldendeTilstand?.byggKoordinatEndring}
+            />
+            <ByggOversiktAreal etasjePlan={gjeldendeTilstand.etasjePlan} />
+          </>
+        )}
+        <ByggSammendrag byggEndringer={bygning.endringer} />
+      </div>
     </Section>
   )
 }

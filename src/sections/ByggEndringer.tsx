@@ -125,8 +125,13 @@ export default function ByggEndringer({
       })),
   )
 
-  const innhold = (
-    <>
+  return (
+    <Section
+      index={index}
+      title={t(`${tKey}.tittel`)}
+      // Seksjonstittelen vises kun for første bygning
+      showTitle={bygningIndeks === 1}
+    >
       <BygningHeader
         byggNr={bygning.bygningsnr}
         bygningIndeks={bygningIndeks}
@@ -166,17 +171,6 @@ export default function ByggEndringer({
           />
         </div>
       )}
-    </>
-  )
-
-  // Seksjonstittelen blir kun vist for første bygning, ellers vises kun innholdet.
-  if (bygningIndeks > 1) {
-    return <section className="mb-20">{innhold}</section>
-  }
-
-  return (
-    <Section index={index} title={t(`${tKey}.tittel`)}>
-      {innhold}
     </Section>
   )
 }
