@@ -1,4 +1,4 @@
-import { Checkbox } from "@kv-designsystem/react"
+import { Checkbox, Paragraph } from "@kv-designsystem/react"
 import type { ParseKeys } from "i18next"
 import { useTranslation } from "react-i18next"
 import { cn } from "../../lib/utils/cn.ts"
@@ -57,7 +57,11 @@ export function Utvalg(props: Props) {
               key={key ?? label}
               label={label}
               checked={value}
-              className={cn(fullBredde && "col-span-full")}
+              data-size="sm"
+              className={cn(
+                "[&_.ds-input]:[--dsc-input-size--toggle:14px] [&_.ds-input]:[--dsc-input-stroke-width:0.6px] [&_.ds-input]:translate-y-0", // Hack for å få checkbox til å se bra ut i PDF
+                fullBredde && "col-span-full",
+              )}
             />
           ) : (
             <span
@@ -68,22 +72,22 @@ export function Utvalg(props: Props) {
                 fullBredde && "col-span-full",
               )}
             >
-              <span className="text-kv-subtle">{label}</span>
+              <Paragraph className="text-kv-subtle">{label}</Paragraph>
               {Array.isArray(value) ? (
                 <span className="flex min-w-0">
-                  <span className="truncate">
+                  <Paragraph className="truncate">
                     {value.slice(0, MAKS_VISTE_VERDIER).join(", ")}
                     {value.length > MAKS_VISTE_VERDIER && "..."}
-                  </span>
+                  </Paragraph>
                   {value.length > MAKS_VISTE_VERDIER && (
-                    <span className="ml-2 shrink-0 text-kv-subtle">
+                    <Paragraph className="ml-2 shrink-0 text-kv-subtle">
                       {`+ `}
                       {value.length - MAKS_VISTE_VERDIER}
-                    </span>
+                    </Paragraph>
                   )}
                 </span>
               ) : (
-                <span>{value}</span>
+                <Paragraph>{value}</Paragraph>
               )}
             </span>
           ),

@@ -1,4 +1,4 @@
-import { Table, Paragraph } from "@kv-designsystem/react"
+import { Paragraph, Table } from "@kv-designsystem/react"
 import type { i18n as I18n } from "i18next"
 import { useTranslation } from "react-i18next"
 import { formatDate } from "../lib/utils/formatDate.ts"
