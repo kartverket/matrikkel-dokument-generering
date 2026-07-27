@@ -129,9 +129,6 @@ export default function ByggEndringer({ index, bygning }: Props) {
       .filter((s) => s != null)
       .map((sefrakId) => ({ lopeNr: e.lopeNr, sefrakId })),
   )
-  const harSefrakopplysninger = endringer.some(
-    (e) => e.sefrakIder !== undefined,
-  )
 
   const kulturminneEndringer = endringer.flatMap((e) =>
     (e.kulturminner ?? [])
@@ -149,9 +146,6 @@ export default function ByggEndringer({ index, bygning }: Props) {
           ? t(`koder.kulturminnekategori.${k.kulturminnekategoriKode}`)
           : undefined,
       })),
-  )
-  const harKulturminneopplysninger = endringer.some(
-    (e) => e.kulturminner !== undefined,
   )
 
   return (
@@ -187,13 +181,13 @@ export default function ByggEndringer({ index, bygning }: Props) {
             endringer={bruksenhetEndringer}
             seksjon="bruksenheter"
           />
-          {harKulturminneopplysninger && (
+          {kulturminneEndringer.length > 0 && (
             <EndringsTabell
               endringer={kulturminneEndringer}
               seksjon="kulturminner"
             />
           )}
-          {harSefrakopplysninger && (
+          {sefrakEndringer.length > 0 && (
             <EndringsTabell endringer={sefrakEndringer} seksjon="sefrak" />
           )}
         </div>

@@ -214,7 +214,6 @@ export const nb = {
         kulturminner: {
           tittel_one: "Kulturminne",
           tittel_other: "Kulturminner",
-          ingenEndring: "Ingen kulturminner registrert på bygget.",
           enkeltminneNr: "Enkeltminnenr.",
           enkeltminneArtKode: "Art",
           vernetypeKode: "Vernetype",
@@ -223,7 +222,6 @@ export const nb = {
         sefrak: {
           tittel_one: "SEFRAK-minne",
           tittel_other: "SEFRAK-minner",
-          ingenEndring: "Ingen SEFRAK-minner registrert på bygget.",
           sefrakId: "Sefrak-ID",
         },
       },
