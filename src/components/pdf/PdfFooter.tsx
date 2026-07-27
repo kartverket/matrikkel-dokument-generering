@@ -27,7 +27,7 @@ export function PdfFooter({ rapportKode, generertTidspunkt }: PdfFooterProps) {
     }) ?? ""
 
   return (
-    <div className="flex w-full justify-between px-[18mm] text-[#5d5d5d] text-pdf-label">
+    <div className="flex w-full justify-between px-[18mm] text-kv-subtle text-pdf-label">
       <span className="whitespace-pre">
         {t("pdf.footer.rapportGenerert", {
           type: rapportKode,

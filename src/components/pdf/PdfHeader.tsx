@@ -12,26 +12,19 @@ export function PdfHeader({ metadata, bygning }: PdfHeaderProps) {
   const { t } = useTranslation()
   const { kommune, koordinatSystemKode } = metadata
 
-  const kommuneTekst = t("pdf.header.kommune", {
+  const kommuneNavnOgNr = t("pdf.header.kommune", {
     kommuneNr: kommune.kommuneNr,
     kommuneNavn:
       kommune.kommuneNavn.charAt(0).toUpperCase() +
       kommune.kommuneNavn.slice(1).toLowerCase(),
   })
-  const koordinatTekst = t("pdf.header.koordinatsystem", {
-    kode: koordinatSystemKode,
-    navn: oversettKode({
-      t,
-      kodeverk: "koordinat",
-      kode: koordinatSystemKode,
-    }),
-  })
+ 
 
   return (
-    <header className="flex items-baseline justify-between text-[#5d5d5d] text-pdf-label">
-      <span className="whitespace-pre">{`${kommuneTekst} ${koordinatTekst}`}</span>
+    <header className="flex items-baseline justify-between text-kv-subtle text-pdf-label">
+      <span className="whitespace-pre">{`${kommuneNavnOgNr} ${t(`koder.koordinat.${koordinatSystemKode}`)}`}</span>
       {bygning && (
-        <span className="underline decoration-1 decoration-[#278a46] underline-offset-[3px]">
+        <span className="underline decoration-1 decoration-kv-accent-border underline-offset-[3px]">
           {t("pdf.header.bygg", { bygningsnr: bygning.bygningsnr })}
         </span>
       )}
