@@ -1,4 +1,4 @@
-import { Heading, Table } from "@kv-designsystem/react"
+import { Heading, Paragraph, Table } from "@kv-designsystem/react"
 import type { i18n as I18n } from "i18next"
 import { useTranslation } from "react-i18next"
 import { formatDate } from "../lib/utils/formatDate.ts"
@@ -55,9 +55,9 @@ export default function EndringsTabell({ endringer, seksjon }: Props) {
       </span>
 
       {endringer.length === 0 ? (
-        <p className="text-kv-subtle">
+        <Paragraph className="text-kv-subtle">
           {t(`${tKey}.ingenEndring`, { defaultValue: "" })}
-        </p>
+        </Paragraph>
       ) : (
         <Table className="w-full">
           <Table.Head>
