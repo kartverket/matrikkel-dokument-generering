@@ -1,4 +1,4 @@
-import { Table, Heading } from "@kv-designsystem/react"
+import { Heading, Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { ByggUtvalgskriterier as Utvalgskriterier } from "../../lib/schema/reports/bygg/shared/byggUtvalgskriterier.schema.ts"
 import { erAngitt, harAngittVerdi } from "./utils/erAngitt.ts"
@@ -28,7 +28,7 @@ export function SokevinduKriterier({ sokevinduKriterier }: Props) {
 
   return (
     <section>
-      <span className="flex items-center gap-4 mb-2">
+      <span className="mb-2 flex items-center gap-4">
         <Heading level={3}>{t(`${uk}.sokevindu.tittel`)}</Heading>
         <hr className="w-full border border-kv-green-border" />
       </span>
