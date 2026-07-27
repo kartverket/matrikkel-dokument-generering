@@ -54,16 +54,6 @@ const mockBygningMassivRapport: Byg0001Rapport = {
     koordinatSystemKode: "22",
     generertTidspunkt: "2026-07-17T10:00:00Z",
   },
-  utvalgskriterier: {
-    omfang: {
-      inkluderBestaaendeBygg: true,
-      inkluderUtgaatteBygg: false,
-      inkluderBygninger: true,
-      inkluderBygningsendringer: true,
-      inkluderFrededeBygninger: true,
-    },
-    matrikkelenhet: { gnr: 208, bnr: 12 },
-  },
   bygninger: [
     {
       bygningsnr: "18 520 621",

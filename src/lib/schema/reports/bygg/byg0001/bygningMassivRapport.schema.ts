@@ -1,16 +1,15 @@
 import { z } from "@hono/zod-openapi"
 import { rapportSchema } from "../../../core/rapport.schema"
 import { valgfriListe } from "../../../core/utils/zodUtils.ts"
-import { byggUtvalgskriterierSchema } from "../shared/byggUtvalgskriterier.schema.ts"
 import { bygningMassivSchema } from "./bygningMassiv.schema.ts"
 
+// Inneholder ikke utvalgskriterier
 export const bygningMassivRapportSchema = rapportSchema
   .extend({
     rapportKode: z.literal("BYG0001").meta({
       description: "Rapportkoden for rapport: Bygning - Massiv",
       example: "BYG0001",
     }),
-    utvalgskriterier: byggUtvalgskriterierSchema,
     bygninger: valgfriListe(bygningMassivSchema),
   })
   .meta({
