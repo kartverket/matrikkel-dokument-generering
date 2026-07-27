@@ -85,25 +85,29 @@ export default function ByggEndringer({ index, bygning }: Props) {
     .filter((e) => e.byggDatoEndring !== undefined)
     .map((e) => ({ lopeNr: e.lopeNr, ...e.byggDatoEndring }))
 
-  const aktuellEierEndringer = endringer
-    .filter((e) => e.aktuellEier !== undefined)
-    .map((e) => ({
-      lopeNr: e.lopeNr,
-      ...e.aktuellEier,
-      eierforholdKode: e.aktuellEier?.eierforholdKode
-        ? t(`koder.eierforhold.${e.aktuellEier.eierforholdKode}`)
-        : undefined,
-    }))
+  const aktuellEierEndringer = endringer.flatMap((e) =>
+    (e.aktuelleEiere ?? [])
+      .filter((eier) => eier !== undefined)
+      .map((eier) => ({
+        lopeNr: e.lopeNr,
+        ...eier,
+        eierforholdKode: eier.eierforholdKode
+          ? t(`koder.eierforhold.${eier.eierforholdKode}`)
+          : undefined,
+      })),
+  )
 
-  const tiltaksHaverEndringer = endringer
-    .filter((e) => e.tiltaksHaver !== undefined)
-    .map((e) => ({
-      lopeNr: e.lopeNr,
-      ...e.tiltaksHaver,
-      kontaktPersonKode: e.tiltaksHaver?.kontaktPersonKode
-        ? t(`koder.kontaktperson.${e.tiltaksHaver.kontaktPersonKode}`)
-        : undefined,
-    }))
+  const tiltaksHaverEndringer = endringer.flatMap((e) =>
+    (e.tiltaksHavere ?? [])
+      .filter((th) => th !== undefined)
+      .map((th) => ({
+        lopeNr: e.lopeNr,
+        ...th,
+        kontaktPersonKode: th.kontaktPersonKode
+          ? t(`koder.kontaktperson.${th.kontaktPersonKode}`)
+          : undefined,
+      })),
+  )
 
   const bruksenhetEndringer = endringer.flatMap((e) =>
     (e.bruksenheter ?? [])
@@ -167,11 +171,11 @@ export default function ByggEndringer({ index, bygning }: Props) {
           <EndringsTabell endringer={datoEndringer} seksjon="byggDatoEndring" />
           <EndringsTabell
             endringer={aktuellEierEndringer}
-            seksjon="aktuellEier"
+            seksjon="aktuelleEiere"
           />
           <EndringsTabell
             endringer={tiltaksHaverEndringer}
-            seksjon="tiltaksHaver"
+            seksjon="tiltaksHavere"
           />
           <EndringsTabell
             endringer={bruksenhetEndringer}

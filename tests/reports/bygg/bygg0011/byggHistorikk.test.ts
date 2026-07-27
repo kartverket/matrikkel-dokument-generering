@@ -55,6 +55,8 @@ describe("byggHistorikk", () => {
         bruksenheter: [],
         kulturminner: [],
         sefrakIder: [],
+        aktuelleEiere: [],
+        tiltaksHavere: [],
       },
       {
         lopeNr: 1,
@@ -67,6 +69,8 @@ describe("byggHistorikk", () => {
         bruksenheter: [],
         kulturminner: [],
         sefrakIder: [],
+        aktuelleEiere: [],
+        tiltaksHavere: [],
       },
     ]
 
@@ -84,6 +88,8 @@ describe("byggHistorikk", () => {
         bruksenheter: [],
         kulturminner: [],
         sefrakIder: [],
+        aktuelleEiere: [],
+        tiltaksHavere: [],
       },
       {
         lopeNr: 0,
@@ -92,6 +98,8 @@ describe("byggHistorikk", () => {
         bruksenheter: [],
         kulturminner: [],
         sefrakIder: [],
+        aktuelleEiere: [],
+        tiltaksHavere: [],
       },
       {
         lopeNr: 1,
@@ -100,6 +108,8 @@ describe("byggHistorikk", () => {
         bruksenheter: [],
         kulturminner: [],
         sefrakIder: [],
+        aktuelleEiere: [],
+        tiltaksHavere: [],
       },
       {
         lopeNr: 4,
@@ -108,6 +118,8 @@ describe("byggHistorikk", () => {
         bruksenheter: [],
         kulturminner: [],
         sefrakIder: [],
+        aktuelleEiere: [],
+        tiltaksHavere: [],
       },
       {
         lopeNr: 3,
@@ -116,6 +128,8 @@ describe("byggHistorikk", () => {
         bruksenheter: [],
         kulturminner: [],
         sefrakIder: [],
+        aktuelleEiere: [],
+        tiltaksHavere: [],
       },
     ]
 
@@ -142,6 +156,8 @@ describe("byggHistorikk", () => {
       bruksenheter: [],
       kulturminner: [],
       sefrakIder: [],
+      aktuelleEiere: [],
+      tiltaksHavere: [],
     })
     const historikk = byggHistorikk([
       endring(0, 0),
@@ -176,6 +192,8 @@ describe("byggHistorikk", () => {
         bruksenheter: [],
         kulturminner: [],
         sefrakIder: [],
+        aktuelleEiere: [],
+        tiltaksHavere: [],
       },
       {
         lopeNr: 1,
@@ -184,6 +202,8 @@ describe("byggHistorikk", () => {
         bruksenheter: [],
         kulturminner: [],
         sefrakIder: [],
+        aktuelleEiere: [],
+        tiltaksHavere: [],
       },
     ]
 
@@ -202,6 +222,8 @@ describe("byggHistorikk", () => {
           bruksenheter: [],
           kulturminner: [],
           sefrakIder: [],
+          aktuelleEiere: [],
+          tiltaksHavere: [],
         },
       ]),
     ).toEqual([])

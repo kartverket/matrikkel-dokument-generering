@@ -167,9 +167,10 @@ export const nn = {
           tattIBruk: "Teke i bruk",
           utgaattRevet: "Utgått / rive",
         },
-        aktuellEier: {
+        aktuelleEiere: {
           ingenEndring: "Ingen endringar registrerte på bygget.",
-          tittel: "Aktuell eigar",
+          tittel_one: "Aktuell eigar",
+          tittel_other: "Aktuelle eigarar",
           eierforholdKode: "Rolle",
           navn: "Namn",
           identifikasjonsNr: "Føds.dato/org.nr",
@@ -178,9 +179,10 @@ export const nn = {
           bruksenhetsNr: "Brukseining",
           erAvdoed: "Avdød",
         },
-        tiltaksHaver: {
+        tiltaksHavere: {
           ingenEndring: "Ingen endringar registrerte på bygget.",
-          tittel: "Tiltakshavar",
+          tittel_one: "Tiltakshavar",
+          tittel_other: "Tiltakshavarar",
           kontaktPersonKode: "Rolle",
           navn: "Namn",
           identifikasjonsNr: "Føds.dato/org.nr",
@@ -189,7 +191,8 @@ export const nn = {
         },
         bruksenheter: {
           ingenEndring: "Ingen endringar registrerte på bygget.",
-          tittel: "Berørte brukseiningar",
+          tittel_one: "Berørt brukseining",
+          tittel_other: "Berørte brukseiningar",
           bruksenhetsNr: "Brukseining",
           bruksenhetsTypeKode: "Type",
           bruksAreal: "BRA",
@@ -201,7 +204,8 @@ export const nn = {
           matrikkelNr: "Matrikkelnr",
         },
         kulturminner: {
-          tittel: "Kulturminne",
+          tittel_one: "Kulturminne",
+          tittel_other: "Kulturminne",
           ingenEndring: "Ingen kulturminne registrerte på bygget.",
           enkeltminneNr: "Enkeltminnenr.",
           enkeltminneArtKode: "Art",
@@ -209,7 +213,8 @@ export const nn = {
           kulturminnekategoriKode: "Kategori",
         },
         sefrak: {
-          tittel: "SEFRAK-minne",
+          tittel_one: "SEFRAK-minne",
+          tittel_other: "SEFRAK-minne",
           ingenEndring: "Ingen SEFRAK-minne registrerte på bygget.",
           sefrakId: "Sefrak-ID",
         },

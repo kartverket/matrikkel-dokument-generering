@@ -49,7 +49,7 @@ export default function EndringsTabell({ endringer, seksjon }: Props) {
     <div className="my-4 space-y-4">
       <span className="flex items-center gap-4">
         <Heading level={3} data-size="sm" className="min-w-max font-medium">
-          {t(`${tKey}.tittel`, { defaultValue: "" })}
+          {t(`${tKey}.tittel`, { defaultValue: "", count: endringer.length })}
         </Heading>
         <hr className="w-full border border-kv-green-border" />
       </span>

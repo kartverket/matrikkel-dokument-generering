@@ -175,8 +175,9 @@ export const nb = {
           tattIBruk: "Tatt i bruk",
           utgaattRevet: "Utgått / revet",
         },
-        aktuellEier: {
-          tittel: "Aktuell eier",
+        aktuelleEiere: {
+          tittel_one: "Aktuell eier",
+          tittel_other: "Aktuelle eiere",
           ingenEndring: "Ingen endringer registrert på bygget.",
           eierforholdKode: "Rolle",
           navn: "Navn",
@@ -186,8 +187,9 @@ export const nb = {
           bruksenhetsNr: "Bruksenhet",
           erAvdoed: "Avdød",
         },
-        tiltaksHaver: {
-          tittel: "Tiltakshaver",
+        tiltaksHavere: {
+          tittel_one: "Tiltakshaver",
+          tittel_other: "Tiltakshavere",
           ingenEndring: "Ingen endringer registrert på bygget.",
           kontaktPersonKode: "Rolle",
           navn: "Navn",
@@ -197,7 +199,8 @@ export const nb = {
           bruksenhetsNr: "Bruksenhet",
         },
         bruksenheter: {
-          tittel: "Berørte bruksenheter",
+          tittel_one: "Berørt bruksenhet",
+          tittel_other: "Berørte bruksenheter",
           ingenEndring: "Ingen endringer registrert på bygget.",
           bruksenhetsNr: "Bruksenhet",
           bruksenhetsTypeKode: "Type",
@@ -210,7 +213,8 @@ export const nb = {
           matrikkelNr: "Matrikkelnr",
         },
         kulturminner: {
-          tittel: "Kulturminner",
+          tittel_one: "Kulturminne",
+          tittel_other: "Kulturminner",
           ingenEndring: "Ingen kulturminner registrert på bygget.",
           enkeltminneNr: "Enkeltminnenr.",
           enkeltminneArtKode: "Art",
@@ -218,7 +222,8 @@ export const nb = {
           kulturminnekategoriKode: "Kategori",
         },
         sefrak: {
-          tittel: "SEFRAK-minner",
+          tittel_one: "SEFRAK-minne",
+          tittel_other: "SEFRAK-minner",
           ingenEndring: "Ingen SEFRAK-minner registrert på bygget.",
           sefrakId: "Sefrak-ID",
         },

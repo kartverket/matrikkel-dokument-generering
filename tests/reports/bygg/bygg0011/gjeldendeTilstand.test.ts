@@ -17,6 +17,8 @@ function endring(
     bruksenheter: [],
     kulturminner: [],
     sefrakIder: [],
+    aktuelleEiere: [],
+    tiltaksHavere: [],
   }
 }
 
