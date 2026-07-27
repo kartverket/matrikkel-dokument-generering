@@ -24,7 +24,7 @@ export default function Oversiktsfelt(props: Props) {
     <ul className="flex flex-row justify-between gap-4">
       <li>
         <Label>{t(`${key}.bygningstype`)}</Label>
-        <Paragraph data-size="sm">
+        <Paragraph>
           {props.byggTypeKode
             ? t(`koder.bygningstype.${props.byggTypeKode}`)
             : tom}
@@ -33,22 +33,22 @@ export default function Oversiktsfelt(props: Props) {
 
       <li>
         <Label>{t(`${key}.antallBruksenheter`)}</Label>
-        <Paragraph data-size="sm">{props.antallBruksenheter ?? tom}</Paragraph>
+        <Paragraph>{props.antallBruksenheter ?? tom}</Paragraph>
       </li>
 
       <li>
         <Label>{t(`${key}.antallBoenheter`)}</Label>
-        <Paragraph data-size="sm">{props.antallBoenheter ?? tom}</Paragraph>
+        <Paragraph>{props.antallBoenheter ?? tom}</Paragraph>
       </li>
 
       <li>
         <Label>{t(`${key}.antallEtasjer`)}</Label>
-        <Paragraph data-size="sm">{props.antallEtasjer ?? tom}</Paragraph>
+        <Paragraph>{props.antallEtasjer ?? tom}</Paragraph>
       </li>
 
       <li>
         <Label>{t(`${key}.naringsgruppe`)}</Label>
-        <Paragraph data-size="sm">
+        <Paragraph>
           {props.naringsgruppeKode
             ? t(`koder.naringsgruppe.${props.naringsgruppeKode}`)
             : tom}
@@ -57,7 +57,7 @@ export default function Oversiktsfelt(props: Props) {
 
       <li>
         <Label>{t(`${key}.koordinater`)}</Label>
-        <Paragraph data-size="sm">
+        <Paragraph>
           {props.koordinater?.nord && props.koordinater?.ost
             ? `${props.koordinater.nord}, ${props.koordinater.ost}`
             : tom}

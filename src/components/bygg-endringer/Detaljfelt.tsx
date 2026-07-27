@@ -53,7 +53,7 @@ export function Detaljfelt({
 }: Props) {
   return (
     <div className={className}>
-      <dt className="text-kv-subtle text-sm">{label}</dt>
+      <dt className="text-kv-subtle">{label}</dt>
       <dd
         className={cn(
           "mt-1",

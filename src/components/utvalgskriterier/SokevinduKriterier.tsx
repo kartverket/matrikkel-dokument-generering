@@ -28,7 +28,7 @@ export function SokevinduKriterier({ sokevinduKriterier }: Props) {
 
   return (
     <section className="break-inside-avoid">
-      <Heading level={3} data-size="sm" className="mb-4 font-medium">
+      <Heading level={3} className="mb-4">
         {t(`${uk}.sokevindu.tittel`)}
       </Heading>
       <Card variant="tinted" className="border border-kv-border">

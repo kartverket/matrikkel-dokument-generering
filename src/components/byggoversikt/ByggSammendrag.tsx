@@ -22,12 +22,10 @@ export default function ByggSammendrag({ byggEndringer }: Props) {
 
   return (
     <div className="space-y-4">
-      <Heading level={4} data-size="xs">
-        {t(`${h}.title`)}
-      </Heading>
+      <Heading level={4}>{t(`${h}.title`)}</Heading>
 
       {historikk.length === 0 ? (
-        <p>{t(`${h}.ingenHistorikk`)}</p>
+        <Paragraph>{t(`${h}.ingenHistorikk`)}</Paragraph>
       ) : (
         <ul className="space-y-8 border-kv-green border-l-3 pl-6">
           {historikk.map((historikk) => {
@@ -87,11 +85,11 @@ export default function ByggSammendrag({ byggEndringer }: Props) {
                   <div className="flex flex-wrap items-center gap-3">
                     <div className="flex w-full justify-between">
                       <div className="flex gap-2">
-                        <p className="font-semibold">
+                        <Heading level={4} className="font-semibold">
                           {historikk.lopeNr === 0
                             ? t(`${h}.forsteVedtak`)
                             : `Endring ${historikk.lopeNr}`}
-                        </p>
+                        </Heading>
 
                         {historikk.byggEndringsKode !== undefined && (
                           <Tag data-color="success" variant="outline">
@@ -132,15 +130,9 @@ export default function ByggSammendrag({ byggEndringer }: Props) {
                   {beskrivelse && <Paragraph>{beskrivelse}</Paragraph>}
                   {berorteEtasjerOgBruksenheter && (
                     <div className="flex flex-wrap items-center gap-2 text-kv-subtle">
-                      <Paragraph data-size="sm">
-                        {berorteEtasjerOgBruksenheter}
-                      </Paragraph>
+                      <Paragraph>{berorteEtasjerOgBruksenheter}</Paragraph>
                       {antallFlereBerorte > 0 && (
-                        <Tag
-                          data-size="sm"
-                          className="shrink-0"
-                          variant="outline"
-                        >
+                        <Tag className="shrink-0" variant="outline">
                           {t(`${h}.flereBerorte`, {
                             antall: antallFlereBerorte,
                           })}

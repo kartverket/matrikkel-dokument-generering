@@ -17,6 +17,49 @@
   --color-kv-green: var(--ds-color-success-base-default);
   --color-kv-green-tinted: #edf6f0;
   --color-kv-background-tinted: #daeed7;
+
+  --text-rapport-h1: 1rem;
+  --text-rapport-h2: 0.75rem;
+  --text-rapport-h3: 0.625rem;
+  --text-rapport-h4: 0.625rem;
+  --text-rapport-p: 0.625rem;
+  --text-rapport-tablehead: 0.625rem;
+  --text-rapport-tablecell: 0.625rem;
+
+  --font-weight-rapport-h1: 500;
+  --font-weight-rapport-h2: 500;
+  --font-weight-rapport-h3: 400;
+  --font-weight-rapport-h4: 500;
+  --font-weight-rapport-p: 400;
+  --font-weight-rapport-tablehead: 400;
+  --font-weight-rapport-tablecell: 400;
+
+  --font-style-rapport-h1: normal;
+  --font-style-rapport-h2: normal;
+  --font-style-rapport-h3: normal;
+  --font-style-rapport-h4: normal;
+  --font-style-rapport-p: normal;
+  --font-style-rapport-tablehead: normal;
+  --font-style-rapport-tablecell: normal;
+
+  --text-color-h1: var(--color-kv-default);
+  --text-color-h2: var(--color-kv-default);
+  --text-color-h3: var(--color-kv-subtle);
+  --text-color-h4: var(--color-kv-default);
+  --text-color-p: var(--color-kv-default);
+  --text-color-tablehead: var(--color-kv-subtle);
+  --text-color-tablecell: var(--color-kv-default);
+
+  /* Label: brukes over verdier i Oversiktsfelt, Nokkeltall osv. */
+  --text-rapport-label: 0.625rem;
+  --font-weight-rapport-label: 500;
+  --text-color-label: var(--color-kv-subtle);
+
+  /* Tag: Figma size/8 = 20px Hug */
+  --text-rapport-tag: 0.625rem;
+  --font-weight-rapport-tag: 500;
+  --min-height-rapport-tag: 1.25rem;
+  --padding-inline-rapport-tag: 0.375rem;
 }
 
 body {
@@ -24,23 +67,6 @@ body {
   font-feature-settings: "cv05" 1;
 }
 
-th {
-  font-weight: 400;
-}
-
-/*
- * PDF-skalering: Gotenberg/Chromium bruker print-emulering ved konvertering,
- * så alt inne i @media print treffer kun PDF-rendringen — ikke web-preview.
- 
- * Ved å justere rot-`font-size` skaleres alle rem-baserte størrelser
- * (tekst, padding, margin, gap) proporsjonalt både i Tailwind og KV
- * designsystem.
- */
-@media print {
-  :root {
-    font-size: calc(10px);
-  }
-}
 
 /*
  * Fjerne streker i alle KV-tabeller. Overstyrer variablene fra
@@ -51,4 +77,90 @@ th {
   --dsc-table-divider-border-width: 0px;
   --dsc-table-border-color: var(--color-kv-green-border);
   --dsc-table-divider-border-color: var(--color-kv-green-border);
+}
+
+/*
+ * Typografi-sannhet: binder rapport-tokens til KV/Digdir sine komponenter.
+ * Reglene ligger utenfor @layer, slik at de vinner over `layer(designsystem)`
+ * uten å måtte matche på `data-size`. Konsekvensen er at `data-size` på
+ * <Heading> og <Paragraph> ikke lenger påvirker rapporten — bruk semantisk
+ * `level` på <Heading> i stedet.
+ *
+ * Mapping (fra Figma):
+ *   <Heading level={1}>            → h1  → rapport-h1
+ *   <Heading level={2}>            → h2  → rapport-h2
+ *   <Heading level={3}>            → h3  → rapport-h3
+ *   <Heading level={4..6}>         → h4+ → rapport-h4
+ *   <Paragraph>                    → p   → rapport-p
+ *   <Label>                        → label-elementet → rapport-label
+ *   <Table.HeaderCell>             → th  → rapport-tablehead
+ *   <Table.Cell>                   → td  → rapport-tablecell
+ */
+h1.ds-heading {
+  font-size: var(--text-rapport-h1);
+  font-weight: var(--font-weight-rapport-h1);
+  font-style: var(--font-style-rapport-h1);
+  color: var(--text-color-h1);
+}
+
+h2.ds-heading {
+  font-size: var(--text-rapport-h2);
+  font-weight: var(--font-weight-rapport-h2);
+  font-style: var(--font-style-rapport-h2);
+  color: var(--text-color-h2);
+}
+
+h3.ds-heading {
+  font-size: var(--text-rapport-h3);
+  font-weight: var(--font-weight-rapport-h3);
+  font-style: var(--font-style-rapport-h3);
+  color: var(--text-color-h3);
+}
+
+h4.ds-heading,
+h5.ds-heading,
+h6.ds-heading {
+  font-size: var(--text-rapport-h4);
+  font-weight: var(--font-weight-rapport-h4);
+  font-style: var(--font-style-rapport-h4);
+  color: var(--text-color-h4);
+}
+
+.ds-paragraph {
+  font-size: var(--text-rapport-p);
+  font-weight: var(--font-weight-rapport-p);
+  font-style: var(--font-style-rapport-p);
+  color: var(--text-color-p);
+}
+
+.ds-label {
+  font-size: var(--text-rapport-label);
+  font-weight: var(--font-weight-rapport-label);
+  color: var(--text-color-label);
+}
+
+.ds-table th {
+  font-size: var(--text-rapport-tablehead);
+  font-weight: var(--font-weight-rapport-tablehead);
+  font-style: var(--font-style-rapport-tablehead);
+  color: var(--text-color-tablehead);
+}
+
+.ds-table td {
+  font-size: var(--text-rapport-tablecell);
+  font-weight: var(--font-weight-rapport-tablecell);
+  font-style: var(--font-style-rapport-tablecell);
+  color: var(--text-color-tablecell);
+}
+
+/*
+ * Tag: Figma size/8 (20px høyde, hugger innholdet). Overstyrer Digdir sine
+ * --dsc-tag-*-variabler så alle `<Tag>` blir kompakte uavhengig av data-size.
+ */
+.ds-tag {
+  --dsc-tag-min-height: var(--min-height-rapport-tag);
+  --dsc-tag-padding: 0 var(--padding-inline-rapport-tag);
+  font-size: var(--text-rapport-tag);
+  font-weight: var(--font-weight-rapport-tag);
+  line-height: 1;
 }

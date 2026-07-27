@@ -34,7 +34,7 @@ export default function ArealTabell({ arealEndringer }: Props) {
   return (
     <div className="my-4 space-y-4">
       <span className="flex items-center gap-4">
-        <Heading level={3} data-size="sm" className="min-w-max font-medium">
+        <Heading level={3} className="min-w-max">
           {t(`${tKey}.tittel`)}
         </Heading>
         <hr className="w-full border border-kv-green-border" />

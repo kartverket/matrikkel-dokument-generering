@@ -16,7 +16,7 @@ export function AktorKriterier({ aktorKriterier }: Props) {
   return (
     <Card variant="tinted" className="border border-kv-border">
       <Card.Block className="p-6">
-        <Heading level={3} data-size="sm" className="mb-5 font-medium">
+        <Heading level={3} className="mb-5">
           {t(`${uk}.aktor.tittel`)}
         </Heading>
         <dl className="grid grid-cols-2 gap-x-6 gap-y-5">

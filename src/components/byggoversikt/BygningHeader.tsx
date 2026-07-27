@@ -1,4 +1,4 @@
-import { Tag } from "@kv-designsystem/react"
+import { Heading, Tag } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 
 interface Props {
@@ -20,16 +20,16 @@ export default function BygningHeader({ gjeldendeStatusKode, byggNr }: Props) {
         </p>
       </div>
       <div className="flex flex-row items-center gap-2">
-        <h3 className="font-medium text-2xl">
+        <Heading level={3} className="font-medium text-2xl">
           {/* Formatterings Regex på formen XX XXX XXX */}
           {byggNr
             .replace(/\s/g, "")
             .replace(/^(\d{2})(?=\d)/, "$1 ")
             .replace(/(\d{3})(?=\d)/g, "$1 ")}
-        </h3>
+        </Heading>
 
         <div className="flex flex-col gap-4">
-          <Tag data-size="sm" data-color={"success"}>
+          <Tag data-color={"success"}>
             {gjeldendeStatusKode
               ? t(`koder.bygningsstatus.${gjeldendeStatusKode}`, {
                   defaultValue: gjeldendeStatusKode,
