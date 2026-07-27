@@ -8,9 +8,16 @@ import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.sch
 type Props = {
   index: number
   bygning: Bygning
+  bygningIndeks: number
+  antallBygninger: number
 }
 
-export default function ByggEndringer({ index, bygning }: Props) {
+export default function ByggEndringer({
+  index,
+  bygning,
+  bygningIndeks,
+  antallBygninger,
+}: Props) {
   const { t } = useTranslation()
   const tKey = "rapport.BYG0011.byggEndringer" as const
 
@@ -117,10 +124,13 @@ export default function ByggEndringer({ index, bygning }: Props) {
       })),
   )
 
-  return (
-    <Section index={index} title={t(`${tKey}.tittel`)}>
+  const innhold = (
+    <>
       <Heading level={2} className="bg-kv-green-subtle p-2">
-        {t(`${tKey}.bygningsnr`, { bygningsnr: bygning.bygningsnr })}
+        {t(`${tKey}.endringerForBygg`, {
+          indeks: bygningIndeks,
+          antall: antallBygninger,
+        })}
       </Heading>
 
       {endringer.length === 0 ? (
@@ -150,6 +160,17 @@ export default function ByggEndringer({ index, bygning }: Props) {
           />
         </div>
       )}
+    </>
+  )
+
+  // Seksjonstittelen blir kun vist for første bygning, ellers vises kun innholdet.
+  if (bygningIndeks > 1) {
+    return <section className="mt-20">{innhold}</section>
+  }
+
+  return (
+    <Section index={index} title={t(`${tKey}.tittel`)}>
+      {innhold}
     </Section>
   )
 }

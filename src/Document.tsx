@@ -1,4 +1,3 @@
-import { Fragment } from "react"
 import { renderToStaticMarkup } from "react-dom/server"
 import { I18nextProvider } from "react-i18next"
 import { PdfFooter } from "./components/pdf/PdfFooter.tsx"
@@ -21,19 +20,31 @@ export function DocumentComponent({ rapport }: { rapport: Byg0011Rapport }) {
       >
         <ByggUtvalgskriterier index={1} kriterier={rapport.utvalgskriterier} />
       </PdfPage>
-      {bygninger.map((bygning) => (
-        <Fragment key={bygning.bygningsnr}>
-          <PdfPage header={<PdfHeader metadata={metadata} bygning={bygning} />}>
-            <Byggoversikt
-              index={2}
-              byggNr={bygning.bygningsnr}
-              byggEndringer={bygning.endringer}
-            />
-          </PdfPage>
-          <PdfPage header={<PdfHeader metadata={metadata} bygning={bygning} />}>
-            <ByggEndringer index={3} bygning={bygning} />
-          </PdfPage>
-        </Fragment>
+      {bygninger.map((bygning, indeks) => (
+        <PdfPage
+          key={bygning.bygningsnr}
+          header={<PdfHeader metadata={metadata} bygning={bygning} />}
+        >
+          <Byggoversikt
+            index={2}
+            bygning={bygning}
+            bygningIndeks={indeks + 1}
+            antallBygninger={bygninger.length}
+          />
+        </PdfPage>
+      ))}
+      {bygninger.map((bygning, indeks) => (
+        <PdfPage
+          key={bygning.bygningsnr}
+          header={<PdfHeader metadata={metadata} bygning={bygning} />}
+        >
+          <ByggEndringer
+            index={3}
+            bygning={bygning}
+            bygningIndeks={indeks + 1}
+            antallBygninger={bygninger.length}
+          />
+        </PdfPage>
       ))}
     </main>
   )
