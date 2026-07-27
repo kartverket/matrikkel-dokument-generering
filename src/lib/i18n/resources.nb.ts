@@ -135,7 +135,6 @@ export const nb = {
         ja: "Ja",
         nei: "Nei",
         sefrakId: "Sefrak-ID",
-        harKulturminne: "Kulturminne",
         byggMetaEndring: {
           tittel: "Grunnopplysninger",
           ingenEndring: "Ingen endringer registrert på bygget.",
