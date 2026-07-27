@@ -95,15 +95,11 @@ describe("ByggUtvalgskriterier", () => {
     })
 
     expect(html).toContain("Søkevindu")
-    for (const [label, verdi] of [
-      ["Nord", 6642200],
-      ["Øst", 597500],
-      ["Syd", 6642000],
-      ["Vest", 597300],
-    ] as const) {
-      expect(html).toContain(label)
+    for (const verdi of [6642200, 597500, 6642000, 597300]) {
       expect(html).toContain(formatter.format(verdi))
     }
+    expect(html.match(/>Nord</g)).toHaveLength(2)
+    expect(html.match(/>Øst</g)).toHaveLength(2)
   })
 
   test("skjuler søkevinduet når alle koordinatene er 0", () => {

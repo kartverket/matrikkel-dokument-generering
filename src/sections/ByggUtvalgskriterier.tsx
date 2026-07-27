@@ -1,12 +1,9 @@
 import { useTranslation } from "react-i18next"
 import { Section } from "../components/Section.tsx"
-import { AdresseKriterier } from "../components/utvalgskriterier/AdresseKriterier"
-import { AktorKriterier } from "../components/utvalgskriterier/AktorKriterier.tsx"
 import { BygningsstatusKriterier } from "../components/utvalgskriterier/BygningsstatusKriterier"
-import { MatrikkelenhetKriterier } from "../components/utvalgskriterier/MatrikkelenhetKriterier"
 import { OmfangsKriterier } from "../components/utvalgskriterier/OmfangsKriterier.tsx"
 import { SokevinduKriterier } from "../components/utvalgskriterier/SokevinduKriterier"
-import { SubrapporterKriterier } from "../components/utvalgskriterier/SubrapporterKriterier"
+import { Utvalg } from "../components/utvalgskriterier/Utvalg.tsx"
 import type { ByggUtvalgskriterier as UtvalgskriterierType } from "../lib/schema/reports/bygg/shared/byggUtvalgskriterier.schema.ts"
 
 interface Props {
@@ -25,17 +22,20 @@ export function ByggUtvalgskriterier({ index, kriterier }: Props) {
             omfangsKriterier={kriterier.omfang}
             bygningKriterier={kriterier.bygning}
           />
-          <SubrapporterKriterier
-            subrapporterKriterier={kriterier.subrapporter}
+          <Utvalg gruppe="subrapporter" kriterier={kriterier.subrapporter} />
+
+          <Utvalg
+            gruppe="adresse"
+            className="grid-cols-7"
+            kriterier={kriterier.adresse}
           />
 
-          <AdresseKriterier adresseKriterier={kriterier.adresse} />
-
           <div className="grid grid-cols-2 gap-10">
-            <MatrikkelenhetKriterier
-              matrikkelenhetKriterier={kriterier.matrikkelenhet}
+            <Utvalg
+              gruppe="matrikkelenhet"
+              kriterier={kriterier.matrikkelenhet}
             />
-            <AktorKriterier aktorKriterier={kriterier.aktor} />
+            <Utvalg gruppe="aktor" kriterier={kriterier.aktor} />
             <BygningsstatusKriterier
               bygningsstatusKriterier={kriterier.bygningsstatus}
             />
