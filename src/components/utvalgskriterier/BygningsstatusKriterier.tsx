@@ -8,6 +8,12 @@ interface Props {
   bygningsstatusKriterier: NonNullable<Utvalgskriterier>["bygningsstatus"]
 }
 
+const numeriskDatoformat = {
+  day: "2-digit",
+  month: "2-digit",
+  year: "numeric",
+} satisfies Intl.DateTimeFormatOptions
+
 export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {
   const { i18n, t } = useTranslation()
   const uk = "rapport.BYG0011.utvalgskriterier"
@@ -35,13 +41,23 @@ export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {
         {
           label: t(`${uk}.bygningsstatus.periodeFra`),
           value: erAngitt(bygningsstatusKriterier?.periodeFra)
-            ? formatDate(i18n, bygningsstatusKriterier.periodeFra)
+            ? formatDate(
+                i18n,
+                bygningsstatusKriterier.periodeFra,
+                undefined,
+                numeriskDatoformat,
+              )
             : undefined,
         },
         {
           label: t(`${uk}.bygningsstatus.periodeTil`),
           value: erAngitt(bygningsstatusKriterier?.periodeTil)
-            ? formatDate(i18n, bygningsstatusKriterier.periodeTil)
+            ? formatDate(
+                i18n,
+                bygningsstatusKriterier.periodeTil,
+                undefined,
+                numeriskDatoformat,
+              )
             : undefined,
         },
       ]}

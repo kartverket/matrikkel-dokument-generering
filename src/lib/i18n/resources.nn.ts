@@ -69,7 +69,7 @@ export const nn = {
           tittel: "Bygningsstatus",
           naavaerende: "Noverande",
           tidligere: "Tidlegare",
-          periodeFra: "I periode frå",
+          periodeFra: "Periode frå",
           periodeTil: "Til",
         },
         sokevindu: {
