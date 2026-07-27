@@ -6,9 +6,19 @@ const CONVERT_PATH = "/forms/chromium/convert/html"
 // Gotenberg (Chromium) sitt HTML-konverteringsendepunkt.
 // Gotenberg krever at hovedfilen heter `index.html`.
 
-export async function htmlToPdf(html: string): Promise<ArrayBuffer> {
+export async function htmlToPdf(
+  html: string,
+  footerHtml?: string,
+): Promise<ArrayBuffer> {
   const form = new FormData()
   form.append("files", new Blob([html], { type: "text/html" }), "index.html")
+  if (footerHtml) {
+    form.append(
+      "files",
+      new Blob([footerHtml], { type: "text/html" }),
+      "footer.html",
+    )
+  }
   form.append("printBackground", "true")
   form.append("preferCssPageSize", "true")
 

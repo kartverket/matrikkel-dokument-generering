@@ -44,35 +44,11 @@ th {
 }
 
 /*
- * Topp- og bunntekst rendres i CSS-sidebokser og er derfor ikke DOM-elementer
- * som kan få className.
+ * Sidestørrelse og marger for PDF-en.
  */
 @page {
-  @top-left {
-    @apply text-pdf-label;
-    color: #5d5d5d;
-    white-space: pre;
-  }
-
-  @top-right {
-    @apply text-pdf-label;
-    color: #5d5d5d;
-    text-decoration-line: underline;
-    text-decoration-color: #278a46;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 3px;
-  }
-
-  @bottom-left {
-    @apply text-pdf-label;
-    color: #5d5d5d;
-    white-space: pre;
-  }
-
-  @bottom-right {
-    @apply text-pdf-label;
-    color: #5d5d5d;
-  }
+  size: A4;
+  margin: 10mm 18mm 22mm 18mm;
 }
 
 /*
