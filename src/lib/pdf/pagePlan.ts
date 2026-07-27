@@ -12,8 +12,6 @@ export interface PageBoxes {
 export interface PageDef {
   // Navn brukt både som `@page`-navn og til CSS-klassen `.pg-<name>`.
   name: string
-  // Om innholdet skal starte på ny side. Default: true.
-  breakBefore?: boolean
   header?: PageBoxes
   footer?: PageBoxes
 }

@@ -14,7 +14,7 @@
   --color-kv-blue-subtle: var(--ds-color-accent-surface-tinted);
   --color-kv-green-subtle: #f6faf7;
   --color-kv-green-border: #97c7a6;
-  --color-kv-green: var(--ds-color-success-base-default);
+  --color-kv-green: #156c30;
   --color-kv-green-tinted: #edf6f0;
   --color-kv-background-tinted: #daeed7;
 }
@@ -51,4 +51,29 @@ th {
   --dsc-table-divider-border-width: 0px;
   --dsc-table-border-color: var(--color-kv-green-border);
   --dsc-table-divider-border-color: var(--color-kv-green-border);
+
+  /*
+   * Designsystemet setter `break-inside: avoid` på hele tabellen, noe som
+   * gjør at store tabeller hopper til neste side i stedet for å flyte
+   * naturlig i PDF-en. Vi tillater sidebrytning i tabellen, men holder
+   * hver rad samlet.
+   */
+  break-inside: auto;
+}
+
+.ds-table tr {
+  break-inside: avoid;
+}
+
+/*
+ * Unngå at en overskrift eller tabell-header blir stående alene nederst
+ * på en side.
+ */
+h2,
+h3,
+h4,
+h5,
+h6,
+.ds-table thead {
+  break-after: avoid;
 }
