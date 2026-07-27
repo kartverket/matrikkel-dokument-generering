@@ -11,8 +11,10 @@ export function PdfHeader({ metadata, bygning }: PdfHeaderProps) {
   const { t } = useTranslation()
   const { kommune, koordinatSystemKode } = metadata
 
-  // Gjør slik at kommunenavnet alltid starter med stor bokstav og resten er små bokstaver, ofte navnet blir sendt i store bokstaver fra M22. 
-  const kommuneNavn = kommune.kommuneNavn.charAt(0).toUpperCase() + kommune.kommuneNavn.slice(1).toLowerCase()
+  // Gjør slik at kommunenavnet alltid starter med stor bokstav og resten er små bokstaver, ofte navnet blir sendt i store bokstaver fra M22.
+  const kommuneNavn =
+    kommune.kommuneNavn.charAt(0).toUpperCase() +
+    kommune.kommuneNavn.slice(1).toLowerCase()
 
   return (
     <header className="flex items-baseline justify-between text-kv-subtle text-pdf-label">
