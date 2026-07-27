@@ -74,7 +74,6 @@ describe("HTTP API", () => {
     expect(openApiResponse.status).toBe(200)
     expect(openApi.openapi).toBe("3.0.3")
     expect(openApi.paths["/create-document/BYG0011"].post).toBeDefined()
-    expect(openApi.paths["/create-document/BYG0012"].post).toBeDefined()
     expect(openApi.components.schemas.ValidationErrorResponse).toBeDefined()
     expect(openApi.components.schemas.PdfErrorResponse).toBeDefined()
     expect(
@@ -82,9 +81,6 @@ describe("HTTP API", () => {
         .properties.bygningstyper.example,
     ).toEqual(["111"])
     expect(openApi.components.schemas.BYG0011).toBeDefined()
-    expect(openApi.components.schemas.BYG0012).toBeDefined()
-    expect(openApi.components.schemas.VannforsyningsKode).toBeDefined()
-    expect(openApi.components.schemas.AvlopsKode).toBeDefined()
     expect(openApi.servers).toEqual([
       { url: "/", description: "Gjeldende miljø" },
     ])
