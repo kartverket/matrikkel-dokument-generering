@@ -13,8 +13,8 @@ import { Metadata } from "./sections/Metadata.tsx"
 
 export function DocumentComponent({ rapport }: { rapport: Byg0011Rapport }) {
   return (
-    <main className="mx-auto max-w-6xl">
-      <Metadata metadata={rapport.metadata} rapportKode={rapport.rapportKode} />
+    <main className="mx-auto max-w-2xl">
+      {/* <Metadata metadata={rapport.metadata} rapportKode={rapport.rapportKode} /> */}
       <ByggUtvalgskriterier index={1} kriterier={rapport.utvalgskriterier} />
 
       {rapport.bygninger.map((bygning) => {

@@ -1,4 +1,4 @@
-import { Card, Heading } from "@kv-designsystem/react"
+import { Table, Heading } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { ByggUtvalgskriterier as Utvalgskriterier } from "../../lib/schema/reports/bygg/shared/byggUtvalgskriterier.schema.ts"
 import { erAngitt, harAngittVerdi } from "./utils/erAngitt.ts"
@@ -24,61 +24,35 @@ export function SokevinduKriterier({ sokevinduKriterier }: Props) {
       maximumFractionDigits: 2,
     },
   )
-  const formaterKoordinat = (verdi: number) => numberFormatter.format(verdi)
+
+  const fmt = (v: number | undefined) =>
+    v === undefined ? "" : numberFormatter.format(v)
 
   return (
     <section>
-      <Heading level={3} data-size="sm" className="mb-4 font-medium">
-        {t(`${uk}.sokevindu.tittel`)}
-      </Heading>
-      <Card variant="tinted" className="border border-kv-border">
-        <Card.Block className="p-6">
-          <dl className="grid grid-cols-2 gap-8">
-            {(erAngitt(ost) || erAngitt(vest)) && (
-              <div>
-                <dt className="font-medium text-kv-subtle">
-                  {t(`${uk}.sokevindu.ost`)}
-                </dt>
-                <dd className="mt-3 flex items-center gap-3 font-medium tabular-nums">
-                  {erAngitt(ost) && <span>{formaterKoordinat(ost)}</span>}
-                  {erAngitt(ost) && erAngitt(vest) && (
-                    <span
-                      className="flex flex-1 items-center"
-                      aria-hidden="true"
-                    >
-                      <span className="size-2 rounded-full bg-kv-blue" />
-                      <span className="h-0.5 flex-1 bg-kv-blue" />
-                      <span className="size-2 rounded-full bg-kv-blue" />
-                    </span>
-                  )}
-                  {erAngitt(vest) && <span>{formaterKoordinat(vest)}</span>}
-                </dd>
-              </div>
-            )}
-            {(erAngitt(nord) || erAngitt(syd)) && (
-              <div>
-                <dt className="font-medium text-kv-subtle">
-                  {t(`${uk}.sokevindu.nord`)}
-                </dt>
-                <dd className="mt-3 flex items-center gap-3 font-medium tabular-nums">
-                  {erAngitt(nord) && <span>{formaterKoordinat(nord)}</span>}
-                  {erAngitt(nord) && erAngitt(syd) && (
-                    <span
-                      className="flex flex-1 items-center"
-                      aria-hidden="true"
-                    >
-                      <span className="size-2 rounded-full bg-kv-blue" />
-                      <span className="h-0.5 flex-1 bg-kv-blue" />
-                      <span className="size-2 rounded-full bg-kv-blue" />
-                    </span>
-                  )}
-                  {erAngitt(syd) && <span>{formaterKoordinat(syd)}</span>}
-                </dd>
-              </div>
-            )}
-          </dl>
-        </Card.Block>
-      </Card>
+      <span className="flex items-center gap-4 mb-2">
+        <Heading level={3}>{t(`${uk}.sokevindu.tittel`)}</Heading>
+        <hr className="w-full border border-kv-green-border" />
+      </span>
+
+      <Table>
+        <Table.Head>
+          <Table.Row>
+            <Table.HeaderCell>{t(`${uk}.sokevindu.nord`)}</Table.HeaderCell>
+            <Table.HeaderCell>{t(`${uk}.sokevindu.ost`)}</Table.HeaderCell>
+            <Table.HeaderCell>{t(`${uk}.sokevindu.syd`)}</Table.HeaderCell>
+            <Table.HeaderCell>{t(`${uk}.sokevindu.vest`)}</Table.HeaderCell>
+          </Table.Row>
+        </Table.Head>
+        <Table.Body>
+          <Table.Row>
+            <Table.Cell>{fmt(nord)}</Table.Cell>
+            <Table.Cell>{fmt(ost)}</Table.Cell>
+            <Table.Cell>{fmt(syd)}</Table.Cell>
+            <Table.Cell>{fmt(vest)}</Table.Cell>
+          </Table.Row>
+        </Table.Body>
+      </Table>
     </section>
   )
 }

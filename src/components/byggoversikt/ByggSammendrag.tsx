@@ -22,7 +22,12 @@ export default function ByggSammendrag({ byggEndringer }: Props) {
 
   return (
     <div className="space-y-4">
-      <Heading level={4}>{t(`${h}.title`)}</Heading>
+      <span className="flex items-center gap-4 mb-4">
+        <Heading className="min-w-max" level={3}>
+          {t(`${h}.title`)}
+        </Heading>
+        <hr className="w-full border border-kv-green-border" />
+      </span>
 
       {historikk.length === 0 ? (
         <Paragraph>{t(`${h}.ingenHistorikk`)}</Paragraph>
@@ -92,7 +97,7 @@ export default function ByggSammendrag({ byggEndringer }: Props) {
                         </Heading>
 
                         {historikk.byggEndringsKode !== undefined && (
-                          <Tag data-color="success" variant="outline">
+                          <Tag data-color="success">
                             {oversettKode({
                               t,
                               kodeverk: "endring",
@@ -110,7 +115,6 @@ export default function ByggSammendrag({ byggEndringer }: Props) {
                                 ? "success"
                                 : "accent"
                             }
-                            variant="outline"
                           >
                             {oversettKode({
                               t,
@@ -120,11 +124,11 @@ export default function ByggSammendrag({ byggEndringer }: Props) {
                           </Tag>
                         )}
                       </div>
-                      <span className="flex items-center gap-1">
+                      <Paragraph className="flex items-center gap-1">
                         {formatDate(i18n, historikk.dato, tom, {
                           dateStyle: "short",
                         })}
-                      </span>
+                      </Paragraph>
                     </div>
                   </div>
                   {beskrivelse && <Paragraph>{beskrivelse}</Paragraph>}
@@ -132,7 +136,7 @@ export default function ByggSammendrag({ byggEndringer }: Props) {
                     <div className="flex flex-wrap items-center gap-2 text-kv-subtle">
                       <Paragraph>{berorteEtasjerOgBruksenheter}</Paragraph>
                       {antallFlereBerorte > 0 && (
-                        <Tag className="shrink-0" variant="outline">
+                        <Tag className="shrink-0">
                           {t(`${h}.flereBerorte`, {
                             antall: antallFlereBerorte,
                           })}

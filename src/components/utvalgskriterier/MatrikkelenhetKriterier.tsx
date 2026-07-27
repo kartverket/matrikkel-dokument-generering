@@ -1,4 +1,4 @@
-import { Card, Heading } from "@kv-designsystem/react"
+import { Heading, Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { ByggUtvalgskriterier as Utvalgskriterier } from "../../lib/schema/reports/bygg/shared/byggUtvalgskriterier.schema.ts"
 import { erAngitt, harAngittVerdi } from "./utils/erAngitt.ts"
@@ -14,54 +14,38 @@ export function MatrikkelenhetKriterier({ matrikkelenhetKriterier }: Props) {
   if (!harAngittVerdi(matrikkelenhetKriterier)) return null
 
   return (
-    <Card variant="tinted" className="border border-kv-border">
-      <Card.Block className="p-6">
-        <Heading level={3} className="mb-5">
-          {t(`${uk}.matrikkelenhet.tittel`)}
-        </Heading>
-        <dl className="grid grid-cols-2 gap-x-6 gap-y-5">
-          {erAngitt(matrikkelenhetKriterier?.gnr) && (
-            <div>
-              <dt className="text-kv-subtle">
-                {t(`${uk}.matrikkelenhet.gnr`)}
-              </dt>
-              <dd className="mt-1 font-medium">
-                {matrikkelenhetKriterier.gnr}
-              </dd>
-            </div>
-          )}
-          {erAngitt(matrikkelenhetKriterier?.bnr) && (
-            <div>
-              <dt className="text-kv-subtle">
-                {t(`${uk}.matrikkelenhet.bnr`)}
-              </dt>
-              <dd className="mt-1 font-medium">
-                {matrikkelenhetKriterier.bnr}
-              </dd>
-            </div>
-          )}
-          {erAngitt(matrikkelenhetKriterier?.fnr) && (
-            <div>
-              <dt className="text-kv-subtle">
-                {t(`${uk}.matrikkelenhet.fnr`)}
-              </dt>
-              <dd className="mt-1 font-medium">
-                {matrikkelenhetKriterier.fnr}
-              </dd>
-            </div>
-          )}
-          {erAngitt(matrikkelenhetKriterier?.snr) && (
-            <div>
-              <dt className="text-kv-subtle">
-                {t(`${uk}.matrikkelenhet.snr`)}
-              </dt>
-              <dd className="mt-1 font-medium">
-                {matrikkelenhetKriterier.snr}
-              </dd>
-            </div>
-          )}
-        </dl>
-      </Card.Block>
-    </Card>
+    <div>
+      <span className="flex items-center gap-4 mb-2">
+        <Heading level={3}>{t(`${uk}.matrikkelenhet.tittel`)}</Heading>
+        <hr className="w-full border border-kv-green-border" />
+      </span>
+
+      <ul className="flex gap-5">
+        {erAngitt(matrikkelenhetKriterier?.gnr) && (
+          <div>
+            <Paragraph>{t(`${uk}.matrikkelenhet.gnr`)}</Paragraph>
+            <Paragraph>{matrikkelenhetKriterier.gnr}</Paragraph>
+          </div>
+        )}
+        {erAngitt(matrikkelenhetKriterier?.bnr) && (
+          <div>
+            <Paragraph>{t(`${uk}.matrikkelenhet.bnr`)}</Paragraph>
+            <Paragraph>{matrikkelenhetKriterier.bnr}</Paragraph>
+          </div>
+        )}
+        {erAngitt(matrikkelenhetKriterier?.fnr) && (
+          <div>
+            <Paragraph>{t(`${uk}.matrikkelenhet.fnr`)}</Paragraph>
+            <Paragraph>{matrikkelenhetKriterier.fnr}</Paragraph>
+          </div>
+        )}
+        {erAngitt(matrikkelenhetKriterier?.snr) && (
+          <div>
+            <Paragraph>{t(`${uk}.matrikkelenhet.snr`)}</Paragraph>
+            <Paragraph>{matrikkelenhetKriterier.snr}</Paragraph>
+          </div>
+        )}
+      </ul>
+    </div>
   )
 }
