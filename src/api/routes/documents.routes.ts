@@ -54,8 +54,8 @@ export function registerDocumentRoutes(app: OpenAPIHono) {
 
     try {
       const css = await getDocumentCss()
-      const { html, footerHtml } = renderDocument(data, css)
-      const pdf = await htmlToPdf(html, footerHtml)
+      const { html, headerHtml, footerHtml } = renderDocument(data, css)
+      const pdf = await htmlToPdf(html, headerHtml, footerHtml)
       return c.body(pdf, 200, { "Content-Type": "application/pdf" })
     } catch (error) {
       const details = error instanceof Error ? error.message : "Ukjent feil"

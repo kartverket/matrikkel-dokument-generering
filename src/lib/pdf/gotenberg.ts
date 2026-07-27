@@ -8,10 +8,20 @@ const CONVERT_PATH = "/forms/chromium/convert/html"
 
 export async function htmlToPdf(
   html: string,
+  headerHtml?: string,
   footerHtml?: string,
 ): Promise<ArrayBuffer> {
   const form = new FormData()
   form.append("files", new Blob([html], { type: "text/html" }), "index.html")
+
+  if (headerHtml) {
+    form.append(
+      "files",
+      new Blob([headerHtml], { type: "text/html" }),
+      "header.html",
+    )
+  }
+
   if (footerHtml) {
     form.append(
       "files",
@@ -19,6 +29,7 @@ export async function htmlToPdf(
       "footer.html",
     )
   }
+
   form.append("printBackground", "true")
   form.append("preferCssPageSize", "true")
 
