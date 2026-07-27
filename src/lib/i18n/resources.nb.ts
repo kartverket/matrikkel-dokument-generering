@@ -15,7 +15,8 @@ export const nb = {
     footer: {
       side: "Side",
       av: "av",
-      rapportGenerert: "Rapport {{type}}   Generert {{dato}} kl. {{tid}}",
+      rapportGenerert:
+        "Rapport {{type}}   Generert {{tidspunkt, datetime(dateStyle: short; timeStyle: short; timeZone: Europe/Oslo)}}",
     },
   },
   rapport: {
