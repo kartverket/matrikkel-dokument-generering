@@ -4,7 +4,6 @@ import { htmlToPdf } from "../../lib/pdf/gotenberg.ts"
 import { getDocumentCss } from "../../lib/pdf/styles.ts"
 import type { RapportKode } from "../../lib/schema/core/koder/rapportKode.schema.ts"
 import { byggRapportSchema } from "../../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
-import { massivuttrekkRapportSchema } from "../../lib/schema/reports/bygg/byg0012/massivuttrekkRapport.schema.ts"
 import {
   notImplementedResponseSchema,
   pdfErrorResponseSchema,
