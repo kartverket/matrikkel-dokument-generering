@@ -32,9 +32,7 @@ export default function ByggOversiktAreal({ etasjePlan }: Props) {
 
   return (
     <div className="space-y-4">
-      <Heading level={4} data-size="xs">
-        {t(`${af}.title`)}
-      </Heading>
+      <Heading level={4}>{t(`${af}.title`)}</Heading>
       <Table>
         <Table.Head>
           <Table.Row>

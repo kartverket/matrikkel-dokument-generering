@@ -1,9 +1,7 @@
-import { Divider } from "@digdir/designsystemet-react"
 import { useTranslation } from "react-i18next"
 import ByggOversiktAreal from "../components/byggoversikt/ByggOversiktAreal.tsx"
 import ByggSammendrag from "../components/byggoversikt/ByggSammendrag"
 import BygningHeader from "../components/byggoversikt/BygningHeader"
-import Nokkeltall from "../components/byggoversikt/Nokkeltall"
 import Oversiktsfelt from "../components/byggoversikt/Oversiktsfelt"
 import { aggregerGjeldendeTilstand } from "../components/byggoversikt/utils/gjeldendeTilstand.ts"
 import { Section } from "../components/Section"
@@ -32,11 +30,9 @@ export default function Byggoversikt({ byggEndringer, index, byggNr }: Props) {
               gjeldendeTilstand?.byggMetaEndring?.bygningsStatusKode
             }
           />
-          <Divider />
 
           {gjeldendeTilstand && (
             <>
-              <Nokkeltall gjeldendeEndring={gjeldendeTilstand} />
               <Oversiktsfelt
                 byggTypeKode={
                   gjeldendeTilstand?.byggMetaEndring?.bygningsTypeKode

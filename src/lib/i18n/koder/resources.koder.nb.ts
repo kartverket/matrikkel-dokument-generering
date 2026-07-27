@@ -1,3 +1,5 @@
+import type { BygningsStatusKode } from "../../schema/reports/bygg/koder/byggningsStatusKode.schema.ts"
+
 export const koderNb = {
   aktor: {
     " ": "Ikke oppgitt",
@@ -44,6 +46,27 @@ export const koderNb = {
     SB: "Splitt bygning",
     DO: "Data fra bygningsendring overført",
   },
+  bygningsstatusKort: {
+    RA: "Rammetillat.",
+    IG: "Igangsett.tillat.",
+    MB: "Midl.brukstillat.",
+    FA: "Ferdigattest",
+    TB: "Tatt i bruk",
+    MT: "Meld.sak – reg. tiltak",
+    MF: "Meld.sak – tiltak fullf.",
+    IP: "Ikke pliktig reg.",
+    GR: "Bygn. godkj. for riving/brenning",
+    BR: "Bygn. revet/brent",
+    BA: "Bygging avlyst",
+    BF: "Bygn. flyttet",
+    BU: "Bygn.nr. utgått",
+    FS: "Fritatt for søkn.plikt",
+    EB: "Endre bygn.data",
+    TE: "Tilbygg som egen bygn.",
+    TA: "Bygg som tilbygg på annen bygn.",
+    SB: "Splitt bygn.",
+    DO: "Data fra bygn.endr. overf.",
+  } satisfies Record<BygningsStatusKode, string>,
   bygningstype: {
     " ": "Ikke valgt",
     "111": "Enebolig",

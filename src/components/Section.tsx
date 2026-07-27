@@ -18,7 +18,7 @@ export function Section({ index, title, description, children }: Props) {
           {title}
         </Heading>
         {description && (
-          <Paragraph className="ml-auto text-kv-subtle text-sm">
+          <Paragraph className="ml-auto text-kv-subtle">
             {description}
           </Paragraph>
         )}

@@ -29,7 +29,7 @@ export const nn = {
         nei: "Nei",
         ikkeAngitt: "Ikkje oppgitt",
         omfang: {
-          tittel: "Rapportutval",
+          tittel: "Bygningar valde",
           inkluderBestaaendeBygg: "Eksisterande bygg",
           inkluderUtgaatteBygg: "Utgåtte bygg",
           inkluderBygninger: "Bygningar",
@@ -60,8 +60,8 @@ export const nn = {
           snr: "Snr",
         },
         aktor: {
-          tittel: "Heimelshavar",
-          identifikasjonsNr: "Fødsels- eller orgnr",
+          tittel: "Heimelshavar/kontaktperson",
+          identifikasjonsNr: "Fød.nr/org.nr",
           etternavn: "Etternamn",
           fornavn: "Fornamn",
         },
@@ -70,7 +70,7 @@ export const nn = {
           naavaerende: "Noverande",
           tidligere: "Tidlegare",
           periodeFra: "Periode frå",
-          periodeTil: "Periode til",
+          periodeTil: "Til",
         },
         sokevindu: {
           tittel: "Søkjevindauge",

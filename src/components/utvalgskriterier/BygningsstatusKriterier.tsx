@@ -1,89 +1,66 @@
-import { Heading, Table, Tag } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
-import { oversettKode } from "../../lib/i18n/koder/oversettKode.ts"
 import type { ByggUtvalgskriterier as Utvalgskriterier } from "../../lib/schema/reports/bygg/shared/byggUtvalgskriterier.schema.ts"
 import { formatDate } from "../../lib/utils/formatDate"
-import { erAngitt, harAngittVerdi } from "./utils/erAngitt.ts"
+import { Utvalg } from "./Utvalg.tsx"
+import { erAngitt } from "./utils/erAngitt.ts"
 
 interface Props {
   bygningsstatusKriterier: NonNullable<Utvalgskriterier>["bygningsstatus"]
 }
 
+const numeriskDatoformat = {
+  day: "2-digit",
+  month: "2-digit",
+  year: "numeric",
+} satisfies Intl.DateTimeFormatOptions
+
 export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {
   const { i18n, t } = useTranslation()
   const uk = "rapport.BYG0011.utvalgskriterier"
 
-  if (!harAngittVerdi(bygningsstatusKriterier)) return null
-
   return (
-    <section>
-      <Heading level={3} data-size="sm" className="mb-4 font-medium">
-        {t(`${uk}.bygningsstatus.tittel`)}
-      </Heading>
-      <Table zebra border className="w-full table-fixed">
-        <Table.Body>
-          {erAngitt(bygningsstatusKriterier?.naavaerende) && (
-            <Table.Row>
-              <Table.HeaderCell scope="row" className="w-1/3">
-                {t(`${uk}.bygningsstatus.naavaerende`)}
-              </Table.HeaderCell>
-              <Table.Cell>
-                <span className="flex flex-wrap gap-2">
-                  {bygningsstatusKriterier.naavaerende.map((status) => (
-                    <Tag key={status} data-color="success" variant="outline">
-                      {oversettKode({
-                        t,
-                        kodeverk: "bygningsstatus",
-                        kode: status,
-                      })}
-                    </Tag>
-                  ))}
-                </span>
-              </Table.Cell>
-            </Table.Row>
-          )}
-          {erAngitt(bygningsstatusKriterier?.tidligere) && (
-            <Table.Row>
-              <Table.HeaderCell scope="row" className="w-1/3">
-                {t(`${uk}.bygningsstatus.tidligere`)}
-              </Table.HeaderCell>
-              <Table.Cell>
-                <span className="flex flex-wrap gap-2">
-                  {bygningsstatusKriterier.tidligere.map((status) => (
-                    <Tag key={status} data-color="accent" variant="outline">
-                      {oversettKode({
-                        t,
-                        kodeverk: "bygningsstatus",
-                        kode: status,
-                      })}
-                    </Tag>
-                  ))}
-                </span>
-              </Table.Cell>
-            </Table.Row>
-          )}
-          {erAngitt(bygningsstatusKriterier?.periodeFra) && (
-            <Table.Row>
-              <Table.HeaderCell scope="row" className="w-1/3">
-                {t(`${uk}.bygningsstatus.periodeFra`)}
-              </Table.HeaderCell>
-              <Table.Cell>
-                {formatDate(i18n, bygningsstatusKriterier.periodeFra)}
-              </Table.Cell>
-            </Table.Row>
-          )}
-          {erAngitt(bygningsstatusKriterier?.periodeTil) && (
-            <Table.Row>
-              <Table.HeaderCell scope="row" className="w-1/3">
-                {t(`${uk}.bygningsstatus.periodeTil`)}
-              </Table.HeaderCell>
-              <Table.Cell>
-                {formatDate(i18n, bygningsstatusKriterier.periodeTil)}
-              </Table.Cell>
-            </Table.Row>
-          )}
-        </Table.Body>
-      </Table>
-    </section>
+    <Utvalg
+      title={t(`${uk}.bygningsstatus.tittel`)}
+      kriterier={[
+        {
+          label: t(`${uk}.bygningsstatus.naavaerende`),
+          value: erAngitt(bygningsstatusKriterier?.naavaerende)
+            ? bygningsstatusKriterier.naavaerende
+                .map((kode) => t(`koder.bygningsstatusKort.${kode}`))
+                .join(", ")
+            : undefined,
+        },
+        {
+          label: t(`${uk}.bygningsstatus.tidligere`),
+          value: erAngitt(bygningsstatusKriterier?.tidligere)
+            ? bygningsstatusKriterier.tidligere
+                .map((kode) => t(`koder.bygningsstatusKort.${kode}`))
+                .join(", ")
+            : undefined,
+        },
+        {
+          label: t(`${uk}.bygningsstatus.periodeFra`),
+          value: erAngitt(bygningsstatusKriterier?.periodeFra)
+            ? formatDate(
+                i18n,
+                bygningsstatusKriterier.periodeFra,
+                undefined,
+                numeriskDatoformat,
+              )
+            : undefined,
+        },
+        {
+          label: t(`${uk}.bygningsstatus.periodeTil`),
+          value: erAngitt(bygningsstatusKriterier?.periodeTil)
+            ? formatDate(
+                i18n,
+                bygningsstatusKriterier.periodeTil,
+                undefined,
+                numeriskDatoformat,
+              )
+            : undefined,
+        },
+      ]}
+    />
   )
 }

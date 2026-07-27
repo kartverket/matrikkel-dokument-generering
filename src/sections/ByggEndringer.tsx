@@ -129,6 +129,9 @@ export default function ByggEndringer({ index, bygning }: Props) {
       .filter((s) => s != null)
       .map((sefrakId) => ({ lopeNr: e.lopeNr, sefrakId })),
   )
+  const harSefrakopplysninger = endringer.some(
+    (e) => e.sefrakIder !== undefined,
+  )
 
   const kulturminneEndringer = endringer.flatMap((e) =>
     (e.kulturminner ?? [])
@@ -147,11 +150,14 @@ export default function ByggEndringer({ index, bygning }: Props) {
           : undefined,
       })),
   )
+  const harKulturminneopplysninger = endringer.some(
+    (e) => e.kulturminner !== undefined,
+  )
 
   return (
     <Section index={index} title={t(`${tKey}.tittel`)}>
       {bygning.bygningsnr && (
-        <Heading level={3} className="bg-kv-green-subtle p-2">
+        <Heading level={2} className="bg-kv-green-subtle p-2">
           {t(`${tKey}.bygningsnr`, { bygningsnr: bygning.bygningsnr })}
         </Heading>
       )}
@@ -181,11 +187,15 @@ export default function ByggEndringer({ index, bygning }: Props) {
             endringer={bruksenhetEndringer}
             seksjon="bruksenheter"
           />
-          <EndringsTabell
-            endringer={kulturminneEndringer}
-            seksjon="kulturminner"
-          />
-          <EndringsTabell endringer={sefrakEndringer} seksjon="sefrak" />
+          {harKulturminneopplysninger && (
+            <EndringsTabell
+              endringer={kulturminneEndringer}
+              seksjon="kulturminner"
+            />
+          )}
+          {harSefrakopplysninger && (
+            <EndringsTabell endringer={sefrakEndringer} seksjon="sefrak" />
+          )}
         </div>
       )}
     </Section>

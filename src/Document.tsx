@@ -15,7 +15,7 @@ export function DocumentComponent({ rapport }: { rapport: Byg0011Rapport }) {
   const enesteBygning = bygninger.length === 1 ? bygninger[0] : undefined
 
   return (
-    <main className="mx-auto max-w-6xl">
+    <main className="mx-auto max-w-2xl">
       <PdfPage
         header={<PdfHeader metadata={metadata} bygning={enesteBygning} />}
       >

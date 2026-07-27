@@ -1,5 +1,6 @@
-import { Heading, Table } from "@kv-designsystem/react"
+import { Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
+import { SubSection } from "./SubSection.tsx"
 
 export type ArealRad = {
   etasjeplan?: string
@@ -32,14 +33,7 @@ export default function ArealTabell({ arealEndringer }: Props) {
   const tKey = `rapport.BYG0011.byggEndringer.areal` as const
 
   return (
-    <div className="my-4 space-y-4">
-      <span className="flex items-center gap-4">
-        <Heading level={3} data-size="sm" className="min-w-max font-medium">
-          {t(`${tKey}.tittel`)}
-        </Heading>
-        <hr className="w-full border border-kv-green-border" />
-      </span>
-
+    <SubSection title={t(`${tKey}.tittel`)} className="my-4">
       {arealEndringer.length === 0 ? (
         <p className="text-kv-subtle">{t(`${tKey}.ingenArealendring`)}</p>
       ) : (
@@ -74,7 +68,7 @@ export default function ArealTabell({ arealEndringer }: Props) {
                     <Table.HeaderCell
                       scope="row"
                       rowSpan={etasjeRader.length}
-                      className="w-32 align-top"
+                      className="w-20 align-top"
                     >
                       {`${t(`rapport.BYG0011.byggEndringer.lopeNr`)} ${lopeNr}`}
                     </Table.HeaderCell>
@@ -109,6 +103,6 @@ export default function ArealTabell({ arealEndringer }: Props) {
           ))}
         </Table>
       )}
-    </div>
+    </SubSection>
   )
 }
