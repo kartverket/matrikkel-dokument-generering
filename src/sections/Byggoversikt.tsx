@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next"
+import BygningHeader from "../components/bygg/BygningHeader.tsx"
 import ByggOversiktAreal from "../components/byggoversikt/ByggOversiktAreal.tsx"
 import ByggSammendrag from "../components/byggoversikt/ByggSammendrag"
-import BygningHeader from "../components/byggoversikt/BygningHeader"
 import Oversiktsfelt from "../components/byggoversikt/Oversiktsfelt"
 import { aggregerGjeldendeTilstand } from "../components/byggoversikt/utils/gjeldendeTilstand.ts"
 import { Section } from "../components/Section"

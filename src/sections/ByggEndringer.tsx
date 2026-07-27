@@ -1,6 +1,7 @@
-import { Heading, Paragraph } from "@kv-designsystem/react"
+import { Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import ArealTabell, { type ArealEndring } from "../components/ArealTabell.tsx"
+import BygningHeader from "../components/bygg/BygningHeader.tsx"
 import EndringsTabell from "../components/EndringsTabell.tsx"
 import { Section } from "../components/Section.tsx"
 import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
@@ -126,12 +127,24 @@ export default function ByggEndringer({
 
   const innhold = (
     <>
-      <Heading level={2} className="bg-kv-green-subtle p-2">
+      {/* <Heading level={2} className="bg-kv-green-subtle p-2">
         {t(`${tKey}.endringerForBygg`, {
           indeks: bygningIndeks,
           antall: antallBygninger,
         })}
-      </Heading>
+      </Heading> */}
+
+      <BygningHeader
+        byggNr={bygning.bygningsnr}
+        bygningIndeks={bygningIndeks}
+        antallBygninger={antallBygninger}
+        bygningsTypeKode={
+          bygning.endringer[0]?.byggMetaEndring?.bygningsTypeKode
+        }
+        gjeldendeStatusKode={
+          bygning.endringer[0]?.byggMetaEndring?.bygningsStatusKode
+        }
+      />
 
       {endringer.length === 0 ? (
         <Paragraph className="text-kv-subtle">
