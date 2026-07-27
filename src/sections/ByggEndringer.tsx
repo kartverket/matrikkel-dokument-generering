@@ -127,13 +127,6 @@ export default function ByggEndringer({
 
   const innhold = (
     <>
-      {/* <Heading level={2} className="bg-kv-green-subtle p-2">
-        {t(`${tKey}.endringerForBygg`, {
-          indeks: bygningIndeks,
-          antall: antallBygninger,
-        })}
-      </Heading> */}
-
       <BygningHeader
         byggNr={bygning.bygningsnr}
         bygningIndeks={bygningIndeks}
