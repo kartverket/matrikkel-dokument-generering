@@ -9,7 +9,7 @@ interface Props {
 
 export function SubSection({ title, className, children }: Props) {
   return (
-    <section className={cn(className, "space-y-2")}>
+    <section className={cn("space-y-2", className)}>
       <span className="flex break-after-avoid items-center gap-4">
         <Heading level={3} data-size="sm" className="min-w-max font-medium">
           {title}
