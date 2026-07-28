@@ -17,7 +17,7 @@ import { byggDatoSchema } from "../shared/byggDato.schema.ts"
 import { enkeltminneSchema } from "../shared/enkeltminne.schema.ts"
 import { kontaktpersonSchema } from "../shared/kontaktperson.schema.ts"
 
-// TODO gjebruke med BYG0011
+// TODO gjebruke med BYG0011 (alt er likt utenom etasjeplan)
 // ref: bygning_massiv_bygningsendring.jrxml
 const bygningsendringSchema = valgfriObjekt({
   lopeNr: valgfriHeltall.meta({
