@@ -1,6 +1,5 @@
 import { z } from "@hono/zod-openapi"
 import {
-  valgfriDato,
   valgfriHeltall,
   valgfriListe,
   valgfriNummer,
@@ -14,47 +13,9 @@ import { naringsgruppeKodeSchema } from "../koder/naringsgruppeKode.schema.ts"
 import { aktuellEierSchema } from "../shared/aktuellEier.schema.ts"
 import { arealFordelingSchema } from "../shared/arealFordeling.schema.ts"
 import { bruksenhetSchema } from "../shared/bruksenhet.schema.ts"
+import { byggDatoSchema } from "../shared/byggDato.schema.ts"
 import { enkeltminneSchema } from "../shared/enkeltminne.schema.ts"
 import { kontaktpersonSchema } from "../shared/kontaktperson.schema.ts"
-
-// TODO: gjenbruke med BYG0011
-// ref: BygningRapportInfo.java
-const byggDatoerSchema = valgfriObjekt({
-  rammetillatelse: valgfriDato.meta({
-    title: "Dato for rammetillatelse",
-    description: "Datoen da bygningen fikk rammetillatelse.",
-  }),
-
-  igangsettingstillatelse: valgfriDato.meta({
-    title: "Dato for igangsettingstillatelse",
-    description: "Datoen da bygningen fikk igangsettingstillatelse.",
-  }),
-
-  midlertidigBrukstillatelse: valgfriDato.meta({
-    title: "Dato for midlertidig brukstillatelse",
-    description: "Datoen da bygningen fikk midlertidig brukstillatelse.",
-  }),
-
-  ferdigattest: valgfriDato.meta({
-    title: "Dato for ferdigattest",
-    description: "Datoen da det ble gitt ferdigattest for bygningen.",
-  }),
-
-  tattIBruk: valgfriDato.meta({
-    title: "Dato tatt i bruk",
-    description: "Datoen da bygningen ble registrert som tatt i bruk.",
-  }),
-
-  utgaattRevet: valgfriDato.meta({
-    title: "Dato utgått eller revet",
-    description:
-      "Datoen da bygningen ble registrert som utgått, revet eller brent.",
-  }),
-}).meta({
-  title: "Datoer",
-  description:
-    "Datoene da bygningen nådde ulike statuser i byggesaks- og registreringsforløpet.",
-})
 
 // TODO gjebruke med BYG0011
 // ref: bygning_massiv_bygningsendring.jrxml
@@ -71,10 +32,10 @@ const bygningsendringSchema = valgfriObjekt({
   utgaattStatusKode: valgfriSchema(byggningsStatusKodeSchema),
   naringsgruppeKode: valgfriSchema(naringsgruppeKodeSchema),
 
-  datoer: valgfriSchema(byggDatoerSchema),
+  datoer: valgfriSchema(byggDatoSchema),
 
   antallBoenheter: valgfriHeltall.meta({
-    description: "Samlet antall boenheter i bygningsendringen.",
+    description: "Samlet antall boenheter i bygningsendringen.", // Blir omtalt som ant. bol i den gamle rapporten
   }),
   bruksareal: valgfriSchema(arealFordelingSchema), // bolig/annet/totalt
 
@@ -111,7 +72,7 @@ export const bygningMassivSchema = valgfriObjekt({
     example: 597400,
   }),
 
-  datoer: valgfriSchema(byggDatoerSchema),
+  datoer: valgfriSchema(byggDatoSchema),
 
   antallBoenheter: valgfriHeltall.meta({
     description: "Samlet antall boenheter i bygningen.",
