@@ -1,4 +1,3 @@
-import { Fragment } from "react"
 import { renderToStaticMarkup } from "react-dom/server"
 import { I18nextProvider } from "react-i18next"
 import { PdfFooter } from "./components/pdf/PdfFooter.tsx"
@@ -15,15 +14,23 @@ export function DocumentComponent({ rapport }: { rapport: Byg0011Rapport }) {
   return (
     <main className="mx-auto max-w-2xl">
       <ByggUtvalgskriterier index={1} kriterier={rapport.utvalgskriterier} />
-      {bygninger.map((bygning) => (
-        <Fragment key={bygning.bygningsnr}>
-          <Byggoversikt
-            index={2}
-            byggNr={bygning.bygningsnr}
-            byggEndringer={bygning.endringer}
-          />
-          <ByggEndringer index={3} bygning={bygning} />
-        </Fragment>
+      {bygninger.map((bygning, indeks) => (
+        <Byggoversikt
+          key={bygning.bygningsnr}
+          index={2}
+          bygning={bygning}
+          bygningIndeks={indeks + 1}
+          antallBygninger={bygninger.length}
+        />
+      ))}
+      {bygninger.map((bygning, indeks) => (
+        <ByggEndringer
+          key={bygning.bygningsnr}
+          index={3}
+          bygning={bygning}
+          bygningIndeks={indeks + 1}
+          antallBygninger={bygninger.length}
+        />
       ))}
     </main>
   )

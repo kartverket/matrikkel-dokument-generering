@@ -130,7 +130,6 @@ export const nb = {
       byggEndringer: {
         tittel: "Bygningsendringer",
         ingenEndringer: "Ingen endringer registrert på bygget.",
-        bygningsnr: "Bygningsnr. {{bygningsnr}}",
         lopeNr: "Endring",
         ja: "Ja",
         nei: "Nei",
@@ -310,6 +309,7 @@ export const nb = {
         bygningsnr: "Bygningsnummer",
         header: {
           bygningsNr: "Bygningsnr.",
+          bygningAvAntall: "Bygning <bold>{{indeks}}</bold> av {{antall}}",
           ferdigattest: "Ferdigattest: {{dato}}",
         },
         arealfordeling: {
