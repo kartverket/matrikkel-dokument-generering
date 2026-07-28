@@ -20,3 +20,15 @@ export const pdfErrorResponseSchema = z
   .openapi("PdfErrorResponse", {
     description: "Returneres når konvertering til PDF feiler.",
   })
+
+export const notImplementedResponseSchema = z
+  .object({
+    error: z.string().openapi({ example: "Rapporttypen er ikke implementert" }),
+    details: z.string().openapi({
+      example: "Dokumentgenerering er ikke klar ennå.",
+    }),
+  })
+  .openapi("NotImplementedResponse", {
+    description:
+      "Returneres når rapporten validerer, men dokumentgenerering for rapporttypen ikke er implementert ennå.",
+  })
