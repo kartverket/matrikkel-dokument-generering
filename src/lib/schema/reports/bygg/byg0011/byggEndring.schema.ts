@@ -14,14 +14,12 @@ import { byggningsStatusKodeSchema } from "../koder/byggningsStatusKode.schema.t
 import { bygningsTypeKodeSchema } from "../koder/bygningsTypeKodeSchema.ts"
 import { eierforholdKodeSchema } from "../koder/eierforholdKode.schema.ts"
 import { endringsKodeSchema } from "../koder/endringsKode.schema.ts"
-import { enkeltminneArtKodeSchema } from "../koder/enkeltminneArtKode.schema.ts"
 import { etasjeplanKodeSchema } from "../koder/etasjeplanKode.schema.ts"
 import { kjokkenTilgangKodeSchema } from "../koder/kjokkenTilgangKode.ts"
 import { kontaktPersonKodeSchema } from "../koder/kontaktPersonKode.schema.ts"
-import { kulturminnekategoriKodeSchema } from "../koder/kulturminnekategoriKode.schema.ts"
 import { naringsgruppeKodeSchema } from "../koder/naringsgruppeKode.schema.ts"
-import { vernetypeKodeSchema } from "../koder/vernetypeKode.schema.ts"
 import { arealFordelingSchema } from "../shared/arealFordeling.schema.ts"
+import { enkeltminneSchema } from "../shared/enkeltminne.schema.ts"
 
 export const byggEndringSchema = valgfriObjekt({
   // Unik ID for en bygg-endring
@@ -135,23 +133,7 @@ export const byggEndringSchema = valgfriObjekt({
   }),
 
   // Kulturminner
-  kulturminner: valgfriListe(
-    valgfriObjekt({
-      enkeltminneNr: valgfriString.meta({
-        title: "Enkeltminnenummer",
-        example: "86121-1",
-        description:
-          "Entydig identifikasjon av kulturminnet (enkeltminnet) knyttet til bygningen, fra Riksantikvarens database Askeladden.",
-      }),
-      enkeltminneArtKode: valgfriSchema(enkeltminneArtKodeSchema),
-      vernetypeKode: valgfriSchema(vernetypeKodeSchema),
-      kulturminnekategoriKode: valgfriSchema(kulturminnekategoriKodeSchema),
-    }),
-  ).meta({
-    title: "Kulturminner",
-    description: `Kulturminner (enkeltminner) registrert på bygningen i Riksantikvarens database Askeladden.
-      "En bygning kan være knyttet til flere enkeltminner.`,
-  }),
+  kulturminner: valgfriListe(enkeltminneSchema),
 
   // Tidligere Hjemmelshaver/aktuell eier/kontaktinstans.
   // En bygning kan ha flere eierforhold: tinglyste (H, F, F1–F9), ikke-tinglyste (AE, AF) og kontaktinstanser (KE, KF, K1–K3)
