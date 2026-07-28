@@ -36,7 +36,7 @@ export function Section({
           )}
         </div>
       )}
-      {children}
+      <div className="px-2.5">{children}</div>
     </section>
   )
 }
