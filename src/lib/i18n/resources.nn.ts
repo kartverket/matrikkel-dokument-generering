@@ -122,7 +122,6 @@ export const nn = {
       byggEndringer: {
         tittel: "Bygningsendringar",
         ingenEndringer: "Ingen endringar registrerte på bygget.",
-        bygningsnr: "Bygningsnr. {{bygningsnr}}",
         lopeNr: "Endring",
         ja: "Ja",
         nei: "Nei",
@@ -315,7 +314,8 @@ export const nn = {
         koordinatsystem: "Koordinatsystem",
         bygningsnr: "Bygningsnummer",
         header: {
-          bygningsnrLopenr: "Bygningsnr.",
+          bygningsNr: "Bygningsnr.",
+          bygningAvAntall: "Bygning <bold>{{indeks}}</bold> av {{antall}}",
           ferdigattest: "Ferdigattest: {{dato}}",
         },
         arealfordeling: {

@@ -1,30 +1,46 @@
 import { useTranslation } from "react-i18next"
+import BygningHeader from "../components/bygg/BygningHeader.tsx"
 import ByggOversiktAreal from "../components/byggoversikt/ByggOversiktAreal.tsx"
 import ByggSammendrag from "../components/byggoversikt/ByggSammendrag"
-import BygningHeader from "../components/byggoversikt/BygningHeader"
 import Oversiktsfelt from "../components/byggoversikt/Oversiktsfelt"
 import { aggregerGjeldendeTilstand } from "../components/byggoversikt/utils/gjeldendeTilstand.ts"
 import { Section } from "../components/Section"
-import type { BygningsEndring } from "../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
+import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 
 interface Props {
   index: number
-  byggNr?: string
-  byggEndringer: BygningsEndring[]
+  bygning: Bygning
+  bygningIndeks: number
+  antallBygninger: number
 }
 
-export default function Byggoversikt({ byggEndringer, index, byggNr }: Props) {
+export default function Byggoversikt({
+  index,
+  bygning,
+  bygningIndeks,
+  antallBygninger,
+}: Props) {
   const { t } = useTranslation()
 
   // Den gjeldende tilstanden til bygget aggregert fra basisregistreringen og ferdigstilte/tatte-i-bruk endringer
   // Dette vil si hvordan bygget ser ut i dag, med alle endringer som er registrert i matrikkelen.
-  const gjeldendeTilstand = aggregerGjeldendeTilstand(byggEndringer)
+  const gjeldendeTilstand = aggregerGjeldendeTilstand(bygning.endringer)
 
   return (
-    <Section index={index} title={t("rapport.BYG0011.byggoversikt.title")}>
+    <Section
+      index={index}
+      title={t("rapport.BYG0011.byggoversikt.title")}
+      // Seksjonstittelen vises kun for første bygning
+      showTitle={bygningIndeks === 1}
+    >
       <div className="space-y-8">
         <BygningHeader
-          byggNr={byggNr}
+          byggNr={bygning.bygningsnr}
+          bygningIndeks={bygningIndeks}
+          antallBygninger={antallBygninger}
+          bygningsTypeKode={
+            gjeldendeTilstand?.byggMetaEndring?.bygningsTypeKode
+          }
           gjeldendeStatusKode={
             gjeldendeTilstand?.byggMetaEndring?.bygningsStatusKode
           }
@@ -49,7 +65,7 @@ export default function Byggoversikt({ byggEndringer, index, byggNr }: Props) {
             <ByggOversiktAreal etasjePlan={gjeldendeTilstand.etasjePlan} />
           </>
         )}
-        <ByggSammendrag byggEndringer={byggEndringer} />
+        <ByggSammendrag byggEndringer={bygning.endringer} />
       </div>
     </Section>
   )

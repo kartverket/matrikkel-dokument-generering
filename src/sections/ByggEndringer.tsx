@@ -1,6 +1,7 @@
-import { Heading, Paragraph } from "@kv-designsystem/react"
+import { Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import ArealTabell, { type ArealEndring } from "../components/ArealTabell.tsx"
+import BygningHeader from "../components/bygg/BygningHeader.tsx"
 import EndringsTabell from "../components/EndringsTabell.tsx"
 import { Section } from "../components/Section.tsx"
 import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
@@ -8,9 +9,16 @@ import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.sch
 type Props = {
   index: number
   bygning: Bygning
+  bygningIndeks: number
+  antallBygninger: number
 }
 
-export default function ByggEndringer({ index, bygning }: Props) {
+export default function ByggEndringer({
+  index,
+  bygning,
+  bygningIndeks,
+  antallBygninger,
+}: Props) {
   const { t } = useTranslation()
   const tKey = "rapport.BYG0011.byggEndringer" as const
 
@@ -149,12 +157,23 @@ export default function ByggEndringer({ index, bygning }: Props) {
   )
 
   return (
-    <Section index={index} title={t(`${tKey}.tittel`)}>
-      {bygning.bygningsnr && (
-        <Heading level={2} className="bg-kv-green-subtle p-2">
-          {t(`${tKey}.bygningsnr`, { bygningsnr: bygning.bygningsnr })}
-        </Heading>
-      )}
+    <Section
+      index={index}
+      title={t(`${tKey}.tittel`)}
+      // Seksjonstittelen vises kun for første bygning
+      showTitle={bygningIndeks === 1}
+    >
+      <BygningHeader
+        byggNr={bygning.bygningsnr}
+        bygningIndeks={bygningIndeks}
+        antallBygninger={antallBygninger}
+        bygningsTypeKode={
+          bygning.endringer[0]?.byggMetaEndring?.bygningsTypeKode
+        }
+        gjeldendeStatusKode={
+          bygning.endringer[0]?.byggMetaEndring?.bygningsStatusKode
+        }
+      />
 
       {endringer.length === 0 ? (
         <Paragraph className="text-kv-subtle">
