@@ -17,7 +17,7 @@ export function ByggUtvalgskriterier({ index, kriterier }: Props) {
   return (
     <Section index={index} title={t("rapport.BYG0011.utvalgskriterier.title")}>
       {kriterier && (
-        <div className="flex flex-col gap-10">
+        <div className="mb-2 flex flex-col gap-10">
           <OmfangsKriterier
             omfangsKriterier={kriterier.omfang}
             bygningKriterier={kriterier.bygning}

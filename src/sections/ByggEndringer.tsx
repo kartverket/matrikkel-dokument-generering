@@ -180,7 +180,7 @@ export default function ByggEndringer({
           {t(`${tKey}.ingenEndringer`)}
         </Paragraph>
       ) : (
-        <div className="space-y-8">
+        <div className="px-2.5">
           <EndringsTabell endringer={metaEndringer} seksjon="byggMetaEndring" />
           <ArealTabell arealEndringer={arealEndringer} />
           <EndringsTabell
