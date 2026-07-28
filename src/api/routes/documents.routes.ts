@@ -2,8 +2,8 @@ import { createRoute, type OpenAPIHono, z } from "@hono/zod-openapi"
 import type { RenderedDocument } from "../../Document.tsx"
 import { htmlToPdf } from "../../lib/pdf/gotenberg.ts"
 import { getDocumentCss } from "../../lib/pdf/styles.ts"
-import type { RapportKode } from "../../lib/schema/core/koder/rapportKode.schema.ts"
 import { reportRegistry } from "../../lib/reports/registry.ts"
+import type { RapportKode } from "../../lib/schema/core/koder/rapportKode.schema.ts"
 import {
   notImplementedResponseSchema,
   pdfErrorResponseSchema,
