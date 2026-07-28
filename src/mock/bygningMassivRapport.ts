@@ -52,7 +52,7 @@ const mockBygningMassivRapport: Byg0001Rapport = {
       naringsgruppeKode: "X",
       nord: 6642100,
       ost: 597400,
-      datoer: {
+      byggDatoer: {
         rammetillatelse: isoDatetime("1997-03-15"),
         igangsettingstillatelse: isoDatetime("1997-05-03"),
         tattIBruk: isoDatetime("1998-06-18"),
@@ -73,7 +73,7 @@ const mockBygningMassivRapport: Byg0001Rapport = {
           endringsKode: "T",
           bygningsStatusKode: "FA",
           naringsgruppeKode: "X",
-          datoer: {
+          byggEndringDatoer: {
             rammetillatelse: isoDatetime("2019-02-12"),
             igangsettingstillatelse: isoDatetime("2019-05-06"),
             midlertidigBrukstillatelse: isoDatetime("2020-01-22"),

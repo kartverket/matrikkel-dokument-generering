@@ -32,7 +32,7 @@ const bygningsendringSchema = valgfriObjekt({
   utgaattStatusKode: valgfriSchema(byggningsStatusKodeSchema),
   naringsgruppeKode: valgfriSchema(naringsgruppeKodeSchema),
 
-  datoer: valgfriSchema(byggDatoSchema),
+  byggEndringDatoer: valgfriSchema(byggDatoSchema),
 
   antallBoenheter: valgfriHeltall.meta({
     description: "Samlet antall boenheter i bygningsendringen.", // Blir omtalt som ant. bol i den gamle rapporten
@@ -72,7 +72,7 @@ export const bygningMassivSchema = valgfriObjekt({
     example: 597400,
   }),
 
-  datoer: valgfriSchema(byggDatoSchema),
+  byggDatoer: valgfriSchema(byggDatoSchema),
 
   antallBoenheter: valgfriHeltall.meta({
     description: "Samlet antall boenheter i bygningen.",
