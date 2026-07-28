@@ -1,12 +1,10 @@
 import type { z } from "@hono/zod-openapi"
 import {
-  valgfriDato,
   valgfriHeltall,
   valgfriListe,
   valgfriNummer,
   valgfriObjekt,
   valgfriSchema,
-  valgfriString,
 } from "../../../core/utils/zodUtils.ts"
 import { byggningsStatusKodeSchema } from "../koder/byggningsStatusKode.schema.ts"
 import { bygningsTypeKodeSchema } from "../koder/bygningsTypeKodeSchema.ts"
@@ -16,8 +14,10 @@ import { naringsgruppeKodeSchema } from "../koder/naringsgruppeKode.schema.ts"
 import { aktuellEierSchema } from "../shared/aktuellEier.schema.ts"
 import { arealFordelingSchema } from "../shared/arealFordeling.schema.ts"
 import { bruksenhetSchema } from "../shared/bruksenhet.schema.ts"
+import { byggDatoSchema } from "../shared/byggDato.schema.ts"
 import { enkeltminneSchema } from "../shared/enkeltminne.schema.ts"
 import { kontaktpersonSchema } from "../shared/kontaktperson.schema.ts"
+import { sefrakSchema } from "../shared/sefrak.schema.ts"
 
 export const byggEndringSchema = valgfriObjekt({
   // Unik ID for en bygg-endring
@@ -72,63 +72,10 @@ export const byggEndringSchema = valgfriObjekt({
     }),
   }),
 
-  byggDatoEndring: valgfriObjekt({
-    rammetillatelse: valgfriDato.meta({
-      title: "Dato for rammetillatelse",
-      description: "Datoen da bygningsendringen fikk rammetillatelse.",
-    }),
-
-    igangsettingstillatelse: valgfriDato.meta({
-      title: "Dato for igangsettingstillatelse",
-      description: "Datoen da bygningsendringen fikk igangsettingstillatelse.",
-    }),
-
-    midlertidigBrukstillatelse: valgfriDato.meta({
-      title: "Dato for midlertidig brukstillatelse",
-      description:
-        "Datoen da bygningsendringen fikk midlertidig brukstillatelse.",
-    }),
-
-    ferdigattest: valgfriDato.meta({
-      title: "Dato for ferdigattest",
-      description: "Datoen da det ble gitt ferdigattest for bygningsendringen.",
-    }),
-
-    tattIBruk: valgfriDato.meta({
-      title: "Dato tatt i bruk",
-      description:
-        "Datoen da bygningsendringen ble registrert som tatt i bruk.",
-    }),
-
-    utgaattRevet: valgfriDato.meta({
-      title: "Dato utgått eller revet",
-      description:
-        "Datoen da bygningsendringen ble registrert som utgått, revet eller brent.",
-    }),
-  }).meta({
-    title: "Endringsdatoer",
-    description:
-      "Datoene da bygningsendringen nådde ulike statuser i byggesaks- og registreringsforløpet.",
-  }),
+  byggDatoEndring: byggDatoSchema,
 
   // SEFRAK og bygg er mange-til-mange i matrikkelen, så en bygning kan ha flere SEFRAK-minner
-  sefrakIder: valgfriListe(
-    valgfriString.meta({
-      example: "0301-0103-058",
-      description:
-        "Sefrak-ID er bygningens identifikasjonsnummer i SEFRAK-registeret, et kulturhistorisk register over eldre bygninger. SEFRAK står for «Sekretariatet for registrering av faste kulturminne i Norge». \n" +
-        "Tallene betyr: KommuneNummer - Registreringskrets - Husløpenummer, med ledende nuller \n" +
-        "\n" +
-        "Eksempelvis for Sefrak-ID 0301-0103-058 så er: \n" +
-        "0301 – kommunenummeret for Oslo \n" +
-        "0103 – registreringskretsen, altså Riksantikvarens geografiske inndeling av kommunen, historisk ofte basert på eldre kirke- eller sognekretser \n" +
-        "058 – bygningens husløpenummer innenfor registreringskrets 103",
-    }),
-  ).meta({
-    title: "SEFRAK-minner",
-    description:
-      "Sefrak-ID-ene til SEFRAK-minnene som er knyttet til bygningsendringen. SEFRAK-knytningen går vanligvis til bygget (grunnregistreringen), unntaksvis til tilbygg.",
-  }),
+  sefrakIder: valgfriListe(sefrakSchema),
 
   // Kulturminner
   kulturminner: valgfriListe(enkeltminneSchema),
