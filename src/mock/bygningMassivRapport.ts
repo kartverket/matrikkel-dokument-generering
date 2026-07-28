@@ -106,8 +106,8 @@ const mockBygningMassivRapport: Byg0001Rapport = {
       enkeltminner: [
         {
           enkeltminneNr: "86155-1",
-          enkeltminneArtKode: "Bolig",
-          kulturminneKategoriKode: "B",
+          enkeltminneArtKode: "1217",
+          kulturminnekategoriKode: "E-ARK",
           vernetypeKode: "AUT",
         },
       ],
