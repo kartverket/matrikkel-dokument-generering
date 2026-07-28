@@ -1,33 +1,25 @@
-import { valgfriObjekt, valgfriString } from "../../../core/utils/zodUtils"
+import {
+  valgfriObjekt,
+  valgfriSchema,
+  valgfriString,
+} from "../../../core/utils/zodUtils"
+import { enkeltminneArtKodeSchema } from "../koder/enkeltminneArtKode.schema"
+import { kulturminnekategoriKodeSchema } from "../koder/kulturminnekategoriKode.schema"
+import { vernetypeKodeSchema } from "../koder/vernetypeKode.schema"
 
 // ref: bygning_enkeltminne.jrxml
 export const enkeltminneSchema = valgfriObjekt({
   enkeltminneNr: valgfriString.meta({
     title: "Enkeltminnenummer",
+    example: "86121-1",
     description:
-      "Kulturminnets identifikasjon i Riksantikvarens database Askeladden.",
-    example: "86155-1",
+      "Entydig identifikasjon av kulturminnet (enkeltminnet) knyttet til bygningen, fra Riksantikvarens database Askeladden.",
   }),
-
-  enkeltminneArtKode: valgfriString.meta({
-    title: "Enkeltminneart",
-    description: "Arten til enkeltminnet, for eksempel bolig eller uthus.",
-    example: "Bolig",
-  }),
-
-  kulturminneKategoriKode: valgfriString.meta({
-    title: "Kulturminnekategori",
-    description: "Kodeverdien for kulturminnekategorien.",
-  }),
-
-  vernetypeKode: valgfriString.meta({
-    // TODO: sette opp enum liste og oversettelser
-    title: "Vernetype",
-    description:
-      "Kodeverdien for vernetypen, for eksempel automatisk fredet eller vedtaksfredet.",
-  }),
+  enkeltminneArtKode: valgfriSchema(enkeltminneArtKodeSchema),
+  vernetypeKode: valgfriSchema(vernetypeKodeSchema),
+  kulturminnekategoriKode: valgfriSchema(kulturminnekategoriKodeSchema),
 }).meta({
   title: "Enkeltminne",
-  description:
-    "Kulturminne registrert på bygningen i Riksantikvarens database Askeladden.",
+  description: `Enkeltminne registrert på bygningen i Riksantikvarens database Askeladden.
+      "En bygning kan være knyttet til flere enkeltminner.`,
 })

@@ -9,17 +9,19 @@ describe("mockByggRapport", () => {
           (etasje) => etasje !== undefined,
         )
         const bra = etasjer?.reduce(
-          (sum, etasje) => sum + (etasje.bruksareal.totaltAreal ?? 0),
+          (sum, etasje) => sum + (etasje.bruksareal?.totaltAreal ?? 0),
           0,
         )
         const bta = etasjer?.reduce(
-          (sum, etasje) => sum + (etasje.bruttoareal.totaltAreal ?? 0),
+          (sum, etasje) => sum + (etasje.bruttoareal?.totaltAreal ?? 0),
           0,
         )
 
-        expect(bra).toBe(endring?.byggArealEndring?.bruksarealBolig.totaltAreal)
+        expect(bra).toBe(
+          endring?.byggArealEndring?.bruksarealBolig?.totaltAreal,
+        )
         expect(bta).toBe(
-          endring?.byggArealEndring?.bruttoarealBolig.totaltAreal,
+          endring?.byggArealEndring?.bruttoarealBolig?.totaltAreal,
         )
       }
     }

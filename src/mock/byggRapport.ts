@@ -2,6 +2,7 @@ import type {
   Bruksenhet,
   ByggEndringsDatoer,
   BygningsEndring,
+  Kulturminne,
 } from "../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 import type { Byg0011Rapport as ByggRapport } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 import type { BygningsStatusKode } from "../lib/schema/reports/bygg/koder/byggningsStatusKode.schema.ts"
@@ -99,6 +100,8 @@ function byggEndring({
   annetAreal,
   datoer,
   bruksenheter,
+  kulturminner = [],
+  sefrakIder = [],
 }: {
   lopeNr: number
   endringsKode?: EndringsKode
@@ -107,6 +110,8 @@ function byggEndring({
   annetAreal: number
   datoer: ByggEndringsDatoer
   bruksenheter: Bruksenhet[]
+  kulturminner?: Kulturminne[]
+  sefrakIder?: string[]
 }): BygningsEndring {
   const bruttoBoligAreal = Math.ceil(boligAreal * 1.13)
   const bruttoAnnetAreal = Math.ceil(annetAreal * 1.2)
@@ -163,23 +168,38 @@ function byggEndring({
     ],
     byggKoordinatEndring: { nord: 6642100, ost: 597400 },
     byggDatoEndring: datoer,
-    aktuellEier: {
-      bruksenhetsNr: "H0101",
-      eierforholdKode: "H",
-      identifikasjonsNr: "12051978",
-      erAvdoed: false,
-      navn: "Ola Nordmann",
-      adresse: "Belsetveien 114, 1348 Rykkinn",
-      andel: "1/2",
-    },
-    tiltaksHaver: {
-      bruksenhetsNr: "H0101",
-      kontaktPersonKode: "T",
-      identifikasjonsNr: "01019012345",
-      navn: "Fredrik Nordmann",
-      adresse: "Storgata 1, 0155 Oslo",
-    },
+    aktuelleEiere: [
+      {
+        bruksenhetsNr: "H0101",
+        eierforholdKode: "H",
+        identifikasjonsNr: "12051978",
+        erAvdoed: false,
+        navn: "Ola Nordmann",
+        adresse: "Belsetveien 114, 1348 Rykkinn",
+        andel: "1/2",
+      },
+      {
+        bruksenhetsNr: "H0101",
+        eierforholdKode: "AE",
+        identifikasjonsNr: "23081980",
+        erAvdoed: false,
+        navn: "Kari Nordmann",
+        adresse: "Belsetveien 114, 1348 Rykkinn",
+        andel: "1/2",
+      },
+    ],
+    tiltaksHavere: [
+      {
+        bruksenhetsNr: "H0101",
+        kontaktPersonKode: "T",
+        identifikasjonsNr: "01019012345",
+        navn: "Fredrik Nordmann",
+        adresse: "Storgata 1, 0155 Oslo",
+      },
+    ],
     bruksenheter,
+    kulturminner,
+    sefrakIder,
   }
 }
 
@@ -253,6 +273,21 @@ const andreEndringer: BygningsEndring[] = [
     annetAreal: 0,
     datoer: { tattIBruk: isoDatetime("1998-06-18") },
     bruksenheter: [h0101, h0102],
+    sefrakIder: ["3201-0103-058", "3201-0103-059"],
+    kulturminner: [
+      {
+        enkeltminneNr: "86121-1",
+        enkeltminneArtKode: "10175",
+        vernetypeKode: "VED",
+        kulturminnekategoriKode: "E-BYG",
+      },
+      {
+        enkeltminneNr: "86121-2",
+        enkeltminneArtKode: "10153",
+        vernetypeKode: "ADM",
+        kulturminnekategoriKode: "E-BYG",
+      },
+    ],
   }),
 ]
 

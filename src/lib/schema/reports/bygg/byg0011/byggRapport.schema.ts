@@ -1,18 +1,18 @@
 import { z } from "@hono/zod-openapi"
 import { rapportSchema } from "../../../core/rapport.schema"
-import { valgfriListe } from "../../../core/utils/zodUtils.ts"
+import { valgfriListe, valgfriString } from "../../../core/utils/zodUtils.ts"
 import { byggUtvalgskriterierSchema } from "../shared/byggUtvalgskriterier.schema.ts"
 import { byggEndringSchema } from "./byggEndring.schema.ts"
 
 const bygningSchema = z.object({
-  bygningsnr: z.string().min(1).meta({
+  bygningsnr: valgfriString.meta({
     title: "Bygningsnummer",
     description:
       "En entydig identifikasjon av bygningen som er unik på landsbasis og tildeles automatisk.",
     example: "12 345 678",
   }),
 
-  matrikkelNr: z.string().min(1).meta({
+  matrikkelNr: valgfriString.meta({
     title: "Matrikkelnummer",
     example: "5001-12/34/0/2",
     description: "KommuneNr-GårdsNr/BruksNr/Festenr/SeksjonsNr",

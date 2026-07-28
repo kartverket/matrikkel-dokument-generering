@@ -1,6 +1,7 @@
-import { Heading, Paragraph } from "@kv-designsystem/react"
+import { Paragraph } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import ArealTabell, { type ArealEndring } from "../components/ArealTabell.tsx"
+import BygningHeader from "../components/bygg/BygningHeader.tsx"
 import EndringsTabell from "../components/EndringsTabell.tsx"
 import { Section } from "../components/Section.tsx"
 import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
@@ -8,9 +9,16 @@ import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.sch
 type Props = {
   index: number
   bygning: Bygning
+  bygningIndeks: number
+  antallBygninger: number
 }
 
-export default function ByggEndringer({ index, bygning }: Props) {
+export default function ByggEndringer({
+  index,
+  bygning,
+  bygningIndeks,
+  antallBygninger,
+}: Props) {
   const { t } = useTranslation()
   const tKey = "rapport.BYG0011.byggEndringer" as const
 
@@ -52,7 +60,10 @@ export default function ByggEndringer({ index, bygning }: Props) {
       etasjeRader: (e.etasjePlan ?? [])
         .filter((ep) => ep !== undefined)
         .map((ep) => ({
-          etasjeplan: t(`koder.etasjeplan.${ep.etasjeplanKode}`),
+          etasjeplan:
+            ep.etasjeplanKode === undefined
+              ? undefined
+              : t(`koder.etasjeplan.${ep.etasjeplanKode}`),
           etasje: ep.etasje,
           antallBoenheter: ep.antallBoenheter,
           boligBra: ep.bruksareal?.boligAreal,
@@ -82,25 +93,29 @@ export default function ByggEndringer({ index, bygning }: Props) {
     .filter((e) => e.byggDatoEndring !== undefined)
     .map((e) => ({ lopeNr: e.lopeNr, ...e.byggDatoEndring }))
 
-  const aktuellEierEndringer = endringer
-    .filter((e) => e.aktuellEier !== undefined)
-    .map((e) => ({
-      lopeNr: e.lopeNr,
-      ...e.aktuellEier,
-      eierforholdKode: e.aktuellEier?.eierforholdKode
-        ? t(`koder.eierforhold.${e.aktuellEier.eierforholdKode}`)
-        : undefined,
-    }))
+  const aktuellEierEndringer = endringer.flatMap((e) =>
+    (e.aktuelleEiere ?? [])
+      .filter((eier) => eier !== undefined)
+      .map((eier) => ({
+        lopeNr: e.lopeNr,
+        ...eier,
+        eierforholdKode: eier.eierforholdKode
+          ? t(`koder.eierforhold.${eier.eierforholdKode}`)
+          : undefined,
+      })),
+  )
 
-  const tiltaksHaverEndringer = endringer
-    .filter((e) => e.tiltaksHaver !== undefined)
-    .map((e) => ({
-      lopeNr: e.lopeNr,
-      ...e.tiltaksHaver,
-      kontaktPersonKode: e.tiltaksHaver?.kontaktPersonKode
-        ? t(`koder.kontaktperson.${e.tiltaksHaver.kontaktPersonKode}`)
-        : undefined,
-    }))
+  const tiltaksHaverEndringer = endringer.flatMap((e) =>
+    (e.tiltaksHavere ?? [])
+      .filter((th) => th !== undefined)
+      .map((th) => ({
+        lopeNr: e.lopeNr,
+        ...th,
+        kontaktPersonKode: th.kontaktPersonKode
+          ? t(`koder.kontaktperson.${th.kontaktPersonKode}`)
+          : undefined,
+      })),
+  )
 
   const bruksenhetEndringer = endringer.flatMap((e) =>
     (e.bruksenheter ?? [])
@@ -117,11 +132,48 @@ export default function ByggEndringer({ index, bygning }: Props) {
       })),
   )
 
+  const sefrakEndringer = endringer.flatMap((e) =>
+    (e.sefrakIder ?? [])
+      .filter((s) => s != null)
+      .map((sefrakId) => ({ lopeNr: e.lopeNr, sefrakId })),
+  )
+
+  const kulturminneEndringer = endringer.flatMap((e) =>
+    (e.kulturminner ?? [])
+      .filter((k) => k !== undefined)
+      .map((k) => ({
+        lopeNr: e.lopeNr,
+        ...k,
+        enkeltminneArtKode: k.enkeltminneArtKode
+          ? t(`koder.enkeltminneart.${k.enkeltminneArtKode}`)
+          : undefined,
+        vernetypeKode: k.vernetypeKode
+          ? t(`koder.vernetype.${k.vernetypeKode}`)
+          : undefined,
+        kulturminnekategoriKode: k.kulturminnekategoriKode
+          ? t(`koder.kulturminnekategori.${k.kulturminnekategoriKode}`)
+          : undefined,
+      })),
+  )
+
   return (
-    <Section index={index} title={t(`${tKey}.tittel`)}>
-      <Heading level={2} className="bg-kv-green-subtle p-2">
-        {t(`${tKey}.bygningsnr`, { bygningsnr: bygning.bygningsnr })}
-      </Heading>
+    <Section
+      index={index}
+      title={t(`${tKey}.tittel`)}
+      // Seksjonstittelen vises kun for første bygning
+      showTitle={bygningIndeks === 1}
+    >
+      <BygningHeader
+        byggNr={bygning.bygningsnr}
+        bygningIndeks={bygningIndeks}
+        antallBygninger={antallBygninger}
+        bygningsTypeKode={
+          bygning.endringer[0]?.byggMetaEndring?.bygningsTypeKode
+        }
+        gjeldendeStatusKode={
+          bygning.endringer[0]?.byggMetaEndring?.bygningsStatusKode
+        }
+      />
 
       {endringer.length === 0 ? (
         <Paragraph className="text-kv-subtle">
@@ -138,16 +190,25 @@ export default function ByggEndringer({ index, bygning }: Props) {
           <EndringsTabell endringer={datoEndringer} seksjon="byggDatoEndring" />
           <EndringsTabell
             endringer={aktuellEierEndringer}
-            seksjon="aktuellEier"
+            seksjon="aktuelleEiere"
           />
           <EndringsTabell
             endringer={tiltaksHaverEndringer}
-            seksjon="tiltaksHaver"
+            seksjon="tiltaksHavere"
           />
           <EndringsTabell
             endringer={bruksenhetEndringer}
             seksjon="bruksenheter"
           />
+          {kulturminneEndringer.length > 0 && (
+            <EndringsTabell
+              endringer={kulturminneEndringer}
+              seksjon="kulturminner"
+            />
+          )}
+          {sefrakEndringer.length > 0 && (
+            <EndringsTabell endringer={sefrakEndringer} seksjon="sefrak" />
+          )}
         </div>
       )}
     </Section>
