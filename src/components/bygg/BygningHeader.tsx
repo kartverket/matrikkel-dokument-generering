@@ -3,7 +3,7 @@ import { Trans, useTranslation } from "react-i18next"
 import type { Bygningstypekode } from "../../lib/schema/reports/bygg/koder/bygningsTypeKodeSchema.ts"
 
 interface Props {
-  byggNr: string
+  byggNr?: string
   bygningIndeks: number
   antallBygninger: number
   bygningsTypeKode?: Bygningstypekode
@@ -26,9 +26,11 @@ export default function BygningHeader({
         <Heading level={3} className="font-rapport-h3">
           {t(`${key}.header.bygningsNr`)}{" "}
           {byggNr
-            .replace(/\s/g, "")
-            .replace(/^(\d{2})(?=\d)/, "$1 ")
-            .replace(/(\d{3})(?=\d)/g, "$1 ")}
+            ? byggNr
+                .replace(/\s/g, "")
+                .replace(/^(\d{2})(?=\d)/, "$1 ")
+                .replace(/(\d{3})(?=\d)/g, "$1 ")
+            : null}
         </Heading>
         <Tag data-size="sm" data-color={"info"}>
           {bygningsTypeKode

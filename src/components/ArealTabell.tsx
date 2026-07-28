@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next"
 import { SubSection } from "./SubSection.tsx"
 
 export type ArealRad = {
-  etasjeplan: string
-  etasje: number
+  etasjeplan?: string
+  etasje?: number
   antallBoenheter?: number
   boligBra?: number
   annetBra?: number

@@ -53,6 +53,10 @@ describe("byggHistorikk", () => {
         },
         etasjePlan: [],
         bruksenheter: [],
+        kulturminner: [],
+        sefrakIder: [],
+        aktuelleEiere: [],
+        tiltaksHavere: [],
       },
       {
         lopeNr: 1,
@@ -63,6 +67,10 @@ describe("byggHistorikk", () => {
         },
         etasjePlan: [],
         bruksenheter: [],
+        kulturminner: [],
+        sefrakIder: [],
+        aktuelleEiere: [],
+        tiltaksHavere: [],
       },
     ]
 
@@ -78,30 +86,50 @@ describe("byggHistorikk", () => {
         byggDatoEndring: { ferdigattest: "2025-06-27" },
         etasjePlan: [],
         bruksenheter: [],
+        kulturminner: [],
+        sefrakIder: [],
+        aktuelleEiere: [],
+        tiltaksHavere: [],
       },
       {
         lopeNr: 0,
         byggDatoEndring: { tattIBruk: "2022-07-07" },
         etasjePlan: [],
         bruksenheter: [],
+        kulturminner: [],
+        sefrakIder: [],
+        aktuelleEiere: [],
+        tiltaksHavere: [],
       },
       {
         lopeNr: 1,
         byggDatoEndring: { utgaattRevet: "2007-03-16" },
         etasjePlan: [],
         bruksenheter: [],
+        kulturminner: [],
+        sefrakIder: [],
+        aktuelleEiere: [],
+        tiltaksHavere: [],
       },
       {
         lopeNr: 4,
         byggDatoEndring: { midlertidigBrukstillatelse: "2002-06-17" },
         etasjePlan: [],
         bruksenheter: [],
+        kulturminner: [],
+        sefrakIder: [],
+        aktuelleEiere: [],
+        tiltaksHavere: [],
       },
       {
         lopeNr: 3,
         byggMetaEndring: { bygningsStatusKode: "GR" },
         etasjePlan: [],
         bruksenheter: [],
+        kulturminner: [],
+        sefrakIder: [],
+        aktuelleEiere: [],
+        tiltaksHavere: [],
       },
     ]
 
@@ -126,6 +154,10 @@ describe("byggHistorikk", () => {
       },
       etasjePlan: [],
       bruksenheter: [],
+      kulturminner: [],
+      sefrakIder: [],
+      aktuelleEiere: [],
+      tiltaksHavere: [],
     })
     const historikk = byggHistorikk([
       endring(0, 0),
@@ -158,12 +190,20 @@ describe("byggHistorikk", () => {
         byggDatoEndring: { tattIBruk: "2020-01-01T00:00:00Z" },
         etasjePlan: [etasje(0)],
         bruksenheter: [],
+        kulturminner: [],
+        sefrakIder: [],
+        aktuelleEiere: [],
+        tiltaksHavere: [],
       },
       {
         lopeNr: 1,
         byggDatoEndring: { ferdigattest: "2021-01-01T00:00:00Z" },
         etasjePlan: [etasje(14)],
         bruksenheter: [],
+        kulturminner: [],
+        sefrakIder: [],
+        aktuelleEiere: [],
+        tiltaksHavere: [],
       },
     ]
 
@@ -176,7 +216,15 @@ describe("byggHistorikk", () => {
     expect(
       byggHistorikk([
         undefined,
-        { lopeNr: 0, etasjePlan: [], bruksenheter: [] },
+        {
+          lopeNr: 0,
+          etasjePlan: [],
+          bruksenheter: [],
+          kulturminner: [],
+          sefrakIder: [],
+          aktuelleEiere: [],
+          tiltaksHavere: [],
+        },
       ]),
     ).toEqual([])
   })

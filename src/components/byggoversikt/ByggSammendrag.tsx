@@ -94,7 +94,7 @@ export default function ByggSammendrag({ byggEndringer }: Props) {
                         </Heading>
 
                         {historikk.byggEndringsKode !== undefined && (
-                          <Tag data-color="success" variant="outline">
+                          <Tag data-color="success" variant="default">
                             {t(`koder.endring.${historikk.byggEndringsKode}`)}
                           </Tag>
                         )}
@@ -105,8 +105,8 @@ export default function ByggSammendrag({ byggEndringer }: Props) {
                               successStatuskoder.includes(
                                 historikk.byggStatusKode,
                               )
-                                ? "success"
-                                : "accent"
+                                ? "info"
+                                : "success"
                             }
                           >
                             {t(

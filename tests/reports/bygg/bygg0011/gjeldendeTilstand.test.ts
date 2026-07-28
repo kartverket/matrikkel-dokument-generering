@@ -15,6 +15,10 @@ function endring(
     byggDatoEndring: datoer,
     etasjePlan: [],
     bruksenheter: [],
+    kulturminner: [],
+    sefrakIder: [],
+    aktuelleEiere: [],
+    tiltaksHavere: [],
   }
 }
 

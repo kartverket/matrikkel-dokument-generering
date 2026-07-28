@@ -48,7 +48,7 @@ export default function EndringsTabell({ endringer, seksjon }: Props) {
 
   return (
     <SubSection
-      title={t(`${tKey}.tittel`, { defaultValue: "" })}
+      title={t(`${tKey}.tittel`, { defaultValue: "", count: endringer.length })}
       className="my-4"
     >
       {endringer.length === 0 ? (

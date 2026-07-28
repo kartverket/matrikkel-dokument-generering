@@ -134,7 +134,6 @@ export const nb = {
         ja: "Ja",
         nei: "Nei",
         sefrakId: "Sefrak-ID",
-        harKulturminne: "Kulturminne",
         byggMetaEndring: {
           tittel: "Grunnopplysninger",
           ingenEndring: "Ingen endringer registrert på bygget.",
@@ -174,8 +173,9 @@ export const nb = {
           tattIBruk: "Tatt i bruk",
           utgaattRevet: "Utgått / revet",
         },
-        aktuellEier: {
-          tittel: "Aktuell eier",
+        aktuelleEiere: {
+          tittel_one: "Aktuell eier",
+          tittel_other: "Aktuelle eiere",
           ingenEndring: "Ingen endringer registrert på bygget.",
           eierforholdKode: "Rolle",
           navn: "Navn",
@@ -185,8 +185,9 @@ export const nb = {
           bruksenhetsNr: "Bruksenhet",
           erAvdoed: "Avdød",
         },
-        tiltaksHaver: {
-          tittel: "Tiltakshaver",
+        tiltaksHavere: {
+          tittel_one: "Tiltakshaver",
+          tittel_other: "Tiltakshavere",
           ingenEndring: "Ingen endringer registrert på bygget.",
           kontaktPersonKode: "Rolle",
           navn: "Navn",
@@ -196,7 +197,8 @@ export const nb = {
           bruksenhetsNr: "Bruksenhet",
         },
         bruksenheter: {
-          tittel: "Berørte bruksenheter",
+          tittel_one: "Berørt bruksenhet",
+          tittel_other: "Berørte bruksenheter",
           ingenEndring: "Ingen endringer registrert på bygget.",
           bruksenhetsNr: "Bruksenhet",
           bruksenhetsTypeKode: "Type",
@@ -207,6 +209,19 @@ export const nb = {
           kjokkenTilgangKode: "Kjøkken",
           adresse: "Adresse",
           matrikkelNr: "Matrikkelnr",
+        },
+        kulturminner: {
+          tittel_one: "Kulturminne",
+          tittel_other: "Kulturminner",
+          enkeltminneNr: "Enkeltminnenr.",
+          enkeltminneArtKode: "Art",
+          vernetypeKode: "Vernetype",
+          kulturminnekategoriKode: "Kategori",
+        },
+        sefrak: {
+          tittel_one: "SEFRAK-minne",
+          tittel_other: "SEFRAK-minner",
+          sefrakId: "Sefrak-ID",
         },
       },
       kontaktpersoner: {

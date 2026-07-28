@@ -13,13 +13,19 @@ export default function ByggOversiktAreal({ etasjePlan }: Props) {
 
   const etasjer = etasjePlan.filter((etasje) => etasje !== undefined)
 
-  const sum = etasjer.reduce(
+  const sum = etasjer.reduce<{
+    antallBoenheter: number
+    bolig: number
+    annet: number
+    bra: number
+    bta: number
+  }>(
     (acc, e) => ({
       antallBoenheter: acc.antallBoenheter + (e.antallBoenheter ?? 0),
-      bolig: acc.bolig + (e.bruksareal.boligAreal ?? 0),
-      annet: acc.annet + (e.bruksareal.annetAreal ?? 0),
-      bra: acc.bra + (e.bruksareal.totaltAreal ?? 0),
-      bta: acc.bta + (e.bruttoareal.totaltAreal ?? 0),
+      bolig: acc.bolig + (e.bruksareal?.boligAreal ?? 0),
+      annet: acc.annet + (e.bruksareal?.annetAreal ?? 0),
+      bra: acc.bra + (e.bruksareal?.totaltAreal ?? 0),
+      bta: acc.bta + (e.bruttoareal?.totaltAreal ?? 0),
     }),
     { antallBoenheter: 0, bolig: 0, annet: 0, bra: 0, bta: 0 },
   )
@@ -42,13 +48,15 @@ export default function ByggOversiktAreal({ etasjePlan }: Props) {
           {etasjer.map((e) => (
             <Table.Row key={`${e.etasjeplanKode}-${e.etasje}`}>
               <Table.Cell>
-                {t(`koder.etasjeplan.${e.etasjeplanKode}`)}
+                {e.etasjeplanKode === undefined
+                  ? undefined
+                  : t(`koder.etasjeplan.${e.etasjeplanKode}`)}
               </Table.Cell>
               <Table.Cell>{e.antallBoenheter}</Table.Cell>
-              <Table.Cell>{formatArea(e.bruksareal.boligAreal)}</Table.Cell>
-              <Table.Cell>{formatArea(e.bruksareal.annetAreal)}</Table.Cell>
-              <Table.Cell>{formatArea(e.bruksareal.totaltAreal)}</Table.Cell>
-              <Table.Cell>{formatArea(e.bruttoareal.totaltAreal)}</Table.Cell>
+              <Table.Cell>{formatArea(e.bruksareal?.boligAreal)}</Table.Cell>
+              <Table.Cell>{formatArea(e.bruksareal?.annetAreal)}</Table.Cell>
+              <Table.Cell>{formatArea(e.bruksareal?.totaltAreal)}</Table.Cell>
+              <Table.Cell>{formatArea(e.bruttoareal?.totaltAreal)}</Table.Cell>
             </Table.Row>
           ))}
           <Table.Row className="font-semibold">

@@ -60,7 +60,10 @@ export default function ByggEndringer({
       etasjeRader: (e.etasjePlan ?? [])
         .filter((ep) => ep !== undefined)
         .map((ep) => ({
-          etasjeplan: t(`koder.etasjeplan.${ep.etasjeplanKode}`),
+          etasjeplan:
+            ep.etasjeplanKode === undefined
+              ? undefined
+              : t(`koder.etasjeplan.${ep.etasjeplanKode}`),
           etasje: ep.etasje,
           antallBoenheter: ep.antallBoenheter,
           boligBra: ep.bruksareal?.boligAreal,
@@ -90,25 +93,29 @@ export default function ByggEndringer({
     .filter((e) => e.byggDatoEndring !== undefined)
     .map((e) => ({ lopeNr: e.lopeNr, ...e.byggDatoEndring }))
 
-  const aktuellEierEndringer = endringer
-    .filter((e) => e.aktuellEier !== undefined)
-    .map((e) => ({
-      lopeNr: e.lopeNr,
-      ...e.aktuellEier,
-      eierforholdKode: e.aktuellEier?.eierforholdKode
-        ? t(`koder.eierforhold.${e.aktuellEier.eierforholdKode}`)
-        : undefined,
-    }))
+  const aktuellEierEndringer = endringer.flatMap((e) =>
+    (e.aktuelleEiere ?? [])
+      .filter((eier) => eier !== undefined)
+      .map((eier) => ({
+        lopeNr: e.lopeNr,
+        ...eier,
+        eierforholdKode: eier.eierforholdKode
+          ? t(`koder.eierforhold.${eier.eierforholdKode}`)
+          : undefined,
+      })),
+  )
 
-  const tiltaksHaverEndringer = endringer
-    .filter((e) => e.tiltaksHaver !== undefined)
-    .map((e) => ({
-      lopeNr: e.lopeNr,
-      ...e.tiltaksHaver,
-      kontaktPersonKode: e.tiltaksHaver?.kontaktPersonKode
-        ? t(`koder.kontaktperson.${e.tiltaksHaver.kontaktPersonKode}`)
-        : undefined,
-    }))
+  const tiltaksHaverEndringer = endringer.flatMap((e) =>
+    (e.tiltaksHavere ?? [])
+      .filter((th) => th !== undefined)
+      .map((th) => ({
+        lopeNr: e.lopeNr,
+        ...th,
+        kontaktPersonKode: th.kontaktPersonKode
+          ? t(`koder.kontaktperson.${th.kontaktPersonKode}`)
+          : undefined,
+      })),
+  )
 
   const bruksenhetEndringer = endringer.flatMap((e) =>
     (e.bruksenheter ?? [])
@@ -121,6 +128,30 @@ export default function ByggEndringer({
           : undefined,
         kjokkenTilgangKode: b.kjokkenTilgangKode
           ? t(`koder.kjokkentilgang.${b.kjokkenTilgangKode}`)
+          : undefined,
+      })),
+  )
+
+  const sefrakEndringer = endringer.flatMap((e) =>
+    (e.sefrakIder ?? [])
+      .filter((s) => s != null)
+      .map((sefrakId) => ({ lopeNr: e.lopeNr, sefrakId })),
+  )
+
+  const kulturminneEndringer = endringer.flatMap((e) =>
+    (e.kulturminner ?? [])
+      .filter((k) => k !== undefined)
+      .map((k) => ({
+        lopeNr: e.lopeNr,
+        ...k,
+        enkeltminneArtKode: k.enkeltminneArtKode
+          ? t(`koder.enkeltminneart.${k.enkeltminneArtKode}`)
+          : undefined,
+        vernetypeKode: k.vernetypeKode
+          ? t(`koder.vernetype.${k.vernetypeKode}`)
+          : undefined,
+        kulturminnekategoriKode: k.kulturminnekategoriKode
+          ? t(`koder.kulturminnekategori.${k.kulturminnekategoriKode}`)
           : undefined,
       })),
   )
@@ -159,16 +190,25 @@ export default function ByggEndringer({
           <EndringsTabell endringer={datoEndringer} seksjon="byggDatoEndring" />
           <EndringsTabell
             endringer={aktuellEierEndringer}
-            seksjon="aktuellEier"
+            seksjon="aktuelleEiere"
           />
           <EndringsTabell
             endringer={tiltaksHaverEndringer}
-            seksjon="tiltaksHaver"
+            seksjon="tiltaksHavere"
           />
           <EndringsTabell
             endringer={bruksenhetEndringer}
             seksjon="bruksenheter"
           />
+          {kulturminneEndringer.length > 0 && (
+            <EndringsTabell
+              endringer={kulturminneEndringer}
+              seksjon="kulturminner"
+            />
+          )}
+          {sefrakEndringer.length > 0 && (
+            <EndringsTabell endringer={sefrakEndringer} seksjon="sefrak" />
+          )}
         </div>
       )}
     </Section>
