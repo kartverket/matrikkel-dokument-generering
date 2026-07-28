@@ -117,7 +117,7 @@ export const byggEndringSchema = valgfriObjekt({
 
   // SEFRAK og bygg er mange-til-mange i matrikkelen, så en bygning kan ha flere SEFRAK-minner
   sefrakIder: valgfriListe(
-    z.string().meta({
+    valgfriString.meta({
       example: "0301-0103-058",
       description:
         "Sefrak-ID er bygningens identifikasjonsnummer i SEFRAK-registeret, et kulturhistorisk register over eldre bygninger. SEFRAK står for «Sekretariatet for registrering av faste kulturminne i Norge». \n" +
@@ -255,13 +255,11 @@ export const byggEndringSchema = valgfriObjekt({
         description: "Adressen til bruksenheten gitt endringen.",
       }),
 
-      matrikkelNr: valgfriSchema(
-        z.string().min(1).meta({
-          title: "Matrikkelnummer",
-          example: "5001-12/34/0/2",
-          description: "KommuneNr-GårdsNr/BruksNr/Festenr/SeksjonsNr",
-        }),
-      ),
+      matrikkelNr: valgfriString.meta({
+        title: "Matrikkelnummer",
+        example: "5001-12/34/0/2",
+        description: "KommuneNr-GårdsNr/BruksNr/Festenr/SeksjonsNr",
+      }),
     }),
   ),
 })
