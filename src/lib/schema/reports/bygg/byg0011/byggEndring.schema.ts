@@ -1,6 +1,5 @@
 import type { z } from "@hono/zod-openapi"
 import {
-  valgfriBool,
   valgfriDato,
   valgfriHeltall,
   valgfriListe,
@@ -9,17 +8,16 @@ import {
   valgfriSchema,
   valgfriString,
 } from "../../../core/utils/zodUtils.ts"
-import { bruksenhetsKodeSchema } from "../koder/bruksenhetsTypeKode.schema.ts"
 import { byggningsStatusKodeSchema } from "../koder/byggningsStatusKode.schema.ts"
 import { bygningsTypeKodeSchema } from "../koder/bygningsTypeKodeSchema.ts"
-import { eierforholdKodeSchema } from "../koder/eierforholdKode.schema.ts"
 import { endringsKodeSchema } from "../koder/endringsKode.schema.ts"
 import { etasjeplanKodeSchema } from "../koder/etasjeplanKode.schema.ts"
-import { kjokkenTilgangKodeSchema } from "../koder/kjokkenTilgangKode.ts"
-import { kontaktPersonKodeSchema } from "../koder/kontaktPersonKode.schema.ts"
 import { naringsgruppeKodeSchema } from "../koder/naringsgruppeKode.schema.ts"
+import { aktuellEierSchema } from "../shared/aktuellEier.schema.ts"
 import { arealFordelingSchema } from "../shared/arealFordeling.schema.ts"
+import { bruksenhetSchema } from "../shared/bruksenhet.schema.ts"
 import { enkeltminneSchema } from "../shared/enkeltminne.schema.ts"
+import { kontaktpersonSchema } from "../shared/kontaktperson.schema.ts"
 
 export const byggEndringSchema = valgfriObjekt({
   // Unik ID for en bygg-endring
@@ -138,112 +136,13 @@ export const byggEndringSchema = valgfriObjekt({
   // Tidligere Hjemmelshaver/aktuell eier/kontaktinstans.
   // En bygning kan ha flere eierforhold: tinglyste (H, F, F1–F9), ikke-tinglyste (AE, AF) og kontaktinstanser (KE, KF, K1–K3)
   // Alle bruker samme EierforholdKode-kodeliste
-  aktuelleEiere: valgfriListe(
-    valgfriObjekt({
-      bruksenhetsNr: valgfriString.meta({
-        title: "Bruksenhetsnummer",
-        example: "H0101",
-      }),
-      eierforholdKode: valgfriSchema(eierforholdKodeSchema),
+  aktuelleEiere: valgfriListe(aktuellEierSchema),
 
-      identifikasjonsNr: valgfriString.meta({
-        title: "Fødselsdato/org.nr",
-        description: "Fødselsdato eller Org. nummer for den aktuelle eieren",
-      }),
-
-      // Samme felt som Status i dag, eneste gyldige verdier for status er enten død eller tom -> Derfor navn-endring
-      erAvdoed: valgfriBool.default(false).meta({
-        title: "Avdødd",
-        description: "Er vedkommende død? \n" + "Standardverdi: false",
-        example: true,
-      }),
-
-      navn: valgfriString.meta({
-        description:
-          "Navnet til den aktuelle eieren. Kan være et selskapsnavn eller personnavn",
-        example: "Bygg AS",
-      }),
-
-      adresse: valgfriString.meta({
-        description: "Adressen til den aktuelle eieren.",
-        example: "Postboks 1350 Vika 113 OSLO",
-      }),
-
-      andel: valgfriString.meta({
-        description: "Andel den aktuelle eieren eventuelt eier av bruksenheten",
-        example: "2/5",
-      }),
-    }),
-  ).meta({
-    title: "Aktuelle eiere",
-    description:
-      "Hjemmelshavere, aktuelle eiere og kontaktinstanser knyttet til endringen. \n" +
-      "En bygning kan ha flere eierforhold, både tinglyste og ikke-tinglyste.",
-  }),
-
-  // Tiltakshaverne til endringen
-  tiltaksHavere: valgfriListe(
-    valgfriObjekt({
-      bruksenhetsNr: valgfriString.meta({
-        title: "Bruksenhetsnummer",
-        example: "H0101",
-      }),
-
-      // Rollekoden til tiltakshaveren (T: Tiltakshaver, K: Kontaktperson)
-      kontaktPersonKode: valgfriSchema(kontaktPersonKodeSchema),
-
-      identifikasjonsNr: valgfriString.meta({
-        title: "Fødselsdato/org.nr",
-        description: "Fødselsdato eller Org. nummer for tiltakshaver",
-      }),
-
-      navn: valgfriString.meta({
-        description:
-          "Navnet til tiltakshaveren. Kan være et selskapsnavn eller personnavn",
-        example: "Bygg AS",
-      }),
-
-      adresse: valgfriString.meta({
-        description: "Adressen til tiltakshaveren",
-        example: "Postboks 1350 Vika 113 OSLO",
-      }),
-    }),
-  ).meta({
-    title: "Registrerte Tiltak",
-    description: "Tiltakshaverne og kontaktpersonene for en endring",
-  }),
+  // Tiltakshaverne / Kontaktpersonene til endringen
+  tiltaksHavere: valgfriListe(kontaktpersonSchema),
 
   // Bruksenheter til endringen
-  bruksenheter: valgfriListe(
-    valgfriObjekt({
-      bruksenhetsNr: valgfriString.meta({
-        description: "Bruksenhetsnummer",
-        example: "H0101",
-      }),
-
-      bruksenhetsTypeKode: valgfriSchema(bruksenhetsKodeSchema),
-
-      bruksAreal: valgfriNummer.meta({
-        description:
-          "Bruksarealet til bruksenheten gitt endringen. Oppgis i kvadratmeter. ",
-      }),
-
-      antallRom: valgfriNummer,
-      antallBad: valgfriNummer,
-      antallWC: valgfriNummer,
-      kjokkenTilgangKode: valgfriSchema(kjokkenTilgangKodeSchema),
-      adresse: valgfriString.meta({
-        example: "Postboks 1234 Nydalen 123 OSLO",
-        description: "Adressen til bruksenheten gitt endringen.",
-      }),
-
-      matrikkelNr: valgfriString.meta({
-        title: "Matrikkelnummer",
-        example: "5001-12/34/0/2",
-        description: "KommuneNr-GårdsNr/BruksNr/Festenr/SeksjonsNr",
-      }),
-    }),
-  ),
+  bruksenheter: valgfriListe(bruksenhetSchema),
 })
 
 export type ByggEndringsDatoer = NonNullable<

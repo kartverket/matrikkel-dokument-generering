@@ -40,4 +40,9 @@ export const aktuellEierSchema = valgfriObjekt({
     description: "Andel den aktuelle eieren eventuelt eier av bruksenheten",
     example: "2/5",
   }),
+}).meta({
+  title: "Aktuelle eiere",
+  description:
+    "Hjemmelshavere, aktuelle eiere og kontaktinstanser knyttet til endringen. \n" +
+    "En bygning kan ha flere eierforhold, både tinglyste og ikke-tinglyste.",
 })

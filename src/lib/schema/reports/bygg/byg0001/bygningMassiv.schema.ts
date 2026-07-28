@@ -6,18 +6,16 @@ import {
   valgfriNummer,
   valgfriObjekt,
   valgfriSchema,
-  valgfriString,
 } from "../../../core/utils/zodUtils.ts"
-import { bruksenhetsKodeSchema } from "../koder/bruksenhetsTypeKode.schema.ts"
 import { byggningsStatusKodeSchema } from "../koder/byggningsStatusKode.schema.ts"
 import { bygningsTypeKodeSchema } from "../koder/bygningsTypeKodeSchema.ts"
 import { endringsKodeSchema } from "../koder/endringsKode.schema.ts"
-import { kjokkenTilgangKodeSchema } from "../koder/kjokkenTilgangKode.ts"
-import { kontaktPersonKodeSchema } from "../koder/kontaktPersonKode.schema.ts"
 import { naringsgruppeKodeSchema } from "../koder/naringsgruppeKode.schema.ts"
 import { aktuellEierSchema } from "../shared/aktuellEier.schema.ts"
 import { arealFordelingSchema } from "../shared/arealFordeling.schema.ts"
+import { bruksenhetSchema } from "../shared/bruksenhet.schema.ts"
 import { enkeltminneSchema } from "../shared/enkeltminne.schema.ts"
+import { kontaktpersonSchema } from "../shared/kontaktperson.schema.ts"
 
 // TODO: gjenbruke med BYG0011
 // ref: BygningRapportInfo.java
@@ -56,75 +54,6 @@ const byggDatoerSchema = valgfriObjekt({
   title: "Datoer",
   description:
     "Datoene da bygningen nådde ulike statuser i byggesaks- og registreringsforløpet.",
-})
-
-// TODO: gjenbruke med BYG0011
-// ref: bygning_total_bruksenheter.jrxml
-const bruksenhetSchema = valgfriObjekt({
-  bruksenhetsNr: valgfriString.meta({
-    title: "Bruksenhetsnummer",
-    description:
-      "Bruksenhetsnummer, sammensatt av etasjeplan, etasjenummer og løpenummer.",
-    example: "H0101",
-  }),
-
-  matrikkelNr: valgfriString.meta({
-    title: "Matrikkelnummer",
-    example: "5001-12/34/0/2",
-    description:
-      "Matrikkelnummeret til matrikkelenheten bruksenheten tilhører. KommuneNr-GårdsNr/BruksNr/Festenr/SeksjonsNr",
-  }),
-
-  adresse: valgfriString.meta({
-    description: "Adressen bruksenheten tilhører.",
-    example: "Storgata 15A, 0155 Oslo",
-  }),
-
-  bruksenhetsTypeKode: valgfriSchema(bruksenhetsKodeSchema),
-
-  antallRom: valgfriHeltall.meta({ description: "Antall rom." }),
-  antallBad: valgfriHeltall.meta({ description: "Antall bad." }),
-  antallWC: valgfriHeltall.meta({ description: "Antall WC." }),
-
-  bruksAreal: valgfriNummer.meta({
-    description: "Bruksarealet til bruksenheten. Oppgis i kvadratmeter.",
-  }),
-
-  kjokkenTilgangKode: valgfriSchema(kjokkenTilgangKodeSchema),
-}).meta({
-  title: "Bruksenhet",
-  description: "Bruksenhet i bygningen eller bygningsendringen.",
-})
-
-// TODO: gjenbruke med BYG0011
-// ref: bygning_total_kontaktpersoner.jrxml / bygning_total_tiltakshavere.jrxml
-const kontaktpersonSchema = valgfriObjekt({
-  kontaktPersonKode: valgfriSchema(kontaktPersonKodeSchema),
-
-  bruksenhetsNr: valgfriString.meta({
-    title: "Bruksenhetsnummer",
-    example: "H0101",
-  }),
-
-  identifikasjonsNr: valgfriString.meta({
-    title: "Fødselsdato/org.nr",
-    description: "Fødselsdato eller organisasjonsnummer for personen.",
-  }),
-
-  navn: valgfriString.meta({
-    description:
-      "Navnet til kontaktpersonen. Kan være et selskapsnavn eller personnavn",
-    example: "Bygg AS",
-  }),
-
-  adresse: valgfriString.meta({
-    description: "Adressen til kontaktpersonen.",
-    example: "Postboks 1350 Vika 113 OSLO",
-  }),
-}).meta({
-  title: "Kontaktperson",
-  description:
-    "Kontaktperson eller kontaktinstans for bygningen, for eksempel en tiltakshaver.",
 })
 
 // TODO gjebruke med BYG0011
