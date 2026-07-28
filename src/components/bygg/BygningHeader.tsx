@@ -23,7 +23,7 @@ export default function BygningHeader({
   return (
     <div className="flex break-inside-avoid break-after-avoid items-baseline justify-between bg-kv-green-tinted px-4 py-2">
       <div className="flex items-baseline gap-4">
-        <Heading level={3} className="font-medium">
+        <Heading level={3} className="font-rapport-h3">
           {t(`${key}.header.bygningsNr`)}{" "}
           {byggNr
             .replace(/\s/g, "")

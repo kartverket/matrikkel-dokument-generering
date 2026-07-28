@@ -33,7 +33,7 @@ export default function Byggoversikt({
       // Seksjonstittelen vises kun for første bygning
       showTitle={bygningIndeks === 1}
     >
-      <div className="space-y-8">
+      <div className="space-y-4 *:px-2.5">
         <BygningHeader
           byggNr={bygning.bygningsnr}
           bygningIndeks={bygningIndeks}
