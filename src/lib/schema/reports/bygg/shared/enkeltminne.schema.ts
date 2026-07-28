@@ -9,7 +9,7 @@ export const enkeltminneSchema = valgfriObjekt({
     example: "86155-1",
   }),
 
-  enkeltminneArt: valgfriString.meta({
+  enkeltminneArtKode: valgfriString.meta({
     title: "Enkeltminneart",
     description: "Arten til enkeltminnet, for eksempel bolig eller uthus.",
     example: "Bolig",

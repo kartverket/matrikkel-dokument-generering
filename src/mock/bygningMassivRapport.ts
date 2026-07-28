@@ -1,8 +1,6 @@
-import type {
-  MassivBruksenhet,
-  MassivKontaktperson,
-} from "../lib/schema/reports/bygg/byg0001/bygningMassiv.schema.ts"
+import type { MassivBruksenhet } from "../lib/schema/reports/bygg/byg0001/bygningMassiv.schema.ts"
 import type { Byg0001Rapport } from "../lib/schema/reports/bygg/byg0001/bygningMassivRapport.schema.ts"
+import type { TiltaksHaver } from "../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 
 function isoDatetime(date: string) {
   return `${date}T00:00:00Z`
@@ -30,20 +28,12 @@ function bruksenhet({
   }
 }
 
-const tiltakshaver: MassivKontaktperson = {
+const tiltakshaver: TiltaksHaver = {
   kontaktPersonKode: "T",
   bruksenhetsNr: "H0101",
   identifikasjonsNr: "01019012345",
   navn: "Fredrik Nordmann",
   adresse: "Storgata 1, 0155 Oslo",
-}
-
-const kontaktperson: MassivKontaktperson = {
-  kontaktPersonKode: "K",
-  bruksenhetsNr: "H0102",
-  identifikasjonsNr: "999999999",
-  navn: "Bygg AS",
-  adresse: "Postboks 1350 Vika 113 OSLO",
 }
 
 const mockBygningMassivRapport: Byg0001Rapport = {
@@ -101,7 +91,7 @@ const mockBygningMassivRapport: Byg0001Rapport = {
           kontaktpersoner: [tiltakshaver],
         },
       ],
-      hjemmelshavere: [
+      aktuelleEiere: [
         {
           bruksenhetsNr: "H0101",
           eierforholdKode: "H",
@@ -113,11 +103,10 @@ const mockBygningMassivRapport: Byg0001Rapport = {
         },
       ],
       tiltakshavere: [tiltakshaver],
-      kontaktpersoner: [kontaktperson],
       enkeltminner: [
         {
           enkeltminneNr: "86155-1",
-          enkeltminneArt: "Bolig",
+          enkeltminneArtKode: "Bolig",
           kulturminneKategoriKode: "B",
           vernetypeKode: "AUT",
         },

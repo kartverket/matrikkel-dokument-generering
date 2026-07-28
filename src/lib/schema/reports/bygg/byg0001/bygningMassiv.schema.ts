@@ -196,7 +196,6 @@ export const bygningMassivSchema = valgfriObjekt({
     description: "Hjemmelshaver eller aktuell eier for bygningen.",
   }),
   tiltakshavere: valgfriListe(kontaktpersonSchema),
-  kontaktpersoner: valgfriListe(kontaktpersonSchema),
   enkeltminner: valgfriListe(enkeltminneSchema),
 }).meta({
   title: "Bygning - Massiv",
@@ -209,8 +208,3 @@ type MassivBruksenheter = NonNullable<
   NonNullable<BygningMassiv>["bruksenheter"]
 >
 export type MassivBruksenhet = NonNullable<MassivBruksenheter[number]>
-
-type MassivKontaktpersoner = NonNullable<
-  NonNullable<BygningMassiv>["kontaktpersoner"]
->
-export type MassivKontaktperson = NonNullable<MassivKontaktpersoner[number]>
