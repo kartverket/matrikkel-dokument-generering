@@ -52,8 +52,8 @@ export default function BygningsendringerMassiv({
 
   // Vedtak/datoer per bygningsendring — gjenbruker `byggDatoEndring`-oppsettet.
   const datoEndringer = endringer
-    .filter((e) => e.datoer !== undefined)
-    .map((e) => ({ lopeNr: e.lopeNr, ...e.datoer }))
+    .filter((e) => e.byggEndringDatoer !== undefined)
+    .map((e) => ({ lopeNr: e.lopeNr, ...e.byggEndringDatoer }))
 
   // Antall bygninger brukes ikke i visningen, men holdes i propsene for
   // symmetri med de andre seksjonene og fremtidig utvidelse.
