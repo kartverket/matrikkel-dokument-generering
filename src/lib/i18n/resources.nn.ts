@@ -324,6 +324,7 @@ export const nn = {
           boenheter: "Bueiningar",
           bolig: "Bustad (m²)",
           annet: "Anna (m²)",
+          totalt: "Totalt (m²)",
           bra: "BRA (m²)",
           bta: "BTA (m²)",
           bya: "BYA (m²)",

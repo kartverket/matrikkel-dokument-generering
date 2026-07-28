@@ -49,7 +49,7 @@ export default function EndringsTabell({ endringer, seksjon }: Props) {
   return (
     <SubSection
       title={t(`${tKey}.tittel`, { defaultValue: "", count: endringer.length })}
-      className="my-4"
+      className="my-4 px-2.5"
     >
       {endringer.length === 0 ? (
         <Paragraph className="text-kv-subtle">
