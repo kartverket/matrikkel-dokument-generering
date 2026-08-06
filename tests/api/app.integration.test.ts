@@ -30,8 +30,11 @@ describe("HTTP API", () => {
     expect(await response.text()).toBe(expectedBody)
   })
 
-  test("validates create-document requests through the route schema", async () => {
-    const response = await app.request("/create-document/BYG0011", {
+  test.each([
+    "/create-document/BYG0011",
+    "/create-document/BYG0001",
+  ])("validates %s requests through the route schema", async (path) => {
+    const response = await app.request(path, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: "{}",
@@ -74,6 +77,7 @@ describe("HTTP API", () => {
     expect(openApiResponse.status).toBe(200)
     expect(openApi.openapi).toBe("3.0.3")
     expect(openApi.paths["/create-document/BYG0011"].post).toBeDefined()
+    expect(openApi.paths["/create-document/BYG0001"].post).toBeDefined()
     expect(openApi.components.schemas.ValidationErrorResponse).toBeDefined()
     expect(openApi.components.schemas.PdfErrorResponse).toBeDefined()
     expect(
@@ -81,6 +85,7 @@ describe("HTTP API", () => {
         .properties.bygningstyper.example,
     ).toEqual(["111"])
     expect(openApi.components.schemas.BYG0011).toBeDefined()
+    expect(openApi.components.schemas.BYG0001).toBeDefined()
     expect(openApi.servers).toEqual([
       { url: "/", description: "Gjeldende miljø" },
     ])

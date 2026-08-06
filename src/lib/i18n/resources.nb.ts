@@ -333,6 +333,7 @@ export const nb = {
           boenheter: "Boenheter",
           bolig: "Bolig (m²)",
           annet: "Annet (m²)",
+          totalt: "Totalt (m²)",
           bra: "BRA (m²)",
           bta: "BTA (m²)",
           bya: "BYA (m²)",

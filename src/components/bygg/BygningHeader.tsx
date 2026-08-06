@@ -46,11 +46,13 @@ export default function BygningHeader({
         </Tag>
       </div>
       <Paragraph>
-        <Trans
-          i18nKey={`${key}.header.bygningAvAntall`}
-          values={{ indeks: bygningIndeks, antall: antallBygninger }}
-          components={{ bold: <strong className="font-bold" /> }}
-        />
+        {antallBygninger > 1 && (
+          <Trans
+            i18nKey={`${key}.header.bygningAvAntall`}
+            values={{ indeks: bygningIndeks, antall: antallBygninger }}
+            components={{ bold: <strong className="font-bold" /> }}
+          />
+        )}
       </Paragraph>
     </div>
   )

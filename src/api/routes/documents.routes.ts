@@ -1,9 +1,9 @@
 import { createRoute, type OpenAPIHono, z } from "@hono/zod-openapi"
-import { renderDocument } from "../../Document.tsx"
+import type { RenderedDocument } from "../../Document.tsx"
 import { htmlToPdf } from "../../lib/pdf/gotenberg.ts"
 import { getDocumentCss } from "../../lib/pdf/styles.ts"
+import { reportRegistry } from "../../lib/reports/registry.ts"
 import type { RapportKode } from "../../lib/schema/core/koder/rapportKode.schema.ts"
-import { byggRapportSchema } from "../../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 import {
   notImplementedResponseSchema,
   pdfErrorResponseSchema,
@@ -67,35 +67,34 @@ function createDocumentRoute<T extends z.ZodType>({
   })
 }
 
-const createByggDocumentRoute = createDocumentRoute({
-  rapportKode: "BYG0011",
-  requestSchema: byggRapportSchema,
-  summary: "Generer PDF-rapport for BYG0011",
-})
-
-// TODO: Implementere frontend håndtering av BYG0001.
-// const createBygningMassivDocumentRoute = createDocumentRoute({
-//   rapportKode: "BYG0001",
-//   requestSchema: bygningMassivRapportSchema,
-//   summary: "Generer PDF-rapport for BYG0001",
-// })
-
 export function registerDocumentRoutes(app: OpenAPIHono) {
-  app.openapi(createByggDocumentRoute, async (c) => {
-    const data = c.req.valid("json")
+  for (const [kode, entry] of Object.entries(reportRegistry)) {
+    const rapportKode = kode as RapportKode
+    const route = createDocumentRoute({
+      rapportKode,
+      requestSchema: entry.schema,
+      summary: entry.summary,
+    })
 
-    try {
-      const css = await getDocumentCss()
-      const { html, headerHtml, footerHtml } = renderDocument(data, css)
-      const pdf = await htmlToPdf(html, headerHtml, footerHtml)
-      return c.body(pdf, 200, { "Content-Type": "application/pdf" })
-    } catch (error) {
-      const details = error instanceof Error ? error.message : "Ukjent feil"
-      return c.json({ error: "PDF-generering feilet", details }, 502)
-    }
-  })
+    // Iterasjonen mister per-rapport-typingen; render-funksjonen er trygg
+    // fordi input allerede er validert av `entry.schema`.
+    const render = entry.render as (
+      data: unknown,
+      css: string,
+    ) => RenderedDocument
 
-  // app.openapi(createBygningMassivDocumentRoute, async (c) => {
-  // TODO: Implementere frontend håndtering av BYG0001.
-  // }
+    app.openapi(route, async (c) => {
+      const data = c.req.valid("json")
+
+      try {
+        const css = await getDocumentCss()
+        const { html, headerHtml, footerHtml } = render(data, css)
+        const pdf = await htmlToPdf(html, headerHtml, footerHtml)
+        return c.body(pdf, 200, { "Content-Type": "application/pdf" })
+      } catch (error) {
+        const details = error instanceof Error ? error.message : "Ukjent feil"
+        return c.json({ error: "PDF-generering feilet", details }, 502)
+      }
+    })
+  }
 }
