@@ -1,7 +1,6 @@
 import { useTranslation } from "react-i18next"
 import BygningHeader from "../components/bygg/BygningHeader.tsx"
 import ByggOversiktAreal from "../components/byggoversikt/ByggOversiktAreal.tsx"
-import ByggSammendrag from "../components/byggoversikt/ByggSammendrag"
 import Oversiktsfelt from "../components/byggoversikt/Oversiktsfelt"
 import { aggregerGjeldendeTilstand } from "../components/byggoversikt/utils/gjeldendeTilstand.ts"
 import { Section } from "../components/Section"
@@ -19,7 +18,7 @@ export default function Byggoversikt({
   bygning,
   bygningIndeks,
   antallBygninger,
-}: Props) {
+}: Readonly<Props>) {
   const { t } = useTranslation()
 
   // Den gjeldende tilstanden til bygget aggregert fra basisregistreringen og ferdigstilte/tatte-i-bruk endringer
@@ -65,7 +64,6 @@ export default function Byggoversikt({
             <ByggOversiktAreal etasjePlan={gjeldendeTilstand.etasjePlan} />
           </>
         )}
-        <ByggSammendrag byggEndringer={bygning.endringer} />
       </div>
     </Section>
   )

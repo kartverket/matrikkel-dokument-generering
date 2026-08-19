@@ -9,13 +9,14 @@ Følgende rapporter støttes:
 
 ## Relaterte repoer
 
-Løsningen er delt over tre selvstendige repoer:
+Løsningen er delt over to selvstendige repoer:
 
 | Repo | Beskrivelse |
 | ---- | ----------- |
-| [matrikkel-dokument-generering](https://github.com/kartverket/matrikkel-dokument-generering) | Dette repoet |
+| [matrikkel-dokument-generering](https://github.com/kartverket/matrikkel-dokument-generering) | Dette repoet (inneholder nå både API, klient og lokal mock-data). |
 | [pdf-generator](https://github.com/kartverket/pdf-generator) | Gotenberg-tjenesten (Docker-image) som API-serveren bruker til HTML→PDF. |
-| [matrikkel-rapport-mock-server](https://github.com/kartverket/matrikkel-rapport-mock-server) | Mock-server som leverer eksempel-/testdata for matrikkelrapporter. |
+
+**Lokal mock-data:** Test-fixtures og mock-server-logikk er nå integrert lokalt i [`src/mock/`](./src/mock/). Se [Lokal HTML-preview med mockdata](#lokal-html-preview-med-mockdata) for brukseksempler.
 
 ## Oppsett
 
@@ -31,6 +32,31 @@ Løsningen er delt over tre selvstendige repoer:
 - Formatter prosjektet (med og uten endringer): `bun run format` og `bun run format:check`
 - Bygg produksjonsartefakter (`dist/`): `bun run build`
 - Forhåndsvis produksjonsbygg: `bun run preview`
+
+### Lokal HTML-preview med mockdata
+
+For å teste dokumentrendring i nettleseren (uten PDF-generering), bruk URL-mønsteret:
+
+`/{RAPPORTKODE}/{test-case}`
+
+Testcaser er definert i [`src/mock/preview-data.ts`](./src/mock/preview-data.ts). Eksempler:
+
+- `http://localhost:5173/BYG0011/standard` - Alias for `bygg-32-341` (eneboliger)
+- `http://localhost:5173/BYG0011/bygg-32-341` - Eneboliger - Hagan terrasse 15B
+- `http://localhost:5173/BYG0011/bygg-42-221` - Stort anlegg - Rikshospitalet
+- `http://localhost:5173/BYG0011/bygg-stasjonsveien-1` - Skole og garasjer
+- `http://localhost:5173/BYG0011/bygg-slottsplassen-1` - Historisk bygg - Slottet
+- `http://localhost:5173/BYG0011/bygg-109-8` - Bygg i arbeid
+- `http://localhost:5173/BYG0011/bygg-alle-5` - Oversikt - alle 5 bygg (aggregert rapport)
+
+I dev-modus proxier Vite denne URL-en til API-endepunktet `/preview/{RAPPORTKODE}/{test-case}?format=html`. Mock-data lastes og normaliseres mot BYG0011-skjemaet ved hver forespørsel.
+
+API-endepunktet `/preview/` støtter begge output-formater:
+
+- `?format=html` (standard) - HTML-preview i nettleser
+- `?format=pdf` - PDF-generering via Gotenberg
+
+Dette gjelder både `/preview/{RAPPORTKODE}/{test-case}` og `/create-document/{RAPPORTKODE}` (POST med JSON-payload).
 
 ### Formattering
 

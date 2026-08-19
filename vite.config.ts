@@ -10,4 +10,14 @@ export default defineConfig({
     babel({ presets: [reactCompilerPreset()] }),
     tailwindcss(),
   ],
+  server: {
+    proxy: {
+      "^/BYG\\d{4}/[^/]+$": {
+        target: "http://localhost:3000",
+        changeOrigin: true,
+        rewrite: (path) =>
+          path.replace(/^\/(BYG\d{4})\/([^/]+)$/, "/preview/$1/$2?format=html"),
+      },
+    },
+  },
 })
