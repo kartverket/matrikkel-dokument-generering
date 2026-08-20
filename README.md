@@ -29,6 +29,7 @@ Løsningen er delt over to selvstendige repoer:
 - Kjør klienten og API-serveren med hot reload: `bun run dev`
 - Kjør linting (med og uten fiksing): `bun run lint:fix` og `bun run lint`
 - Kjør tester: `bun run test`
+- Kjør visuelle regresjonstester: `bun run test:visual`
 - Formatter prosjektet (med og uten endringer): `bun run format` og `bun run format:check`
 - Bygg produksjonsartefakter (`dist/`): `bun run build`
 - Forhåndsvis produksjonsbygg: `bun run preview`
@@ -55,6 +56,25 @@ API-endepunktet `/preview/` støtter begge output-formater:
 
 - `?format=html` (standard) - HTML-preview i nettleser
 - `?format=pdf` - PDF-generering via Gotenberg
+
+### Visuelle regresjonstester (Playwright)
+
+Prosjektet har Playwright-tester som tar snapshots av HTML-preview for BYG0011-caser.
+
+- Kjør testene: `bun run test:visual`
+- Oppdater snapshots etter en bevisst UI-endring: `bun run test:visual:update`
+
+Visuelle regresjonstester kjøres også i CI (`Build and deploy`-workflow) og må passere før image bygges/pushes fra `main`.
+
+Første baseline dekker disse casene:
+
+- `bygg-32-341`
+- `bygg-42-221`
+- `bygg-stasjonsveien-1`
+- `bygg-slottsplassen-1`
+- `bygg-109-8`
+
+Merk: Aggregert caset `bygg-alle-5` er ikke med i baseline fordi mock-data inkluderer dynamisk tidsstempel (`generertTidspunkt`) som kan gjøre snapshot-differ ustabile.
 
 Dette gjelder både `/preview/{RAPPORTKODE}/{test-case}` og `/create-document/{RAPPORTKODE}` (POST med JSON-payload).
 
