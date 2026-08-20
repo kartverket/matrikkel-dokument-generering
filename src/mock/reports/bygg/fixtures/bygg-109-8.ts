@@ -1,6 +1,6 @@
-import type { ByggRapport } from "../../../types"
+import type { LegacyFixtureByggRapport } from "../../../types"
 
-type Bygning = ByggRapport["bygninger"][number]
+type Bygning = LegacyFixtureByggRapport["bygninger"][number]
 type Endring = Bygning["endringer"][number]
 type Etasje = NonNullable<NonNullable<Endring["etasjePlan"]>[number]>
 type Bruksenhet = NonNullable<NonNullable<Endring["bruksenheter"]>[number]>
@@ -84,7 +84,7 @@ function bygning(input: BygningInput): Bygning {
   }
 }
 
-export function createBygg1098Report(): ByggRapport {
+export function createBygg1098Report(): LegacyFixtureByggRapport {
   return {
     rapportKode: "BYG0011",
     locale: "nb",

@@ -47,9 +47,3 @@ export type LegacyFixtureByggRapport = Omit<
 > & {
   bygninger: LegacyBygning[]
 }
-
-/**
- * Alias for fixture creators.
- * @internal Use `LegacyFixtureByggRapport` in new code.
- */
-export type ByggRapport = LegacyFixtureByggRapport

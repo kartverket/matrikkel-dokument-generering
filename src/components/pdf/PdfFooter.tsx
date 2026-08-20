@@ -2,14 +2,17 @@ import { useTranslation } from "react-i18next"
 import type { RapportKode } from "../../lib/schema/core/koder/rapportKode.schema.ts"
 
 interface PdfFooterProps {
-  rapportKode: RapportKode
-  generertTidspunkt: string
+  readonly rapportKode: RapportKode
+  readonly generertTidspunkt: string
 }
 
 // Rendres i Gotenbergs footer-mal, et eget minidokument som får dokumentets
 // CSS embeddet i `footer.html` (se renderDocument). Chromium fyller selv inn
 // sidetall i elementene med klassene `pageNumber` og `totalPages`.
-export function PdfFooter({ rapportKode, generertTidspunkt }: PdfFooterProps) {
+export function PdfFooter({
+  rapportKode,
+  generertTidspunkt,
+}: Readonly<PdfFooterProps>) {
   const { t } = useTranslation()
 
   return (

@@ -6,10 +6,10 @@ import { SubSection } from "./SubSection.tsx"
 
 type EndringsRad = { lopeNr: number } & Record<string, unknown>
 
-type Props = {
+type Props = Readonly<{
   endringer: EndringsRad[]
   seksjon: string
-}
+}>
 
 function formatCell(
   value: unknown,
@@ -36,6 +36,7 @@ function formatCell(
 export default function EndringsTabell({ endringer, seksjon }: Props) {
   const { t, i18n } = useTranslation()
   const tKey = `rapport.BYG0011.byggEndringer.${seksjon}` as const
+  const lopeNrLabel = t("rapport.BYG0011.byggEndringer.lopeNr")
 
   const kolonner = Array.from(
     endringer.reduce((set, rad) => {
@@ -69,10 +70,10 @@ export default function EndringsTabell({ endringer, seksjon }: Props) {
           </Table.Head>
 
           <Table.Body>
-            {endringer.map((rad, i) => (
-              <Table.Row key={String(i)} className="even:bg-kv-green-subtle">
+            {endringer.map((rad) => (
+              <Table.Row key={String(rad.lopeNr)} className="even:bg-kv-green-subtle">
                 <Table.HeaderCell scope="row" className="w-20 align-top">
-                  {`${t(`rapport.BYG0011.byggEndringer.lopeNr`)} ${rad.lopeNr}`}
+                  {`${lopeNrLabel} ${rad.lopeNr}`}
                 </Table.HeaderCell>
                 {kolonner.map((k) => (
                   <Table.Cell

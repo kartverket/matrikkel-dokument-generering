@@ -5,7 +5,7 @@ import { Utvalg } from "./Utvalg.tsx"
 import { erAngitt } from "./utils/erAngitt.ts"
 
 interface Props {
-  bygningsstatusKriterier: NonNullable<Utvalgskriterier>["bygningsstatus"]
+  readonly bygningsstatusKriterier: NonNullable<Utvalgskriterier>["bygningsstatus"]
 }
 
 const numeriskDatoformat = {
@@ -14,7 +14,9 @@ const numeriskDatoformat = {
   year: "numeric",
 } satisfies Intl.DateTimeFormatOptions
 
-export function BygningsstatusKriterier({ bygningsstatusKriterier }: Props) {
+export function BygningsstatusKriterier({
+  bygningsstatusKriterier,
+}: Readonly<Props>) {
   const { i18n, t } = useTranslation()
   const uk = "rapport.BYG0011.utvalgskriterier"
 

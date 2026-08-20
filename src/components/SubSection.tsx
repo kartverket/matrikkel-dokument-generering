@@ -2,12 +2,12 @@ import { Heading } from "@kv-designsystem/react"
 import { cn } from "../lib/utils/cn.ts"
 
 interface Props {
-  title: string
-  className?: string
-  children?: React.ReactNode
+  readonly title: string
+  readonly className?: string
+  readonly children?: React.ReactNode
 }
 
-export function SubSection({ title, className, children }: Props) {
+export function SubSection({ title, className, children }: Readonly<Props>) {
   return (
     <section className={cn("space-y-2", className)}>
       <span className="flex break-after-avoid items-center gap-4">
