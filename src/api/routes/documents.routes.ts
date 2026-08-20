@@ -25,6 +25,15 @@ function normalizeRapportKode(value: string) {
   return value.trim().toUpperCase()
 }
 
+/**
+ * Extracts the content between <body> tags from an HTML string.
+ * @internal Used to inject header/footer content into preview HTML.
+ */
+function extractBodyContent(html: string): string {
+  const bodyMatch = html.match(/<body[^>]*>([\s\S]*)<\/body>/i)
+  return bodyMatch ? bodyMatch[1] : ""
+}
+
 async function createDocumentResponse({
   rapport,
   format,
@@ -36,7 +45,86 @@ async function createDocumentResponse({
   const { html, headerHtml, footerHtml } = renderDocument(rapport, css)
 
   if (format === "html") {
-    return { body: html, contentType: "text/html" as const }
+    // For preview: include header and footer in the HTML
+    const headerContent = extractBodyContent(headerHtml)
+    const bodyContent = extractBodyContent(html)
+    const footerContent = extractBodyContent(footerHtml)
+
+    const htmlWithHeaderFooter = `<!DOCTYPE html>
+<html lang="${rapport.locale}">
+<head>
+  <meta charset="utf-8">
+  <style>${css}</style>
+  <style>
+    /* Preview shell styled to resemble a PDF page in a document viewer. */
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background: #eef2f7;
+    }
+
+    .preview-canvas {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 2rem 1rem;
+      box-sizing: border-box;
+    }
+
+    .preview-page {
+      width: 210mm;
+      max-width: 100%;
+      min-height: 297mm;
+      background: #fff;
+      box-shadow: 0 8px 28px rgba(15, 23, 42, 0.16);
+      border: 1px solid #d9e0ea;
+      border-radius: 2px;
+      box-sizing: border-box;
+      padding: 14mm 12mm;
+    }
+
+    @media (max-width: 900px) {
+      .preview-canvas {
+        padding: 0;
+      }
+
+      .preview-page {
+        width: 100%;
+        min-height: 100vh;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        padding: 1rem 0.75rem;
+      }
+    }
+
+    .preview-header {
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .preview-footer {
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid #e5e7eb;
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+  </style>
+</head>
+<body>
+  <div class="preview-canvas">
+    <div class="preview-page">
+      <div class="preview-header">${headerContent}</div>
+      <main>${bodyContent}</main>
+      <div class="preview-footer">${footerContent}</div>
+    </div>
+  </div>
+</body>
+</html>`
+
+    return { body: htmlWithHeaderFooter, contentType: "text/html" as const }
   }
 
   const pdf = await htmlToPdf(html, headerHtml, footerHtml)
