@@ -71,7 +71,10 @@ export default function EndringsTabell({ endringer, seksjon }: Props) {
 
           <Table.Body>
             {endringer.map((rad) => (
-              <Table.Row key={String(rad.lopeNr)} className="even:bg-kv-green-subtle">
+              <Table.Row
+                key={String(rad.lopeNr)}
+                className="even:bg-kv-green-subtle"
+              >
                 <Table.HeaderCell scope="row" className="w-20 align-top">
                   {`${lopeNrLabel} ${rad.lopeNr}`}
                 </Table.HeaderCell>
