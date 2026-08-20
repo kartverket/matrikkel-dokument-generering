@@ -18,7 +18,9 @@ test.describe("BYG0011 preview visual regression", () => {
 
       // Wait one animation frame so layout and webfonts stabilize.
       await page.evaluate(async () => {
-        await new Promise((resolve) => requestAnimationFrame(() => resolve(null)))
+        await new Promise((resolve) =>
+          requestAnimationFrame(() => resolve(null)),
+        )
       })
 
       await expect(page.locator(".preview-page")).toHaveScreenshot(
