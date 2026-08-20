@@ -60,6 +60,7 @@ API-endepunktet `/preview/` støtter begge output-formater:
 ### Visuelle regresjonstester (Playwright)
 
 Prosjektet har Playwright-tester som tar snapshots av HTML-preview for BYG0011-caser.
+Disse ligger i en egen mappe: `visual-tests/`.
 
 - Kjør testene: `bun run test:visual`
 - Oppdater snapshots etter en bevisst UI-endring: `bun run test:visual:update`

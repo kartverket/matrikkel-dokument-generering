@@ -10,7 +10,7 @@
     "lint": "biome lint .",
     "lint:fix": "biome check --write .",
     "sort:classes": "biome lint --write --only=nursery/useSortedClasses .",
-    "test": "bun test",
+    "test": "bun test tests",
     "test:visual": "playwright test",
     "test:visual:update": "playwright test --update-snapshots",
     "format": "biome format --write . && biome check --write --formatter-enabled=false --linter-enabled=false . && bun run sort:classes",

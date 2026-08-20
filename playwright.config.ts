@@ -10,7 +10,8 @@ const pdfLikeViewport = {
 }
 
 export default defineConfig({
-  testDir: "./tests/visual",
+  testDir: "./visual-tests",
+  testMatch: "**/*.pw.ts",
   snapshotPathTemplate:
     "{testDir}/{testFilePath}-snapshots/{arg}-{projectName}{ext}",
   fullyParallel: true,
