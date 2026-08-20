@@ -82,7 +82,7 @@ jobs:
 
   visual-regression:
     name: Verify Visual Regression
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     permissions:
       contents: read
 
@@ -103,7 +103,7 @@ jobs:
       - name: Cache Playwright browsers
         uses: actions/cache@v6
         with:
-          path: ~/Library/Caches/ms-playwright
+          path: ~/.cache/ms-playwright
           key: ${{ runner.os }}-playwright-cache-${{ hashFiles('bun.lock') }}
           restore-keys: |
             ${{ runner.os }}-playwright-cache-
