@@ -43,7 +43,7 @@ jobs:
         uses: ./.github/actions/setup-node-and-bun
 
       - name: Cache Bun package cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.bun/install/cache
           key: ${{ runner.os }}-bun-cache-${{ hashFiles('bun.lock') }}
@@ -93,7 +93,7 @@ jobs:
         uses: ./.github/actions/setup-node-and-bun
 
       - name: Cache Bun package cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.bun/install/cache
           key: ${{ runner.os }}-bun-cache-${{ hashFiles('bun.lock') }}
@@ -101,7 +101,7 @@ jobs:
             ${{ runner.os }}-bun-cache-
 
       - name: Cache Playwright browsers
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/Library/Caches/ms-playwright
           key: ${{ runner.os }}-playwright-cache-${{ hashFiles('bun.lock') }}
