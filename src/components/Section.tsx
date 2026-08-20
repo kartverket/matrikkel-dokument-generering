@@ -1,11 +1,11 @@
 import { Heading, Paragraph } from "@kv-designsystem/react"
 
 interface Props {
-  index: number
-  title: string
-  description?: string
-  showTitle?: boolean
-  children?: React.ReactNode
+  readonly index: number
+  readonly title: string
+  readonly description?: string
+  readonly showTitle?: boolean
+  readonly children?: React.ReactNode
 }
 
 export function Section({
@@ -14,7 +14,7 @@ export function Section({
   description,
   showTitle = true,
   children,
-}: Props) {
+}: Readonly<Props>) {
   return (
     <section className="mb-20">
       {showTitle && (

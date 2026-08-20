@@ -8,7 +8,9 @@ import ByggEndringer from "./sections/ByggEndringer.tsx"
 import Byggoversikt from "./sections/Byggoversikt.tsx"
 import { ByggUtvalgskriterier } from "./sections/ByggUtvalgskriterier.tsx"
 
-export function DocumentComponent({ rapport }: { rapport: Byg0011Rapport }) {
+export function DocumentComponent({
+  rapport,
+}: Readonly<{ rapport: Byg0011Rapport }>) {
   const { bygninger } = rapport
 
   return (

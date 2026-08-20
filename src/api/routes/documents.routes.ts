@@ -30,7 +30,7 @@ function normalizeRapportKode(value: string) {
  * @internal Used to inject header/footer content into preview HTML.
  */
 function extractBodyContent(html: string): string {
-  const bodyMatch = html.match(/<body[^>]*>([\s\S]*)<\/body>/i)
+  const bodyMatch = /<body[^>]*>([\s\S]*)<\/body>/i.exec(html)
   return bodyMatch ? bodyMatch[1] : ""
 }
 
@@ -277,7 +277,7 @@ export function registerDocumentRoutes(app: OpenAPIHono) {
 
     const previewCase = await getPreviewCaseData(testCase)
     if (!previewCase) {
-      const availableCases = (await listPreviewCases())
+      const availableCases = listPreviewCases()
         .map((entry) => entry.testCase)
         .sort((a, b) => a.localeCompare(b, "nb"))
         .join(", ")

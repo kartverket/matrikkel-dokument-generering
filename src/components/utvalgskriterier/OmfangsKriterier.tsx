@@ -3,14 +3,14 @@ import type { ByggUtvalgskriterier as Utvalgskriterier } from "../../lib/schema/
 import { Utvalg } from "./Utvalg.tsx"
 
 interface Props {
-  omfangsKriterier: NonNullable<Utvalgskriterier>["omfang"]
-  bygningKriterier: NonNullable<Utvalgskriterier>["bygning"]
+  readonly omfangsKriterier: NonNullable<Utvalgskriterier>["omfang"]
+  readonly bygningKriterier: NonNullable<Utvalgskriterier>["bygning"]
 }
 
 export function OmfangsKriterier({
   omfangsKriterier,
   bygningKriterier,
-}: Props) {
+}: Readonly<Props>) {
   const { t } = useTranslation()
   const uk = "rapport.BYG0011.utvalgskriterier"
 

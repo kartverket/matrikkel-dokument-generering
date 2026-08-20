@@ -7,11 +7,11 @@ import { Utvalg } from "../components/utvalgskriterier/Utvalg.tsx"
 import type { ByggUtvalgskriterier as UtvalgskriterierType } from "../lib/schema/reports/bygg/shared/byggUtvalgskriterier.schema.ts"
 
 interface Props {
-  index: number
-  kriterier: UtvalgskriterierType
+  readonly index: number
+  readonly kriterier: UtvalgskriterierType
 }
 
-export function ByggUtvalgskriterier({ index, kriterier }: Props) {
+export function ByggUtvalgskriterier({ index, kriterier }: Readonly<Props>) {
   const { t } = useTranslation()
 
   return (

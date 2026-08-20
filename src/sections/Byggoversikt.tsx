@@ -7,10 +7,10 @@ import { Section } from "../components/Section"
 import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 
 interface Props {
-  index: number
-  bygning: Bygning
-  bygningIndeks: number
-  antallBygninger: number
+  readonly index: number
+  readonly bygning: Bygning
+  readonly bygningIndeks: number
+  readonly antallBygninger: number
 }
 
 export default function Byggoversikt({

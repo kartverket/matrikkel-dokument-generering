@@ -3,11 +3,11 @@ import { Trans, useTranslation } from "react-i18next"
 import type { Bygningstypekode } from "../../lib/schema/reports/bygg/koder/bygningsTypeKodeSchema.ts"
 
 interface Props {
-  byggNr?: string
-  bygningIndeks: number
-  antallBygninger: number
-  bygningsTypeKode?: Bygningstypekode
-  gjeldendeStatusKode?: string
+  readonly byggNr?: string
+  readonly bygningIndeks: number
+  readonly antallBygninger: number
+  readonly bygningsTypeKode?: Bygningstypekode
+  readonly gjeldendeStatusKode?: string
 }
 
 export default function BygningHeader({
@@ -16,9 +16,12 @@ export default function BygningHeader({
   antallBygninger,
   bygningsTypeKode,
   gjeldendeStatusKode,
-}: Props) {
+}: Readonly<Props>) {
   const { t } = useTranslation()
   const key = "rapport.BYG0011.byggoversikt"
+  const bygningsTypeLabel = bygningsTypeKode
+    ? t(`koder.bygningstype.${bygningsTypeKode}`)
+    : null
 
   return (
     <div className="flex break-inside-avoid break-after-avoid items-baseline justify-between bg-kv-green-tinted px-4 py-2">
@@ -34,7 +37,7 @@ export default function BygningHeader({
         </Heading>
         <Tag data-size="sm" data-color={"info"}>
           {bygningsTypeKode
-            ? `${bygningsTypeKode} ${t(`koder.bygningstype.${bygningsTypeKode}`)}`
+            ? `${bygningsTypeKode} ${bygningsTypeLabel}`
             : t(`${key}.ukjentByggningsType`)}
         </Tag>
         <Tag data-size="sm" data-color={"success"}>

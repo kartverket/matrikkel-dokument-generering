@@ -4,11 +4,11 @@ import { cn } from "../../lib/utils/cn.ts"
 import { getValueOrEmpty } from "../../lib/utils/getValueOrEmpty.ts"
 
 interface Props {
-  label: string
-  value: string
-  className?: string
-  valueClassName?: string
-  erTom?: boolean
+  readonly label: string
+  readonly value: string
+  readonly className?: string
+  readonly valueClassName?: string
+  readonly erTom?: boolean
 }
 
 export interface DetaljfeltData {
@@ -50,7 +50,7 @@ export function Detaljfelt({
   className = "",
   valueClassName = "",
   erTom = false,
-}: Props) {
+}: Readonly<Props>) {
   return (
     <div className={className}>
       <dt className="text-kv-subtle">{label}</dt>
@@ -68,12 +68,16 @@ export function Detaljfelt({
 }
 
 interface DetaljgridProps {
-  felter: DetaljfeltData[]
-  tom: string
-  className?: string
+  readonly felter: DetaljfeltData[]
+  readonly tom: string
+  readonly className?: string
 }
 
-export function Detaljgrid({ felter, tom, className }: DetaljgridProps) {
+export function Detaljgrid({
+  felter,
+  tom,
+  className,
+}: Readonly<DetaljgridProps>) {
   const { t } = useTranslation()
 
   return (

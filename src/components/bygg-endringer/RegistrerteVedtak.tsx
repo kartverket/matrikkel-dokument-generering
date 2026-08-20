@@ -9,7 +9,7 @@ import { formatDate } from "../../lib/utils/formatDate"
 import { Detaljgrid, lagDetaljfeltBuilder } from "./Detaljfelt.tsx"
 
 interface Props {
-  endring: BygningsEndring | undefined
+  readonly endring: BygningsEndring | undefined
 }
 
 const vedtakFelt = lagDetaljfeltBuilder("rapport.BYG0011.registrerteVedtak")
@@ -36,7 +36,7 @@ function getVedtakDetaljfelter(datoer: ByggEndringsDatoer, i18n: I18n) {
   ]
 }
 
-export function RegistrerteVedtak({ endring }: Props) {
+export function RegistrerteVedtak({ endring }: Readonly<Props>) {
   const { i18n, t } = useTranslation()
   const translationKey = "rapport.BYG0011.registrerteVedtak"
   const tom = t("tom")

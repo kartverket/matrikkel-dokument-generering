@@ -1,34 +1,39 @@
 import { Heading, Table } from "@kv-designsystem/react"
+import { useMemo } from "react"
 import { useTranslation } from "react-i18next"
 import type { EtasjePlan } from "../../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
 import { formatArea } from "../../lib/utils/formatArea.ts"
 
 interface Props {
-  etasjePlan: EtasjePlan
+  readonly etasjePlan: EtasjePlan
 }
 
-export default function ByggOversiktAreal({ etasjePlan }: Props) {
+export default function ByggOversiktAreal({ etasjePlan }: Readonly<Props>) {
   const { t } = useTranslation()
   const af = "rapport.BYG0011.byggoversikt.arealfordeling"
 
-  const etasjer = etasjePlan.filter((etasje) => etasje !== undefined)
+  const { etasjer, sum } = useMemo(() => {
+    const etasjer = etasjePlan.filter((etasje) => etasje !== undefined)
 
-  const sum = etasjer.reduce<{
-    antallBoenheter: number
-    bolig: number
-    annet: number
-    bra: number
-    bta: number
-  }>(
-    (acc, e) => ({
-      antallBoenheter: acc.antallBoenheter + (e.antallBoenheter ?? 0),
-      bolig: acc.bolig + (e.bruksareal?.boligAreal ?? 0),
-      annet: acc.annet + (e.bruksareal?.annetAreal ?? 0),
-      bra: acc.bra + (e.bruksareal?.totaltAreal ?? 0),
-      bta: acc.bta + (e.bruttoareal?.totaltAreal ?? 0),
-    }),
-    { antallBoenheter: 0, bolig: 0, annet: 0, bra: 0, bta: 0 },
-  )
+    const sum = etasjer.reduce<{
+      antallBoenheter: number
+      bolig: number
+      annet: number
+      bra: number
+      bta: number
+    }>(
+      (acc, e) => ({
+        antallBoenheter: acc.antallBoenheter + (e.antallBoenheter ?? 0),
+        bolig: acc.bolig + (e.bruksareal?.boligAreal ?? 0),
+        annet: acc.annet + (e.bruksareal?.annetAreal ?? 0),
+        bra: acc.bra + (e.bruksareal?.totaltAreal ?? 0),
+        bta: acc.bta + (e.bruttoareal?.totaltAreal ?? 0),
+      }),
+      { antallBoenheter: 0, bolig: 0, annet: 0, bra: 0, bta: 0 },
+    )
+
+    return { etasjer, sum }
+  }, [etasjePlan])
 
   return (
     <div className="space-y-4 px-2.5">

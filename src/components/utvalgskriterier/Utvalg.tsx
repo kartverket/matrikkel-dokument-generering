@@ -17,14 +17,15 @@ export type Kriterie = {
 
 type Felter = Record<string, boolean | string | number | null | undefined>
 
-type Props = {
+type Props = Readonly<{
   className?: string
   // Legger label og verdi på samme linje i stedet for stablet over hverandre
   inlineVerdier?: boolean
-} & (
-  | { title: string; gruppe?: never; kriterier: Kriterie[] }
-  | { title?: string; gruppe: string; kriterier: Felter | null | undefined }
-)
+}> &
+  (
+    | { title: string; gruppe?: never; kriterier: Kriterie[] }
+    | { title?: string; gruppe: string; kriterier: Felter | null | undefined }
+  )
 
 const uk = "rapport.BYG0011.utvalgskriterier"
 const MAKS_VISTE_VERDIER = 5
