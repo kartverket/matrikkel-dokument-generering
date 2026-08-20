@@ -24,10 +24,15 @@ export default defineConfig({
       animations: "disabled",
       caret: "hide",
       scale: "css",
+      // Allow tiny cross-OS rasterization differences (font antialiasing/subpixels).
+      maxDiffPixelRatio: 0.002,
     },
   },
   use: {
     baseURL: "http://127.0.0.1:5173",
+    locale: "nb-NO",
+    timezoneId: "Europe/Oslo",
+    colorScheme: "light",
     trace: "on-first-retry",
   },
   webServer: {
@@ -42,6 +47,7 @@ export default defineConfig({
       use: {
         ...devices["Desktop Chrome"],
         viewport: pdfLikeViewport,
+        deviceScaleFactor: 1,
       },
     },
   ],

@@ -62,6 +62,8 @@ API-endepunktet `/preview/` støtter begge output-formater:
 Prosjektet har Playwright-tester som tar snapshots av HTML-preview for BYG0011-caser.
 Disse ligger i en egen mappe: `visual-tests/`.
 
+Testoppsettet er stabilisert for tvers av maskiner/OS med fast locale/tidssone/skjermskala og en liten piksel-toleranse for renderer-forskjeller.
+
 - Kjør testene: `bun run test:visual`
 - Oppdater snapshots etter en bevisst UI-endring: `bun run test:visual:update`
 
