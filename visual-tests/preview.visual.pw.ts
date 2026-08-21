@@ -23,12 +23,9 @@ test.describe("BYG0011 preview visual regression", () => {
         )
       })
 
-      await expect(page.locator(".preview-page")).toHaveScreenshot(
-        `${testCase}.png`,
-        {
-          animations: "disabled",
-        },
-      )
+      await expect(page.locator(".preview-page")).toHaveScreenshot(`${testCase}.png`, {
+        animations: "disabled",
+      })
     })
   }
 })

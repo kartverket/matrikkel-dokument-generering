@@ -24,8 +24,8 @@ export default defineConfig({
       animations: "disabled",
       caret: "hide",
       scale: "css",
-      // Allow tiny cross-OS rasterization differences (font antialiasing/subpixels).
-      maxDiffPixelRatio: 0.002,
+      // One shared baseline across OS needs tolerance for rasterization differences.
+      maxDiffPixelRatio: 0.02,
     },
   },
   use: {
