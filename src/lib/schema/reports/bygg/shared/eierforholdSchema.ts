@@ -20,25 +20,24 @@ const personEierforholdRapportInfoSchema = personInfoSupportBaseSchema.extend({
 
 // Tar ikke med nøstet MatrikkelenhetEierforholdRapportInfo
 const matrikkelenhetEierforholdRapportInfoSchema = z.object({
-    // Felter pa MatrikkelenhetEierforholdRapportInfo
-    selveierskap: z.boolean().optional(),
-    personEierforhold: z.array(personEierforholdRapportInfoSchema).optional(),
-    matrikkelnrRapportInfo: matrikkelnrRapportInfoSchema.optional(),
-    eierforholdKode: eierforholdKodeSchema.optional(),
-    datoFra: z.iso.datetime({ offset: true }).nullable().optional(),
-    arealtype: z.string().optional(),
+  // Felter pa MatrikkelenhetEierforholdRapportInfo
+  selveierskap: z.boolean().optional(),
+  personEierforhold: z.array(personEierforholdRapportInfoSchema).optional(),
+  matrikkelnrRapportInfo: matrikkelnrRapportInfoSchema.optional(),
+  eierforholdKode: eierforholdKodeSchema.optional(),
+  datoFra: z.iso.datetime({ offset: true }).nullable().optional(),
+  arealtype: z.string().optional(),
 
-    // Getter-felter
-    matrikkelenhet: z.string().optional().meta({
-      description: "Matrikkelnummer med kommunenummer"
-    }),
-    harAndel: z.boolean().optional(),
-    teller: z.number().int().nonnegative().optional(),
-    nevner: z.number().int().nonnegative().optional(),
-    harPersonEierforhold: z.boolean().optional(),
-    eierforholdKodeEnum: enumRapportInfoSchema.optional(),
-  })
-
+  // Getter-felter
+  matrikkelenhet: z.string().optional().meta({
+    description: "Matrikkelnummer med kommunenummer",
+  }),
+  harAndel: z.boolean().optional(),
+  teller: z.number().int().nonnegative().optional(),
+  nevner: z.number().int().nonnegative().optional(),
+  harPersonEierforhold: z.boolean().optional(),
+  eierforholdKodeEnum: enumRapportInfoSchema.optional(),
+})
 
 export const eierforholdSchema = z
   .object({
@@ -56,7 +55,6 @@ export const eierforholdSchema = z
     description:
       "Eierforhold med matrikkelenhetseiere og personeiere, inkludert felter fra klasse og getter-basert presentasjon.",
   })
-
 
 export type Hjemmelshaver = z.infer<typeof eierforholdSchema>
 export type AktuellEier = Hjemmelshaver // Legacy kompabilitet
