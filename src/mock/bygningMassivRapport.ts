@@ -1,6 +1,6 @@
 import type { MassivBruksenhet } from "../lib/schema/reports/bygg/byg0001/bygningMassiv.schema.ts"
 import type { Byg0001Rapport } from "../lib/schema/reports/bygg/byg0001/bygningMassivRapport.schema.ts"
-import type { TiltaksHaver } from "../lib/schema/reports/bygg/byg0011/byggEndring.schema.ts"
+import type { TiltaksHaver } from "../lib/schema/reports/bygg/shared/kontaktperson.schema.ts"
 
 function isoDatetime(date: string) {
   return `${date}T00:00:00Z`
@@ -16,24 +16,22 @@ function bruksenhet({
   bruksAreal: number
 }): MassivBruksenhet {
   return {
-    bruksenhetsNr: id,
-    matrikkelNr: "3201/208/12/0",
-    adresse: `Belsetveien 114 ${id}, 1348 Rykkinn`,
+    bruksenhetsnummer: id,
     bruksenhetsTypeKode: "B",
     antallRom,
     antallBad: 1,
     antallWC: 1,
-    bruksAreal,
-    kjokkenTilgangKode: "1",
+    bruksareal: bruksAreal,
+    kjokkentilgang: "1",
   }
 }
 
 const tiltakshaver: TiltaksHaver = {
-  kontaktPersonKode: "T",
-  bruksenhetsNr: "H0101",
-  identifikasjonsNr: "01019012345",
+  kontaktpersonKode: "T",
+  bruksenhetsnummer: "H0101",
+  eierident: "01019012345",
   navn: "Fredrik Nordmann",
-  adresse: "Storgata 1, 0155 Oslo",
+  eierAdresse: "Storgata 1, 0155 Oslo",
 }
 
 const mockBygningMassivRapport: Byg0001Rapport = {
@@ -91,21 +89,11 @@ const mockBygningMassivRapport: Byg0001Rapport = {
           kontaktpersoner: [tiltakshaver],
         },
       ],
-      aktuelleEiere: [
-        {
-          bruksenhetsNr: "H0101",
-          eierforholdKode: "H",
-          identifikasjonsNr: "12051978",
-          erAvdoed: false,
-          navn: "Ola Nordmann",
-          adresse: "Belsetveien 114, 1348 Rykkinn",
-          andel: "1/2",
-        },
-      ],
+      aktuelleEiere: [],
       tiltakshavere: [tiltakshaver],
       enkeltminner: [
         {
-          enkeltminneNr: "86155-1",
+          enkeltminneNummer: "86155-1",
           enkeltminneArtKode: "1217",
           kulturminnekategoriKode: "E-ARK",
           vernetypeKode: "AUT",
