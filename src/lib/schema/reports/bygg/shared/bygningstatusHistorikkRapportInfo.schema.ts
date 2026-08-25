@@ -1,7 +1,6 @@
 import { z } from "@hono/zod-openapi"
 import { byggningsStatusKodeSchema } from "../koder/byggningsStatusKode.schema"
 
-
 export const bygningstatusHistorikkRapportInfoSchema = z
   .object({
     // Direkte felter pa klassen.
@@ -14,7 +13,7 @@ export const bygningstatusHistorikkRapportInfoSchema = z
 
     // Getter-baserte felter.
     bygningstatus: z.string().optional().meta({
-      description: "Bygnngstatus som tekst"
+      description: "Bygnngstatus som tekst",
     }),
     bygningstatusKode: byggningsStatusKodeSchema.optional().meta({
       description: "Bygningstatus som kodeverdi",

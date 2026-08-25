@@ -4,10 +4,10 @@ import { etasjeplanKodeSchema } from "../koder/etasjeplanKode.schema"
 export const etasjeRapportInfoSchema = z
   .object({
     etasjeplanKode: etasjeplanKodeSchema.optional().meta({
-        description: "Etasjeplan som kode"
+      description: "Etasjeplan som kode",
     }),
     etasjeplan: z.string().optional().meta({
-        description: "Etasjeplan som tekst"
+      description: "Etasjeplan som tekst",
     }),
     etasjenummer: z.number().int().nonnegative().optional(),
     antallBoenheter: z.number().int().nonnegative().optional(),
@@ -24,13 +24,10 @@ export const etasjeRapportInfoSchema = z
       description: "N=Ny, E=Endret, S=Slettet.",
       example: "N",
     }),
-
-
   })
   .meta({
     title: "EtasjeRapportInfo",
-    description:
-      "Etasjeinformasjon med felter fra EtasjeRapportInfo-klassen",
+    description: "Etasjeinformasjon med felter fra EtasjeRapportInfo-klassen",
   })
   .optional()
 

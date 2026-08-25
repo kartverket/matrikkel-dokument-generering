@@ -7,10 +7,10 @@ import { endringsKodeSchema } from "../koder/endringsKode.schema.ts"
 import { naeringsgruppeKodeSchema } from "../koder/naeringsgruppeKodeSchema.ts"
 import { opprinnelsesKodeSchema } from "../koder/opprinnelsesKode.schema.ts"
 import { vannforsyningsKodeSchema } from "../koder/vannforsyningsKode.ts"
-import { eierforholdSchema } from "../shared/eierforholdSchema.ts"
 import { bruksenhetSchema } from "../shared/bruksenhet.schema.ts"
 import { byggUtvalgskriterierSchema } from "../shared/byggUtvalgskriterier.schema.ts"
 import { bygningstatusHistorikkRapportInfoSchema } from "../shared/bygningstatusHistorikkRapportInfo.schema.ts"
+import { eierforholdSchema } from "../shared/eierforholdSchema.ts"
 import { enkeltminneSchema } from "../shared/enkeltminne.schema.ts"
 import { enumRapportInfoSchema } from "../shared/enumRapportInfo.schema.ts"
 import { etasjedataSchema } from "../shared/etasjedata.schema.ts"
@@ -48,7 +48,7 @@ const bygningSchema = z.object({
   avlopsKode: avlopsKodeSchema.optional(),
   harAvlopskode: z.boolean().optional(),
 
-  etasjedata: etasjedataSchema.optional(),  // Mangler getter for denne
+  etasjedata: etasjedataSchema.optional(), // Mangler getter for denne
   kommunenummer: z.string().optional(),
 
   opprinnelsesKode: opprinnelsesKodeSchema.optional(),
@@ -82,7 +82,9 @@ const bygningSchema = z.object({
   tiltakshavere: z.array(kontaktpersonSchema).optional(),
 
   harKontaktpersonderSomIkkeErTiltakshavere: z.boolean().optional(),
-  kontaktpersonerSomIkkeErTiltakshavere: z.array(kontaktpersonSchema).optional(),
+  kontaktpersonerSomIkkeErTiltakshavere: z
+    .array(kontaktpersonSchema)
+    .optional(),
 
   oppvarmingskoder: z.array(enumRapportInfoSchema),
   harOppvarming: z.boolean().optional(),
@@ -130,10 +132,10 @@ const bygningSchema = z.object({
 
   // Disse har 2 forskjellige gettere som gir 2 forskjellige resultat
   erFerdigstilt: z.boolean().optional().meta({
-    description: "Bygning har ferdigattest eller er tatt i bruk."
+    description: "Bygning har ferdigattest eller er tatt i bruk.",
   }),
   bygningErFerdigstilt: z.boolean().optional().meta({
-    description: "Bygningen er ferdigstilt"
+    description: "Bygningen er ferdigstilt",
   }),
 
   erBygningsendring: z.boolean().optional(),

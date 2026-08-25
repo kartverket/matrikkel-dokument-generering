@@ -10,10 +10,10 @@ import { byggningsStatusKodeSchema } from "../koder/byggningsStatusKode.schema.t
 import { bygningsTypeKodeSchema } from "../koder/bygningsTypeKodeSchema.ts"
 import { endringsKodeSchema } from "../koder/endringsKode.schema.ts"
 import { naeringsgruppeKodeSchema } from "../koder/naeringsgruppeKodeSchema.ts"
-import { eierforholdSchema } from "../shared/eierforholdSchema.ts"
 import { arealFordelingSchema } from "../shared/arealFordeling.schema.ts"
 import { bruksenhetSchema } from "../shared/bruksenhet.schema.ts"
 import { byggDatoSchema } from "../shared/byggDato.schema.ts"
+import { eierforholdSchema } from "../shared/eierforholdSchema.ts"
 import { enkeltminneSchema } from "../shared/enkeltminne.schema.ts"
 import { kontaktpersonSchema } from "../shared/kontaktperson.schema.ts"
 

@@ -1,14 +1,6 @@
 import { z } from "@hono/zod-openapi"
 
-const opprinnelsesKoder = [
-  " ",
-  "F",
-  "S",
-  "T",
-  "R",
-  "V",
-  "M",
-] as const
+const opprinnelsesKoder = [" ", "F", "S", "T", "R", "V", "M"] as const
 
 export const opprinnelsesKodeSchema = z.enum(opprinnelsesKoder).meta({
   id: "OpprinnelsesKode",
