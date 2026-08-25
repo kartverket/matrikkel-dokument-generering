@@ -18,6 +18,10 @@ const personEierforholdRapportInfoSchema = personInfoSupportBaseSchema.extend({
   eierforholdKodeEnum: enumRapportInfoSchema.optional(),
 })
 
+export type PersonEierforholdRapportInfo = NonNullable<
+  z.infer<typeof personEierforholdRapportInfoSchema>
+>
+
 // Tar ikke med nøstet MatrikkelenhetEierforholdRapportInfo
 const matrikkelenhetEierforholdRapportInfoSchema = z.object({
   // Felter pa MatrikkelenhetEierforholdRapportInfo
@@ -38,6 +42,10 @@ const matrikkelenhetEierforholdRapportInfoSchema = z.object({
   harPersonEierforhold: z.boolean().optional(),
   eierforholdKodeEnum: enumRapportInfoSchema.optional(),
 })
+
+export type MatrikkelenhetEierforholdRapportInfo = NonNullable<
+  z.infer<typeof matrikkelenhetEierforholdRapportInfoSchema>
+>
 
 export const eierforholdSchema = z
   .object({

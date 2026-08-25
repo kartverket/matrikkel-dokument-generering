@@ -26,3 +26,5 @@ export const mottakerAdresseSchema = z
       "Mottakeradresse med adresselinjer, postnummeromrade, landkode og beregnede adressefelt.",
   })
   .optional()
+
+export type MottakerAdresse = NonNullable<z.infer<typeof mottakerAdresseSchema>>

@@ -18,3 +18,5 @@ export const etasjedataSchema = z
       "Sumfelt for etasjeinformasjon pa bygning, inkludert areal- og boenhetssummer.",
   })
   .optional()
+
+export type Etasjedata = NonNullable<z.infer<typeof etasjedataSchema>>

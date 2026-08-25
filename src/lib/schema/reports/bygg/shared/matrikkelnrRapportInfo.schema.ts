@@ -15,3 +15,7 @@ export const matrikkelnrRapportInfoSchema = z
     }),
   })
   .optional()
+
+export type MatrikkelnrRapportInfo = NonNullable<
+  z.infer<typeof matrikkelnrRapportInfoSchema>
+>

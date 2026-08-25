@@ -14,3 +14,5 @@ export const enumRapportInfoSchema = z
     title: "EnumRapportInfo",
   })
   .optional()
+
+export type EnumRapportInfo = NonNullable<z.infer<typeof enumRapportInfoSchema>>

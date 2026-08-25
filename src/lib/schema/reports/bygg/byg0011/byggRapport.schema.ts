@@ -104,8 +104,6 @@ const bygningSchema = z.object({
   enkeltminner: z.array(enkeltminneSchema),
   harEnkeltminner: z.boolean().optional(),
 
-  endringer: z.array(byggEndringSchema),
-
   harRammetillatelse: z.boolean().optional(),
   rammetillatelsedato: z.iso.datetime({ offset: true }).optional(),
   harIgangsettingstillatelse: z.boolean().optional(),

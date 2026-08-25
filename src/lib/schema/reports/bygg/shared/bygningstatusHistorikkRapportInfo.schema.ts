@@ -29,3 +29,7 @@ export const bygningstatusHistorikkRapportInfoSchema = z
       "Historikk for bygningsstatus med felter fra klasse og getter-basert presentasjon.",
   })
   .optional()
+
+export type BygningstatusHistorikkRapportInfo = NonNullable<
+  z.infer<typeof bygningstatusHistorikkRapportInfoSchema>
+>

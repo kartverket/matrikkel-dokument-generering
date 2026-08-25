@@ -74,4 +74,4 @@ export const byggEndringSchema = z
   })
   .optional()
 
-export type BygningsEndring = z.infer<typeof byggEndringSchema>
+export type BygningsEndring = NonNullable<z.infer<typeof byggEndringSchema>>

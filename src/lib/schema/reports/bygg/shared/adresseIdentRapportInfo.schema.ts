@@ -36,3 +36,7 @@ export const adresseIdentRapportInfoSchema = z
       "Adresseidentifikasjon for vegadresse eller matrikkeladresse, inkludert felt fra klasse og getter-avledet visning.",
   })
   .optional()
+
+export type AdresseIdentRapportInfo = NonNullable<
+  z.infer<typeof adresseIdentRapportInfoSchema>
+>
