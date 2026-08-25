@@ -24,13 +24,14 @@ export type ArealEndring = {
   sum: ArealSum
 }
 
-type Props = {
+type Props = Readonly<{
   arealEndringer: ArealEndring[]
-}
+}>
 
 export default function ArealTabell({ arealEndringer }: Props) {
   const { t } = useTranslation()
   const tKey = `rapport.BYG0011.byggEndringer.areal` as const
+  const lopeNrLabel = t("rapport.BYG0011.byggEndringer.lopeNr")
 
   return (
     <SubSection title={t(`${tKey}.tittel`)} className="my-4">
@@ -67,7 +68,7 @@ export default function ArealTabell({ arealEndringer }: Props) {
                       rowSpan={etasjeRader.length}
                       className="w-20 align-top"
                     >
-                      {`${t(`rapport.BYG0011.byggEndringer.lopeNr`)} ${lopeNr}`}
+                      {`${lopeNrLabel} ${lopeNr}`}
                     </Table.HeaderCell>
                   )}
                   <Table.Cell>{r.etasjeplan}</Table.Cell>

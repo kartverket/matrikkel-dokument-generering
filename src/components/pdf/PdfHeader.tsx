@@ -1,13 +1,11 @@
 import { useTranslation } from "react-i18next"
 import type { RapportMeta } from "../../lib/schema/core/meta.schema.ts"
-import type { Bygning } from "../../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 
 interface PdfHeaderProps {
-  metadata: RapportMeta
-  bygning?: Bygning
+  readonly metadata: RapportMeta
 }
 
-export function PdfHeader({ metadata }: PdfHeaderProps) {
+export function PdfHeader({ metadata }: Readonly<PdfHeaderProps>) {
   const { t } = useTranslation()
   const { kommune, koordinatSystemKode } = metadata
 

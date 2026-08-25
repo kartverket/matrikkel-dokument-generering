@@ -1,4 +1,6 @@
 import { Paragraph } from "@kv-designsystem/react"
+import type { ParseKeys } from "i18next"
+import { useCallback, useMemo } from "react"
 import { useTranslation } from "react-i18next"
 import ArealTabell, { type ArealEndring } from "../components/ArealTabell.tsx"
 import BygningHeader from "../components/bygg/BygningHeader.tsx"
@@ -6,26 +8,17 @@ import EndringsTabell from "../components/EndringsTabell.tsx"
 import { Section } from "../components/Section.tsx"
 import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 
-type Props = {
+type Props = Readonly<{
   index: number
   bygning: Bygning
   bygningIndeks: number
   antallBygninger: number
-}
+}>
 
-export default function ByggEndringer({
-  index,
-  bygning,
-  bygningIndeks,
-  antallBygninger,
-}: Props) {
-  const { t } = useTranslation()
-  const tKey = "rapport.BYG0011.byggEndringer" as const
+type Endring = Exclude<Bygning["endringer"][number], undefined>
+type Translate = (key: string) => string
 
-  const endringer = bygning.endringer
-    .filter((e) => e !== undefined)
-    .toSorted((a, b) => a.lopeNr - b.lopeNr)
-
+function buildEndringsData(endringer: readonly Endring[], t: Translate) {
   // Enkeltfelt: én rad per endring (der feltet finnes)
   const metaEndringer = endringer
     .filter((e) => e.byggMetaEndring !== undefined)
@@ -154,6 +147,52 @@ export default function ByggEndringer({
           ? t(`koder.kulturminnekategori.${k.kulturminnekategoriKode}`)
           : undefined,
       })),
+  )
+
+  return {
+    metaEndringer,
+    arealEndringer,
+    koordinatEndringer,
+    datoEndringer,
+    aktuellEierEndringer,
+    tiltaksHaverEndringer,
+    bruksenhetEndringer,
+    sefrakEndringer,
+    kulturminneEndringer,
+  }
+}
+
+export default function ByggEndringer({
+  index,
+  bygning,
+  bygningIndeks,
+  antallBygninger,
+}: Props) {
+  const { t } = useTranslation()
+  const tKey = "rapport.BYG0011.byggEndringer" as const
+  const translate = useCallback((key: string) => t(key as ParseKeys), [t])
+
+  const endringer = useMemo(
+    () =>
+      bygning.endringer
+        .filter((e): e is Endring => e !== undefined)
+        .toSorted((a, b) => a.lopeNr - b.lopeNr),
+    [bygning.endringer],
+  )
+
+  const {
+    metaEndringer,
+    arealEndringer,
+    koordinatEndringer,
+    datoEndringer,
+    aktuellEierEndringer,
+    tiltaksHaverEndringer,
+    bruksenhetEndringer,
+    sefrakEndringer,
+    kulturminneEndringer,
+  } = useMemo(
+    () => buildEndringsData(endringer, translate),
+    [endringer, translate],
   )
 
   return (

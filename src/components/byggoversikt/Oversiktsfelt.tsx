@@ -4,14 +4,14 @@ import type { Bygningstypekode } from "../../lib/schema/reports/bygg/koder/bygni
 import type { NaeringsgruppeKode } from "../../lib/schema/reports/bygg/koder/naeringsgruppeKodeSchema.ts"
 
 interface Props {
-  byggTypeKode?: Bygningstypekode
-  antallBoenheter?: number
-  antallBruksenheter?: number
-  antallEtasjer?: number
-  naringsgruppeKode?: NaeringsgruppeKode
-  koordinater?: {
-    nord?: number
-    ost?: number
+  readonly byggTypeKode?: Bygningstypekode
+  readonly antallBoenheter?: number
+  readonly antallBruksenheter?: number
+  readonly antallEtasjer?: number
+  readonly naringsgruppeKode?: NaeringsgruppeKode
+  readonly koordinater?: {
+    readonly nord?: number
+    readonly ost?: number
   }
 }
 

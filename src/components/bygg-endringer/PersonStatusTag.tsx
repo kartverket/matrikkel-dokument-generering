@@ -1,10 +1,10 @@
 import { Tag } from "@kv-designsystem/react"
 
 interface Props {
-  erUtgatt: boolean
-  statuskode: string | null | undefined
-  utgattLabel: string
-  tom: string
+  readonly erUtgatt: boolean
+  readonly statuskode: string | null | undefined
+  readonly utgattLabel: string
+  readonly tom: string
 }
 
 export function PersonStatusTag({
@@ -12,7 +12,7 @@ export function PersonStatusTag({
   statuskode,
   utgattLabel,
   tom,
-}: Props) {
+}: Readonly<Props>) {
   return (
     <Tag data-color={erUtgatt ? "danger" : "success"} variant="outline">
       {erUtgatt ? utgattLabel : (statuskode ?? tom)}

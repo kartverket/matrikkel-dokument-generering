@@ -8,9 +8,3 @@ export type NormalizedByggRapport = Byg0011Rapport
  * This adapter layer exists to keep fixture data concise while schema compliance is enforced at load-time.
  */
 export type LegacyFixtureByggRapport = Byg0011Rapport
-
-/**
- * Alias for fixture creators.
- * @internal Use `LegacyFixtureByggRapport` in new code.
- */
-export type ByggRapport = LegacyFixtureByggRapport
