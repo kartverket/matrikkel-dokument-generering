@@ -9,8 +9,8 @@ import {
 import { byggningsStatusKodeSchema } from "../koder/byggningsStatusKode.schema.ts"
 import { bygningsTypeKodeSchema } from "../koder/bygningsTypeKodeSchema.ts"
 import { endringsKodeSchema } from "../koder/endringsKode.schema.ts"
-import { naringsgruppeKodeSchema } from "../koder/naringsgruppeKode.schema.ts"
-import { aktuellEierSchema } from "../shared/aktuellEier.schema.ts"
+import { naeringsgruppeKodeSchema } from "../koder/naeringsgruppeKodeSchema.ts"
+import { eierforholdSchema } from "../shared/eierforholdSchema.ts"
 import { arealFordelingSchema } from "../shared/arealFordeling.schema.ts"
 import { bruksenhetSchema } from "../shared/bruksenhet.schema.ts"
 import { byggDatoSchema } from "../shared/byggDato.schema.ts"
@@ -30,7 +30,7 @@ const bygningsendringSchema = valgfriObjekt({
   endringsKode: valgfriSchema(endringsKodeSchema),
   bygningsStatusKode: valgfriSchema(byggningsStatusKodeSchema),
   utgaattStatusKode: valgfriSchema(byggningsStatusKodeSchema),
-  naringsgruppeKode: valgfriSchema(naringsgruppeKodeSchema),
+  naringsgruppeKode: valgfriSchema(naeringsgruppeKodeSchema),
 
   byggEndringDatoer: valgfriSchema(byggDatoSchema),
 
@@ -59,7 +59,7 @@ export const bygningMassivSchema = valgfriObjekt({
   bygningsStatusKode: valgfriSchema(byggningsStatusKodeSchema),
   utgaattStatusKode: valgfriSchema(byggningsStatusKodeSchema),
   bygningsTypeKode: valgfriSchema(bygningsTypeKodeSchema),
-  naringsgruppeKode: valgfriSchema(naringsgruppeKodeSchema),
+  naringsgruppeKode: valgfriSchema(naeringsgruppeKodeSchema),
 
   nord: valgfriNummer.meta({
     description:
@@ -81,7 +81,7 @@ export const bygningMassivSchema = valgfriObjekt({
 
   bruksenheter: valgfriListe(bruksenhetSchema),
   bygningsendringer: valgfriListe(bygningsendringSchema),
-  aktuelleEiere: valgfriListe(aktuellEierSchema).meta({
+  aktuelleEiere: valgfriListe(eierforholdSchema).meta({
     title: "Hjemmelshaver",
     description: "Hjemmelshaver eller aktuell eier for bygningen.",
   }),

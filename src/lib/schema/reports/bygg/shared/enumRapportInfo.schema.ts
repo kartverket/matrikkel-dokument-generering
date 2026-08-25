@@ -1,12 +1,16 @@
-import { valgfriObjekt, valgfriString } from "../../../core/utils/zodUtils"
+import { z } from "@hono/zod-openapi"
 
-// Placeholder until EnumRapportInfo shape is finalized in source system.
-export const enumRapportInfoSchema = valgfriObjekt({
-  kodeverdi: valgfriString,
-  navn: valgfriString,
-  id: valgfriString,
-}).meta({
-  title: "EnumRapportInfo",
-  description:
-    "Forelopig schema for kodelisteverdier brukt av oppvarmingskoder og energikilder.",
-})
+export const enumRapportInfoSchema = z
+  .object({
+    kode: z.string().optional(),
+    kodeverdi: z.string().optional(),
+    beskrivelse: z.string().nullable().optional(),
+    nyEndretSlettet: z.string().optional().meta({
+      description: "N=Ny, E=Endret, S=Slettet.",
+      example: "N",
+    }),
+  })
+  .meta({
+    title: "EnumRapportInfo",
+  })
+  .optional()

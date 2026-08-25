@@ -1,21 +1,20 @@
-import {
-  valgfriHeltall,
-  valgfriNummer,
-  valgfriObjekt,
-} from "../../../core/utils/zodUtils"
+import { z } from "@hono/zod-openapi"
 
-export const etasjedataSchema = valgfriObjekt({
-  bruksarealTilAnnet: valgfriNummer,
-  bruttoarealTilAnnet: valgfriNummer,
-  alternativtAreal: valgfriNummer,
-  alternativtAreal2: valgfriNummer,
-  bruksarealTotalt: valgfriNummer,
-  bruttoarealTotalt: valgfriNummer,
-  bruksarealTilBolig: valgfriNummer,
-  bruttoarealTilBolig: valgfriNummer,
-  antallBoenheter: valgfriHeltall,
-}).meta({
-  title: "Etasjedata",
-  description:
-    "Aggregert areal- og boenhetsinformasjon pa bygning. Feltlisten kan utvides ved behov.",
-})
+export const etasjedataSchema = z
+  .object({
+    antallBoenheter: z.number().int().optional(),
+    bruksarealTilBolig: z.number().optional(),
+    bruksarealTilAnnet: z.number().optional(),
+    bruksarealTotalt: z.number().optional(),
+    alternativtAreal: z.number().optional(),
+    alternativtAreal2: z.number().optional(),
+    bruttoarealTilBolig: z.number().optional(),
+    bruttoarealTilAnnet: z.number().optional(),
+    bruttoarealTotalt: z.number().optional(),
+  })
+  .meta({
+    title: "Etasjedata",
+    description:
+      "Sumfelt for etasjeinformasjon pa bygning, inkludert areal- og boenhetssummer.",
+  })
+  .optional()

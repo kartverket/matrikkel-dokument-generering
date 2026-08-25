@@ -1,11 +1,31 @@
 import { z } from "@hono/zod-openapi"
 
-// Placeholder until OpprinnelsesKodeId values are mapped.
-export const opprinnelsesKodeSchema = z.string().min(1).meta({
+const opprinnelsesKoder = [
+  " ",
+  "F",
+  "S",
+  "T",
+  "R",
+  "V",
+  "M",
+] as const
+
+export const opprinnelsesKodeSchema = z.enum(opprinnelsesKoder).meta({
   id: "OpprinnelsesKode",
-  description:
-    "Forelopig schema for opprinnelseskode. Oppdateres med eksplisitt kodeliste nar kodeverdiene er avklart.",
-  example: "1",
+  description: `Angir hvordan bygget opprinnelig ble registrert i GAB eller matrikkel.
+
+Koder:
+
+\`\`\`
+<blank>: Ikke oppgitt
+F: Fylkesforsyningsnemnda
+S: SEFRAK
+T: Generert Pga Tilbygg
+R: Ruin Ved Registreringspunkt SEFRAK
+V: Vanlig Registrering
+M: Massivregistrering
+\`\`\``,
+  example: "V",
 })
 
 export type OpprinnelsesKode = z.infer<typeof opprinnelsesKodeSchema>

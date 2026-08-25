@@ -1,16 +1,32 @@
-import {
-  valgfriDato,
-  valgfriObjekt,
-  valgfriSchema,
-} from "../../../core/utils/zodUtils"
+import { z } from "@hono/zod-openapi"
 import { byggningsStatusKodeSchema } from "../koder/byggningsStatusKode.schema"
 
-// Placeholder until BygningstatusHistorikkRapportInfo is fully specified.
-export const bygningstatusHistorikkRapportInfoSchema = valgfriObjekt({
-  bygningsstatusKode: valgfriSchema(byggningsStatusKodeSchema),
-  dato: valgfriDato,
-  registrertDato: valgfriDato,
-}).meta({
-  title: "BygningstatusHistorikkRapportInfo",
-  description: "Forelopig schema for historiske bygningsstatusoppforinger.",
-})
+
+export const bygningstatusHistorikkRapportInfoSchema = z
+  .object({
+    // Direkte felter pa klassen.
+    dato: z.iso.datetime({ offset: true }).nullable().optional(),
+    regDato: z.iso.datetime({ offset: true }).nullable().optional(),
+    nyEndretSlettet: z.string().optional().meta({
+      description: "N=Ny, E=Endret, S=Slettet.",
+      example: "N",
+    }),
+
+    // Getter-baserte felter.
+    bygningstatus: z.string().optional().meta({
+      description: "Bygnngstatus som tekst"
+    }),
+    bygningstatusKode: byggningsStatusKodeSchema.optional().meta({
+      description: "Bygningstatus som kodeverdi",
+    }),
+    harRegDato: z.boolean().optional(),
+    harDato: z.boolean().optional(),
+    datoSOSI: z.string().optional(),
+    regDatoSOSI: z.string().optional(),
+  })
+  .meta({
+    title: "BygningstatusHistorikkRapportInfo",
+    description:
+      "Historikk for bygningsstatus med felter fra klasse og getter-basert presentasjon.",
+  })
+  .optional()
