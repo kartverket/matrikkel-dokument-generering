@@ -29,12 +29,16 @@ export const nb = {
       generertTidspunkt: "Generert tidspunkt",
     },
     BYG0011: {
-      rapportTittel: "Bygg Rapport",
+      rapportTittel: "Byggrapport",
       title: "Bygning {{bygningsnr}} – {{bygningstype}}",
       utvalgskriterier: {
         title: "Utvalgskriterier",
-        ja: "Ja",
-        nei: "Nei",
+        avgrensning: "Avgrensning",
+        filtrering: "Filtrering",
+        innholdIRapporten: "Innhold i rapporten",
+        innhold: "Innhold",
+        byggstatus: "Byggstatus",
+        periode: "Periode",
         ikkeAngitt: "Ikke angitt",
         omfang: {
           tittel: "Bygninger valgt",

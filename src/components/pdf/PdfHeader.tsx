@@ -6,22 +6,30 @@ interface PdfHeaderProps {
 }
 
 export function PdfHeader({ metadata }: Readonly<PdfHeaderProps>) {
-  const { t } = useTranslation()
-  const { kommune, koordinatSystemKode } = metadata
+  const { i18n, t } = useTranslation()
+  const { kommune, koordinatSystemKode, generertTidspunkt } = metadata
 
-  // Gjør slik at kommunenavnet alltid starter med stor bokstav og resten er små bokstaver, ofte navnet blir sendt i store bokstaver fra M22.
-  const kommuneNavn =
-    kommune.kommuneNavn.charAt(0).toUpperCase() +
-    kommune.kommuneNavn.slice(1).toLowerCase()
+  const generertDato = new Date(generertTidspunkt)
+  const harGyldigDato = Number.isFinite(generertDato.getTime())
+
+  const rapportDato = harGyldigDato
+    ? new Intl.DateTimeFormat(i18n.language, {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+        timeZone: "Europe/Oslo",
+      }).format(generertDato)
+    : ""
 
   return (
-    <div className="flex w-full justify-between px-[18mm] text-kv-subtle text-pdf-label">
-      <span className="whitespace-pre">
-        {`${kommune.kommuneNr} ${kommuneNavn} `}
-      </span>
-      <span className="whitespace-pre">
-        {t(`koder.koordinat.${koordinatSystemKode}`)}
-      </span>
+    <div className="w-full text-kv-subtle text-pdf-label leading-tight">
+      <div className="grid w-full grid-cols-3 items-center">
+        <span className="truncate">{`${kommune.kommuneNr} ${kommune.kommuneNavn}`}</span>
+        <span className="text-center">{rapportDato}</span>
+        <span className="whitespace-pre text-right">
+          {t(`koder.koordinat.${koordinatSystemKode}`)}
+        </span>
+      </div>
     </div>
   )
 }

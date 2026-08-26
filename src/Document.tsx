@@ -1,5 +1,6 @@
+import { Heading } from "@kv-designsystem/react"
 import { renderToStaticMarkup } from "react-dom/server"
-import { I18nextProvider } from "react-i18next"
+import { I18nextProvider, useTranslation } from "react-i18next"
 import { PdfFooter } from "./components/pdf/PdfFooter.tsx"
 import { PdfHeader } from "./components/pdf/PdfHeader.tsx"
 import { createI18n } from "./lib/i18n/createI18n"
@@ -8,14 +9,23 @@ import ByggEndringer from "./sections/ByggEndringer.tsx"
 import Byggoversikt from "./sections/Byggoversikt.tsx"
 import { ByggUtvalgskriterier } from "./sections/ByggUtvalgskriterier.tsx"
 
-export function DocumentComponent({
+function Byg0011DocumentRenderer({
   rapport,
 }: Readonly<{ rapport: Byg0011Rapport }>) {
+  const { t } = useTranslation()
   const { bygninger } = rapport
 
   return (
-    <main className="mx-auto max-w-2xl">
-      <ByggUtvalgskriterier index={1} kriterier={rapport.utvalgskriterier} />
+    <main className="mx-auto max-w-2xl px-2">
+      <Heading
+        level={1}
+        className="mb-8 break-after-avoid font-medium text-kv-title"
+      >
+        {t("rapport.BYG0011.rapportTittel")}
+      </Heading>
+
+      <ByggUtvalgskriterier kriterier={rapport.utvalgskriterier} />
+
       {bygninger.map((bygning, indeks) => (
         <Byggoversikt
           key={bygning.bygningsnr}
@@ -36,6 +46,12 @@ export function DocumentComponent({
       ))}
     </main>
   )
+}
+
+export function DocumentComponent({
+  rapport,
+}: Readonly<{ rapport: Byg0011Rapport }>) {
+  return <Byg0011DocumentRenderer rapport={rapport} />
 }
 
 export interface RenderedDocument {
@@ -63,10 +79,7 @@ export function renderDocument(
 
   const footerBody = renderToStaticMarkup(
     <I18nextProvider i18n={i18n}>
-      <PdfFooter
-        rapportKode={rapport.rapportKode}
-        generertTidspunkt={rapport.metadata.generertTidspunkt}
-      />
+      <PdfFooter metadata={rapport.metadata} />
     </I18nextProvider>,
   )
   const html = `<!DOCTYPE html>
