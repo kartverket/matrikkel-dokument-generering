@@ -4,6 +4,7 @@ import { avlopsKodeSchema } from "../koder/avlopsKode.ts"
 import { byggningsStatusKodeSchema } from "../koder/byggningsStatusKode.schema.ts"
 import { bygningsTypeKodeSchema } from "../koder/bygningsTypeKodeSchema.ts"
 import { endringsKodeSchema } from "../koder/endringsKode.schema.ts"
+import { jaNeiEnum } from "../koder/jaNeiEnumType.ts"
 import { naringsgruppeKodeSchema } from "../koder/naringsgruppeKodeSchema.ts"
 import { opprinnelsesKodeSchema } from "../koder/opprinnelsesKode.schema.ts"
 import { vannforsyningsKodeSchema } from "../koder/vannforsyningsKode.ts"
@@ -33,7 +34,7 @@ const bygningSchema = z.object({
   }),
 
   bygningsendringsKode: endringsKodeSchema.optional(),
-  harUfullstendigAreal: z.union([z.literal("Ja"), z.literal("Nei")]).optional(),
+  harUfullstendigAreal: jaNeiEnum.optional(),
 
   bygningstypeKode: bygningsTypeKodeSchema.optional(),
   naringsgruppeKode: naringsgruppeKodeSchema.optional(),

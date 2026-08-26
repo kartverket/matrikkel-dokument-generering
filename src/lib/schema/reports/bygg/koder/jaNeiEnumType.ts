@@ -15,4 +15,4 @@ Nei
   example: "Ja",
 })
 
-export type JaNeiEnum = z.infer<typeof jaNeiEnum>
+export type JaNeiEnumType = z.infer<typeof jaNeiEnum>
