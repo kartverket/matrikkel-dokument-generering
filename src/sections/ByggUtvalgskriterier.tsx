@@ -125,6 +125,11 @@ export function ByggUtvalgskriterier({ kriterier }: Readonly<Props>) {
   const innholdIRapporten: string[] = []
   leggTilHvisSann(
     innholdIRapporten,
+    kriterier.omfang?.inkluderFrededeBygninger,
+    t(`${uk}.omfang.inkluderFrededeBygninger`),
+  )
+  leggTilHvisSann(
+    innholdIRapporten,
     kriterier.omfang?.inkluderBygninger,
     t(`${uk}.omfang.inkluderBygninger`),
   )
