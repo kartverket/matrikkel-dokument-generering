@@ -1,11 +1,12 @@
 import { z } from "@hono/zod-openapi"
 import { koordinatSystemKodeSchema } from "../../../core/koder/koordinatSystemKode.schema.ts"
+import { kodeSchemaOgTekst } from "../../../core/utils/zodUtils.ts"
 import { posisjonskvalitetSchema } from "./posisjonskvalitet.schema.ts"
 
 export const representasjonspunktSchema = z
   .object({
-    koordinatsystemKode: koordinatSystemKodeSchema.optional(),
-    originalKoordinatsystemKode: koordinatSystemKodeSchema.optional(),
+    koordinatsystemKode: kodeSchemaOgTekst(koordinatSystemKodeSchema),
+    originalKoordinatsystemKode: kodeSchemaOgTekst(koordinatSystemKodeSchema),
     kvalitet: posisjonskvalitetSchema.optional(),
 
     koordinatkvalitetKode: z.string().optional(), // TODO: Fiks kodeverdi for denne?

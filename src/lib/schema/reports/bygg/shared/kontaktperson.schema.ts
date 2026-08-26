@@ -1,4 +1,5 @@
 import { z } from "@hono/zod-openapi"
+import { kodeSchemaOgTekst } from "../../../core/utils/zodUtils.ts"
 import { kontaktPersonKodeSchema } from "../koder/kontaktPersonKode.schema"
 import { nyEndretSlettetEnum } from "../koder/nyEndretSlettetEnum.ts"
 import { personInfoSupportBaseSchema } from "./personInfoSupport.schema.ts"
@@ -8,9 +9,7 @@ export const kontaktpersonSchema = personInfoSupportBaseSchema
     datofra: z.iso.datetime({ offset: true }).optional(),
     nyEndretSlettet: nyEndretSlettetEnum.optional(),
 
-    kontaktpersonKode: kontaktPersonKodeSchema.optional().meta({
-      description: "Rolle som kodeverdi",
-    }),
+    kontaktpersonKode: kodeSchemaOgTekst(kontaktPersonKodeSchema),
     datofraSOSI: z.string().optional().meta({
       description: "Kontaktpersonens fra-dato som tekst (sosi)",
     }),

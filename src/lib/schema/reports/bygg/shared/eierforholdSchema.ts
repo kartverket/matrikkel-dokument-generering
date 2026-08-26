@@ -1,11 +1,12 @@
 import { z } from "@hono/zod-openapi"
+import { kodeSchemaOgTekst } from "../../../core/utils/zodUtils.ts"
 import { eierforholdKodeSchema } from "../koder/eierforholdKode.schema"
 import { enumRapportInfoSchema } from "./enumRapportInfo.schema.ts"
 import { matrikkelnrRapportInfoSchema } from "./matrikkelnrRapportInfo.schema.ts"
 import { personInfoSupportBaseSchema } from "./personInfoSupport.schema.ts"
 
 const personEierforholdRapportInfoSchema = personInfoSupportBaseSchema.extend({
-  eierforholdKode: eierforholdKodeSchema.optional(),
+  eierforholdKode: kodeSchemaOgTekst(eierforholdKodeSchema),
   andelsNummer: z.number().int().nonnegative().optional(),
   datoTil: z.iso.datetime({ offset: true }).nullable().optional(),
   datoFra: z.iso.datetime({ offset: true }).nullable().optional(),
@@ -25,7 +26,7 @@ const matrikkelenhetEierforholdRapportInfoSchema = z.object({
   selveierskap: z.boolean().optional(),
   personEierforhold: z.array(personEierforholdRapportInfoSchema).optional(),
   matrikkelnrRapportInfo: matrikkelnrRapportInfoSchema.optional(),
-  eierforholdKode: eierforholdKodeSchema.optional(),
+  eierforholdKode: kodeSchemaOgTekst(eierforholdKodeSchema),
   datoFra: z.iso.datetime({ offset: true }).optional(),
   arealtype: z.string().optional(),
 

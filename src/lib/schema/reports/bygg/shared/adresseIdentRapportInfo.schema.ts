@@ -6,7 +6,6 @@ export const adresseIdentRapportInfoSchema = z
     matrikkelnrRapportInfo: matrikkelnrRapportInfoSchema.optional(),
     adresseNavn: z.string().optional(),
     bokstav: z.string().optional(),
-    adresseKode: z.number().int().nonnegative().optional(), // Mangler getter i m22
     nummer: z.number().int().nonnegative().optional(),
     undernummer: z.string().optional(),
 

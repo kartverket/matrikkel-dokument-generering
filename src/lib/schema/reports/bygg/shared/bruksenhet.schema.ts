@@ -1,4 +1,5 @@
 import { z } from "@hono/zod-openapi"
+import { kodeSchemaOgTekst } from "../../../core/utils/zodUtils.ts"
 import { bruksenhetsKodeSchema } from "../koder/bruksenhetsTypeKode.schema"
 import { etasjeplanKodeSchema } from "../koder/etasjeplanKode.schema"
 import { kjokkenTilgangKodeSchema } from "../koder/kjokkenTilgangKode"
@@ -14,9 +15,9 @@ export const bruksenhetSchema = z
       example: "H0101",
     }),
 
-    bruksenhetsTypeKode: bruksenhetsKodeSchema.optional(),
+    bruksenhetsTypeKode: kodeSchemaOgTekst(bruksenhetsKodeSchema),
 
-    etasjeplanKode: etasjeplanKodeSchema.optional(),
+    etasjeplanKode: kodeSchemaOgTekst(etasjeplanKodeSchema),
 
     bruksareal: z.number().optional().meta({
       description:
@@ -29,9 +30,7 @@ export const bruksenhetSchema = z
     etasjenummer: z.string().optional(),
     lopenummer: z.string().optional(),
 
-    kjokkentilgang: z
-      .union([kjokkenTilgangKodeSchema, z.literal("*")])
-      .optional(),
+    kjokkentilgang: kodeSchemaOgTekst(kjokkenTilgangKodeSchema),
 
     matrikkelnrRapportInfo: matrikkelnrRapportInfoSchema.optional(),
     adresseIdentRapportInfo: adresseIdentRapportInfoSchema.optional(),
@@ -43,4 +42,4 @@ export const bruksenhetSchema = z
   })
   .optional()
 
-export type Bruksenhet = z.infer<typeof bruksenhetSchema>
+export type Bruksenhet = NonNullable<z.infer<typeof bruksenhetSchema>>

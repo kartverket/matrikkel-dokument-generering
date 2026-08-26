@@ -1,4 +1,5 @@
 import { z } from "@hono/zod-openapi"
+import { kodeSchemaOgTekst } from "../../../core/utils/zodUtils.ts"
 import { avlopsKodeSchema } from "../koder/avlopsKode.ts"
 import { byggningsStatusKodeSchema } from "../koder/byggningsStatusKode.schema.ts"
 import { bygningsTypeKodeSchema } from "../koder/bygningsTypeKodeSchema.ts"
@@ -16,19 +17,17 @@ export const byggEndringSchema = z
   .object({
     bygningsnummer: z.number().int().nonnegative().optional(),
     lopenummer: z.number().int().nonnegative().optional(),
-    bygningsendringsKode: endringsKodeSchema.optional().meta({
-      description: "Bygningsendringskode som kodeverdi",
-    }),
+    bygningsendringsKode: kodeSchemaOgTekst(endringsKodeSchema),
     harUfullstendigAreal: jaNeiEnum.optional(),
-    bygningstypeKode: bygningsTypeKodeSchema.optional(),
-    naeringsgruppeKode: naringsgruppeKodeSchema.optional(),
-    bygningstatusKode: byggningsStatusKodeSchema.optional(),
+    bygningstypeKode: kodeSchemaOgTekst(bygningsTypeKodeSchema),
+    naeringsgruppeKode: kodeSchemaOgTekst(naringsgruppeKodeSchema),
+    bygningstatusKode: kodeSchemaOgTekst(byggningsStatusKodeSchema),
     bebygdAreal: z.number().optional(),
-    vannforsyningsKode: vannforsyningsKodeSchema.optional(),
-    avlopsKode: avlopsKodeSchema.optional(),
+    vannforsyningsKode: kodeSchemaOgTekst(vannforsyningsKodeSchema),
+    avlopsKode: kodeSchemaOgTekst(avlopsKodeSchema),
     etasjedata: etasjedataSchema.optional(),
     kommunenummer: z.string().optional(),
-    opprinnelsesKode: opprinnelsesKodeSchema.optional(),
+    opprinnelsesKode: kodeSchemaOgTekst(opprinnelsesKodeSchema),
     bruksenheter: z.array(bruksenhetSchema).optional(),
     historikker: z.array(bygningstatusHistorikkRapportInfoSchema).optional(),
     objektnr: z.number().int().optional(),

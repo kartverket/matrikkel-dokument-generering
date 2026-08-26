@@ -1,4 +1,5 @@
 import { z } from "@hono/zod-openapi"
+import { kodeSchemaOgTekst } from "../../../core/utils/zodUtils.ts"
 import { byggningsStatusKodeSchema } from "../koder/byggningsStatusKode.schema"
 import { nyEndretSlettetEnum } from "../koder/nyEndretSlettetEnum.ts"
 
@@ -8,9 +9,7 @@ export const bygningstatusHistorikkRapportInfoSchema = z
     regDato: z.iso.datetime({ offset: true }).nullable().optional(),
     nyEndretSlettet: nyEndretSlettetEnum.optional(),
 
-    bygningstatusKode: byggningsStatusKodeSchema.optional().meta({
-      description: "Bygningstatus som kodeverdi",
-    }),
+    bygningstatusKode: kodeSchemaOgTekst(byggningsStatusKodeSchema),
     datoSOSI: z.string().optional(),
     regDatoSOSI: z.string().optional(),
   })

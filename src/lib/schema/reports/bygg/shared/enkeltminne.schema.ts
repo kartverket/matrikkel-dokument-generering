@@ -1,4 +1,5 @@
 import { z } from "@hono/zod-openapi"
+import { kodeSchemaOgTekst } from "../../../core/utils/zodUtils.ts"
 import { enkeltminneArtKodeSchema } from "../koder/enkeltminneArtKode.schema"
 import { kulturminnekategoriKodeSchema } from "../koder/kulturminnekategoriKode.schema"
 import { vernetypeKodeSchema } from "../koder/vernetypeKode.schema"
@@ -12,9 +13,9 @@ export const enkeltminneSchema = z
       description:
         "Entydig identifikasjon av kulturminnet (enkeltminnet) knyttet til bygningen, fra Riksantikvarens database Askeladden.",
     }),
-    enkeltminneArtKode: enkeltminneArtKodeSchema.optional(),
-    vernetypeKode: vernetypeKodeSchema.optional(),
-    kulturminnekategoriKode: kulturminnekategoriKodeSchema.optional(),
+    enkeltminneArtKode: kodeSchemaOgTekst(enkeltminneArtKodeSchema),
+    vernetypeKode: kodeSchemaOgTekst(vernetypeKodeSchema),
+    kulturminnekategoriKode: kodeSchemaOgTekst(kulturminnekategoriKodeSchema),
   })
   .meta({
     title: "Enkeltminne",
