@@ -17,6 +17,7 @@ import { enumRapportInfoSchema } from "../shared/enumRapportInfo.schema.ts"
 import { etasjedataSchema } from "../shared/etasjedata.schema.ts"
 import { etasjeRapportInfoSchema } from "../shared/etasjeRapportInfo.schema.ts"
 import { kontaktpersonSchema } from "../shared/kontaktperson.schema.ts"
+import { representasjonspunktSchema } from "../shared/representasjonspunkt.schema.ts"
 import { sefrakSchema } from "../shared/sefrak.schema.ts"
 import { byggEndringSchema } from "./byggEndring.schema.ts"
 
@@ -49,16 +50,7 @@ const bygningSchema = z.object({
 
   opprinnelsesKode: opprinnelsesKodeSchema.optional(),
 
-  harRepresentasjonspunkt: z.boolean().optional(),
-  harStedfestingVerifisertRepPunkt: z.boolean().optional(),
-  nord: z.number().optional(),
-  nordSOSI: z.string().optional(),
-  ost: z.number().optional(),
-  ostSOSI: z.string().optional(),
-
-  koordinatkvalitetKode: z.string().optional(),
-  harKoordinatkvalitetkode: z.boolean().optional(),
-  koordinatsystem: z.string().optional(),
+  representasjonspunkt: representasjonspunktSchema.optional(),
 
   bruksenheter: z.array(bruksenhetSchema),
 
