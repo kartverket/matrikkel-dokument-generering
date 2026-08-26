@@ -3,7 +3,8 @@ import { avlopsKodeSchema } from "../koder/avlopsKode.ts"
 import { byggningsStatusKodeSchema } from "../koder/byggningsStatusKode.schema.ts"
 import { bygningsTypeKodeSchema } from "../koder/bygningsTypeKodeSchema.ts"
 import { endringsKodeSchema } from "../koder/endringsKode.schema.ts"
-import { naeringsgruppeKodeSchema } from "../koder/naeringsgruppeKodeSchema.ts"
+import { jaNeiEnum } from "../koder/jaNeiEnum.ts"
+import { naringsgruppeKodeSchema } from "../koder/naringsgruppeKodeSchema.ts"
 import { opprinnelsesKodeSchema } from "../koder/opprinnelsesKode.schema.ts"
 import { vannforsyningsKodeSchema } from "../koder/vannforsyningsKode.ts"
 import { bruksenhetSchema } from "../shared/bruksenhet.schema.ts"
@@ -18,11 +19,9 @@ export const byggEndringSchema = z
     bygningsendringsKode: endringsKodeSchema.optional().meta({
       description: "Bygningsendringskode som kodeverdi",
     }),
-    harUfullstendigAreal: z
-      .union([z.literal("Ja"), z.literal("Nei")])
-      .optional(),
+    harUfullstendigAreal: jaNeiEnum.optional(),
     bygningstypeKode: bygningsTypeKodeSchema.optional(),
-    naeringsgruppeKode: naeringsgruppeKodeSchema.optional(),
+    naeringsgruppeKode: naringsgruppeKodeSchema.optional(),
     bygningstatusKode: byggningsStatusKodeSchema.optional(),
     bebygdAreal: z.number().optional(),
     vannforsyningsKode: vannforsyningsKodeSchema.optional(),
@@ -40,30 +39,7 @@ export const byggEndringSchema = z
     utgattDato: z.iso.datetime({ offset: true }).optional(),
     utgattBeskrivelse: z.string().optional(),
 
-    harKontaktpersoner: z.boolean().optional(),
-    harLopenr: z.boolean().optional(), // Kan utledes fra om lopenummer er ulik `null` og mer enn 0
-    bygningsendringskode: z.string().optional().meta({
-      description: "Bygningsendringskode som tekst",
-    }),
-    harOpprinnelseskode: z.boolean().optional(), // Kan utledes fra om opprinnelsesKode er `null` eller ikke
-    harNaeringsgruppekode: z.boolean().optional(), // False om opprinnelsesKode er `null` eller `Ikke Oppgitt`
-    harRammetillatelse: z.boolean().optional(),
-    rammetillatelseDato: z.iso.datetime({ offset: true }).optional(),
-    harIgangsettingstillatelse: z.boolean().optional(),
-    igangsettingstillatelseDato: z.iso.datetime({ offset: true }).optional(),
-    harTattibruk: z.boolean().optional(),
-    tattibrukDato: z.iso.datetime({ offset: true }).optional(),
-    harMidlbrukstillatelese: z.boolean().optional(),
-    midlbrukstillateleseDato: z.iso.datetime({ offset: true }).optional(),
-    harFerdigattest: z.boolean().optional(),
-    ferdigattestDato: z.iso.datetime({ offset: true }).optional(),
-    harBebygdAreal: z.boolean().optional(),
     harHeis: z.boolean().optional(),
-    harVannforsyningskode: z.boolean().optional(), // False om vannforsyningskode er `null` eller `Ikke Oppgitt`
-    harAvlopskode: z.boolean().optional(), // False om avlopskode er `null` eller `Ikke Oppgitt`
-
-    harBruksenheter: z.boolean().optional(), // False om bruksenheter er tom
-    harBygningsstatuskoder: z.boolean().optional(), // False om bygningsstatuser er tom
     bygningErFerdigstilt: z.boolean().optional(),
   })
   .optional()

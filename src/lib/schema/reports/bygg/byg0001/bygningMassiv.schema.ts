@@ -9,7 +9,7 @@ import {
 import { byggningsStatusKodeSchema } from "../koder/byggningsStatusKode.schema.ts"
 import { bygningsTypeKodeSchema } from "../koder/bygningsTypeKodeSchema.ts"
 import { endringsKodeSchema } from "../koder/endringsKode.schema.ts"
-import { naeringsgruppeKodeSchema } from "../koder/naeringsgruppeKodeSchema.ts"
+import { naringsgruppeKodeSchema } from "../koder/naringsgruppeKodeSchema.ts"
 import { arealFordelingSchema } from "../shared/arealFordeling.schema.ts"
 import { bruksenhetSchema } from "../shared/bruksenhet.schema.ts"
 import { byggDatoSchema } from "../shared/byggDato.schema.ts"
@@ -30,7 +30,7 @@ const bygningsendringSchema = valgfriObjekt({
   endringsKode: valgfriSchema(endringsKodeSchema),
   bygningsStatusKode: valgfriSchema(byggningsStatusKodeSchema),
   utgaattStatusKode: valgfriSchema(byggningsStatusKodeSchema),
-  naringsgruppeKode: valgfriSchema(naeringsgruppeKodeSchema),
+  naringsgruppeKode: valgfriSchema(naringsgruppeKodeSchema),
 
   byggEndringDatoer: valgfriSchema(byggDatoSchema),
 
@@ -59,7 +59,7 @@ export const bygningMassivSchema = valgfriObjekt({
   bygningsStatusKode: valgfriSchema(byggningsStatusKodeSchema),
   utgaattStatusKode: valgfriSchema(byggningsStatusKodeSchema),
   bygningsTypeKode: valgfriSchema(bygningsTypeKodeSchema),
-  naringsgruppeKode: valgfriSchema(naeringsgruppeKodeSchema),
+  naringsgruppeKode: valgfriSchema(naringsgruppeKodeSchema),
 
   nord: valgfriNummer.meta({
     description:

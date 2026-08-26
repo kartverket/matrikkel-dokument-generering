@@ -14,8 +14,7 @@ export const etasjedataSchema = z
   })
   .meta({
     title: "Etasjedata",
-    description:
-      "Sumfelt for etasjeinformasjon pa bygning, inkludert areal- og boenhetssummer.",
+    description: "Etasjeinformasjon på bygning.",
   })
   .optional()
 

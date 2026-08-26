@@ -4,7 +4,7 @@ import { avlopsKodeSchema } from "../koder/avlopsKode.ts"
 import { byggningsStatusKodeSchema } from "../koder/byggningsStatusKode.schema.ts"
 import { bygningsTypeKodeSchema } from "../koder/bygningsTypeKodeSchema.ts"
 import { endringsKodeSchema } from "../koder/endringsKode.schema.ts"
-import { naeringsgruppeKodeSchema } from "../koder/naeringsgruppeKodeSchema.ts"
+import { naringsgruppeKodeSchema } from "../koder/naringsgruppeKodeSchema.ts"
 import { opprinnelsesKodeSchema } from "../koder/opprinnelsesKode.schema.ts"
 import { vannforsyningsKodeSchema } from "../koder/vannforsyningsKode.ts"
 import { bruksenhetSchema } from "../shared/bruksenhet.schema.ts"
@@ -20,7 +20,7 @@ import { sefrakSchema } from "../shared/sefrak.schema.ts"
 import { byggEndringSchema } from "./byggEndring.schema.ts"
 
 const bygningSchema = z.object({
-  bygningsnummer: z.string().optional().meta({
+  bygningsnummer: z.string().meta({
     title: "Bygningsnummer",
     description:
       "En entydig identifikasjon av bygningen som er unik på landsbasis og tildeles automatisk.",
@@ -31,28 +31,22 @@ const bygningSchema = z.object({
     title: "Lopenr",
     example: 1,
   }),
-  harLopenummer: z.boolean().optional(),
 
   bygningsendringsKode: endringsKodeSchema.optional(),
   harUfullstendigAreal: z.union([z.literal("Ja"), z.literal("Nei")]).optional(),
 
   bygningstypeKode: bygningsTypeKodeSchema.optional(),
-  naringsgruppeKode: naeringsgruppeKodeSchema.optional(),
-  harNaeringsgruppekode: z.boolean().optional(),
+  naringsgruppeKode: naringsgruppeKodeSchema.optional(),
   bygningstatusKode: byggningsStatusKodeSchema.optional(),
   bebygdAreal: z.number().optional(),
-  harBebygdAreal: z.boolean().optional(),
   harHeis: z.boolean().optional(),
   vannforsyningsKode: vannforsyningsKodeSchema.optional(),
-  harVannforsyningskode: z.boolean().optional(),
   avlopsKode: avlopsKodeSchema.optional(),
-  harAvlopskode: z.boolean().optional(),
 
   etasjedata: etasjedataSchema.optional(),
   kommunenummer: z.string().optional(),
 
   opprinnelsesKode: opprinnelsesKodeSchema.optional(),
-  harOpprinnelseskode: z.boolean().optional(),
 
   harRepresentasjonspunkt: z.boolean().optional(),
   harStedfestingVerifisertRepPunkt: z.boolean().optional(),
@@ -66,54 +60,28 @@ const bygningSchema = z.object({
   koordinatsystem: z.string().optional(),
 
   bruksenheter: z.array(bruksenhetSchema),
-  harBruksenheter: z.boolean().optional(),
 
   sefrakminner: z.array(sefrakSchema),
-  harSefrakminner: z.boolean().optional(),
 
   etasjer: z.array(etasjeRapportInfoSchema),
-  harEtasjer: z.boolean().optional(),
-  antallEtasjer: z.number().int().nonnegative().optional(),
 
-  harKontaktpersoner: z.boolean().optional(),
   kontaktpersoner: z.array(kontaktpersonSchema),
 
-  harTiltakshavere: z.boolean().optional(),
-  tiltakshavere: z.array(kontaktpersonSchema).optional(),
-
-  harKontaktpersonderSomIkkeErTiltakshavere: z.boolean().optional(),
-  kontaktpersonerSomIkkeErTiltakshavere: z
-    .array(kontaktpersonSchema)
-    .optional(),
-
   oppvarmingskoder: z.array(enumRapportInfoSchema),
-  harOppvarming: z.boolean().optional(),
 
   energikilder: z.array(enumRapportInfoSchema),
-  harEnergikilder: z.boolean().optional(),
 
   historikker: z.array(bygningstatusHistorikkRapportInfoSchema),
-  harBygningsstatuskoder: z.boolean().optional(),
 
   hjemmelshavere: z.array(eierforholdSchema),
-  harHjemmelshavere: z.boolean().optional(),
 
   bygningsendringer: z.array(byggEndringSchema),
-  harBygningsendringer: z.boolean().optional(),
 
   enkeltminner: z.array(enkeltminneSchema),
-  harEnkeltminner: z.boolean().optional(),
 
-  harRammetillatelse: z.boolean().optional(),
-  rammetillatelsedato: z.iso.datetime({ offset: true }).optional(),
-  harIgangsettingstillatelse: z.boolean().optional(),
-  igangsettingstillatelseDato: z.iso.datetime({ offset: true }).optional(),
-  harTattibruk: z.boolean().optional(),
-  tattibrukDato: z.iso.datetime({ offset: true }).optional(),
-  harMidlbrukstillatelese: z.boolean().optional(),
-  midlbrukstillateleseDato: z.iso.datetime({ offset: true }).optional(),
-  harFerdigattest: z.boolean().optional(),
-  ferdigattestDato: z.iso.datetime({ offset: true }).optional(),
+  bygningsstatuser: z
+    .record(z.string(), z.iso.datetime({ offset: true }))
+    .optional(),
 
   utgattDato: z.iso.datetime({ offset: true }).optional(),
   utgattBeskrivelse: z.string().optional(),

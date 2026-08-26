@@ -5,13 +5,11 @@ import { matrikkelnrRapportInfoSchema } from "./matrikkelnrRapportInfo.schema.ts
 import { personInfoSupportBaseSchema } from "./personInfoSupport.schema.ts"
 
 const personEierforholdRapportInfoSchema = personInfoSupportBaseSchema.extend({
-  // Felter pa PersonEierforholdRapportInfo
   eierforholdKode: eierforholdKodeSchema.optional(),
   andelsNummer: z.number().int().nonnegative().optional(),
   datoTil: z.iso.datetime({ offset: true }).nullable().optional(),
   datoFra: z.iso.datetime({ offset: true }).nullable().optional(),
 
-  // Getter-felter pa PersonEierforholdRapportInfo
   harAndel: z.boolean().optional(),
   teller: z.number().int().nonnegative().optional(),
   nevner: z.number().int().nonnegative().optional(),
@@ -24,22 +22,19 @@ export type PersonEierforholdRapportInfo = NonNullable<
 
 // Tar ikke med nøstet MatrikkelenhetEierforholdRapportInfo
 const matrikkelenhetEierforholdRapportInfoSchema = z.object({
-  // Felter pa MatrikkelenhetEierforholdRapportInfo
   selveierskap: z.boolean().optional(),
   personEierforhold: z.array(personEierforholdRapportInfoSchema).optional(),
   matrikkelnrRapportInfo: matrikkelnrRapportInfoSchema.optional(),
   eierforholdKode: eierforholdKodeSchema.optional(),
-  datoFra: z.iso.datetime({ offset: true }).nullable().optional(),
+  datoFra: z.iso.datetime({ offset: true }).optional(),
   arealtype: z.string().optional(),
 
-  // Getter-felter
   matrikkelenhet: z.string().optional().meta({
     description: "Matrikkelnummer med kommunenummer",
   }),
   harAndel: z.boolean().optional(),
   teller: z.number().int().nonnegative().optional(),
   nevner: z.number().int().nonnegative().optional(),
-  harPersonEierforhold: z.boolean().optional(),
   eierforholdKodeEnum: enumRapportInfoSchema.optional(),
 })
 
@@ -49,14 +44,10 @@ export type MatrikkelenhetEierforholdRapportInfo = NonNullable<
 
 export const eierforholdSchema = z
   .object({
-    // Felter pa EierforholdRapportInfo
     matrikkelenhetEiereInfos: z
       .array(matrikkelenhetEierforholdRapportInfoSchema)
       .optional(),
     personEiereInfos: z.array(personEierforholdRapportInfoSchema).optional(),
-
-    // Getter-felter pa EierforholdRapportInfo
-    harEiere: z.boolean().optional(), // Denne er false om begge listene er tomme
   })
   .meta({
     title: "EierforholdRapportInfo",
@@ -65,4 +56,3 @@ export const eierforholdSchema = z
   })
 
 export type Hjemmelshaver = z.infer<typeof eierforholdSchema>
-export type AktuellEier = Hjemmelshaver // Legacy kompabilitet

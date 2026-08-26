@@ -1,5 +1,6 @@
 import { z } from "@hono/zod-openapi"
 import { etasjeplanKodeSchema } from "../koder/etasjeplanKode.schema"
+import { nyEndretSlettetEnum } from "../koder/nyEndretSlettetEnum.ts"
 import { etasjedataSchema } from "./etasjedata.schema.ts"
 
 export const etasjeRapportInfoSchema = z
@@ -7,16 +8,10 @@ export const etasjeRapportInfoSchema = z
     etasjeplanKode: etasjeplanKodeSchema.optional().meta({
       description: "Etasjeplan som kode",
     }),
-    etasjeplan: z.string().optional().meta({
-      description: "Etasjeplan som tekst",
-    }),
     etasjenummer: z.number().int().nonnegative().optional(),
     bruttoarealTotalt: z.number().optional(),
     etasjedata: etasjedataSchema.optional(),
-    nyEndretSlettet: z.string().optional().meta({
-      description: "N=Ny, E=Endret, S=Slettet.",
-      example: "N",
-    }),
+    nyEndretSlettet: nyEndretSlettetEnum.optional(),
   })
   .meta({
     title: "EtasjeRapportInfo",

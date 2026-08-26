@@ -2,6 +2,7 @@ import { z } from "@hono/zod-openapi"
 import { bruksenhetsKodeSchema } from "../koder/bruksenhetsTypeKode.schema"
 import { etasjeplanKodeSchema } from "../koder/etasjeplanKode.schema"
 import { kjokkenTilgangKodeSchema } from "../koder/kjokkenTilgangKode"
+import { nyEndretSlettetEnum } from "../koder/nyEndretSlettetEnum.ts"
 import { adresseIdentRapportInfoSchema } from "./adresseIdentRapportInfo.schema"
 import { enumRapportInfoSchema } from "./enumRapportInfo.schema"
 import { matrikkelnrRapportInfoSchema } from "./matrikkelnrRapportInfo.schema"
@@ -38,10 +39,7 @@ export const bruksenhetSchema = z
     kostraLeieareal: z.string().optional(),
     kostraVirksomhetNummer: z.string().optional(),
     kostraVirksomhetNavn: z.string().optional(),
-    nyEndretSlettet: z.string().optional().meta({
-      description: "N=Ny, E=Endret, S=Slettet.",
-      example: "N",
-    }),
+    nyEndretSlettet: nyEndretSlettetEnum.optional(),
   })
   .optional()
 

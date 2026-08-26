@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi"
 
-const naeringsgruppeKoder = [
+const naringsgruppeKoder = [
   " ", // Ikke oppgitt
   "X", // Bolig
   "A", // Jordbruk, skogbruk og fiske
@@ -29,7 +29,7 @@ const naeringsgruppeKoder = [
 ] as const
 
 // ref: NaringsgruppeKodeId.java
-export const naeringsgruppeKodeSchema = z.enum(naeringsgruppeKoder).meta({
+export const naringsgruppeKodeSchema = z.enum(naringsgruppeKoder).meta({
   id: "NaringsgruppeKode",
   description: `Angir hvilken næringsgruppe bygget tilhører. Kodelisten bygger på SN2007.
 
@@ -65,4 +65,4 @@ S: Annen tjenesteyting
   example: "X",
 })
 
-export type NaeringsgruppeKode = z.infer<typeof naeringsgruppeKodeSchema>
+export type NaringsgruppeKode = z.infer<typeof naringsgruppeKodeSchema>

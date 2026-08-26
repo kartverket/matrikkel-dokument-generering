@@ -1,14 +1,12 @@
 import { z } from "@hono/zod-openapi"
+import { nyEndretSlettetEnum } from "../koder/nyEndretSlettetEnum.ts"
 
 export const enumRapportInfoSchema = z
   .object({
     kode: z.string().optional(),
     kodeverdi: z.string().optional(),
     beskrivelse: z.string().nullable().optional(),
-    nyEndretSlettet: z.string().optional().meta({
-      description: "N=Ny, E=Endret, S=Slettet.",
-      example: "N",
-    }),
+    nyEndretSlettet: nyEndretSlettetEnum.optional(),
   })
   .meta({
     title: "EnumRapportInfo",

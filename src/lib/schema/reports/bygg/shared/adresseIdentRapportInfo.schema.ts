@@ -11,9 +11,6 @@ export const adresseIdentRapportInfoSchema = z
     undernummer: z.string().optional(),
 
     erVegadresse: z.boolean().optional(),
-    adresseTypeStreng: z.string().optional().meta({
-      description: "Adressetype som tekst",
-    }), // henter localized name i m22, ikke ta med?
     adressekodeGardsnr: z.number().int().nonnegative().optional().meta({
       description:
         "Adressekode for vegadesser og gårdsnr for matrikkeladresser",
