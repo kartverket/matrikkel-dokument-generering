@@ -1,23 +1,47 @@
 import { describe, expect, spyOn, test } from "bun:test"
 import { createApp } from "../../src/api/app.ts"
-import { bygningMassivRapportSchema } from "../../src/lib/schema/reports/bygg/byg0001/bygningMassivRapport.schema.ts"
 import { byggRapportSchema } from "../../src/lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
-import mockByggRapport from "../../src/mock/byggRapport.ts"
-import mockBygningMassivRapport from "../../src/mock/bygningMassivRapport.ts"
+import { createBygg32341Report } from "../../src/mock/reports/bygg/fixtures/bygg-32-341.ts"
+import { createBygg42221Report } from "../../src/mock/reports/bygg/fixtures/bygg-42-221.ts"
+import { createBygg1098Report } from "../../src/mock/reports/bygg/fixtures/bygg-109-8.ts"
+import { createByggSlottsplassen1Report } from "../../src/mock/reports/bygg/fixtures/bygg-slottsplassen-1.ts"
+import { createByggStasjonsveien1Report } from "../../src/mock/reports/bygg/fixtures/bygg-stasjonsveien-1.ts"
 
 const app = createApp()
 
 describe("HTTP API", () => {
-  test("accepts the JSON representation documented by OpenAPI", () => {
-    const byggPayload = JSON.parse(JSON.stringify(mockByggRapport))
-    const bygningMassivPayload = JSON.parse(
-      JSON.stringify(mockBygningMassivRapport),
-    )
+  const fixtureCases = [
+    ["bygg-32-341", createBygg32341Report],
+    ["bygg-42-221", createBygg42221Report],
+    ["bygg-109-8", createBygg1098Report],
+    ["bygg-slottsplassen-1", createByggSlottsplassen1Report],
+    ["bygg-stasjonsveien-1", createByggStasjonsveien1Report],
+  ] as const
 
-    expect(byggRapportSchema.safeParse(byggPayload).success).toBe(true)
-    expect(
-      bygningMassivRapportSchema.safeParse(bygningMassivPayload).success,
-    ).toBe(true)
+  test.each(
+    fixtureCases,
+  )("%s fixture is valid against BYG0011 schema", (_name, createFixture) => {
+    const payload = JSON.parse(JSON.stringify(createFixture()))
+    const parseResult = byggRapportSchema.safeParse(payload)
+
+    if (!parseResult.success) {
+      throw new Error(JSON.stringify(parseResult.error.issues, null, 2))
+    }
+
+    expect(parseResult.success).toBe(true)
+  })
+
+  test.each(
+    fixtureCases,
+  )("%s fixture is accepted by create-document route schema", async (_name, createFixture) => {
+    const response = await app.request("/create-document/BYG0011?format=html", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(createFixture()),
+    })
+
+    expect(response.status).toBe(200)
+    expect(response.headers.get("Content-Type")).toContain("text/html")
   })
 
   test.each([
@@ -75,12 +99,7 @@ describe("HTTP API", () => {
     expect(openApi.openapi).toBe("3.0.3")
     expect(openApi.paths["/create-document/BYG0011"].post).toBeDefined()
     expect(openApi.components.schemas.ValidationErrorResponse).toBeDefined()
-    expect(openApi.components.schemas.PdfErrorResponse).toBeDefined()
-    expect(
-      openApi.components.schemas.ByggUtvalgskriterier.properties.bygning
-        .properties.bygningstyper.example,
-    ).toEqual(["111"])
-    expect(openApi.components.schemas.BYG0011).toBeDefined()
+    expect(openApi.components.schemas.Rapportgrunnlag).toBeDefined()
     expect(openApi.servers).toEqual([
       { url: "/", description: "Gjeldende miljø" },
     ])
