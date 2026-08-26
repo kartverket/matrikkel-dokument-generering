@@ -15,9 +15,9 @@ export const byggEndringSchema = z
   .object({
     bygningsnummer: z.number().int().nonnegative().optional(),
     lopenummer: z.number().int().nonnegative().optional(),
-    bygningsendringsKodeVerdi: endringsKodeSchema.optional().meta({
+    bygningsendringsKode: endringsKodeSchema.optional().meta({
       description: "Bygningsendringskode som kodeverdi",
-    }), // Mangler getter for kodeverdi, holder det å bruke teksten direkte?
+    }),
     harUfullstendigAreal: z
       .union([z.literal("Ja"), z.literal("Nei")])
       .optional(),
@@ -27,7 +27,7 @@ export const byggEndringSchema = z
     bebygdAreal: z.number().optional(),
     vannforsyningsKode: vannforsyningsKodeSchema.optional(),
     avlopsKode: avlopsKodeSchema.optional(),
-    etasjedata: etasjedataSchema.optional(), // Mangler getter for denne
+    etasjedata: etasjedataSchema.optional(),
     kommunenummer: z.string().optional(),
     opprinnelsesKode: opprinnelsesKodeSchema.optional(),
     bruksenheter: z.array(bruksenhetSchema).optional(),
@@ -62,12 +62,6 @@ export const byggEndringSchema = z
     harVannforsyningskode: z.boolean().optional(), // False om vannforsyningskode er `null` eller `Ikke Oppgitt`
     harAvlopskode: z.boolean().optional(), // False om avlopskode er `null` eller `Ikke Oppgitt`
 
-    sumBruksarealTilAnnet: z.number().optional(),
-    sumAlternativtAreal: z.number().optional(),
-    sumAlternativtAreal2: z.number().optional(),
-    sumBruksarealTotalt: z.number().optional(),
-    sumBruksarealTilBolig: z.number().optional(),
-    sumAntallBoenheter: z.number().int().nonnegative().optional(),
     harBruksenheter: z.boolean().optional(), // False om bruksenheter er tom
     harBygningsstatuskoder: z.boolean().optional(), // False om bygningsstatuser er tom
     bygningErFerdigstilt: z.boolean().optional(),

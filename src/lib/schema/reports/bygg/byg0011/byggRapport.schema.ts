@@ -48,7 +48,7 @@ const bygningSchema = z.object({
   avlopsKode: avlopsKodeSchema.optional(),
   harAvlopskode: z.boolean().optional(),
 
-  etasjedata: etasjedataSchema.optional(), // Mangler getter for denne
+  etasjedata: etasjedataSchema.optional(),
   kommunenummer: z.string().optional(),
 
   opprinnelsesKode: opprinnelsesKodeSchema.optional(),
@@ -117,16 +117,6 @@ const bygningSchema = z.object({
 
   utgattDato: z.iso.datetime({ offset: true }).optional(),
   utgattBeskrivelse: z.string().optional(),
-
-  sumBruksarealTilAnnet: z.number().optional(),
-  sumBruttoarealTilAnnet: z.number().optional(),
-  sumAlternativtAreal: z.number().optional(),
-  sumAlternativtAreal2: z.number().optional(),
-  sumBruksarealTotalt: z.number().optional(),
-  sumBruttoarealTotalt: z.number().optional(),
-  sumBruksarealTilBolig: z.number().optional(),
-  sumBruttoarealTilBolig: z.number().optional(),
-  sumAntallBoenheter: z.number().int().nonnegative().optional(),
 
   // Disse har 2 forskjellige gettere som gir 2 forskjellige resultat
   erFerdigstilt: z.boolean().optional().meta({
