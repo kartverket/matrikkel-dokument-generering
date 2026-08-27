@@ -5,15 +5,12 @@ import { PdfFooter } from "./components/pdf/PdfFooter.tsx"
 import { PdfHeader } from "./components/pdf/PdfHeader.tsx"
 import { createI18n } from "./lib/i18n/createI18n"
 import type { Byg0011Rapport } from "./lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
-import ByggEndringer from "./sections/ByggEndringer.tsx"
-import Byggoversikt from "./sections/Byggoversikt.tsx"
 import { ByggUtvalgskriterier } from "./sections/ByggUtvalgskriterier.tsx"
 
 function Byg0011DocumentRenderer({
   rapport,
 }: Readonly<{ rapport: Byg0011Rapport }>) {
   const { t } = useTranslation()
-  const { bygninger } = rapport
 
   return (
     <main className="mx-auto max-w-2xl px-2">
@@ -25,25 +22,6 @@ function Byg0011DocumentRenderer({
       </Heading>
 
       <ByggUtvalgskriterier kriterier={rapport.utvalgskriterier} />
-
-      {bygninger.map((bygning, indeks) => (
-        <Byggoversikt
-          key={bygning.bygningsnr}
-          index={2}
-          bygning={bygning}
-          bygningIndeks={indeks + 1}
-          antallBygninger={bygninger.length}
-        />
-      ))}
-      {bygninger.map((bygning, indeks) => (
-        <ByggEndringer
-          key={bygning.bygningsnr}
-          index={3}
-          bygning={bygning}
-          bygningIndeks={indeks + 1}
-          antallBygninger={bygninger.length}
-        />
-      ))}
     </main>
   )
 }
