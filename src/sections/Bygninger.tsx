@@ -11,7 +11,7 @@ export function Bygninger({ bygninger }: Readonly<Props>) {
   return (
     <section>
       {bygninger.map((bygning) => (
-        <BygningSection key={bygning.bygningsnummer} bygning={(bygning)} />
+        <BygningSection key={bygning.bygningsnummer} bygning={bygning} />
       ))}
     </section>
   )
