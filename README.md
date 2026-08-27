@@ -110,7 +110,7 @@ API-serveren er avhengig av at Gotenberg kjører.
    ```sh
    curl http://localhost:3000/internal/isAlive        # -> Alive
 
-   curl -X POST http://localhost:3000/create-document \
+   curl -X POST http://localhost:3000/create-document/BYG0011 \
      -H "Content-Type: application/json" \
      --data @rapport.json \
      --output rapport.pdf
@@ -133,7 +133,7 @@ Endepunkter:
 
 | Metode | Sti                 | Beskrivelse                                                   |
 | ------ | ------------------- | ------------------------------------------------------------- |
-| `POST` | `/create-document`  | Validerer byggrapport og returnerer PDF (`application/pdf`).   |
+| `POST` | `/create-document/{rapportKode}` | Validerer rapport og returnerer PDF (`application/pdf`). Støttede koder: `BYG0011`. |
 | `GET`  | `/internal/isAlive` | Liveness-probe (returnerer `Alive`).                           |
 | `GET`  | `/internal/isReady` | Readiness-probe (returnerer `Ready`).                          |
 | `GET`  | `/internal/metrics` | Prometheus-metrikker for tjenesten.                       |
