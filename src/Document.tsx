@@ -38,10 +38,7 @@ export interface RenderedDocument {
   headerHtml: string
 }
 
-export function renderDocument(
-  rapport: Byg0011Rapport,
-  css = "",
-): RenderedDocument {
+export function renderDocument(rapport: Byg0011Rapport, css = ""): RenderedDocument {
   const i18n = createI18n(rapport.locale)
   const body = renderToStaticMarkup(
     <I18nextProvider i18n={i18n}>
