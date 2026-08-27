@@ -16,6 +16,7 @@
   --color-kv-green-subtle: #f6faf7;
   --color-kv-green-border: #97c7a6;
   --color-kv-green: #156c30;
+  --color-kv-title: #0f5f2d;
   --color-kv-green-tinted: #edf6f0;
   --color-kv-background-tinted: #daeed7;
 
@@ -77,26 +78,11 @@ body {
   margin: 18mm 18mm 22mm 18mm;
 }
 
-/*
- * Fjerne streker i alle KV-tabeller. Overstyrer variablene fra
- * @digdir/designsystemet-css sin table.css
- */
-.ds-table {
-  --dsc-table-border-width: 0px;
-  --dsc-table-divider-border-width: 0px;
-  --dsc-table-border-color: var(--color-kv-green-border);
-  --dsc-table-divider-border-color: var(--color-kv-green-border);
-
-  /*
-   * Designsystemet setter `break-inside: avoid` på hele tabellen, noe som
-   * gjør at store tabeller hopper til neste side i stedet for å flyte
-   * naturlig i PDF-en. Vi tillater sidebrytning i tabellen, men holder
-   * hver rad samlet.
-   */
+table {
   break-inside: auto;
 }
 
-.ds-table tr {
+table tr {
   break-inside: avoid;
 }
 
@@ -109,86 +95,6 @@ h3,
 h4,
 h5,
 h6,
-.ds-table thead {
+thead {
   break-after: avoid;
-}
-
-/*
- * Mapping (fra Figma):
- *   <Heading level={1}>            → h1  → rapport-h1
- *   <Heading level={2}>            → h2  → rapport-h2
- *   <Heading level={3}>            → h3  → rapport-h3
- *   <Heading level={4..6}>         → h4+ → rapport-h4
- *   <Paragraph>                    → p   → rapport-p
- *   <Label>                        → label-elementet → rapport-label
- *   <Table.HeaderCell>             → th  → rapport-tablehead
- *   <Table.Cell>                   → td  → rapport-tablecell
- */
-h1.ds-heading {
-  font-size: var(--text-rapport-h1);
-  font-weight: var(--font-weight-rapport-h1);
-  font-style: var(--font-style-rapport-h1);
-  color: var(--text-color-h1);
-}
-
-h2.ds-heading {
-  font-size: var(--text-rapport-h2);
-  font-weight: var(--font-weight-rapport-h2);
-  font-style: var(--font-style-rapport-h2);
-  color: var(--text-color-h2);
-}
-
-h3.ds-heading {
-  font-size: var(--text-rapport-h3);
-  font-weight: var(--font-weight-rapport-h3);
-  font-style: var(--font-style-rapport-h3);
-  color: var(--text-color-h3);
-}
-
-h4.ds-heading,
-h5.ds-heading,
-h6.ds-heading {
-  font-size: var(--text-rapport-h4);
-  font-weight: var(--font-weight-rapport-h4);
-  font-style: var(--font-style-rapport-h4);
-  color: var(--text-color-h4);
-}
-
-.ds-paragraph {
-  font-size: var(--text-rapport-p);
-  font-weight: var(--font-weight-rapport-p);
-  font-style: var(--font-style-rapport-p);
-  color: var(--text-color-p);
-}
-
-.ds-label {
-  font-size: var(--text-rapport-label);
-  font-weight: var(--font-weight-rapport-label);
-  color: var(--text-color-label);
-}
-
-.ds-table th {
-  font-size: var(--text-rapport-tablehead);
-  font-weight: var(--font-weight-rapport-tablehead);
-  font-style: var(--font-style-rapport-tablehead);
-  color: var(--text-color-tablehead);
-}
-
-.ds-table td {
-  font-size: var(--text-rapport-tablecell);
-  font-weight: var(--font-weight-rapport-tablecell);
-  font-style: var(--font-style-rapport-tablecell);
-  color: var(--text-color-tablecell);
-}
-
-/*
- * Tag: Figma size/8 (20px høyde, hugger innholdet). Overstyrer Digdir sine
- * --dsc-tag-*-variabler så alle `<Tag>` blir kompakte uavhengig av data-size.
- */
-.ds-tag {
-  --dsc-tag-min-height: var(--min-height-rapport-tag);
-  --dsc-tag-padding: 0 var(--padding-inline-rapport-tag);
-  font-size: var(--text-rapport-tag);
-  font-weight: var(--font-weight-rapport-tag);
-  line-height: 1;
 }

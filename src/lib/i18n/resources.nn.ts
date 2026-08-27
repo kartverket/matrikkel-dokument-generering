@@ -21,12 +21,16 @@ export const nn = {
   },
   rapport: {
     BYG0011: {
-      rapportTittel: "Bygg Rapport",
+      rapportTittel: "Byggrapport",
       title: "Bygning {{bygningsnr}} – {{bygningstype}}",
       utvalgskriterier: {
         title: "Utvalskriterier",
-        ja: "Ja",
-        nei: "Nei",
+        avgrensning: "Avgrensing",
+        filtrering: "Filtrering",
+        innholdIRapporten: "Innhald i rapporten",
+        innhold: "Innhald",
+        byggstatus: "Byggstatus",
+        periode: "Periode",
         ikkeAngitt: "Ikkje oppgitt",
         omfang: {
           tittel: "Bygningar valde",
