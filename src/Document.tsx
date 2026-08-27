@@ -3,37 +3,14 @@ import { I18nextProvider } from "react-i18next"
 import { PdfFooter } from "./components/pdf/PdfFooter.tsx"
 import { PdfHeader } from "./components/pdf/PdfHeader.tsx"
 import { createI18n } from "./lib/i18n/createI18n"
-import type { Byg0011Rapport } from "./lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
-import ByggEndringer from "./sections/ByggEndringer.tsx"
-import Byggoversikt from "./sections/Byggoversikt.tsx"
-import { ByggUtvalgskriterier } from "./sections/ByggUtvalgskriterier.tsx"
+import type { Rapport } from "./lib/schema/core/rapport.schema.ts"
 
-export function DocumentComponent({
-  rapport,
-}: Readonly<{ rapport: Byg0011Rapport }>) {
-  const { bygninger } = rapport
-
+export function DocumentComponent({ rapport }: Readonly<{ rapport: Rapport }>) {
   return (
     <main className="mx-auto max-w-2xl">
-      <ByggUtvalgskriterier index={1} kriterier={rapport.utvalgskriterier} />
-      {bygninger.map((bygning, indeks) => (
-        <Byggoversikt
-          key={bygning.bygningsnr}
-          index={2}
-          bygning={bygning}
-          bygningIndeks={indeks + 1}
-          antallBygninger={bygninger.length}
-        />
-      ))}
-      {bygninger.map((bygning, indeks) => (
-        <ByggEndringer
-          key={bygning.bygningsnr}
-          index={3}
-          bygning={bygning}
-          bygningIndeks={indeks + 1}
-          antallBygninger={bygninger.length}
-        />
-      ))}
+      <section className="rounded border border-slate-200 bg-slate-50 p-6 text-slate-700">
+        Dokumentinnhold for {rapport.rapportKode} er ikke implementert enna.
+      </section>
     </main>
   )
 }
@@ -44,10 +21,7 @@ export interface RenderedDocument {
   headerHtml: string
 }
 
-export function renderDocument(
-  rapport: Byg0011Rapport,
-  css = "",
-): RenderedDocument {
+export function renderDocument(rapport: Rapport, css = ""): RenderedDocument {
   const i18n = createI18n(rapport.locale)
   const body = renderToStaticMarkup(
     <I18nextProvider i18n={i18n}>

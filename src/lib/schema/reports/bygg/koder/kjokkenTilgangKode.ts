@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi"
 
 const kjokkenTilgangKoder = [
-  " ", // Ikke oppgitt
+  "*", // Ikke oppgitt
   "1", // Har eget kjøkken
   "2", // Har ikke adgang til kjøkken
   "3", // Har adgang til felles kjøkken
@@ -9,6 +9,7 @@ const kjokkenTilgangKoder = [
 ] as const
 
 // ref: KjokkentilgangKodeId.java
+// Spesiell case for getter, returnerer "*" dersom kjøkkentilgane er `null` eller `IkkeOppgitt`
 export const kjokkenTilgangKodeSchema = z.enum(kjokkenTilgangKoder).meta({
   id: "KjokkenTilgangKode",
   description: `Beskriver bruksenhetens tilgang til kjøkken.
@@ -16,7 +17,7 @@ export const kjokkenTilgangKodeSchema = z.enum(kjokkenTilgangKoder).meta({
 Koder:
 
 \`\`\`
-<blank>: Ikke oppgitt
+*: Ikke oppgitt
 1: Har eget kjøkken
 2: Har ikke adgang til kjøkken
 3: Har adgang til felles kjøkken

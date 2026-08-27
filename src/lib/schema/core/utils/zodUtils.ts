@@ -18,3 +18,11 @@ export const valgfriDato = z.iso
 
 export const valgfriObjekt = <T extends z.ZodRawShape>(shape: T) =>
   z.object(shape).optional()
+
+export const kodeSchemaOgTekst = <T extends z.ZodTypeAny>(kodeverdiSchema: T) =>
+  z
+    .object({
+      kodeverdi: kodeverdiSchema.optional(),
+      displayTekst: z.string().optional(),
+    })
+    .optional()

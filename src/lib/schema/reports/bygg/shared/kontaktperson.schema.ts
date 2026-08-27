@@ -1,35 +1,24 @@
-import {
-  valgfriObjekt,
-  valgfriSchema,
-  valgfriString,
-} from "../../../core/utils/zodUtils"
+import { z } from "@hono/zod-openapi"
+import { kodeSchemaOgTekst } from "../../../core/utils/zodUtils.ts"
 import { kontaktPersonKodeSchema } from "../koder/kontaktPersonKode.schema"
+import { nyEndretSlettetEnum } from "../koder/nyEndretSlettetEnum.ts"
+import { personInfoSupportBaseSchema } from "./personInfoSupport.schema.ts"
 
-export const kontaktpersonSchema = valgfriObjekt({
-  bruksenhetsNr: valgfriString.meta({
-    title: "Bruksenhetsnummer",
-    example: "H0101",
-  }),
+export const kontaktpersonSchema = personInfoSupportBaseSchema
+  .extend({
+    datofra: z.iso.datetime({ offset: true }).optional(),
+    nyEndretSlettet: nyEndretSlettetEnum.optional(),
 
-  // Rollekoden til tiltakshaveren (T: Tiltakshaver, K: Kontaktperson)
-  kontaktPersonKode: valgfriSchema(kontaktPersonKodeSchema),
-
-  identifikasjonsNr: valgfriString.meta({
-    title: "Fødselsdato/org.nr",
-    description: "Fødselsdato eller Org. nummer for tiltakshaver",
-  }),
-
-  navn: valgfriString.meta({
+    kontaktpersonKode: kodeSchemaOgTekst(kontaktPersonKodeSchema),
+    datofraSOSI: z.string().optional().meta({
+      description: "Kontaktpersonens fra-dato som tekst (sosi)",
+    }),
+  })
+  .meta({
+    title: "KontaktpersonRapportInfo",
     description:
-      "Navnet til tiltakshaveren. Kan være et selskapsnavn eller personnavn",
-    example: "Bygg AS",
-  }),
+      "Kontaktperson med personinformasjon, inkludert felter fra klasse og getter-basert presentasjon.",
+  })
+  .optional()
 
-  adresse: valgfriString.meta({
-    description: "Adressen til tiltakshaveren",
-    example: "Postboks 1350 Vika 113 OSLO",
-  }),
-}).meta({
-  title: "Registrerte Tiltak",
-  description: "Tiltakshaveren eller kontaktperson opp mot et bygg",
-})
+export type Kontaktperson = NonNullable<z.infer<typeof kontaktpersonSchema>>
