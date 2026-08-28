@@ -6,6 +6,7 @@ import { PdfHeader } from "./components/pdf/PdfHeader.tsx"
 import { createI18n } from "./lib/i18n/createI18n"
 import type { Byg0011Rapport } from "./lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 import { ByggUtvalgskriterier } from "./sections/ByggUtvalgskriterier.tsx"
+import { Bygninger } from "./sections/Bygninger.tsx"
 
 function Byg0011DocumentRenderer({
   rapport,
@@ -22,6 +23,7 @@ function Byg0011DocumentRenderer({
       </Heading>
 
       <ByggUtvalgskriterier kriterier={rapport.utvalgskriterier} />
+      <Bygninger bygninger={rapport.bygninger} />
     </main>
   )
 }
