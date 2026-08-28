@@ -109,6 +109,9 @@ export const nb = {
         boenheter: "Boenheter",
         representasjonspunkt: "Representasjonspunkt",
       },
+      bygningsstatuser: {
+        tittel: "Bygningsstatuser",
+      },
       arealfordeling: {
         title: "Areal og beliggenhet",
         bebygdAreal: "Bebygd areal",
