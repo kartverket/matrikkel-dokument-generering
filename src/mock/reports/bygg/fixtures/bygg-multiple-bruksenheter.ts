@@ -240,6 +240,7 @@ export function createByggMultipleBruksenheterReport(): LegacyFixtureByggRapport
               bruttoarealTilAnnet: 30,
               bruttoarealTotalt: 30,
             },
+            nyEndretSlettet: "N",
           },
           {
             etasjeplanKode: "H",
@@ -256,6 +257,7 @@ export function createByggMultipleBruksenheterReport(): LegacyFixtureByggRapport
               bruttoarealTilAnnet: 0,
               bruttoarealTotalt: 120,
             },
+            nyEndretSlettet: "N",
           },
           {
             etasjeplanKode: "L",
@@ -272,6 +274,7 @@ export function createByggMultipleBruksenheterReport(): LegacyFixtureByggRapport
               bruttoarealTilAnnet: 0,
               bruttoarealTotalt: 25,
             },
+            nyEndretSlettet: "N",
           },
         ],
         kontaktpersoner: [],
@@ -281,6 +284,15 @@ export function createByggMultipleBruksenheterReport(): LegacyFixtureByggRapport
         hjemmelshavere: [],
         bygningsendringer: [],
         enkeltminner: [],
+        bygningsstatuser: {
+          TB: "2026-08-18T00:00:00Z",
+        },
+        utgattDato: "9999-12-31T00:00:00Z",
+        utgattBeskrivelse: "Aktiv",
+        erFerdigstilt: true,
+        bygningErFerdigstilt: true,
+        erBygningsendring: false,
+        objektnummer: 200100200,
       },
     ],
   }

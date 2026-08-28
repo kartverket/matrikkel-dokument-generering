@@ -62,7 +62,7 @@ export function Bruksenheter({ bruksenheter }: Props) {
           </thead>
           <tbody>
             {filtrerteEnheter.map((enhet) => (
-              <tr key={enhet.bruksenhetsnummer} className="border-b text-sm">
+              <tr key={enhet.bruksenhetsnummer} className="text-sm">
                 <td className="px-0 py-2">{enhet.bruksenhetsnummer}</td>
                 <td className="px-0 py-2">
                   {enhet.bruksenhetsTypeKode?.displayTekst ?? "-"}
