@@ -118,6 +118,9 @@ export const nb = {
         total: "Total",
         enhet: "m²",
       },
+      bygningsstatuser: {
+        tittel: "Bygningsstatuser",
+      },
       arealfordeling: {
         title: "Areal og beliggenhet",
         bebygdAreal: "Bebygd areal",
