@@ -102,7 +102,13 @@ export const nb = {
         },
       },
       matrikkelenhet: "Matrikkelenhet",
-      naringsgruppe: "Næringsgruppe",
+      omBygget: {
+        tittel: "Om bygget",
+        bygningstype: "Bygningstype",
+        naringsgruppe: "Næringsgruppe",
+        boenheter: "Boenheter",
+        representasjonspunkt: "Representasjonspunkt",
+      },
       arealfordeling: {
         title: "Areal og beliggenhet",
         bebygdAreal: "Bebygd areal",
@@ -262,7 +268,6 @@ export const nb = {
         bruttoareal: "Bruttoareal (BTA) bolig/annet/totalt",
         antallBoenheter: "Antall boenheter",
         bebygdAreal: "Bebygd areal (BYA)",
-        representasjonspunkt: "Representasjonspunkt (nord, øst)",
         erFerdigstilt: "Ferdigstilt",
         minner: "Sefrak / enkeltminner",
       },
