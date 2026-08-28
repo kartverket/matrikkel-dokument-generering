@@ -18,6 +18,10 @@ export function Bruksenheter({ bruksenheter }: Props) {
     return null
   }
 
+  const cellClass = "px-2 py-2"
+  const headerClass = `${cellClass} font-semibold text-sm`
+  const numberCellClass = `${cellClass} text-right`
+
   return (
     <section className="space-y-2">
       <span className="flex break-after-avoid items-center gap-4">
@@ -31,31 +35,31 @@ export function Bruksenheter({ bruksenheter }: Props) {
         <table className="w-full">
           <thead>
             <tr className="border-kv-green-border border-b">
-              <th className="px-0 py-2 text-left font-semibold text-sm">
+              <th className={`text-left ${headerClass}`}>
                 {t(`${tKey}.bruksenhetsNr`)}
               </th>
-              <th className="px-0 py-2 text-left font-semibold text-sm">
+              <th className={`text-left ${headerClass}`}>
                 {t(`${tKey}.bruksenhetsTypeKode`)}
               </th>
-              <th className="px-0 py-2 text-left font-semibold text-sm">
+              <th className={`text-right ${headerClass}`}>
                 {t(`${tKey}.bruksAreal`)}
               </th>
-              <th className="px-0 py-2 text-left font-semibold text-sm">
+              <th className={`text-right ${headerClass}`}>
                 {t(`${tKey}.antallRom`)}
               </th>
-              <th className="px-0 py-2 text-left font-semibold text-sm">
+              <th className={`text-right ${headerClass}`}>
                 {t(`${tKey}.antallBad`)}
               </th>
-              <th className="px-0 py-2 text-left font-semibold text-sm">
+              <th className={`text-right ${headerClass}`}>
                 {t(`${tKey}.antallWC`)}
               </th>
-              <th className="px-0 py-2 text-left font-semibold text-sm">
+              <th className={`text-left ${headerClass}`}>
                 {t(`${tKey}.kjokkenTilgangKode`)}
               </th>
-              <th className="px-0 py-2 text-left font-semibold text-sm">
+              <th className={`text-left ${headerClass}`}>
                 {t(`${tKey}.adresse`)}
               </th>
-              <th className="px-0 py-2 text-left font-semibold text-sm">
+              <th className={`text-left ${headerClass}`}>
                 {t(`${tKey}.matrikkelNr`)}
               </th>
             </tr>
@@ -63,23 +67,23 @@ export function Bruksenheter({ bruksenheter }: Props) {
           <tbody>
             {filtrerteEnheter.map((enhet) => (
               <tr key={enhet.bruksenhetsnummer} className="text-sm">
-                <td className="px-0 py-2">{enhet.bruksenhetsnummer}</td>
-                <td className="px-0 py-2">
+                <td className={cellClass}>{enhet.bruksenhetsnummer}</td>
+                <td className={cellClass}>
                   {enhet.bruksenhetsTypeKode?.displayTekst ?? "-"}
                 </td>
-                <td className="px-0 py-2">
+                <td className={numberCellClass}>
                   {enhet.bruksareal != null ? `${enhet.bruksareal} m²` : "-"}
                 </td>
-                <td className="px-0 py-2">{enhet.antallRom ?? "-"}</td>
-                <td className="px-0 py-2">{enhet.antallBad ?? "-"}</td>
-                <td className="px-0 py-2">{enhet.antallWC ?? "-"}</td>
-                <td className="px-0 py-2">
+                <td className={numberCellClass}>{enhet.antallRom ?? "-"}</td>
+                <td className={numberCellClass}>{enhet.antallBad ?? "-"}</td>
+                <td className={numberCellClass}>{enhet.antallWC ?? "-"}</td>
+                <td className={cellClass}>
                   {enhet.kjokkentilgang?.displayTekst ?? "-"}
                 </td>
-                <td className="px-0 py-2">
+                <td className={cellClass}>
                   {enhet.adresseIdentRapportInfo?.adresseAsString ?? "-"}
                 </td>
-                <td className="px-0 py-2">
+                <td className={cellClass}>
                   {enhet.matrikkelnrRapportInfo?.matrikkelNummer ?? "-"}
                 </td>
               </tr>
