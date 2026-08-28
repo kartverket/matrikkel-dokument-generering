@@ -10,7 +10,12 @@ export function BygningSection({ bygning }: Readonly<Props>) {
 
   return (
     <section>
-      <OmBygget bygning={bygning} />
+      <OmBygget
+        bygningstypeKode={bygning.bygningstypeKode}
+        naringsgruppeKode={bygning.naringsgruppeKode}
+        etasjedata={bygning.etasjedata}
+        representasjonspunkt={bygning.representasjonspunkt}
+      />
     </section>
   )
 }

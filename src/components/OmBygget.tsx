@@ -4,21 +4,22 @@ import { oversettKode } from "../lib/i18n/koder/oversettKode.ts"
 import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 import { LabelValue } from "./utils/LabelValue.tsx"
 
-interface Props {
-  readonly bygning: Bygning
-}
+type Props = Pick<
+  Bygning,
+  | "bygningstypeKode"
+  | "naringsgruppeKode"
+  | "etasjedata"
+  | "representasjonspunkt"
+>
 
-export function OmBygget({ bygning }: Props) {
+export function OmBygget({
+  bygningstypeKode,
+  naringsgruppeKode,
+  etasjedata,
+  representasjonspunkt,
+}: Props) {
   const { t } = useTranslation()
   const tKey = "rapport.BYG0011.omBygget" as const
-
-  const {
-    bygningstypeKode,
-    naringsgruppeKode,
-    etasjedata,
-    representasjonspunkt,
-  } = bygning
-
   const bygningstype =
     bygningstypeKode?.kodeverdi != null
       ? `${bygningstypeKode.kodeverdi} ${oversettKode({ t, kodeverk: "bygningstype", kode: bygningstypeKode.kodeverdi })}`
