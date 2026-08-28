@@ -54,9 +54,9 @@ export function formatMatrikkelnummer(
   if (!matrikkel) return undefined
 
   const deler: string[] = []
-  if (typeof matrikkel.gnr === "number")
+  if (typeof matrikkel.gnr === "string" && matrikkel.gnr.trim().length > 0)
     deler.push(`${labels.gnr} ${matrikkel.gnr}`)
-  if (typeof matrikkel.bnr === "number")
+  if (typeof matrikkel.bnr === "string" && matrikkel.bnr.trim().length > 0)
     deler.push(`${labels.bnr} ${matrikkel.bnr}`)
   if (typeof matrikkel.fnr === "number")
     deler.push(`${labels.fnr} ${matrikkel.fnr}`)

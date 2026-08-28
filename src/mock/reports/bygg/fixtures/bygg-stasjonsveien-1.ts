@@ -287,7 +287,7 @@ export function createByggStasjonsveien1Report(): LegacyFixtureByggRapport {
         adresseNr: 1,
         utenBokstav: null,
       },
-      matrikkelenhet: { gnr: 35, bnr: 12 },
+      matrikkelenhet: { gnr: "35", bnr: "12" },
       bygningsstatus: { naavaerende: ["TB"], tidligere: [] },
       sokevindu: { nord: 6647233, ost: 594560, syd: 6647175, vest: 594460 },
       subrapporter: {

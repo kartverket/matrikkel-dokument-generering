@@ -258,7 +258,7 @@ export function createByggSlottsplassen1Report(): LegacyFixtureByggRapport {
         adresseNr: 1,
         utenBokstav: null,
       },
-      matrikkelenhet: { gnr: 209, bnr: 25 },
+      matrikkelenhet: { gnr: "209", bnr: "25" },
       bygningsstatus: { naavaerende: ["TB"], tidligere: [] },
       sokevindu: { nord: 6643438, ost: 596593, syd: 6643438, vest: 596593 },
       subrapporter: {
