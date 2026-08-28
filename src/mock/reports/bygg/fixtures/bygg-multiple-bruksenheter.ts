@@ -1,6 +1,9 @@
 import type { LegacyFixtureByggRapport } from "../../../types"
 
-const kode = <T extends string>(kodeverdi: T, displayTekst: string = kodeverdi) => ({
+const kode = <T extends string>(
+  kodeverdi: T,
+  displayTekst: string = kodeverdi,
+) => ({
   kodeverdi,
   displayTekst,
 })
