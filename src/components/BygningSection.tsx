@@ -23,7 +23,7 @@ export function BygningSection({ bygning }: Readonly<Props>) {
       {bygning.etasjedata != null && (
         <ArealSection etasjedata={bygning.etasjedata} />
       )}
-      
+
       {bygning.bygningsstatuser != null && (
         <BygningsstatuserSection bygningsstatuser={bygning.bygningsstatuser} />
       )}
