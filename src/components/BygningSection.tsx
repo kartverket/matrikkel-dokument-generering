@@ -10,7 +10,7 @@ export function BygningSection({ bygning }: Readonly<Props>) {
   if (!bygning) return null
 
   return (
-    <section>
+    <section className="flex flex-col gap-4">
       <OmBygget
         bygningstypeKode={bygning.bygningstypeKode}
         naringsgruppeKode={bygning.naringsgruppeKode}

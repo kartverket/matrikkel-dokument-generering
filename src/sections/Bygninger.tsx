@@ -9,7 +9,7 @@ export function Bygninger({ bygninger }: Readonly<Props>) {
   if (!bygninger) return null
 
   return (
-    <section>
+    <section className="flex flex-col gap-4">
       {bygninger.map((bygning) => (
         <BygningSection key={bygning.bygningsnummer} bygning={bygning} />
       ))}
