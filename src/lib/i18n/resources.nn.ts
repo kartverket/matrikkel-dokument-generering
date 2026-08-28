@@ -209,7 +209,7 @@ export const nn = {
         bruksenheter: {
           ingenEndring: "Ingen endringar registrerte på bygget.",
           tittel_one: "Berørt brukseining",
-          tittel_other: "Berørte brukseiningar",
+          tittel_other: "Brukseiningar",
           bruksenhetsNr: "Brukseining",
           bruksenhetsTypeKode: "Type",
           bruksAreal: "BRA",

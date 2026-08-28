@@ -216,8 +216,8 @@ export const nb = {
           bruksenhetsNr: "Bruksenhet",
         },
         bruksenheter: {
-          tittel_one: "Berørt bruksenhet",
-          tittel_other: "Berørte bruksenheter",
+          tittel_one: "Bruksenhet",
+          tittel_other: "Bruksenheter",
           ingenEndring: "Ingen endringer registrert på bygget.",
           bruksenhetsNr: "Bruksenhet",
           bruksenhetsTypeKode: "Type",
@@ -359,7 +359,7 @@ export const nb = {
         historikk: {
           title: "Sammendrag av bygningshistorikk",
           ingenHistorikk: "Ingen registrerte matrikkelføringer på bygget.",
-          berorteBruksenheter: "Berørte bruksenheter {{bruksenheter}}",
+          berorteBruksenheter: "Bruksenheter {{bruksenheter}}",
           berorteEtasje: "Berørte etasje {{etasjer}}",
           berorteEtasjer: "Berørte etasjene {{etasjer}}",
           flereBerorte: "+{{antall}} til",

@@ -3,6 +3,7 @@ import { createBygg42221Report } from "./reports/bygg/fixtures/bygg-42-221"
 import { createBygg1098Report } from "./reports/bygg/fixtures/bygg-109-8"
 import { createByggSlottsplassen1Report } from "./reports/bygg/fixtures/bygg-slottsplassen-1"
 import { createByggStasjonsveien1Report } from "./reports/bygg/fixtures/bygg-stasjonsveien-1"
+import { createByggMultipleBruksenheterReport } from "./reports/bygg/fixtures/bygg-multiple-bruksenheter"
 import { normalizeByggRapport } from "./reports/bygg/normalize-bygg-report"
 import type { NormalizedByggRapport } from "./types"
 
@@ -184,6 +185,17 @@ const case5 = {
 }
 
 /**
+ * Demonstrerer et bygg med flere bruksenheter.
+ * Brukes til: Testing av Bruksenheter-komponenten, tabell-layout med multiple units.
+ */
+const case5b = {
+  testCase: "bygg-multiple-bruksenheter" as const,
+  name: "Multiple bruksenheter - Oslogaten 42",
+  description: "Enebolig med 3 separate bruksenheter (hovedplan, kjeller, loft)",
+  load: createByggMultipleBruksenheterReport,
+}
+
+/**
  * Kombinerer alle 5 testcaser til en aggregert rapport.
  * Brukes til: Visning av all testdata på en side, skalabilitetstesting.
  */
@@ -211,6 +223,7 @@ const caseDefinitions: CaseDefinition[] = [
   case3,
   case4,
   case5,
+  case5b,
   case6,
   case7,
 ]

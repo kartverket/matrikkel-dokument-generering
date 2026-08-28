@@ -40,6 +40,5 @@ export const bruksenhetSchema = z
     kostraVirksomhetNavn: z.string().optional(),
     nyEndretSlettet: nyEndretSlettetEnum.optional(),
   })
-  .optional()
 
 export type Bruksenhet = NonNullable<z.infer<typeof bruksenhetSchema>>
