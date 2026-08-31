@@ -5,6 +5,7 @@ import type { Kontaktperson } from "../lib/schema/reports/bygg/shared/kontaktper
 import { ArealSection } from "./ArealSection.tsx"
 import { Bruksenheter } from "./Bruksenheter.tsx"
 import { BygningsstatuserSection } from "./BygningsstatuserSection.tsx"
+import { EtasjerSection } from "./EtasjerSection.tsx"
 import { Hjemmelshavere } from "./Hjemmelshavere.tsx"
 import { Kontaktpersoner } from "./Kontaktpersoner.tsx"
 import { OmBygget } from "./OmBygget.tsx"
@@ -87,6 +88,10 @@ export function BygningSection({ bygning }: Readonly<Props>) {
               <BygningsstatuserSection
                 bygningsstatuser={bygning.bygningsstatuser}
               />
+            )}
+
+            {bygning.etasjer != null && bygning.etasjer.length > 0 && (
+              <EtasjerSection etasjer={bygning.etasjer} />
             )}
 
             {bygning.bruksenheter.length > 0 && (

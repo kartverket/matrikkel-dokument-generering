@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next"
 import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
+import { formatAreal } from "../lib/utils/formatAreal.ts"
 import { LabelValue } from "./utils/LabelValue.tsx"
 import { SectionTitle } from "./utils/SectionTitle.tsx"
 
@@ -10,9 +11,6 @@ export function ArealSection({ etasjedata }: Props) {
   const tKey = "rapport.BYG0011.areal" as const
   const enhet = t(`${tKey}.enhet`)
 
-  const formatAreal = (value: number | undefined) =>
-    value != null ? `${value} ${enhet}` : undefined
-
   return (
     <section className="space-y-2">
       <SectionTitle>{t(`${tKey}.tittel`)}</SectionTitle>
@@ -20,18 +18,18 @@ export function ArealSection({ etasjedata }: Props) {
       <div className="flex gap-8">
         <ArealGruppe
           tittel={t(`${tKey}.bruksareal`)}
-          bolig={formatAreal(etasjedata?.bruksarealTilBolig)}
-          annet={formatAreal(etasjedata?.bruksarealTilAnnet)}
-          total={formatAreal(etasjedata?.bruksarealTotalt)}
+          bolig={formatAreal(etasjedata?.bruksarealTilBolig, enhet)}
+          annet={formatAreal(etasjedata?.bruksarealTilAnnet, enhet)}
+          total={formatAreal(etasjedata?.bruksarealTotalt, enhet)}
           boligLabel={t(`${tKey}.bolig`)}
           annetLabel={t(`${tKey}.annet`)}
           totalLabel={t(`${tKey}.total`)}
         />
         <ArealGruppe
           tittel={t(`${tKey}.bruttoareal`)}
-          bolig={formatAreal(etasjedata?.bruttoarealTilBolig)}
-          annet={formatAreal(etasjedata?.bruttoarealTilAnnet)}
-          total={formatAreal(etasjedata?.bruttoarealTotalt)}
+          bolig={formatAreal(etasjedata?.bruttoarealTilBolig, enhet)}
+          annet={formatAreal(etasjedata?.bruttoarealTilAnnet, enhet)}
+          total={formatAreal(etasjedata?.bruttoarealTotalt, enhet)}
           boligLabel={t(`${tKey}.bolig`)}
           annetLabel={t(`${tKey}.annet`)}
           totalLabel={t(`${tKey}.total`)}
@@ -41,7 +39,7 @@ export function ArealSection({ etasjedata }: Props) {
   )
 }
 
-interface ArealGruppeProps {
+export interface ArealGruppeProps {
   tittel: string
   bolig: string | undefined
   annet: string | undefined
@@ -51,7 +49,7 @@ interface ArealGruppeProps {
   totalLabel: string
 }
 
-function ArealGruppe({
+export function ArealGruppe({
   tittel,
   bolig,
   annet,
