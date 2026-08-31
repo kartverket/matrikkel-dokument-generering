@@ -226,7 +226,7 @@ export function createByggMultipleBruksenheterReport(): LegacyFixtureByggRapport
         sefrakminner: [],
         etasjer: [
           {
-            etasjeplanKode: "K",
+            etasjeplanKode: kode("K", "Kjelleretasje"),
             etasjenummer: 0,
             bruttoarealTotalt: 30,
             etasjedata: {
@@ -243,7 +243,7 @@ export function createByggMultipleBruksenheterReport(): LegacyFixtureByggRapport
             nyEndretSlettet: "N",
           },
           {
-            etasjeplanKode: "H",
+            etasjeplanKode: kode("H", "Hovedetasje"),
             etasjenummer: 1,
             bruttoarealTotalt: 120,
             etasjedata: {
@@ -260,7 +260,7 @@ export function createByggMultipleBruksenheterReport(): LegacyFixtureByggRapport
             nyEndretSlettet: "N",
           },
           {
-            etasjeplanKode: "L",
+            etasjeplanKode: kode("L", "Loft"),
             etasjenummer: 2,
             bruttoarealTotalt: 25,
             etasjedata: {
