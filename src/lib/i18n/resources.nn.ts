@@ -1,5 +1,6 @@
 import { koderNn } from "./koder/resources.koder.nn.ts"
 import { shared } from "./resources.shared"
+import type { ValidRapportResources } from "./validRapportResources.ts"
 
 export const nn = {
   ...shared,
@@ -20,6 +21,14 @@ export const nn = {
     },
   },
   rapport: {
+    metaData: {
+      rapportKode: "rapportKode",
+      rapportNr: "Rapportnr",
+      kommune: "Kommune",
+      kommuneNr: "Kommunenr",
+      koordinatsystem: "Koordinatsystem",
+      generertTidspunkt: "Generert tidspunkt",
+    },
     BYG0011: {
       rapportTittel: "Byggrapport",
       title: "Bygning {{bygningsnr}} – {{bygningstype}}",
@@ -94,6 +103,8 @@ export const nn = {
         },
       },
       matrikkelenhet: "Matrikkeleining",
+      bygningsnummer: "Bygningsnummer",
+      naavarendeBygning: "Nåverande bygning",
       omBygget: {
         tittel: "Om bygget",
         bygningstype: "Bygningstype",
@@ -373,5 +384,5 @@ export const nn = {
         },
       },
     },
-  },
+  } satisfies ValidRapportResources & { metaData: any },
 } as const

@@ -1,8 +1,8 @@
-import { Heading } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import { oversettKode } from "../lib/i18n/koder/oversettKode.ts"
 import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 import { LabelValue } from "./utils/LabelValue.tsx"
+import { SectionTitle } from "./utils/SectionTitle.tsx"
 
 type Props = Pick<
   Bygning,
@@ -36,13 +36,8 @@ export function OmBygget({
       : undefined
 
   return (
-    <section className="space-y-2">
-      <span className="flex break-after-avoid items-center gap-4">
-        <Heading level={3} data-size="2xs" className="min-w-max font-medium">
-          {t(`${tKey}.tittel`)}
-        </Heading>
-        <hr className="w-full border border-kv-green-border" />
-      </span>
+    <div className="space-y-2">
+      <SectionTitle>{t(`${tKey}.tittel`)}</SectionTitle>
 
       <div className="grid grid-cols-4 gap-4">
         <LabelValue label={t(`${tKey}.bygningstype`)} value={bygningstype} />
@@ -56,6 +51,6 @@ export function OmBygget({
           value={koordinater}
         />
       </div>
-    </section>
+    </div>
   )
 }

@@ -73,9 +73,9 @@ async function createDocumentResponse({
     }
 
     .preview-page {
-      width: 210mm;
+      width: 297mm;
       max-width: 100%;
-      min-height: 297mm;
+      min-height: 210mm;
       background: #fff;
       box-shadow: 0 8px 28px rgba(15, 23, 42, 0.16);
       border: 1px solid #d9e0ea;
