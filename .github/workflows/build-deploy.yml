@@ -9,6 +9,10 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  CI: true
+  TZ: Europe/Oslo
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
@@ -228,5 +232,25 @@ jobs:
         with:
           cluster: "atkv3-prod"
           resource: ".skip/prodtest.yaml"
+          var: |
+            image=${{ needs.version.outputs.image }},version=${{ needs.version.outputs.version }}
+
+  deploy-prod:
+    name: "Deploy Prod"
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    needs:
+      - version
+      - deploy-prodtest
+    permissions:
+      actions: read
+      contents: read
+      id-token: write
+    steps:
+      - name: Deploy to prod
+        uses: kartverket/matrikkel-actions/heimdall-deploy@main
+        with:
+          cluster: "atkv3-prod"
+          resource: ".skip/prod.yaml"
           var: |
             image=${{ needs.version.outputs.image }},version=${{ needs.version.outputs.version }}
