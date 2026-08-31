@@ -4,6 +4,7 @@ import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.sch
 import { ArealSection } from "./ArealSection.tsx"
 import { Bruksenheter } from "./Bruksenheter.tsx"
 import { BygningsstatuserSection } from "./BygningsstatuserSection.tsx"
+import { EtasjerSection } from "./EtasjerSection.tsx"
 import { OmBygget } from "./OmBygget.tsx"
 
 interface Props {
@@ -73,6 +74,10 @@ export function BygningSection({ bygning }: Readonly<Props>) {
               <BygningsstatuserSection
                 bygningsstatuser={bygning.bygningsstatuser}
               />
+            )}
+
+            {bygning.etasjer.length > 0 && (
+              <EtasjerSection etasjer={bygning.etasjer} />
             )}
 
             {bygning.bruksenheter.length > 0 && (

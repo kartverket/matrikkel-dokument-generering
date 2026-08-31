@@ -140,17 +140,9 @@ export const nb = {
       },
       etasjer: {
         title: "Etasjer",
-        endring: "Endring",
         etasjeplan: "Etasjeplan",
         etasje: "Etasje",
         antallBoenheter: "Boenheter",
-        bruksarealBolig: "Bruksareal bolig",
-        bruksarealAnnet: "Bruksareal annet",
-        bruksarealTotalt: "Bruksareal totalt",
-        bruttoarealBolig: "Bruttoareal bolig",
-        bruttoarealAnnet: "Bruttoareal annet",
-        bruttoarealTotalt: "Bruttoareal totalt",
-        opprinnelig: "Opprinnelig",
       },
       byggEndringer: {
         tittel: "Bygningsendringer",
