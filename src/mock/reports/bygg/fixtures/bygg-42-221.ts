@@ -377,7 +377,7 @@ export function createBygg42221Report(): LegacyFixtureByggRapport {
         adresseNr: 20,
         utenBokstav: null,
       },
-      matrikkelenhet: { gnr: 42, bnr: 221 },
+      matrikkelenhet: { gnr: "42", bnr: "221" },
       bygningsstatus: { naavaerende: ["TB", "FA", "IG", "RA"], tidligere: [] },
       sokevindu: { nord: 6647010, ost: 595909, syd: 6646774, vest: 595695 },
       subrapporter: {

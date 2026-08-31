@@ -398,7 +398,7 @@ export function createBygg32341Report(): LegacyFixtureByggRapport {
         adresseNr: 15,
         utenBokstav: null,
       },
-      matrikkelenhet: { gnr: 32, bnr: 341 },
+      matrikkelenhet: { gnr: "32", bnr: "341" },
       bygningsstatus: { naavaerende: ["TB", "FA"], tidligere: [] },
       sokevindu: { nord: 6645987, ost: 593530, syd: 6645984, vest: 593522 },
       subrapporter: {

@@ -95,8 +95,8 @@ function createByggAlleKriterierReport() {
         utenBokstav: false,
       },
       matrikkelenhet: {
-        gnr: 32,
-        bnr: 341,
+        gnr: "32",
+        bnr: "341",
         fnr: 0,
         snr: 2,
       },
