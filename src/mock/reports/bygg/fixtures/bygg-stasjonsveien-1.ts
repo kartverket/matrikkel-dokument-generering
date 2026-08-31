@@ -118,7 +118,7 @@ function createBygning(input: {
     ],
     etasjer: [
       {
-        etasjeplanKode: "H",
+        etasjeplanKode: kode("H", "Hovedetasje"),
         etasjenummer: 1,
         bruttoarealTotalt: input.bruksareal,
         etasjedata: {
