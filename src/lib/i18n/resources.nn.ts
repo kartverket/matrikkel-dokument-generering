@@ -21,12 +21,16 @@ export const nn = {
   },
   rapport: {
     BYG0011: {
-      rapportTittel: "Bygg Rapport",
+      rapportTittel: "Byggrapport",
       title: "Bygning {{bygningsnr}} – {{bygningstype}}",
       utvalgskriterier: {
         title: "Utvalskriterier",
-        ja: "Ja",
-        nei: "Nei",
+        avgrensning: "Avgrensing",
+        filtrering: "Filtrering",
+        innholdIRapporten: "Innhald i rapporten",
+        innhold: "Innhald",
+        byggstatus: "Byggstatus",
+        periode: "Periode",
         ikkeAngitt: "Ikkje oppgitt",
         omfang: {
           tittel: "Bygningar valde",
@@ -90,7 +94,25 @@ export const nn = {
         },
       },
       matrikkelenhet: "Matrikkeleining",
-      naringsgruppe: "Næringsgruppe",
+      omBygget: {
+        tittel: "Om bygget",
+        bygningstype: "Bygningstype",
+        naringsgruppe: "Næringsgruppe",
+        boenheter: "Bygningar",
+        representasjonspunkt: "Representasjonspunkt",
+      },
+      areal: {
+        tittel: "Areal",
+        bruksareal: "Bruksareal",
+        bruttoareal: "Bruttoareal",
+        bolig: "Bustad",
+        annet: "Anna",
+        total: "Totalt",
+        enhet: "m²",
+      },
+      bygningsstatuser: {
+        tittel: "Bygningsstatuser",
+      },
       arealfordeling: {
         title: "Areal og beliggenheit",
         bebygdAreal: "Bebygd areal",
@@ -249,7 +271,6 @@ export const nn = {
         bruttoareal: "Bruttoareal (BTA) bustad/anna/totalt",
         antallBoenheter: "Tal på bueiningar",
         bebygdAreal: "Bebygd areal (BYA)",
-        representasjonspunkt: "Representasjonspunkt (nord, aust)",
         erFerdigstilt: "Ferdigstilt",
         minner: "SEFRAK / enkeltminne",
       },

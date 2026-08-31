@@ -6,6 +6,7 @@ const previewCases = [
   "bygg-stasjonsveien-1",
   "bygg-slottsplassen-1",
   "bygg-109-8",
+  "bygg-alle-kriterier",
 ]
 
 test.describe("BYG0011 preview visual regression", () => {
