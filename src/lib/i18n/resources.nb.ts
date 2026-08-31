@@ -1,5 +1,6 @@
 import { koderNb } from "./koder/resources.koder.nb.ts"
 import { shared } from "./resources.shared"
+import type { ValidRapportResources } from "./validRapportResources.ts"
 
 export const nb = {
   ...shared,
@@ -102,6 +103,8 @@ export const nb = {
         },
       },
       matrikkelenhet: "Matrikkelenhet",
+      bygningsnummer: "Bygningsnummer",
+      naavarendeBygning: "Nåværende bygning",
       omBygget: {
         tittel: "Om bygget",
         bygningstype: "Bygningstype",
@@ -382,5 +385,5 @@ export const nb = {
         },
       },
     },
-  },
+  } satisfies ValidRapportResources & { metaData: any },
 } as const

@@ -1,13 +1,15 @@
 import { useTranslation } from "react-i18next"
+import type { RapportKode } from "../../lib/schema/core/koder/rapportKode.schema.ts"
 import type { RapportMeta } from "../../lib/schema/core/meta.schema.ts"
 
 interface PdfHeaderProps {
   readonly metadata: RapportMeta
+  readonly rapportKode: RapportKode
 }
 
-export function PdfHeader({ metadata }: Readonly<PdfHeaderProps>) {
+export function PdfHeader({ metadata, rapportKode }: Readonly<PdfHeaderProps>) {
   const { i18n, t } = useTranslation()
-  const { kommune, koordinatSystemKode, generertTidspunkt } = metadata
+  const { koordinatSystemKode, generertTidspunkt } = metadata
 
   const generertDato = new Date(generertTidspunkt)
   const harGyldigDato = Number.isFinite(generertDato.getTime())
@@ -24,7 +26,7 @@ export function PdfHeader({ metadata }: Readonly<PdfHeaderProps>) {
   return (
     <div className="w-full text-kv-subtle text-pdf-label leading-tight">
       <div className="grid w-full grid-cols-3 items-center">
-        <span className="truncate">{`${kommune.kommuneNr} ${kommune.kommuneNavn}`}</span>
+        <span>{t(`rapport.${rapportKode}.rapportTittel`)}</span>
         <span className="text-center">{rapportDato}</span>
         <span className="whitespace-pre text-right">
           {t(`koder.koordinat.${koordinatSystemKode}`)}
