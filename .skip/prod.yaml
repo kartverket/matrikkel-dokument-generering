@@ -7,7 +7,7 @@ spec:
   image: "{{ image }}"
   port: 8087
   ingresses:
-    - matrikkel-dokument-generering-prod.atkv3-prod.kartverket-intern.cloud
+    - matrikkel-dokument-generering.atkv3-prod.kartverket-intern.cloud
   replicas: 1
 
   accessPolicy:
