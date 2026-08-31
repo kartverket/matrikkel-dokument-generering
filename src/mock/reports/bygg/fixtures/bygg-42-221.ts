@@ -32,8 +32,8 @@ function isoDate(date: string) {
 
 function createBygning(input: {
   kommuneNr: string
-  gnr: number
-  bnr: number
+  gnr: string
+  bnr: string
   adresseNavn: string
   adresseNr: number
   bygningsnummer: string
@@ -101,8 +101,8 @@ function createBygning(input: {
         kjokkentilgang: kode("9", "Ikke oppgitt"),
         matrikkelnrRapportInfo: {
           kommunenummer: input.kommuneNr,
-          gnr: input.gnr,
-          bnr: input.bnr,
+          gnr: Number(input.gnr),
+          bnr: Number(input.bnr),
           fnr: 0,
           snr: 0,
           matrikkelNummer,
@@ -252,8 +252,8 @@ function createBygning(input: {
             ],
             matrikkelnrRapportInfo: {
               kommunenummer: input.kommuneNr,
-              gnr: input.gnr,
-              bnr: input.bnr,
+              gnr: Number(input.gnr),
+              bnr: Number(input.bnr),
               fnr: 0,
               snr: 0,
               matrikkelNummer,
@@ -392,8 +392,8 @@ export function createBygg42221Report(): LegacyFixtureByggRapport {
     bygninger: [
       createBygning({
         kommuneNr: "0301",
-        gnr: 42,
-        bnr: 221,
+        gnr: "42",
+        bnr: "221",
         adresseNavn: "Sognsvannsveien",
         adresseNr: 20,
         bygningsnummer: "81174261",
@@ -407,8 +407,8 @@ export function createBygg42221Report(): LegacyFixtureByggRapport {
       }),
       createBygning({
         kommuneNr: "0301",
-        gnr: 42,
-        bnr: 221,
+        gnr: "42",
+        bnr: "221",
         adresseNavn: "Sognsvannsveien",
         adresseNr: 20,
         bygningsnummer: "81197334",
@@ -423,8 +423,8 @@ export function createBygg42221Report(): LegacyFixtureByggRapport {
       }),
       createBygning({
         kommuneNr: "0301",
-        gnr: 42,
-        bnr: 221,
+        gnr: "42",
+        bnr: "221",
         adresseNavn: "Sognsvannsveien",
         adresseNr: 20,
         bygningsnummer: "81771197",
@@ -439,8 +439,8 @@ export function createBygg42221Report(): LegacyFixtureByggRapport {
       }),
       createBygning({
         kommuneNr: "0301",
-        gnr: 42,
-        bnr: 221,
+        gnr: "42",
+        bnr: "221",
         adresseNavn: "Sognsvannsveien",
         adresseNr: 20,
         bygningsnummer: "81771200",
@@ -454,8 +454,8 @@ export function createBygg42221Report(): LegacyFixtureByggRapport {
       }),
       createBygning({
         kommuneNr: "0301",
-        gnr: 42,
-        bnr: 221,
+        gnr: "42",
+        bnr: "221",
         adresseNavn: "Sognsvannsveien",
         adresseNr: 20,
         bygningsnummer: "81848238",
@@ -469,8 +469,8 @@ export function createBygg42221Report(): LegacyFixtureByggRapport {
       }),
       createBygning({
         kommuneNr: "0301",
-        gnr: 42,
-        bnr: 221,
+        gnr: "42",
+        bnr: "221",
         adresseNavn: "Sognsvannsveien",
         adresseNr: 20,
         bygningsnummer: "301432893",

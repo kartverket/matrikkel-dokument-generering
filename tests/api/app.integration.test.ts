@@ -18,36 +18,31 @@ describe("HTTP API", () => {
     ["bygg-stasjonsveien-1", createByggStasjonsveien1Report],
   ] as const
 
-  test.each(fixtureCases)(
-    "%s fixture is valid against BYG0011 schema",
-    (_name, createFixture) => {
-      const payload = JSON.parse(JSON.stringify(createFixture()))
-      const parseResult = byggRapportSchema.safeParse(payload)
+  test.each(
+    fixtureCases,
+  )("%s fixture is valid against BYG0011 schema", (_name, createFixture) => {
+    const payload = JSON.parse(JSON.stringify(createFixture()))
+    const parseResult = byggRapportSchema.safeParse(payload)
 
-      if (!parseResult.success) {
-        throw new Error(JSON.stringify(parseResult.error.issues, null, 2))
-      }
+    if (!parseResult.success) {
+      throw new Error(JSON.stringify(parseResult.error.issues, null, 2))
+    }
 
-      expect(parseResult.success).toBe(true)
-    },
-  )
+    expect(parseResult.success).toBe(true)
+  })
 
-  test.each(fixtureCases)(
-    "%s fixture is accepted by create-document route schema",
-    async (_name, createFixture) => {
-      const response = await app.request(
-        "/create-document/BYG0011?format=html",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(createFixture()),
-        },
-      )
+  test.each(
+    fixtureCases,
+  )("%s fixture is accepted by create-document route schema", async (_name, createFixture) => {
+    const response = await app.request("/create-document/BYG0011?format=html", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(createFixture()),
+    })
 
-      expect(response.status).toBe(200)
-      expect(response.headers.get("Content-Type")).toContain("text/html")
-    },
-  )
+    expect(response.status).toBe(200)
+    expect(response.headers.get("Content-Type")).toContain("text/html")
+  })
 
   test.each([
     ["/internal/isAlive", "Alive"],

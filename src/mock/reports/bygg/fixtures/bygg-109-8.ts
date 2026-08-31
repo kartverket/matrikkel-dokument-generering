@@ -32,8 +32,8 @@ function isoDate(date: string) {
 
 function createBygning(input: {
   kommuneNr: string
-  gnr: number
-  bnr: number
+  gnr: string
+  bnr: string
   adresseNavn: string
   adresseNr: number
   bygningsnummer: string
@@ -101,8 +101,8 @@ function createBygning(input: {
         kjokkentilgang: kode("1", "Kjokken"),
         matrikkelnrRapportInfo: {
           kommunenummer: input.kommuneNr,
-          gnr: input.gnr,
-          bnr: input.bnr,
+          gnr: Number(input.gnr),
+          bnr: Number(input.bnr),
           fnr: 0,
           snr: 0,
           matrikkelNummer,
@@ -111,8 +111,8 @@ function createBygning(input: {
         adresseIdentRapportInfo: {
           matrikkelnrRapportInfo: {
             kommunenummer: input.kommuneNr,
-            gnr: input.gnr,
-            bnr: input.bnr,
+            gnr: Number(input.gnr),
+            bnr: Number(input.bnr),
           },
           adresseNavn: input.adresseNavn,
           nummer: input.adresseNr,
@@ -268,8 +268,8 @@ function createBygning(input: {
             ],
             matrikkelnrRapportInfo: {
               kommunenummer: input.kommuneNr,
-              gnr: input.gnr,
-              bnr: input.bnr,
+              gnr: Number(input.gnr),
+              bnr: Number(input.bnr),
               fnr: 0,
               snr: 0,
               matrikkelNummer,
@@ -409,8 +409,8 @@ export function createBygg1098Report(): LegacyFixtureByggRapport {
     bygninger: [
       createBygning({
         kommuneNr: "3201",
-        gnr: 109,
-        bnr: 8,
+        gnr: "109",
+        bnr: "8",
         adresseNavn: "Vensasveien",
         adresseNr: 6,
         bygningsnummer: "17361511",
@@ -424,8 +424,8 @@ export function createBygg1098Report(): LegacyFixtureByggRapport {
       }),
       createBygning({
         kommuneNr: "3201",
-        gnr: 109,
-        bnr: 8,
+        gnr: "109",
+        bnr: "8",
         adresseNavn: "Vensasveien",
         adresseNr: 6,
         bygningsnummer: "17361538",
@@ -439,8 +439,8 @@ export function createBygg1098Report(): LegacyFixtureByggRapport {
       }),
       createBygning({
         kommuneNr: "3201",
-        gnr: 109,
-        bnr: 8,
+        gnr: "109",
+        bnr: "8",
         adresseNavn: "Vensasveien",
         adresseNr: 6,
         bygningsnummer: "17362623",
