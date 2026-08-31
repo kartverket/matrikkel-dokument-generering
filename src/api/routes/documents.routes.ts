@@ -9,6 +9,11 @@ import {
   listPreviewCases,
 } from "../../mock/preview-data.ts"
 import {
+  renderNotFoundPage,
+  renderRapportsListPage,
+  renderScenariosListPage,
+} from "../../pages/previewRenderer.ts"
+import {
   notImplementedResponseSchema,
   pdfErrorResponseSchema,
   validationErrorResponseSchema,
@@ -263,9 +268,21 @@ export function registerDocumentRoutes(app: OpenAPIHono) {
 
     try {
       const result = await createDocumentResponse({ rapport: data, format })
+
+      if (format === "pdf" && result.body instanceof ArrayBuffer) {
+        return new Response(result.body, {
+          status: 200,
+          headers: {
+            "Content-Type": result.contentType,
+            "Content-Length": result.body.byteLength.toString(),
+          },
+        })
+      }
+
       return c.body(result.body, 200, { "Content-Type": result.contentType })
     } catch (error) {
       const details = error instanceof Error ? error.message : "Ukjent feil"
+      console.error("PDF generation error:", error)
       return c.json({ error: "PDF-generering feilet", details }, 502)
     }
   })
@@ -330,10 +347,95 @@ export function registerDocumentRoutes(app: OpenAPIHono) {
         format,
       })
 
+      if (format === "pdf" && result.body instanceof ArrayBuffer) {
+        return new Response(result.body, {
+          status: 200,
+          headers: {
+            "Content-Type": result.contentType,
+            "Content-Length": result.body.byteLength.toString(),
+          },
+        })
+      }
+
       return c.body(result.body, 200, { "Content-Type": result.contentType })
     } catch (error) {
       const details = error instanceof Error ? error.message : "Ukjent feil"
+      console.error("Preview PDF generation error:", error)
       return c.json({ error: "PDF-generering feilet", details }, 502)
     }
+  })
+
+  // List all available rapport types
+  const listRapportTypesRoute = createRoute({
+    method: "get" as const,
+    path: "/preview",
+    tags: ["Dokument"],
+    summary: "List alle tilgjengelige rapporttyper",
+    operationId: "listRapportTypes",
+    responses: {
+      200: {
+        description: "Liste over alle rapporttyper",
+        content: {
+          "text/html": {
+            schema: z.string(),
+          },
+        },
+      },
+    },
+  })
+
+  app.openapi(listRapportTypesRoute, (c) => {
+    const host = c.req.header("host") || "localhost:5173"
+    const protocol = c.req.header("x-forwarded-proto") || "http"
+
+    const rapportTypes = [
+      {
+        kode: "BYG0011",
+        tittel: "Bygningsrapport",
+        beskrivelse: "Detaljert rapport over bygninger og deres karakteristika",
+      },
+    ]
+
+    const html = renderRapportsListPage(rapportTypes, protocol, host)
+    return c.html(html)
+  })
+
+  // List scenarios for a specific rapport type
+  const listRapportScenariosRoute = createRoute({
+    method: "get" as const,
+    path: "/preview/{rapportKode}",
+    tags: ["Dokument"],
+    summary: "List alle tilgjengelige scenarioer for en rapporttype",
+    operationId: "listRapportScenarios",
+    request: {
+      params: z.object({
+        rapportKode: z.string(),
+      }),
+    },
+    responses: {
+      200: {
+        description: "Liste over alle scenarioer for rapporten",
+        content: {
+          "text/html": {
+            schema: z.string(),
+          },
+        },
+      },
+    },
+  })
+
+  app.openapi(listRapportScenariosRoute, (c) => {
+    const { rapportKode } = c.req.param()
+    const host = c.req.header("host") || "localhost:5173"
+    const protocol = c.req.header("x-forwarded-proto") || "http"
+
+    if (rapportKode !== "BYG0011") {
+      const html = renderNotFoundPage(rapportKode, protocol, host)
+      return c.html(html, 404)
+    }
+
+    const scenarios = listPreviewCases()
+    const html = renderScenariosListPage(rapportKode, scenarios, protocol, host)
+    return c.html(html)
   })
 }
