@@ -133,11 +133,11 @@ export const byggUtvalgskriterierSchema = valgfriObjekt({
 
   // Matrikkelenhet filter-kriterier
   matrikkelenhet: valgfriObjekt({
-    gnr: valgfriHeltall.meta({
+    gnr: z.string().optional().meta({
       title: "Gårdsnummer",
       description: "Nummeret på et større geografisk område innen kommunen.",
     }),
-    bnr: valgfriHeltall.meta({
+    bnr: z.string().optional().meta({
       title: "Bruksnummer",
       description: "Nummeret på den enkelte eiendommen innenfor gårdsnummeret.",
     }),

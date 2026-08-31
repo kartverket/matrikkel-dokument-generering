@@ -394,7 +394,7 @@ export function createBygg1098Report(): LegacyFixtureByggRapport {
       },
       bygning: { bygningstyper: ["181", "111"] },
       adresse: { adresseNavn: "Vensasveien", adresseNr: 6, utenBokstav: null },
-      matrikkelenhet: { gnr: 109, bnr: 8 },
+      matrikkelenhet: { gnr: "109", bnr: "8" },
       bygningsstatus: { naavaerende: ["TB", "IG"], tidligere: [] },
       sokevindu: { nord: 6649724, ost: 582088, syd: 6649713, vest: 582064 },
       subrapporter: {
