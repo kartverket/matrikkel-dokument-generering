@@ -21,6 +21,7 @@ export function BygningSection({ bygning }: Readonly<Props>) {
 
   const bygningstype = bygning.bygningstypeKode?.displayTekst ?? ""
   const status = bygning.bygningstatusKode?.displayTekst ?? ""
+
   const tiltakshavere =
     bygning.kontaktpersoner?.filter(
       (k): k is Kontaktperson => k?.kontaktpersonKode?.kodeverdi === "T",
@@ -32,7 +33,7 @@ export function BygningSection({ bygning }: Readonly<Props>) {
     ) ?? []
 
   return (
-    <section className="flex flex-col gap-8">
+    <section className="flex flex-col gap-4">
       <div className="flex items-center justify-between bg-kv-green px-6 py-4">
         <div>
           <p className="font-medium text-white text-xs opacity-80">
@@ -63,7 +64,7 @@ export function BygningSection({ bygning }: Readonly<Props>) {
 
         <div>
           {/* Section title with status */}
-          <div className="mb-6 flex items-baseline gap-2">
+          <div className="mb-4 flex items-baseline gap-2">
             <h2 className="font-bold text-gray-900 text-lg">
               {t("rapport.BYG0011.naavarendeBygning")}
             </h2>

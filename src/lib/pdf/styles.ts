@@ -36,11 +36,9 @@ export async function getDocumentCss(): Promise<string> {
     return buildCssFromSource()
   }
 
-  if (!cssPromise) {
-    cssPromise = getPrebuiltCss().catch((error) => {
-      cssPromise = null
-      throw error
-    })
-  }
+  cssPromise ??= getPrebuiltCss().catch((error) => {
+    cssPromise = null
+    throw error
+  })
   return cssPromise
 }

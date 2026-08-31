@@ -12,9 +12,17 @@ export default defineConfig({
   ],
   server: {
     proxy: {
+      "^/preview/": {
+        target: "http://localhost:3000",
+        changeOrigin: true,
+        timeout: 120000, // 120 sekunder for PDF-generering
+        proxyTimeout: 120000,
+      },
       "^/BYG\\d{4}/[^/]+$": {
         target: "http://localhost:3000",
         changeOrigin: true,
+        timeout: 120000, // 120 sekunder for PDF-generering
+        proxyTimeout: 120000,
         rewrite: (path) =>
           path.replace(/^\/(BYG\d{4})\/([^/]+)$/, "/preview/$1/$2?format=html"),
       },
