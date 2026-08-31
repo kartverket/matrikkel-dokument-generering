@@ -17,7 +17,7 @@
     "format:check": "biome check . --formatter-enabled=true --linter-enabled=false --assist-enabled=false",
     "prepare": "husky",
     "preview": "vite preview --host 0.0.0.0",
-    "serve": "bun run build:css && bun src/api/server.ts"
+    "serve": "NODE_ENV=production bun run build:css && NODE_ENV=production bun src/api/server.ts"
   },
   "dependencies": {
     "@hono/prometheus": "^1.0.3",
