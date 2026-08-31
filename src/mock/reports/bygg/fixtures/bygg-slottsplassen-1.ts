@@ -83,7 +83,7 @@ function createBygning(): Bygning {
     ],
     etasjer: [
       {
-        etasjeplanKode: "H",
+        etasjeplanKode: kode("H", "Hovedetasje"),
         etasjenummer: 1,
         bruttoarealTotalt: 15862,
         etasjedata: {
