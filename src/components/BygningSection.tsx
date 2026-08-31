@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next"
 import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 import { ArealSection } from "./ArealSection.tsx"
 import { Bruksenheter } from "./Bruksenheter.tsx"
+import { BygningsEndringerSection } from "./BygningsEndringerSection.tsx"
 import { BygningsstatuserSection } from "./BygningsstatuserSection.tsx"
 import { OmBygget } from "./OmBygget.tsx"
 
@@ -81,6 +82,13 @@ export function BygningSection({ bygning }: Readonly<Props>) {
           </div>
         </div>
       </div>
+
+      {bygning.bygningsendringer != null &&
+        bygning.bygningsendringer.length > 0 && (
+          <BygningsEndringerSection
+            bygningsendringer={bygning.bygningsendringer}
+          />
+        )}
     </section>
   )
 }
