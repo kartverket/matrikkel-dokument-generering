@@ -14,8 +14,6 @@ export function EtasjerSection({ etasjer }: Props) {
   const arealKey = "rapport.BYG0011.areal" as const
   const enhet = t(`${arealKey}.enhet`)
 
-  if (!etasjer || etasjer.length === 0) return null
-
   return (
     <section className="space-y-4">
       <SectionTitle>{t(`${tKey}.title`)}</SectionTitle>
