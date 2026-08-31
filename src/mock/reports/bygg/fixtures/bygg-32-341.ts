@@ -32,8 +32,8 @@ function isoDate(date: string) {
 
 function createBygning(input: {
   kommuneNr: string
-  gnr: number
-  bnr: number
+  gnr: string
+  bnr: string
   adresseNavn: string
   adresseNr: number
   bygningsnummer: string
@@ -101,8 +101,8 @@ function createBygning(input: {
         kjokkentilgang: kode("1", "Kjokken"),
         matrikkelnrRapportInfo: {
           kommunenummer: input.kommuneNr,
-          gnr: input.gnr,
-          bnr: input.bnr,
+          gnr: Number(input.gnr),
+          bnr: Number(input.bnr),
           fnr: 0,
           snr: 0,
           matrikkelNummer,
@@ -111,8 +111,8 @@ function createBygning(input: {
         adresseIdentRapportInfo: {
           matrikkelnrRapportInfo: {
             kommunenummer: input.kommuneNr,
-            gnr: input.gnr,
-            bnr: input.bnr,
+            gnr: Number(input.gnr),
+            bnr: Number(input.bnr),
           },
           adresseNavn: input.adresseNavn,
           nummer: input.adresseNr,
@@ -268,8 +268,8 @@ function createBygning(input: {
             ],
             matrikkelnrRapportInfo: {
               kommunenummer: input.kommuneNr,
-              gnr: input.gnr,
-              bnr: input.bnr,
+              gnr: Number(input.gnr),
+              bnr: Number(input.bnr),
               fnr: 0,
               snr: 0,
               matrikkelNummer,
@@ -413,8 +413,8 @@ export function createBygg32341Report(): LegacyFixtureByggRapport {
     bygninger: [
       createBygning({
         kommuneNr: "0301",
-        gnr: 32,
-        bnr: 341,
+        gnr: "32",
+        bnr: "341",
         adresseNavn: "Hagan terrasse",
         adresseNr: 15,
         bygningsnummer: "80087713",
@@ -428,8 +428,8 @@ export function createBygg32341Report(): LegacyFixtureByggRapport {
       }),
       createBygning({
         kommuneNr: "0301",
-        gnr: 32,
-        bnr: 341,
+        gnr: "32",
+        bnr: "341",
         adresseNavn: "Hagan terrasse",
         adresseNr: 15,
         bygningsnummer: "80087721",

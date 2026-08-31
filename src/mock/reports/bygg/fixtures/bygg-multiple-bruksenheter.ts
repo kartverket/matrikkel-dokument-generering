@@ -34,7 +34,7 @@ export function createByggMultipleBruksenheterReport(): LegacyFixtureByggRapport
         adresseNr: 42,
         utenBokstav: null,
       },
-      matrikkelenhet: { gnr: 32, bnr: 341 },
+      matrikkelenhet: { gnr: "32", bnr: "341" },
       bygningsstatus: { naavaerende: ["TB"], tidligere: [] },
       sokevindu: { nord: 6640000, ost: 256000, syd: 6640000, vest: 256000 },
       subrapporter: {

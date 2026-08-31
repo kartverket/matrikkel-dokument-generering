@@ -28,8 +28,8 @@ function isoDate(date: string) {
 
 function createBygning(input: {
   kommuneNr: string
-  gnr: number
-  bnr: number
+  gnr: string
+  bnr: string
   adresseNavn: string
   adresseNr: number
   bygningsnummer: string
@@ -94,8 +94,8 @@ function createBygning(input: {
         kjokkentilgang: kode("1", "Kjokken"),
         matrikkelnrRapportInfo: {
           kommunenummer: input.kommuneNr,
-          gnr: input.gnr,
-          bnr: input.bnr,
+          gnr: Number(input.gnr),
+          bnr: Number(input.bnr),
           fnr: 0,
           snr: 0,
           matrikkelNummer,
@@ -302,8 +302,8 @@ export function createByggStasjonsveien1Report(): LegacyFixtureByggRapport {
     bygninger: [
       createBygning({
         kommuneNr: "0301",
-        gnr: 35,
-        bnr: 12,
+        gnr: "35",
+        bnr: "12",
         adresseNavn: "Stasjonsveien",
         adresseNr: 1,
         bygningsnummer: "80100590",
@@ -317,8 +317,8 @@ export function createByggStasjonsveien1Report(): LegacyFixtureByggRapport {
       }),
       createBygning({
         kommuneNr: "0301",
-        gnr: 35,
-        bnr: 12,
+        gnr: "35",
+        bnr: "12",
         adresseNavn: "Stasjonsveien",
         adresseNr: 1,
         bygningsnummer: "80100604",
@@ -332,8 +332,8 @@ export function createByggStasjonsveien1Report(): LegacyFixtureByggRapport {
       }),
       createBygning({
         kommuneNr: "0301",
-        gnr: 35,
-        bnr: 12,
+        gnr: "35",
+        bnr: "12",
         adresseNavn: "Stasjonsveien",
         adresseNr: 1,
         bygningsnummer: "80951361",
@@ -347,8 +347,8 @@ export function createByggStasjonsveien1Report(): LegacyFixtureByggRapport {
       }),
       createBygning({
         kommuneNr: "0301",
-        gnr: 35,
-        bnr: 12,
+        gnr: "35",
+        bnr: "12",
         adresseNavn: "Stasjonsveien",
         adresseNr: 1,
         bygningsnummer: "80951388",
