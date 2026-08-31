@@ -14,7 +14,7 @@ export function EtasjerSection({ etasjer }: Props) {
   const arealKey = "rapport.BYG0011.areal" as const
   const enhet = t(`${arealKey}.enhet`)
 
-  if (etasjer.length === 0) return null
+  if (!etasjer || etasjer.length === 0) return null
 
   return (
     <section className="space-y-4">
@@ -24,18 +24,18 @@ export function EtasjerSection({ etasjer }: Props) {
         .filter((etasje) => etasje != null)
         .map((etasje) => (
           <div
-            key={`${etasje.etasjeplanKode}-${etasje.etasjenummer}`}
+            key={`${etasje.etasjeplanKode?.kodeverdi}-${etasje.etasjenummer}`}
             className="flex gap-8"
           >
             <div className="flex gap-4">
               <LabelValue
                 label={t(`${tKey}.etasjeplan`)}
                 value={
-                  etasje.etasjeplanKode != null
+                  etasje.etasjeplanKode?.kodeverdi != null
                     ? oversettKode({
                         t,
                         kodeverk: "etasjeplan",
-                        kode: etasje.etasjeplanKode,
+                        kode: etasje.etasjeplanKode.kodeverdi,
                       })
                     : undefined
                 }

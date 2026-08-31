@@ -76,7 +76,7 @@ export function BygningSection({ bygning }: Readonly<Props>) {
               />
             )}
 
-            {bygning.etasjer.length > 0 && (
+            {bygning.etasjer != null && bygning.etasjer.length > 0 && (
               <EtasjerSection etasjer={bygning.etasjer} />
             )}
 
