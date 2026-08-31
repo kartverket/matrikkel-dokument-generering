@@ -14,15 +14,18 @@ function Byg0011DocumentRenderer({
   const { t } = useTranslation()
 
   return (
-    <main className="mx-auto max-w-2xl px-2">
-      <Heading
-        level={1}
-        className="mb-8 break-after-avoid font-medium text-kv-title"
-      >
-        {t("rapport.BYG0011.rapportTittel")}
-      </Heading>
+    <main>
+      <div className="mx-2">
+        <Heading
+          level={1}
+          className="mb-8 break-after-avoid font-medium text-kv-title"
+        >
+          {t("rapport.BYG0011.rapportTittel")}
+        </Heading>
 
-      <ByggUtvalgskriterier kriterier={rapport.utvalgskriterier} />
+        <ByggUtvalgskriterier kriterier={rapport.utvalgskriterier} />
+      </div>
+
       <Bygninger bygninger={rapport.bygninger} />
     </main>
   )
@@ -53,7 +56,10 @@ export function renderDocument(
 
   const headerBody = renderToStaticMarkup(
     <I18nextProvider i18n={i18n}>
-      <PdfHeader metadata={rapport.metadata} />
+      <PdfHeader
+        metadata={rapport.metadata}
+        rapportKode={rapport.rapportKode}
+      />
     </I18nextProvider>,
   )
 

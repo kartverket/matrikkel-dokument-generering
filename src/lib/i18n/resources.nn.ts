@@ -1,5 +1,6 @@
 import { koderNn } from "./koder/resources.koder.nn.ts"
 import { shared } from "./resources.shared"
+import type { ValidRapportResources } from "./validRapportResources.ts"
 
 export const nn = {
   ...shared,
@@ -20,6 +21,14 @@ export const nn = {
     },
   },
   rapport: {
+    metaData: {
+      rapportKode: "rapportKode",
+      rapportNr: "Rapportnr",
+      kommune: "Kommune",
+      kommuneNr: "Kommunenr",
+      koordinatsystem: "Koordinatsystem",
+      generertTidspunkt: "Generert tidspunkt",
+    },
     BYG0011: {
       rapportTittel: "Byggrapport",
       title: "Bygning {{bygningsnr}} – {{bygningstype}}",
@@ -94,6 +103,8 @@ export const nn = {
         },
       },
       matrikkelenhet: "Matrikkeleining",
+      bygningsnummer: "Bygningsnummer",
+      naavarendeBygning: "Nåverande bygning",
       omBygget: {
         tittel: "Om bygget",
         bygningstype: "Bygningstype",
@@ -212,16 +223,16 @@ export const nn = {
         bruksenheter: {
           ingenEndring: "Ingen endringar registrerte på bygget.",
           tittel_one: "Berørt brukseining",
-          tittel_other: "Berørte brukseiningar",
+          tittel_other: "Brukseiningar",
           bruksenhetsNr: "Brukseining",
           bruksenhetsTypeKode: "Type",
-          bruksAreal: "BRA",
-          antallRom: "Rom",
-          antallBad: "Bad",
-          antallWC: "WC",
-          kjokkenTilgangKode: "Kjøkken",
+          bruksAreal: "Bruksareal",
+          antallRom: "Antall rom",
+          antallBad: "Antall bad",
+          antallWC: "Antall WC",
+          kjokkenTilgangKode: "Kjøkkentilgang",
           adresse: "Adresse",
-          matrikkelNr: "Matrikkelnr",
+          matrikkelNr: "Matrikkelenhet",
         },
         kulturminner: {
           tittel_one: "Kulturminne",
@@ -373,5 +384,5 @@ export const nn = {
         },
       },
     },
-  },
+  } satisfies ValidRapportResources & { metaData: any },
 } as const

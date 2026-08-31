@@ -4,9 +4,9 @@ import { defineConfig, devices } from "@playwright/test"
 
 const pdfLikeViewport = {
   // Keep width above 900px to avoid triggering preview mobile styles.
-  width: 1000,
-  // A4-ish ratio (210x297) in CSS pixels for stable PDF-like rendering.
-  height: 1414,
+  // A4 landscape ratio (297x210) in CSS pixels for stable PDF-like rendering.
+  width: 1414,
+  height: 1000,
 }
 
 export default defineConfig({

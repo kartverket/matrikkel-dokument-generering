@@ -3,7 +3,6 @@ import {
   type Kriterie,
   Utvalg,
 } from "../components/utvalgskriterier/Utvalg.tsx"
-import { UtvalgskriterierSection } from "../components/utvalgskriterier/UtvalgskriterierSection.tsx"
 import { erAngitt } from "../components/utvalgskriterier/utils/erAngitt.ts"
 import {
   formatAdresse,
@@ -24,7 +23,7 @@ export function ByggUtvalgskriterier({ kriterier }: Readonly<Props>) {
   const uk = "rapport.BYG0011.utvalgskriterier"
 
   if (!kriterier) {
-    return <UtvalgskriterierSection>{null}</UtvalgskriterierSection>
+    return null
   }
 
   const valgteByggstatus: string[] = []
@@ -165,7 +164,7 @@ export function ByggUtvalgskriterier({ kriterier }: Readonly<Props>) {
   )
 
   return (
-    <UtvalgskriterierSection>
+    <section className={"mb-20"}>
       <div className="mb-2 flex flex-col gap-12">
         <Utvalg
           title={t(`${uk}.avgrensning`)}
@@ -185,6 +184,6 @@ export function ByggUtvalgskriterier({ kriterier }: Readonly<Props>) {
           ]}
         />
       </div>
-    </UtvalgskriterierSection>
+    </section>
   )
 }

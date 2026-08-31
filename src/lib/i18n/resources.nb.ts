@@ -1,5 +1,6 @@
 import { koderNb } from "./koder/resources.koder.nb.ts"
 import { shared } from "./resources.shared"
+import type { ValidRapportResources } from "./validRapportResources.ts"
 
 export const nb = {
   ...shared,
@@ -102,6 +103,8 @@ export const nb = {
         },
       },
       matrikkelenhet: "Matrikkelenhet",
+      bygningsnummer: "Bygningsnummer",
+      naavarendeBygning: "Nåværende bygning",
       omBygget: {
         tittel: "Om bygget",
         bygningstype: "Bygningstype",
@@ -219,18 +222,18 @@ export const nb = {
           bruksenhetsNr: "Bruksenhet",
         },
         bruksenheter: {
-          tittel_one: "Berørt bruksenhet",
-          tittel_other: "Berørte bruksenheter",
+          tittel_one: "Bruksenhet",
+          tittel_other: "Bruksenheter",
           ingenEndring: "Ingen endringer registrert på bygget.",
           bruksenhetsNr: "Bruksenhet",
           bruksenhetsTypeKode: "Type",
-          bruksAreal: "BRA",
-          antallRom: "Rom",
-          antallBad: "Bad",
-          antallWC: "WC",
-          kjokkenTilgangKode: "Kjøkken",
+          bruksAreal: "Bruksareal",
+          antallRom: "Antall rom",
+          antallBad: "Antall bad",
+          antallWC: "Antall WC",
+          kjokkenTilgangKode: "Kjøkkentilgang",
           adresse: "Adresse",
-          matrikkelNr: "Matrikkelnr",
+          matrikkelNr: "Matrikkelenhet",
         },
         kulturminner: {
           tittel_one: "Kulturminne",
@@ -362,7 +365,7 @@ export const nb = {
         historikk: {
           title: "Sammendrag av bygningshistorikk",
           ingenHistorikk: "Ingen registrerte matrikkelføringer på bygget.",
-          berorteBruksenheter: "Berørte bruksenheter {{bruksenheter}}",
+          berorteBruksenheter: "Bruksenheter {{bruksenheter}}",
           berorteEtasje: "Berørte etasje {{etasjer}}",
           berorteEtasjer: "Berørte etasjene {{etasjer}}",
           flereBerorte: "+{{antall}} til",
@@ -382,5 +385,5 @@ export const nb = {
         },
       },
     },
-  },
+  } satisfies ValidRapportResources & { metaData: any },
 } as const
