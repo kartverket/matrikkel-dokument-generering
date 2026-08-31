@@ -27,7 +27,7 @@ export const koderNb = {
   },
   bygningsstatus: {
     RA: "Rammetillatelse",
-    IG: "Igangsettingstillatelse",
+    IG: "Igangsettings- tillatelse",
     MB: "Midlertidig brukstillatelse",
     FA: "Ferdigattest",
     TB: "Tatt i bruk",
@@ -35,7 +35,7 @@ export const koderNb = {
     MF: "Meldingssak – tiltak fullført",
     IP: "Ikke pliktig registrert",
     GR: "Bygning godkjent for riving eller brenning",
-    BR: "Bygning revet eller brent",
+    BR: "Revet/brent",
     BA: "Bygging avlyst",
     BF: "Bygning flyttet",
     BU: "Bygningsnummer utgått",
