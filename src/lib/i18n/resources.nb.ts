@@ -396,5 +396,6 @@ export const nb = {
         },
       },
     },
+    // biome-ignore lint/suspicious/noExplicitAny: metaData type varies by rapport
   } satisfies ValidRapportResources & { metaData: any },
 } as const
