@@ -2,6 +2,7 @@ import { Tag } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 import { ArealSection } from "./ArealSection.tsx"
+import { Bruksenheter } from "./Bruksenheter.tsx"
 import { BygningsstatuserSection } from "./BygningsstatuserSection.tsx"
 import { OmBygget } from "./OmBygget.tsx"
 
@@ -23,9 +24,17 @@ export function BygningsEndringerSection({ bygningsendringer }: Props) {
           const status = endring.bygningstatusKode?.displayTekst
 
           return (
-            <section key={endring.lopenummer} className="flex gap-6">
+            <section
+              key={endring.lopenummer}
+              className="flex gap-6"
+              data-color="neutral"
+            >
               <div className="bg-gray-200 p-4 text-right [writing-mode:sideways-lr]">
                 <p className="text-xs uppercase">{tittel}</p>
+                <p className="ml-2 text-xs">
+                  {t("rapport.BYG0011.bygningsnummer")}:
+                  <span className="font-semibold">{` ${endring.bygningsnummer}`}</span>
+                </p>
               </div>
 
               <div className="flex-1 space-y-8">
@@ -49,6 +58,10 @@ export function BygningsEndringerSection({ bygningsendringer }: Props) {
                   <BygningsstatuserSection
                     bygningsstatuser={endring.bygningsstatuser}
                   />
+                )}
+
+                {endring.bruksenheter && endring.bruksenheter.length > 0 && (
+                  <Bruksenheter bruksenheter={endring.bruksenheter} />
                 )}
               </div>
             </section>
