@@ -1,6 +1,7 @@
 import { createBygg32341Report } from "./reports/bygg/fixtures/bygg-32-341"
 import { createBygg42221Report } from "./reports/bygg/fixtures/bygg-42-221"
 import { createBygg1098Report } from "./reports/bygg/fixtures/bygg-109-8"
+import { createDeltEierskapReport } from "./reports/bygg/fixtures/bygg-delt-eierskap"
 import { createByggMultipleBruksenheterReport } from "./reports/bygg/fixtures/bygg-multiple-bruksenheter"
 import { createByggSlottsplassen1Report } from "./reports/bygg/fixtures/bygg-slottsplassen-1"
 import { createByggStasjonsveien1Report } from "./reports/bygg/fixtures/bygg-stasjonsveien-1"
@@ -10,6 +11,7 @@ import type { NormalizedByggRapport } from "./types"
 export interface MockServerPreviewCase {
   testCase: string
   name: string
+  description: string
 }
 
 export interface MockServerPreviewResult extends MockServerPreviewCase {
@@ -138,7 +140,7 @@ const case1 = {
   name: "Eneboliger - Hagan terrasse 15B",
   description: "Enkel boligbygning med 4 varianter",
   load: createBygg32341Report,
-}
+} as const
 
 /**
  * Demonstrerer et større anlegg med kompleks struktur.
@@ -197,6 +199,18 @@ const case5b = {
 }
 
 /**
+ * Demonstrerer et bygg med delt eierskap, tiltakshaver og kontaktperson.
+ * Brukes til: Testing av Tiltakshavere, Kontaktpersoner og Hjemmelshavere tabeller.
+ */
+const case8 = {
+  testCase: "bygg-delt-eierskap" as const,
+  name: "Delt eierskap - Ferner Jacobsens gate 22",
+  description:
+    "Boligbygg med tiltakshaver, kontaktperson og delt eierskap (2 hjemmelshavere)",
+  load: createDeltEierskapReport,
+} as const
+
+/**
  * Kombinerer alle 5 testcaser til en aggregert rapport.
  * Brukes til: Visning av all testdata på en side, skalabilitetstesting.
  */
@@ -225,6 +239,7 @@ const caseDefinitions: CaseDefinition[] = [
   case4,
   case5,
   case5b,
+  case8,
   case6,
   case7,
 ]
@@ -245,7 +260,11 @@ function resolveCaseName(value: string) {
  * @internal BYG0011-specific. Will need refactoring when multi-rapport support is added.
  */
 export function listPreviewCases(): MockServerPreviewCase[] {
-  return caseDefinitions.map(({ testCase, name }) => ({ testCase, name }))
+  return caseDefinitions.map(({ testCase, name, description }) => ({
+    testCase,
+    name,
+    description,
+  }))
 }
 
 /**

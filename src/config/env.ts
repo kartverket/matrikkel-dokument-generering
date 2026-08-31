@@ -2,8 +2,8 @@ import { z } from "zod"
 
 const environmentSchema = z.object({
   PORT: z.coerce.number().int().min(1).max(65_535).default(3000),
-  GOTENBERG_URL: z.string().url().default("http://0.0.0.0:8089"),
-  GOTENBERG_TIMEOUT_MS: z.coerce.number().int().positive().default(10_000),
+  GOTENBERG_URL: z.url().default("http://0.0.0.0:8089"),
+  GOTENBERG_TIMEOUT_MS: z.coerce.number().int().positive().default(30_000),
 })
 
 export interface AppConfig {
