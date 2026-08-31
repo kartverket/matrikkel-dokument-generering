@@ -5,9 +5,9 @@ import type { Kontaktperson } from "../lib/schema/reports/bygg/shared/kontaktper
 import { ArealSection } from "./ArealSection.tsx"
 import { Bruksenheter } from "./Bruksenheter.tsx"
 import { BygningsstatuserSection } from "./BygningsstatuserSection.tsx"
+import { EtasjerSection } from "./EtasjerSection.tsx"
 import { Hjemmelshavere } from "./Hjemmelshavere.tsx"
 import { Kontaktpersoner } from "./Kontaktpersoner.tsx"
-import { EtasjerSection } from "./EtasjerSection.tsx"
 import { OmBygget } from "./OmBygget.tsx"
 import { Tiltakshavere } from "./Tiltakshavere.tsx"
 
