@@ -11,10 +11,8 @@ interface Props {
   readonly bygning: Bygning
 }
 
-export function BygningsEndringerSection({ bygning }: Readonly<Props>) {
+export function BygningsendringSection({ bygning }: Readonly<Props>) {
   const { t } = useTranslation()
-
-  if (!bygning) return null
 
   const tittel = t(
     "rapport.BYG0011.bygningsendring",
