@@ -14,13 +14,13 @@ function isoDate(date: string) {
   return `${date}T00:00:00Z`
 }
 
-function createBygning(): Bygning {
+function createBygning(lopenummer = 0): Bygning {
   const matrikkelNummer = "0301-209/25/0/0"
   const statusDato = isoDate("2023-01-01")
 
   return {
     bygningsnummer: "81416001",
-    lopenummer: 0,
+    lopenummer,
     bygningsendringsKode: kode("X", "Bygningsendring"),
     harUfullstendigAreal: "Nei",
     bygningstypeKode: kode("311", "Bygningstype"),
@@ -270,6 +270,6 @@ export function createByggSlottsplassen1Report(): LegacyFixtureByggRapport {
         inkluderKulturminner: true,
       },
     },
-    bygninger: [createBygning()],
+    bygninger: [createBygning(), createBygning(1)],
   }
 }

@@ -1,4 +1,5 @@
 import { BygningSection } from "../components/BygningSection.tsx"
+import { BygningsendringSection } from "../components/BygningsendringSection.tsx"
 import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 
 interface Props {
@@ -10,9 +11,19 @@ export function Bygninger({ bygninger }: Readonly<Props>) {
 
   return (
     <section className="flex flex-col gap-8">
-      {bygninger.map((bygning) => (
-        <BygningSection key={bygning.bygningsnummer} bygning={bygning} />
-      ))}
+      {bygninger.map((bygning) =>
+        bygning.lopenummer == null || bygning.lopenummer < 1 ? (
+          <BygningSection
+            key={`${bygning.bygningsnummer}-${bygning.lopenummer}`}
+            bygning={bygning}
+          />
+        ) : (
+          <BygningsendringSection
+            key={`${bygning.bygningsnummer}-${bygning.lopenummer}`}
+            bygning={bygning}
+          />
+        ),
+      )}
     </section>
   )
 }

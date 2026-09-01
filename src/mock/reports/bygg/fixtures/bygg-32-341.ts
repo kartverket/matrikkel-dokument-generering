@@ -45,6 +45,7 @@ function createBygning(input: {
   antallBoenheter: number
   nord: number
   ost: number
+  lopenummer?: number
 }): Bygning {
   const numericBygningsnummer = Number(input.bygningsnummer)
   const matrikkelNummer = `${input.kommuneNr}-${input.gnr}/${input.bnr}/0/0`
@@ -53,7 +54,7 @@ function createBygning(input: {
 
   return {
     bygningsnummer: input.bygningsnummer,
-    lopenummer: 0,
+    lopenummer: input.lopenummer ?? 0,
     bygningsendringsKode: kode(input.endringsKode ?? "X", "Bygningsendring"),
     bygningstypeKode: kode(input.bygningstypeKode, "Bygningstype"),
     naringsgruppeKode: kode(input.naringsgruppeKode, "Naringsgruppe"),
@@ -432,7 +433,24 @@ export function createBygg32341Report(): LegacyFixtureByggRapport {
         bnr: "341",
         adresseNavn: "Hagan terrasse",
         adresseNr: 15,
-        bygningsnummer: "80087721",
+        bygningsnummer: "80087713",
+        bygningstypeKode: "121",
+        bygningstatusKode: "TB",
+        naringsgruppeKode: "X",
+        bruksareal: 40,
+        antallBoenheter: 1,
+        endringsKode: "T",
+        nord: 6645987,
+        ost: 593530,
+        lopenummer: 1,
+      }),
+      createBygning({
+        kommuneNr: "0301",
+        gnr: "32",
+        bnr: "342",
+        adresseNavn: "Hagan terrasse",
+        adresseNr: 16,
+        bygningsnummer: "80087754",
         bygningstypeKode: "121",
         bygningstatusKode: "FA",
         naringsgruppeKode: "X",
@@ -441,6 +459,40 @@ export function createBygg32341Report(): LegacyFixtureByggRapport {
         endringsKode: "T",
         nord: 6645984,
         ost: 593522,
+      }),
+      createBygning({
+        kommuneNr: "0301",
+        gnr: "32",
+        bnr: "342",
+        adresseNavn: "Hagan terrasse",
+        adresseNr: 16,
+        bygningsnummer: "80087754",
+        bygningstypeKode: "121",
+        bygningstatusKode: "FA",
+        naringsgruppeKode: "X",
+        bruksareal: 25,
+        antallBoenheter: 1,
+        endringsKode: "T",
+        nord: 6645984,
+        ost: 593522,
+        lopenummer: 1,
+      }),
+      createBygning({
+        kommuneNr: "0301",
+        gnr: "32",
+        bnr: "342",
+        adresseNavn: "Hagan terrasse",
+        adresseNr: 16,
+        bygningsnummer: "80087754",
+        bygningstypeKode: "121",
+        bygningstatusKode: "FA",
+        naringsgruppeKode: "X",
+        bruksareal: 12,
+        antallBoenheter: 0,
+        endringsKode: "T",
+        nord: 6645984,
+        ost: 593522,
+        lopenummer: 2,
       }),
     ],
   }
