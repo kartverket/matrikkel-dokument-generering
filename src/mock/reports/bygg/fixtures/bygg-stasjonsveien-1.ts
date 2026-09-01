@@ -40,6 +40,7 @@ function createBygning(input: {
   antallBoenheter: number
   nord: number
   ost: number
+  lopenummer?: number
 }): Bygning {
   const numericBygningsnummer = Number(input.bygningsnummer)
   const matrikkelNummer = `${input.kommuneNr}-${input.gnr}/${input.bnr}/0/0`
@@ -48,7 +49,7 @@ function createBygning(input: {
 
   return {
     bygningsnummer: input.bygningsnummer,
-    lopenummer: 0,
+    lopenummer: input.lopenummer ?? 0,
     bygningsendringsKode: kode("X", "Bygningsendring"),
     harUfullstendigAreal: "Nei",
     bygningstypeKode: kode(input.bygningstypeKode, "Bygningstype"),
@@ -321,6 +322,22 @@ export function createByggStasjonsveien1Report(): LegacyFixtureByggRapport {
         bnr: "12",
         adresseNavn: "Stasjonsveien",
         adresseNr: 1,
+        bygningsnummer: "80100590",
+        bygningstypeKode: "613",
+        bygningstatusKode: "TB",
+        naringsgruppeKode: "P",
+        bruksareal: 300,
+        antallBoenheter: 1,
+        nord: 6647216,
+        ost: 594528,
+        lopenummer: 1,
+      }),
+      createBygning({
+        kommuneNr: "0301",
+        gnr: "35",
+        bnr: "15",
+        adresseNavn: "Stasjonsveien",
+        adresseNr: 2,
         bygningsnummer: "80100604",
         bygningstypeKode: "619",
         bygningstatusKode: "TB",
@@ -333,9 +350,9 @@ export function createByggStasjonsveien1Report(): LegacyFixtureByggRapport {
       createBygning({
         kommuneNr: "0301",
         gnr: "35",
-        bnr: "12",
+        bnr: "13",
         adresseNavn: "Stasjonsveien",
-        adresseNr: 1,
+        adresseNr: 3,
         bygningsnummer: "80951361",
         bygningstypeKode: "181",
         bygningstatusKode: "TB",
@@ -348,9 +365,9 @@ export function createByggStasjonsveien1Report(): LegacyFixtureByggRapport {
       createBygning({
         kommuneNr: "0301",
         gnr: "35",
-        bnr: "12",
+        bnr: "14",
         adresseNavn: "Stasjonsveien",
-        adresseNr: 1,
+        adresseNr: 5,
         bygningsnummer: "80951388",
         bygningstypeKode: "181",
         bygningstatusKode: "TB",

@@ -45,6 +45,7 @@ function createBygning(input: {
   antallBoenheter: number
   nord: number
   ost: number
+  lopenummer?: number
 }): Bygning {
   const numericBygningsnummer = Number(input.bygningsnummer)
   const matrikkelNummer = `${input.kommuneNr}-${input.gnr}/${input.bnr}/0/0`
@@ -53,7 +54,7 @@ function createBygning(input: {
 
   return {
     bygningsnummer: input.bygningsnummer,
-    lopenummer: 0,
+    lopenummer: input.lopenummer ?? 0,
     bygningsendringsKode: kode(input.endringsKode ?? "X", "Bygningsendring"),
     harUfullstendigAreal: "Nei",
     bygningstypeKode: kode(input.bygningstypeKode, "Bygningstype"),
@@ -484,6 +485,23 @@ export function createDeltEierskapReport(): LegacyFixtureByggRapport {
         antallBoenheter: 2,
         nord: 6644950,
         ost: 249950,
+      }),
+      createBygning({
+        kommuneNr: "0301",
+        gnr: "102",
+        bnr: "15",
+        adresseNavn: "Ferner Jacobsens gate",
+        adresseNr: 22,
+        bygningsnummer: "19264567",
+        bygningstypeKode: "111",
+        bygningstatusKode: "TB",
+        naringsgruppeKode: "S",
+        bruksareal: 30,
+        antallBoenheter: 1,
+        endringsKode: "T",
+        nord: 6644950,
+        ost: 249950,
+        lopenummer: 1,
       }),
     ],
   }

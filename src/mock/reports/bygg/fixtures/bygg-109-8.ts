@@ -45,6 +45,7 @@ function createBygning(input: {
   antallBoenheter: number
   nord: number
   ost: number
+  lopenummer?: number
 }): Bygning {
   const numericBygningsnummer = Number(input.bygningsnummer)
   const matrikkelNummer = `${input.kommuneNr}-${input.gnr}/${input.bnr}/0/0`
@@ -53,7 +54,7 @@ function createBygning(input: {
 
   return {
     bygningsnummer: input.bygningsnummer,
-    lopenummer: 0,
+    lopenummer: input.lopenummer ?? 0,
     bygningsendringsKode: kode(input.endringsKode ?? "X", "Bygningsendring"),
     harUfullstendigAreal: "Nei",
     bygningstypeKode: kode(input.bygningstypeKode, "Bygningstype"),
@@ -428,6 +429,23 @@ export function createBygg1098Report(): LegacyFixtureByggRapport {
         bnr: "8",
         adresseNavn: "Vensasveien",
         adresseNr: 6,
+        bygningsnummer: "17361511",
+        bygningstypeKode: "181",
+        bygningstatusKode: "TB",
+        naringsgruppeKode: "Y",
+        bruksareal: 10,
+        antallBoenheter: 0,
+        endringsKode: "T",
+        nord: 6649724,
+        ost: 582079,
+        lopenummer: 1,
+      }),
+      createBygning({
+        kommuneNr: "3201",
+        gnr: "109",
+        bnr: "9",
+        adresseNavn: "Vensasveien",
+        adresseNr: 8,
         bygningsnummer: "17361538",
         bygningstypeKode: "181",
         bygningstatusKode: "TB",
@@ -440,9 +458,9 @@ export function createBygg1098Report(): LegacyFixtureByggRapport {
       createBygning({
         kommuneNr: "3201",
         gnr: "109",
-        bnr: "8",
+        bnr: "10",
         adresseNavn: "Vensasveien",
-        adresseNr: 6,
+        adresseNr: 10,
         bygningsnummer: "17362623",
         bygningstypeKode: "111",
         bygningstatusKode: "IG",
@@ -452,6 +470,23 @@ export function createBygg1098Report(): LegacyFixtureByggRapport {
         endringsKode: "P",
         nord: 6649713,
         ost: 582088,
+      }),
+      createBygning({
+        kommuneNr: "3201",
+        gnr: "109",
+        bnr: "10",
+        adresseNavn: "Vensasveien",
+        adresseNr: 10,
+        bygningsnummer: "17362623",
+        bygningstypeKode: "111",
+        bygningstatusKode: "IG",
+        naringsgruppeKode: "X",
+        bruksareal: 20,
+        antallBoenheter: 1,
+        endringsKode: "P",
+        nord: 6649713,
+        ost: 582088,
+        lopenummer: 1,
       }),
     ],
   }

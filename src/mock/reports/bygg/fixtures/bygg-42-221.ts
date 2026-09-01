@@ -45,6 +45,7 @@ function createBygning(input: {
   antallBoenheter: number
   nord: number
   ost: number
+  lopenummer?: number
 }): Bygning {
   const numericBygningsnummer = Number(input.bygningsnummer)
   const matrikkelNummer = `${input.kommuneNr}-${input.gnr}/${input.bnr}/0/0`
@@ -53,7 +54,7 @@ function createBygning(input: {
 
   return {
     bygningsnummer: input.bygningsnummer,
-    lopenummer: 0,
+    lopenummer: input.lopenummer ?? 0,
     bygningsendringsKode: kode(input.endringsKode ?? "X", "Bygningsendring"),
     harUfullstendigAreal: "Nei",
     bygningstypeKode: kode(input.bygningstypeKode, "Bygningstype"),
@@ -411,6 +412,23 @@ export function createBygg42221Report(): LegacyFixtureByggRapport {
         bnr: "221",
         adresseNavn: "Sognsvannsveien",
         adresseNr: 20,
+        bygningsnummer: "81174261",
+        bygningstypeKode: "719",
+        bygningstatusKode: "TB",
+        naringsgruppeKode: "Q",
+        bruksareal: 500,
+        antallBoenheter: 1,
+        endringsKode: "T",
+        nord: 6647003,
+        ost: 595695,
+        lopenummer: 1,
+      }),
+      createBygning({
+        kommuneNr: "0301",
+        gnr: "42",
+        bnr: "221",
+        adresseNavn: "Sognsvannsveien",
+        adresseNr: 20,
         bygningsnummer: "81197334",
         bygningstypeKode: "719",
         bygningstatusKode: "FA",
@@ -424,9 +442,9 @@ export function createBygg42221Report(): LegacyFixtureByggRapport {
       createBygning({
         kommuneNr: "0301",
         gnr: "42",
-        bnr: "221",
+        bnr: "222",
         adresseNavn: "Sognsvannsveien",
-        adresseNr: 20,
+        adresseNr: 22,
         bygningsnummer: "81771197",
         bygningstypeKode: "629",
         bygningstatusKode: "IG",
@@ -440,9 +458,9 @@ export function createBygg42221Report(): LegacyFixtureByggRapport {
       createBygning({
         kommuneNr: "0301",
         gnr: "42",
-        bnr: "221",
+        bnr: "223",
         adresseNavn: "Sognsvannsveien",
-        adresseNr: 20,
+        adresseNr: 24,
         bygningsnummer: "81771200",
         bygningstypeKode: "629",
         bygningstatusKode: "TB",
@@ -455,9 +473,9 @@ export function createBygg42221Report(): LegacyFixtureByggRapport {
       createBygning({
         kommuneNr: "0301",
         gnr: "42",
-        bnr: "221",
+        bnr: "224",
         adresseNavn: "Sognsvannsveien",
-        adresseNr: 20,
+        adresseNr: 26,
         bygningsnummer: "81848238",
         bygningstypeKode: "181",
         bygningstatusKode: "TB",
@@ -470,9 +488,9 @@ export function createBygg42221Report(): LegacyFixtureByggRapport {
       createBygning({
         kommuneNr: "0301",
         gnr: "42",
-        bnr: "221",
+        bnr: "225",
         adresseNavn: "Sognsvannsveien",
-        adresseNr: 20,
+        adresseNr: 28,
         bygningsnummer: "301432893",
         bygningstypeKode: "719",
         bygningstatusKode: "RA",
