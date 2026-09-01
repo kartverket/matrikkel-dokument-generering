@@ -23,7 +23,7 @@ import { sefrakSchema } from "../shared/sefrak.schema.ts"
 import { byggEndringSchema } from "./byggEndring.schema.ts"
 
 const bygningSchema = z.object({
-  bygningsnummer: z.string().meta({
+  bygningsnummer: z.number().nonnegative().meta({
     title: "Bygningsnummer",
     description:
       "En entydig identifikasjon av bygningen som er unik på landsbasis og tildeles automatisk.",
