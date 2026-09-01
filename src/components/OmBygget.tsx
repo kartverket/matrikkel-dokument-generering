@@ -10,6 +10,7 @@ type Props = Pick<
   | "naringsgruppeKode"
   | "etasjedata"
   | "representasjonspunkt"
+  | "sefrakminner"
 >
 
 export function OmBygget({
@@ -17,6 +18,7 @@ export function OmBygget({
   naringsgruppeKode,
   etasjedata,
   representasjonspunkt,
+  sefrakminner,
 }: Props) {
   const { t } = useTranslation()
   const tKey = "rapport.BYG0011.omBygget" as const
@@ -35,11 +37,23 @@ export function OmBygget({
       ? `${representasjonspunkt.nord}, ${representasjonspunkt.ost}`
       : undefined
 
+  const sefrakIDs = sefrakminner
+    ?.map((s) => {
+      if (
+        s.kommunenr == null ||
+        s.registreringskretsnr == null ||
+        s.huslopenr == null
+      )
+        return null
+      return `${s.kommunenr}-${s.registreringskretsnr}-${s.huslopenr}`
+    })
+    .filter((id): id is string => id != null)
+
   return (
     <div className="space-y-2">
       <SectionTitle>{t(`${tKey}.tittel`)}</SectionTitle>
 
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-5 gap-4">
         <LabelValue label={t(`${tKey}.bygningstype`)} value={bygningstype} />
         <LabelValue label={t(`${tKey}.naringsgruppe`)} value={naringsgruppe} />
         <LabelValue
@@ -50,6 +64,7 @@ export function OmBygget({
           label={t(`${tKey}.representasjonspunkt`)}
           value={koordinater}
         />
+        <LabelValue label={t(`${tKey}.sefrakId`)} value={sefrakIDs} />
       </div>
     </div>
   )

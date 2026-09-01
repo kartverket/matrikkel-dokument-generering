@@ -111,6 +111,7 @@ export const nb = {
         naringsgruppe: "Næringsgruppe",
         boenheter: "Boenheter",
         representasjonspunkt: "Representasjonspunkt",
+        sefrakId: "Sefrak-id",
       },
       areal: {
         tittel: "Areal",

@@ -75,6 +75,7 @@ export function BygningSection({ bygning }: Readonly<Props>) {
             naringsgruppeKode={bygning.naringsgruppeKode}
             etasjedata={bygning.etasjedata}
             representasjonspunkt={bygning.representasjonspunkt}
+            sefrakminner={bygning.sefrakminner}
           />
 
           <div className="space-y-8">
