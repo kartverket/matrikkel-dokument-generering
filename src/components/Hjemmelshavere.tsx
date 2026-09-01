@@ -67,7 +67,6 @@ export function Hjemmelshavere({ hjemmelshavere }: Readonly<Props>) {
     {
       key: "andel",
       labelKey: t("rapport.BYG0011.hjemmelshavere.andel"),
-      align: "right" as const,
       render: (item: FlattenedPerson) =>
         item.teller && item.nevner ? `${item.teller}/${item.nevner}` : "-",
     },

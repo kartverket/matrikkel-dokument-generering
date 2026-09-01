@@ -142,8 +142,15 @@ function createBygning(input: {
         objektnr: `SEFRAK-${input.bygningsnummer}`,
         objektnavn: "Sefrak registrering",
         kommunenr: input.kommuneNr,
-        registreringskretsnr: 1,
-        huslopenr: 1,
+        registreringskretsnr: 4324,
+        huslopenr: 124,
+      },
+      {
+        objektnr: `SEFRAK-${input.bygningsnummer}`,
+        objektnavn: "Sefrak registrering",
+        kommunenr: input.kommuneNr,
+        registreringskretsnr: 2354,
+        huslopenr: 145,
       },
     ],
     etasjer: [
