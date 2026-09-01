@@ -34,7 +34,7 @@ export function Hjemmelshavere({ hjemmelshavere }: Readonly<Props>) {
   const columns = [
     {
       key: "rolle",
-      labelKey: t("rapport.BYG0011.hjemmelshavere.rolle"),
+      labelKey: t("rapport.BYG0011.person.rolle"),
       render: (item: FlattenedPerson) =>
         item.eierforholdKode?.displayTekst || "-",
     },
@@ -46,17 +46,17 @@ export function Hjemmelshavere({ hjemmelshavere }: Readonly<Props>) {
     },
     {
       key: "eierident",
-      labelKey: t("rapport.BYG0011.hjemmelshavere.fodselsnum"),
+      labelKey: t("rapport.BYG0011.hjemmelshavere.identifikasjonsNr"),
       render: (item: FlattenedPerson) => item.eierident,
     },
     {
       key: "navn",
-      labelKey: t("rapport.BYG0011.hjemmelshavere.navn"),
+      labelKey: t("rapport.BYG0011.person.navn"),
       render: (item: FlattenedPerson) => item.navn || "-",
     },
     {
       key: "adresse",
-      labelKey: t("rapport.BYG0011.hjemmelshavere.addresse"),
+      labelKey: t("rapport.BYG0011.person.adresse"),
       render: (item: FlattenedPerson) => item.eierAdresse || "-",
     },
     {

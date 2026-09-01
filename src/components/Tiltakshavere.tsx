@@ -18,23 +18,23 @@ export function Tiltakshavere({ tiltakshavere }: Readonly<Props>) {
   const columns = [
     {
       key: "rolle",
-      labelKey: t("rapport.BYG0011.tiltakshavere.rolle"),
+      labelKey: t("rapport.BYG0011.person.rolle"),
       render: (item: Kontaktperson) =>
         item.kontaktpersonKode?.displayTekst || "-",
     },
     {
       key: "eierident",
-      labelKey: t("rapport.BYG0011.tiltakshavere.fodselsnum"),
+      labelKey: t("rapport.BYG0011.person.identifikasjonsNr"),
       render: (item: Kontaktperson) => item.eierident,
     },
     {
       key: "navn",
-      labelKey: t("rapport.BYG0011.tiltakshavere.navn"),
+      labelKey: t("rapport.BYG0011.person.navn"),
       render: (item: Kontaktperson) => item.navn,
     },
     {
       key: "adresse",
-      labelKey: t("rapport.BYG0011.tiltakshavere.addresse"),
+      labelKey: t("rapport.BYG0011.person.adresse"),
       render: (item: Kontaktperson) => item.eierAdresse || "-",
     },
     {
