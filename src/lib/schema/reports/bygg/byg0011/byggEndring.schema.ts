@@ -15,7 +15,7 @@ import { kontaktpersonSchema } from "../shared/kontaktperson.schema.ts"
 
 export const byggEndringSchema = z
   .object({
-    bygningsnummer: z.number().int().nonnegative().optional(),
+    bygningsnummer: z.number().nonnegative().optional(),
     lopenummer: z.number().int().nonnegative().optional(),
     bygningsendringsKode: kodeSchemaOgTekst(endringsKodeSchema),
     harUfullstendigAreal: jaNeiEnum.optional(),
