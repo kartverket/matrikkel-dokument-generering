@@ -18,7 +18,10 @@ interface Props {
 export function BygningSection({ bygning }: Readonly<Props>) {
   const { t } = useTranslation()
 
-  const bygningstype = bygning.bygningstypeKode?.displayTekst ?? ""
+  const bygningstype =
+    bygning.bygningstypeKode?.kodeverdi != null
+      ? `${bygning.bygningstypeKode.kodeverdi} ${bygning.bygningstypeKode.displayTekst ?? ""}`.trim()
+      : ""
   const status = bygning.bygningstatusKode?.displayTekst ?? ""
 
   const tiltakshavere =
