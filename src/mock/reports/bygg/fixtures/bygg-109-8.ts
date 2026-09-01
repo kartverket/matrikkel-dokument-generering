@@ -36,7 +36,7 @@ function createBygning(input: {
   bnr: string
   adresseNavn: string
   adresseNr: number
-  bygningsnummer: string
+  bygningsnummer: number
   bygningstypeKode: BygningstypeKode
   bygningstatusKode: BygningstatusKode
   naringsgruppeKode: NaringsgruppeKode
@@ -47,7 +47,7 @@ function createBygning(input: {
   ost: number
   lopenummer?: number
 }): Bygning {
-  const numericBygningsnummer = Number(input.bygningsnummer)
+  const numericBygningsnummer = input.bygningsnummer
   const matrikkelNummer = `${input.kommuneNr}-${input.gnr}/${input.bnr}/0/0`
   const statusDato = isoDate("2024-01-01")
   const bruksenhetsnummer = input.antallBoenheter > 0 ? "H0101" : undefined
@@ -414,7 +414,7 @@ export function createBygg1098Report(): LegacyFixtureByggRapport {
         bnr: "8",
         adresseNavn: "Vensasveien",
         adresseNr: 6,
-        bygningsnummer: "17361511",
+        bygningsnummer: 17361511,
         bygningstypeKode: "181",
         bygningstatusKode: "TB",
         naringsgruppeKode: "Y",
@@ -429,7 +429,7 @@ export function createBygg1098Report(): LegacyFixtureByggRapport {
         bnr: "8",
         adresseNavn: "Vensasveien",
         adresseNr: 6,
-        bygningsnummer: "17361511",
+        bygningsnummer: 17361511,
         bygningstypeKode: "181",
         bygningstatusKode: "TB",
         naringsgruppeKode: "Y",
@@ -446,7 +446,7 @@ export function createBygg1098Report(): LegacyFixtureByggRapport {
         bnr: "9",
         adresseNavn: "Vensasveien",
         adresseNr: 8,
-        bygningsnummer: "17361538",
+        bygningsnummer: 17361538,
         bygningstypeKode: "181",
         bygningstatusKode: "TB",
         naringsgruppeKode: "Y",
@@ -461,7 +461,7 @@ export function createBygg1098Report(): LegacyFixtureByggRapport {
         bnr: "10",
         adresseNavn: "Vensasveien",
         adresseNr: 10,
-        bygningsnummer: "17362623",
+        bygningsnummer: 17362623,
         bygningstypeKode: "111",
         bygningstatusKode: "IG",
         naringsgruppeKode: "X",
@@ -477,7 +477,7 @@ export function createBygg1098Report(): LegacyFixtureByggRapport {
         bnr: "10",
         adresseNavn: "Vensasveien",
         adresseNr: 10,
-        bygningsnummer: "17362623",
+        bygningsnummer: 17362623,
         bygningstypeKode: "111",
         bygningstatusKode: "IG",
         naringsgruppeKode: "X",

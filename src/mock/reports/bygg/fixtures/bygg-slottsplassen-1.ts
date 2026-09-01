@@ -19,7 +19,7 @@ function createBygning(lopenummer = 0): Bygning {
   const statusDato = isoDate("2023-01-01")
 
   return {
-    bygningsnummer: "81416001",
+    bygningsnummer: 81416001,
     lopenummer,
     bygningsendringsKode: kode("X", "Bygningsendring"),
     harUfullstendigAreal: "Nei",

@@ -32,7 +32,7 @@ function createBygning(input: {
   bnr: string
   adresseNavn: string
   adresseNr: number
-  bygningsnummer: string
+  bygningsnummer: number
   bygningstypeKode: BygningstypeKode
   bygningstatusKode: BygningstatusKode
   naringsgruppeKode: NaringsgruppeKode
@@ -42,7 +42,7 @@ function createBygning(input: {
   ost: number
   lopenummer?: number
 }): Bygning {
-  const numericBygningsnummer = Number(input.bygningsnummer)
+  const numericBygningsnummer = input.bygningsnummer
   const matrikkelNummer = `${input.kommuneNr}-${input.gnr}/${input.bnr}/0/0`
   const statusDato = isoDate("2023-01-01")
   const bruksenhetsnummer = input.antallBoenheter > 0 ? "H0101" : undefined
@@ -307,7 +307,7 @@ export function createByggStasjonsveien1Report(): LegacyFixtureByggRapport {
         bnr: "12",
         adresseNavn: "Stasjonsveien",
         adresseNr: 1,
-        bygningsnummer: "80100590",
+        bygningsnummer: 80100590,
         bygningstypeKode: "613",
         bygningstatusKode: "TB",
         naringsgruppeKode: "P",
@@ -322,7 +322,7 @@ export function createByggStasjonsveien1Report(): LegacyFixtureByggRapport {
         bnr: "12",
         adresseNavn: "Stasjonsveien",
         adresseNr: 1,
-        bygningsnummer: "80100590",
+        bygningsnummer: 80100590,
         bygningstypeKode: "613",
         bygningstatusKode: "TB",
         naringsgruppeKode: "P",
@@ -338,7 +338,7 @@ export function createByggStasjonsveien1Report(): LegacyFixtureByggRapport {
         bnr: "15",
         adresseNavn: "Stasjonsveien",
         adresseNr: 2,
-        bygningsnummer: "80100604",
+        bygningsnummer: 80100604,
         bygningstypeKode: "619",
         bygningstatusKode: "TB",
         naringsgruppeKode: "P",
@@ -353,7 +353,7 @@ export function createByggStasjonsveien1Report(): LegacyFixtureByggRapport {
         bnr: "13",
         adresseNavn: "Stasjonsveien",
         adresseNr: 3,
-        bygningsnummer: "80951361",
+        bygningsnummer: 80951361,
         bygningstypeKode: "181",
         bygningstatusKode: "TB",
         naringsgruppeKode: "Y",
@@ -368,7 +368,7 @@ export function createByggStasjonsveien1Report(): LegacyFixtureByggRapport {
         bnr: "14",
         adresseNavn: "Stasjonsveien",
         adresseNr: 5,
-        bygningsnummer: "80951388",
+        bygningsnummer: 80951388,
         bygningstypeKode: "181",
         bygningstatusKode: "TB",
         naringsgruppeKode: "Y",

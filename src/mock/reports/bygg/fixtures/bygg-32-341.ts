@@ -36,7 +36,7 @@ function createBygning(input: {
   bnr: string
   adresseNavn: string
   adresseNr: number
-  bygningsnummer: string
+  bygningsnummer: number
   bygningstypeKode: BygningstypeKode
   bygningstatusKode: BygningstatusKode
   naringsgruppeKode: NaringsgruppeKode
@@ -47,7 +47,7 @@ function createBygning(input: {
   ost: number
   lopenummer?: number
 }): Bygning {
-  const numericBygningsnummer = Number(input.bygningsnummer)
+  const numericBygningsnummer = input.bygningsnummer
   const matrikkelNummer = `${input.kommuneNr}-${input.gnr}/${input.bnr}/0/0`
   const statusDato = isoDate("2024-01-01")
   const bruksenhetsnummer = input.antallBoenheter > 0 ? "H0101" : undefined
@@ -425,7 +425,7 @@ export function createBygg32341Report(): LegacyFixtureByggRapport {
         bnr: "341",
         adresseNavn: "Hagan terrasse",
         adresseNr: 15,
-        bygningsnummer: "80087713",
+        bygningsnummer: 80087713,
         bygningstypeKode: "121",
         bygningstatusKode: "TB",
         naringsgruppeKode: "X",
@@ -440,7 +440,7 @@ export function createBygg32341Report(): LegacyFixtureByggRapport {
         bnr: "341",
         adresseNavn: "Hagan terrasse",
         adresseNr: 15,
-        bygningsnummer: "80087713",
+        bygningsnummer: 80087713,
         bygningstypeKode: "121",
         bygningstatusKode: "TB",
         naringsgruppeKode: "X",
@@ -457,7 +457,7 @@ export function createBygg32341Report(): LegacyFixtureByggRapport {
         bnr: "342",
         adresseNavn: "Hagan terrasse",
         adresseNr: 16,
-        bygningsnummer: "80087754",
+        bygningsnummer: 80087754,
         bygningstypeKode: "121",
         bygningstatusKode: "FA",
         naringsgruppeKode: "X",
@@ -473,7 +473,7 @@ export function createBygg32341Report(): LegacyFixtureByggRapport {
         bnr: "342",
         adresseNavn: "Hagan terrasse",
         adresseNr: 16,
-        bygningsnummer: "80087754",
+        bygningsnummer: 80087754,
         bygningstypeKode: "121",
         bygningstatusKode: "FA",
         naringsgruppeKode: "X",
@@ -490,7 +490,7 @@ export function createBygg32341Report(): LegacyFixtureByggRapport {
         bnr: "342",
         adresseNavn: "Hagan terrasse",
         adresseNr: 16,
-        bygningsnummer: "80087754",
+        bygningsnummer: 80087754,
         bygningstypeKode: "121",
         bygningstatusKode: "FA",
         naringsgruppeKode: "X",
