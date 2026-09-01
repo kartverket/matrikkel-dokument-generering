@@ -48,7 +48,7 @@ export function createByggMultipleBruksenheterReport(): LegacyFixtureByggRapport
     },
     bygninger: [
       {
-        bygningsnummer: "200 100 200",
+        bygningsnummer: 200100200,
         lopenummer: 0,
         bygningsendringsKode: kode("X", "Bygningsendring"),
         harUfullstendigAreal: "Nei",

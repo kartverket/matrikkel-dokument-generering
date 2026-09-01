@@ -36,7 +36,7 @@ function createBygning(input: {
   bnr: string
   adresseNavn: string
   adresseNr: number
-  bygningsnummer: string
+  bygningsnummer: number
   bygningstypeKode: BygningstypeKode
   bygningstatusKode: BygningstatusKode
   naringsgruppeKode: NaringsgruppeKode
@@ -47,7 +47,7 @@ function createBygning(input: {
   ost: number
   lopenummer?: number
 }): Bygning {
-  const numericBygningsnummer = Number(input.bygningsnummer)
+  const numericBygningsnummer = input.bygningsnummer
   const matrikkelNummer = `${input.kommuneNr}-${input.gnr}/${input.bnr}/0/0`
   const statusDato = isoDate("2024-01-01")
   const bruksenhetsnummer = input.antallBoenheter > 0 ? "H0101" : undefined
@@ -397,7 +397,7 @@ export function createBygg42221Report(): LegacyFixtureByggRapport {
         bnr: "221",
         adresseNavn: "Sognsvannsveien",
         adresseNr: 20,
-        bygningsnummer: "81174261",
+        bygningsnummer: 81174261,
         bygningstypeKode: "719",
         bygningstatusKode: "TB",
         naringsgruppeKode: "Q",
@@ -412,7 +412,7 @@ export function createBygg42221Report(): LegacyFixtureByggRapport {
         bnr: "221",
         adresseNavn: "Sognsvannsveien",
         adresseNr: 20,
-        bygningsnummer: "81174261",
+        bygningsnummer: 81174261,
         bygningstypeKode: "719",
         bygningstatusKode: "TB",
         naringsgruppeKode: "Q",
@@ -429,7 +429,7 @@ export function createBygg42221Report(): LegacyFixtureByggRapport {
         bnr: "221",
         adresseNavn: "Sognsvannsveien",
         adresseNr: 20,
-        bygningsnummer: "81197334",
+        bygningsnummer: 81197334,
         bygningstypeKode: "719",
         bygningstatusKode: "FA",
         naringsgruppeKode: "Q",
@@ -445,7 +445,7 @@ export function createBygg42221Report(): LegacyFixtureByggRapport {
         bnr: "222",
         adresseNavn: "Sognsvannsveien",
         adresseNr: 22,
-        bygningsnummer: "81771197",
+        bygningsnummer: 81771197,
         bygningstypeKode: "629",
         bygningstatusKode: "IG",
         naringsgruppeKode: "P",
@@ -461,7 +461,7 @@ export function createBygg42221Report(): LegacyFixtureByggRapport {
         bnr: "223",
         adresseNavn: "Sognsvannsveien",
         adresseNr: 24,
-        bygningsnummer: "81771200",
+        bygningsnummer: 81771200,
         bygningstypeKode: "629",
         bygningstatusKode: "TB",
         naringsgruppeKode: "P",
@@ -476,7 +476,7 @@ export function createBygg42221Report(): LegacyFixtureByggRapport {
         bnr: "224",
         adresseNavn: "Sognsvannsveien",
         adresseNr: 26,
-        bygningsnummer: "81848238",
+        bygningsnummer: 81848238,
         bygningstypeKode: "181",
         bygningstatusKode: "TB",
         naringsgruppeKode: "Y",
@@ -491,7 +491,7 @@ export function createBygg42221Report(): LegacyFixtureByggRapport {
         bnr: "225",
         adresseNavn: "Sognsvannsveien",
         adresseNr: 28,
-        bygningsnummer: "301432893",
+        bygningsnummer: 301432893,
         bygningstypeKode: "719",
         bygningstatusKode: "RA",
         naringsgruppeKode: "O",
