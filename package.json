@@ -23,7 +23,7 @@
     "@hono/prometheus": "^1.0.3",
     "@hono/swagger-ui": "^0.6.1",
     "@hono/zod-openapi": "^1.6.1",
-    "@kv-designsystem/react": "^1.0.0-alpha.2",
+    "@kv-designsystem/react": "^1.0.0-alpha.4",
     "@navikt/aksel-icons": "^8.16.1",
     "@tailwindcss/cli": "^4.3.3",
     "clsx": "^2.1.1",
