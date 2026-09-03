@@ -74,7 +74,7 @@ const bygningSchema = z.object({
   enkeltminner: z.array(enkeltminneSchema),
 
   bygningsstatuser: z
-    .record(z.string(), z.iso.datetime({ offset: true }))
+    .record(z.string(), z.iso.datetime({ offset: true }).optional())
     .optional(),
 
   utgattDato: z.iso.datetime({ offset: true }).optional(),
