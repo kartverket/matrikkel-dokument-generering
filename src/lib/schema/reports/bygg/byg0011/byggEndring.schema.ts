@@ -33,7 +33,7 @@ export const byggEndringSchema = z
     objektnr: z.number().int().optional(),
     kontaktpersoner: z.array(kontaktpersonSchema).optional(),
     bygningsstatuser: z
-      .record(z.string(), z.iso.datetime({ offset: true }))
+      .record(z.string(), z.iso.datetime({ offset: true }).optional())
       .optional(),
     utgattDato: z.iso.datetime({ offset: true }).optional(),
     utgattBeskrivelse: z.string().optional(),
