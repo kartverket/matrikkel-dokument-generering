@@ -61,11 +61,11 @@ export function ArealGruppe({
   return (
     <div className="flex-1 space-y-1">
       <span className="flex items-center gap-2">
-        <hr className="flex-1 border-gray-300 border-b-4" />
+        <hr className="flex-1 border border-gray-300" />
         <span className="whitespace-nowrap text-kv-subtle text-xs">
           {tittel}
         </span>
-        <hr className="flex-1 border-gray-300 border-b-4" />
+        <hr className="flex-1 border border-gray-300" />
       </span>
       <div className="flex gap-4">
         <div className="flex-1">
