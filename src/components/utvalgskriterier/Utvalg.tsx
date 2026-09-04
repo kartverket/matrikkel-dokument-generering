@@ -34,11 +34,7 @@ export function Utvalg({ title, kriterier, className }: Readonly<Props>) {
           if (!erAngitt(verdi)) return null
 
           return (
-            <Paragraph
-              key={key ?? label}
-              data-size="sm"
-              className="text-[0.625rem] leading-snug"
-            >
+            <Paragraph key={key ?? label} className="text-xs leading-snug">
               <span className="font-semibold">{label}: </span>
               {verdi}
             </Paragraph>
