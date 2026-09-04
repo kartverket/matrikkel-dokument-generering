@@ -22,16 +22,7 @@ export function BygningsendringSection({ bygning }: Readonly<Props>) {
   const status = bygning.bygningstatusKode?.displayTekst
 
   return (
-    <section className="flex gap-6" data-color="neutral">
-      <div className="bg-gray-200 p-4 text-right [writing-mode:sideways-lr]">
-        <p className="text-xs uppercase">{tittel}</p>
-        <p className="ml-2 text-xs">
-          {t("rapport.BYG0011.bygningsnummer")}:
-          <span className="font-semibold">{` ${bygning.bygningsnummer}`}</span>
-        </p>
-      </div>
-
-      <div className="flex-1 space-y-8">
+    <section>
         <div className="flex items-baseline gap-2">
           <h2 className="font-bold text-gray-900 text-lg">{tittel}</h2>
           {status && <Tag>{status}</Tag>}
@@ -62,7 +53,6 @@ export function BygningsendringSection({ bygning }: Readonly<Props>) {
         {bygning.bruksenheter.length > 0 && (
           <Bruksenheter bruksenheter={bygning.bruksenheter} />
         )}
-      </div>
     </section>
   )
 }

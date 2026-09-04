@@ -34,8 +34,8 @@ const testCaseAliases: Record<string, string> = {
 const PREVIEW_GENERERT_TIDSPUNKT = "2026-08-18T00:00:00.000Z"
 
 /**
- * Kombinerer alle 5 fixtures til en aggregert rapport.
- * Brukes til: Oversikt over all testdata på en gang.
+ * Kombinerer nåværende bygg fra de 5 hoved-fixturene til en aggregert rapport.
+ * Brukes til: Oversikt over fem unike bygg.
  */
 function createByggUtvalgReport(): NormalizedByggRapport {
   const reports = [
@@ -46,7 +46,7 @@ function createByggUtvalgReport(): NormalizedByggRapport {
     createBygg1098Report(),
   ].map((report) => normalizeByggRapport(report))
 
-  const [baseReport, ...restReports] = reports
+  const [baseReport] = reports
 
   return {
     ...baseReport,
@@ -54,10 +54,7 @@ function createByggUtvalgReport(): NormalizedByggRapport {
       ...baseReport.metadata,
       generertTidspunkt: PREVIEW_GENERERT_TIDSPUNKT,
     },
-    bygninger: [
-      ...(baseReport.bygninger ?? []),
-      ...restReports.flatMap((report) => report.bygninger ?? []),
-    ],
+    bygninger: baseReport.bygninger
   }
 }
 
@@ -211,8 +208,8 @@ const case8 = {
 } as const
 
 /**
- * Kombinerer alle 5 testcaser til en aggregert rapport.
- * Brukes til: Visning av all testdata på en side, skalabilitetstesting.
+ * Kombinerer de 5 hoved-testcasene til én rapport med ett nåværende bygg fra
+ * hver fixture.
  */
 const case6 = {
   testCase: "bygg-alle-5" as const,

@@ -54,17 +54,6 @@ export function BygningSection({ bygning }: Readonly<Props>) {
         </div>
       </div>
 
-      <div className="flex gap-6">
-        <div className="bg-kv-green-subtle p-4 text-right [writing-mode:sideways-lr]">
-          <p className="text-xs uppercase">
-            {t("rapport.BYG0011.naavarendeBygning")}
-          </p>
-          <p className="ml-2 text-xs">
-            {t("rapport.BYG0011.bygningsnummer")}:
-            <span className="font-semibold">{` ${bygning.bygningsnummer}`}</span>
-          </p>
-        </div>
-
         <div>
           {/* Section title with status */}
           <div className="mb-4 flex items-baseline gap-2">
@@ -117,7 +106,6 @@ export function BygningSection({ bygning }: Readonly<Props>) {
               <Kulturminner enkeltminner={bygning.enkeltminner} />
             )}
           </div>
-        </div>
       </div>
     </section>
   )

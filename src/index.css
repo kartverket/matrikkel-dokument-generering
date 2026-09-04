@@ -80,28 +80,56 @@ body {
  * horisontal padding i header.html/footer.html (se Document.tsx) slik at de
  * ligger på linje med hovedinnholdet.
  */
-@page {
-  size: A4;
-  margin: 14mm 4mm;
-}
+@media print {
+  @page {
+    size: A4;
+    margin: 14mm 4mm;
+  }
 
-table {
-  break-inside: auto;
-}
+  .pdf-section {
+    break-inside: auto;
+  }
 
-table tr {
-  break-inside: avoid;
-}
+  .pdf-keep-together {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
 
-/*
- * Unngå at en overskrift eller tabell-header blir stående alene nederst
- * på en side.
- */
-h2,
-h3,
-h4,
-h5,
-h6,
-thead {
-  break-after: avoid;
+  .pdf-page-break-before {
+    break-before: page;
+  }
+
+  .pdf-page-break-after {
+    break-after: page;
+  }
+
+  .pdf-building {
+    break-inside: auto;
+  }
+
+  .pdf-building section section {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    break-after: avoid;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  table {
+    break-inside: auto;
+  }
+
+  table tr {
+    break-inside: avoid;
+  }
 }

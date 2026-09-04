@@ -26,7 +26,9 @@ function Byg0011DocumentRenderer({
         <ByggUtvalgskriterier kriterier={rapport.utvalgskriterier} />
       </div>
 
-      <Bygninger bygninger={rapport.bygninger} />
+      <div className={rapport.utvalgskriterier ? "pdf-page-break-before" : ""}>
+        <Bygninger bygninger={rapport.bygninger} />
+      </div>
     </main>
   )
 }
