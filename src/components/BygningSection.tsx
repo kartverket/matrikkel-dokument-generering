@@ -8,6 +8,7 @@ import { BygningsstatuserSection } from "./BygningsstatuserSection.tsx"
 import { EtasjerSection } from "./EtasjerSection.tsx"
 import { Hjemmelshavere } from "./Hjemmelshavere.tsx"
 import { Kontaktpersoner } from "./Kontaktpersoner.tsx"
+import { Kulturminner } from "./KulturminneSection.tsx"
 import { OmBygget } from "./OmBygget.tsx"
 import { Tiltakshavere } from "./Tiltakshavere.tsx"
 
@@ -110,6 +111,10 @@ export function BygningSection({ bygning }: Readonly<Props>) {
 
             {bygning.hjemmelshavere && bygning.hjemmelshavere.length > 0 && (
               <Hjemmelshavere hjemmelshavere={bygning.hjemmelshavere} />
+            )}
+
+            {bygning.enkeltminner && bygning.enkeltminner.length > 0 && (
+              <Kulturminner enkeltminner={bygning.enkeltminner} />
             )}
           </div>
         </div>
