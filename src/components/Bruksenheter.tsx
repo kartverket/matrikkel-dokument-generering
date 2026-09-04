@@ -3,18 +3,15 @@ import type { Bruksenhet } from "../lib/schema/reports/bygg/shared/bruksenhet.sc
 import { TableSection } from "./utils/TableSection.tsx"
 
 type Props = Readonly<{
-  bruksenheter: (Bruksenhet | undefined)[]
+  bruksenheter: Bruksenhet[]
 }>
 
 export function Bruksenheter({ bruksenheter }: Props) {
   const { t } = useTranslation()
   const tKey = "rapport.BYG0011.byggEndringer.bruksenheter" as const
 
-  const filtrerteEnheter: (Bruksenhet & { bruksenhetsnummer: string })[] =
-    bruksenheter.filter(
-      (u): u is Bruksenhet & { bruksenhetsnummer: string } =>
-        u?.bruksenhetsnummer != null,
-    )
+  const filtrerteEnheter: Bruksenhet[] =
+    bruksenheter
 
   if (filtrerteEnheter.length === 0) {
     return null
@@ -81,7 +78,7 @@ export function Bruksenheter({ bruksenheter }: Props) {
       title={t(`${tKey}.tittel_other`)}
       items={filtrerteEnheter}
       columns={columns}
-      rowKey={(item) => item.bruksenhetsnummer}
+      rowKey={(item) => item.bruksenhetsnummer ?? Math.random().toString()}
     />
   )
 }
