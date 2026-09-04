@@ -10,8 +10,7 @@ export function Bruksenheter({ bruksenheter }: Props) {
   const { t } = useTranslation()
   const tKey = "rapport.BYG0011.byggEndringer.bruksenheter" as const
 
-  const filtrerteEnheter: Bruksenhet[] =
-    bruksenheter
+  const filtrerteEnheter: Bruksenhet[] = bruksenheter
 
   if (filtrerteEnheter.length === 0) {
     return null
