@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next"
-import { TableSection } from "./utils/TableSection.tsx"
 import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
+import { TableSection } from "./utils/TableSection.tsx"
 
 type Props = Pick<Bygning, "hjemmelshavere">
 
