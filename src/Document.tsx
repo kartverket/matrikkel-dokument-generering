@@ -1,4 +1,4 @@
-import { Heading } from "@kv-designsystem/react"
+import { Heading, Tag } from "@kv-designsystem/react"
 import { renderToStaticMarkup } from "react-dom/server"
 import { I18nextProvider, useTranslation } from "react-i18next"
 import { PdfFooter } from "./components/pdf/PdfFooter.tsx"
@@ -12,15 +12,19 @@ function Byg0011DocumentRenderer({
   rapport,
 }: Readonly<{ rapport: Byg0011Rapport }>) {
   const { t } = useTranslation()
+  const antallBygg = rapport.bygninger.filter(
+    (it) => !it.erBygningsendring,
+  ).length
 
   return (
     <main>
       <div>
         <Heading
           level={1}
-          className="mb-8 break-after-avoid font-medium text-kv-title"
+          className="mb-8 flex break-after-avoid items-center gap-6 font-medium text-kv-title"
         >
           {t("rapport.BYG0011.rapportTittel")}
+          <Tag data-size="md">{antallBygg} bygg</Tag>
         </Heading>
 
         <ByggUtvalgskriterier kriterier={rapport.utvalgskriterier} />

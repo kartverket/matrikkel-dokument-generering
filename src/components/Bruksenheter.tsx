@@ -8,7 +8,7 @@ type Props = Readonly<{
 
 export function Bruksenheter({ bruksenheter }: Props) {
   const { t } = useTranslation()
-  const tKey = "rapport.BYG0011.byggEndringer.bruksenheter" as const
+  const tKey = "rapport.BYG0011.bruksenheter" as const
 
   const filtrerteEnheter: Bruksenhet[] = bruksenheter
 
@@ -74,7 +74,7 @@ export function Bruksenheter({ bruksenheter }: Props) {
 
   return (
     <TableSection
-      title={t(`${tKey}.tittel_other`)}
+      title={t(`${tKey}.tittel`)}
       items={filtrerteEnheter}
       columns={columns}
       rowKey={(item) => item.bruksenhetsnummer ?? Math.random().toString()}

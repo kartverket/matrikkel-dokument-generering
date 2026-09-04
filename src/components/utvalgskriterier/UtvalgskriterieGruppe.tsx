@@ -15,10 +15,7 @@ export function UtvalgskriterieGruppe({
   return (
     <section className={cn("space-y-3", className)}>
       <span className="flex break-after-avoid items-center gap-4">
-        <Heading
-          level={3}
-          className="min-w-max text-[0.625rem] text-kv-default"
-        >
+        <Heading level={3} className="min-w-max text-base">
           {title}
         </Heading>
         <hr className="w-full border border-kv-green-border/90" />

@@ -4,15 +4,6 @@
 @import "@kv-designsystem/react/green" layer(designsystem);
 
 @theme {
-  --color-kv-subtle: var(--ds-color-neutral-text-subtle);
-  --color-kv-tinted: var(--ds-color-neutral-background-tinted);
-  --color-kv-default: var(--ds-color-neutral-text-default);
-  --color-kv-border: var(--ds-color-neutral-border-subtle);
-  --color-kv-accent-border: var(--ds-color-accent-border-default);
-  --color-kv-surface: var(--ds-color-neutral-background-default);
-  --color-kv-gray: var(--ds-color-neutral-background-tinted);
-  --color-kv-blue: var(--ds-color-accent-base-default);
-  --color-kv-blue-subtle: var(--ds-color-accent-surface-tinted);
   --color-kv-green-subtle: #f6faf7;
   --color-kv-green-border: #97c7a6;
   --color-kv-green: #156c30;
@@ -20,48 +11,6 @@
   --color-kv-green-tinted: #edf6f0;
   --color-kv-background-tinted: #daeed7;
 
-  --text-rapport-h1: 1rem;
-  --text-rapport-h2: 0.75rem;
-  --text-rapport-h3: 0.625rem;
-  --text-rapport-h4: 0.625rem;
-  --text-rapport-p: 0.625rem;
-  --text-rapport-tablehead: 0.625rem;
-  --text-rapport-tablecell: 0.625rem;
-
-  --font-weight-rapport-h1: 500;
-  --font-weight-rapport-h2: 500;
-  --font-weight-rapport-h3: 400;
-  --font-weight-rapport-h4: 500;
-  --font-weight-rapport-p: 400;
-  --font-weight-rapport-tablehead: 400;
-  --font-weight-rapport-tablecell: 400;
-
-  --font-style-rapport-h1: normal;
-  --font-style-rapport-h2: normal;
-  --font-style-rapport-h3: normal;
-  --font-style-rapport-h4: normal;
-  --font-style-rapport-p: normal;
-  --font-style-rapport-tablehead: normal;
-  --font-style-rapport-tablecell: normal;
-
-  --text-color-h1: var(--color-kv-default);
-  --text-color-h2: var(--color-kv-default);
-  --text-color-h3: var(--color-kv-subtle);
-  --text-color-h4: var(--color-kv-default);
-  --text-color-p: var(--color-kv-default);
-  --text-color-tablehead: var(--color-kv-subtle);
-  --text-color-tablecell: var(--color-kv-default);
-
-  /* Label: brukes over verdier i Oversiktsfelt, Nokkeltall osv. */
-  --text-rapport-label: 0.625rem;
-  --font-weight-rapport-label: 500;
-  --text-color-label: var(--color-kv-subtle);
-
-  /* Tag: Figma size/8 = 20px Hug */
-  --text-rapport-tag: 0.625rem;
-  --font-weight-rapport-tag: 500;
-  --min-height-rapport-tag: 1.25rem;
-  --padding-inline-rapport-tag: 0.375rem;
   --text-pdf-label: 9pt;
 }
 

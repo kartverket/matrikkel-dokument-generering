@@ -48,9 +48,9 @@ export function BygningSection({ bygning }: Readonly<Props>) {
         </div>
 
         <div className="flex gap-2">
-          {bygningstype && <Tag>{bygningstype}</Tag>}
+          {bygningstype && <Tag data-size="sm">{bygningstype}</Tag>}
 
-          {status && <Tag>{status}</Tag>}
+          {status && <Tag data-size="sm">{status}</Tag>}
         </div>
       </div>
 
@@ -60,7 +60,6 @@ export function BygningSection({ bygning }: Readonly<Props>) {
           <h2 className="font-bold text-gray-900 text-lg">
             {t("rapport.BYG0011.naavarendeBygning")}
           </h2>
-          {status && <Tag>{status}</Tag>}
         </div>
 
         <OmBygget
