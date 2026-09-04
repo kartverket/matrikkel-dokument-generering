@@ -20,6 +20,7 @@ export function BygningsendringSection({ bygning }: Readonly<Props>) {
     { lopenummer: bygning.lopenummer },
   )
   const status = bygning.bygningstatusKode?.displayTekst
+  const endringskode = bygning.bygningsendringsKode?.displayTekst
 
   return (
     <section className="flex gap-6" data-color="neutral">
@@ -35,6 +36,7 @@ export function BygningsendringSection({ bygning }: Readonly<Props>) {
         <div className="flex items-baseline gap-2">
           <h2 className="font-bold text-gray-900 text-lg">{tittel}</h2>
           {status && <Tag data-size="sm">{status}</Tag>}
+          {endringskode && <Tag data-size="sm">{endringskode}</Tag>}
         </div>
 
         <OmBygget
