@@ -145,6 +145,13 @@ export const nn = {
         etasje: "Etasje",
         antallBoenheter: "Bueiningar",
       },
+      kulturminner: {
+        tittel: "Kulturminne",
+        enkeltminneNr: "Enkeltminnenummer",
+        enkeltminneArtKode: "Enkeltminne art",
+        vernetypeKode: "Vernetype",
+        kulturminnekategoriKode: "Kulturminnekategori",
+      },
       byggEndringer: {
         tittel: "Bygningsendringar",
         ingenEndringer: "Ingen endringar registrerte på bygget.",
@@ -226,14 +233,6 @@ export const nn = {
           kjokkenTilgangKode: "Kjøkkentilgang",
           adresse: "Adresse",
           matrikkelNr: "Matrikkelenhet",
-        },
-        kulturminner: {
-          tittel_one: "Kulturminne",
-          tittel_other: "Kulturminne",
-          enkeltminneNr: "Enkeltminnenr.",
-          enkeltminneArtKode: "Art",
-          vernetypeKode: "Vernetype",
-          kulturminnekategoriKode: "Kategori",
         },
         sefrak: {
           tittel_one: "SEFRAK-minne",
