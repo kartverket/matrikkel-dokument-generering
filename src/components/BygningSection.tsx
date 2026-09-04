@@ -54,69 +54,57 @@ export function BygningSection({ bygning }: Readonly<Props>) {
         </div>
       </div>
 
-      <div className="flex gap-6">
-        <div className="bg-kv-green-subtle p-4 text-right [writing-mode:sideways-lr]">
-          <p className="text-xs uppercase">
+      <div>
+        {/* Section title with status */}
+        <div className="mb-4 flex items-baseline gap-2">
+          <h2 className="font-bold text-gray-900 text-lg">
             {t("rapport.BYG0011.naavarendeBygning")}
-          </p>
-          <p className="ml-2 text-xs">
-            {t("rapport.BYG0011.bygningsnummer")}:
-            <span className="font-semibold">{` ${bygning.bygningsnummer}`}</span>
-          </p>
+          </h2>
+          {status && <Tag>{status}</Tag>}
         </div>
 
-        <div>
-          {/* Section title with status */}
-          <div className="mb-4 flex items-baseline gap-2">
-            <h2 className="font-bold text-gray-900 text-lg">
-              {t("rapport.BYG0011.naavarendeBygning")}
-            </h2>
-            {status && <Tag>{status}</Tag>}
-          </div>
+        <OmBygget
+          bygningstypeKode={bygning.bygningstypeKode}
+          naringsgruppeKode={bygning.naringsgruppeKode}
+          etasjedata={bygning.etasjedata}
+          representasjonspunkt={bygning.representasjonspunkt}
+          sefrakminner={bygning.sefrakminner}
+        />
 
-          <OmBygget
-            bygningstypeKode={bygning.bygningstypeKode}
-            naringsgruppeKode={bygning.naringsgruppeKode}
-            etasjedata={bygning.etasjedata}
-            representasjonspunkt={bygning.representasjonspunkt}
-            sefrakminner={bygning.sefrakminner}
-          />
+        <div className="space-y-8">
+          {bygning.etasjedata != null && (
+            <ArealSection etasjedata={bygning.etasjedata} />
+          )}
 
-          <div className="space-y-8">
-            {bygning.etasjedata != null && (
-              <ArealSection etasjedata={bygning.etasjedata} />
-            )}
+          {bygning.bygningsstatuser != null && (
+            <BygningsstatuserSection
+              bygningsstatuser={bygning.bygningsstatuser}
+            />
+          )}
 
-            {bygning.bygningsstatuser != null && (
-              <BygningsstatuserSection
-                bygningsstatuser={bygning.bygningsstatuser}
-              />
-            )}
+          {bygning.etasjer != null && bygning.etasjer.length > 0 && (
+            <EtasjerSection etasjer={bygning.etasjer} />
+          )}
 
-            {bygning.etasjer != null && bygning.etasjer.length > 0 && (
-              <EtasjerSection etasjer={bygning.etasjer} />
-            )}
+          {bygning.bruksenheter.length > 0 && (
+            <Bruksenheter bruksenheter={bygning.bruksenheter} />
+          )}
 
-            {bygning.bruksenheter.length > 0 && (
-              <Bruksenheter bruksenheter={bygning.bruksenheter} />
-            )}
+          {tiltakshavere.length > 0 && (
+            <Tiltakshavere tiltakshavere={tiltakshavere} />
+          )}
 
-            {tiltakshavere.length > 0 && (
-              <Tiltakshavere tiltakshavere={tiltakshavere} />
-            )}
+          {øvrigeKontaktpersoner.length > 0 && (
+            <Kontaktpersoner kontaktpersoner={øvrigeKontaktpersoner} />
+          )}
 
-            {øvrigeKontaktpersoner.length > 0 && (
-              <Kontaktpersoner kontaktpersoner={øvrigeKontaktpersoner} />
-            )}
+          {bygning.hjemmelshavere && bygning.hjemmelshavere.length > 0 && (
+            <Hjemmelshavere hjemmelshavere={bygning.hjemmelshavere} />
+          )}
 
-            {bygning.hjemmelshavere && bygning.hjemmelshavere.length > 0 && (
-              <Hjemmelshavere hjemmelshavere={bygning.hjemmelshavere} />
-            )}
-
-            {bygning.enkeltminner && bygning.enkeltminner.length > 0 && (
-              <Kulturminner enkeltminner={bygning.enkeltminner} />
-            )}
-          </div>
+          {bygning.enkeltminner && bygning.enkeltminner.length > 0 && (
+            <Kulturminner enkeltminner={bygning.enkeltminner} />
+          )}
         </div>
       </div>
     </section>
