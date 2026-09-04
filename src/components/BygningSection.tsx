@@ -71,7 +71,6 @@ export function BygningSection({ bygning }: Readonly<Props>) {
             <h2 className="font-bold text-gray-900 text-lg">
               {t("rapport.BYG0011.naavarendeBygning")}
             </h2>
-            {status && <Tag data-size="sm">{status}</Tag>}
           </div>
 
           <OmBygget
