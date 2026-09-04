@@ -1,11 +1,13 @@
 import { describe, expect, test } from "bun:test"
 import { byggRapportSchema } from "../../src/lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
+import { getPreviewCaseData } from "../../src/mock/preview-data.ts"
 import { createBygg32341Report } from "../../src/mock/reports/bygg/fixtures/bygg-32-341.ts"
 import { createBygg42221Report } from "../../src/mock/reports/bygg/fixtures/bygg-42-221.ts"
 import { createBygg1098Report } from "../../src/mock/reports/bygg/fixtures/bygg-109-8.ts"
 import { createByggSlottsplassen1Report } from "../../src/mock/reports/bygg/fixtures/bygg-slottsplassen-1.ts"
 import { createByggStasjonsveien1Report } from "../../src/mock/reports/bygg/fixtures/bygg-stasjonsveien-1.ts"
 import { normalizeByggRapport } from "../../src/mock/reports/bygg/normalize-bygg-report.ts"
+import { grupperBygninger } from "../../src/sections/Bygninger.tsx"
 
 describe("Mock server fixtures", () => {
   const fixtures = [
@@ -37,5 +39,14 @@ describe("Mock server fixtures", () => {
 
       expect(parseResult.success).toBe(true)
     })
+  })
+
+  test("bygg-alle-5 groups changes under the preceding current building", async () => {
+    const previewCase = await getPreviewCaseData("bygg-alle-5")
+    const grupper = grupperBygninger(previewCase?.report.bygninger ?? [])
+
+    expect(grupper).toHaveLength(2)
+    expect(grupper.map(({ endringer }) => endringer.length)).toEqual([1, 2])
+    expect(grupper.map(({ bygning }) => bygning.lopenummer)).toEqual([0, 0])
   })
 })
