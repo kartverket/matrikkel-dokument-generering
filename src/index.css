@@ -71,11 +71,18 @@ body {
 }
 
 /*
- * Sidestørrelse og marger for PDF-en.
+ * Sidestørrelse og marger for PDF-en. Må matche `.preview-page` i
+ * HTML-forhåndsvisningen (se documents.routes.ts) slik at PDF og preview
+ * gjengir seg med samme sideformat og innholdsområde.
+ *
+ * Merk: Chromiums header/footer-maler rendres alltid over hele sidebredden
+ * uavhengig av `@page`-margen. Header og footer får derfor tilsvarende
+ * horisontal padding i header.html/footer.html (se Document.tsx) slik at de
+ * ligger på linje med hovedinnholdet.
  */
 @page {
   size: A4;
-  margin: 18mm 18mm 22mm 18mm;
+  margin: 14mm 4mm;
 }
 
 table {

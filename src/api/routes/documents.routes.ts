@@ -78,15 +78,15 @@ async function createDocumentResponse({
     }
 
     .preview-page {
-      width: 297mm;
+      width: 210mm;
       max-width: 100%;
-      min-height: 210mm;
+      min-height: 297mm;
       background: #fff;
       box-shadow: 0 8px 28px rgba(15, 23, 42, 0.16);
       border: 1px solid #d9e0ea;
       border-radius: 2px;
       box-sizing: border-box;
-      padding: 14mm 12mm;
+      padding: 14mm 4mm;
     }
 
     @media (max-width: 900px) {
@@ -105,16 +105,10 @@ async function createDocumentResponse({
     }
 
     .preview-header {
-      margin-bottom: 2rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid #e5e7eb;
+      margin-bottom: 1rem;
     }
     .preview-footer {
-      margin-top: 2rem;
-      padding-top: 1rem;
-      border-top: 1px solid #e5e7eb;
-      font-size: 0.875rem;
-      color: #6b7280;
+      margin-top: 1rem;
     }
   </style>
 </head>
