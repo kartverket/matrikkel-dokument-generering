@@ -28,7 +28,7 @@ export function PdfHeader({ metadata, rapportKode }: Readonly<PdfHeaderProps>) {
       <div className="grid w-full grid-cols-3 items-center">
         <span>{t(`rapport.${rapportKode}.rapportTittel`)}</span>
         <span className="text-center">{rapportDato}</span>
-        <span className="whitespace-pre text-right">
+        <span className="text-right">
           {t(`koder.koordinat.${koordinatSystemKode}`)}
         </span>
       </div>

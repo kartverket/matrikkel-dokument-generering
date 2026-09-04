@@ -15,7 +15,7 @@ function Byg0011DocumentRenderer({
 
   return (
     <main>
-      <div className="mx-2">
+      <div>
         <Heading
           level={1}
           className="mb-8 break-after-avoid font-medium text-kv-title"
@@ -78,10 +78,14 @@ export function renderDocument(
             <body>${body}</body>
             </html>`
 
+  // Chromiums header/footer-maler rendres over hele sidebredden. Vi setter
+  // derfor samme horisontale padding her som `@page`-margen i index.css slik
+  // at header og footer ligger på linje med hovedinnholdet i PDF-en.
   const headerHtml = `<html>
       <head>
         <meta charset="utf-8">
         <style>${css}</style>
+        <style>body { margin: 0; padding: 0 4mm; }</style>
       </head>
       <body>${headerBody}</body>
     </html>`
@@ -90,6 +94,7 @@ export function renderDocument(
             <head>
               <meta charset="utf-8">
               <style>${css}</style>
+              <style>body { margin: 0; padding: 0 4mm; }</style>
             </head>
             <body>${footerBody}</body>
             </html>`
