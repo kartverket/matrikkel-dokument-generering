@@ -1,10 +1,8 @@
 import { useTranslation } from "react-i18next"
-import type { Hjemmelshaver } from "../lib/schema/reports/bygg/shared/eierforholdSchema.ts"
+import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 import { TableSection } from "./utils/TableSection.tsx"
 
-interface Props {
-  readonly hjemmelshavere: Array<Hjemmelshaver>
-}
+type Props = Pick<Bygning, "hjemmelshavere">
 
 interface FlattenedPerson {
   eierident?: string
@@ -20,14 +18,20 @@ interface FlattenedPerson {
 export function Hjemmelshavere({ hjemmelshavere }: Readonly<Props>) {
   const { t } = useTranslation()
 
-  const hjemmelshaverList: (FlattenedPerson & { eierident: string })[] =
+  const hjemmelshaverList: FlattenedPerson[] =
     hjemmelshavere
       .flatMap((eierforhold) => eierforhold.matrikkelenhetEiereInfos || [])
       .flatMap((matrikkel) => matrikkel.personEierforhold || [])
-      .filter(
-        (person): person is FlattenedPerson & { eierident: string } =>
-          !!person.eierident,
-      )
+      .map((person) => ({
+        eierident: person.eierident,
+        eierforholdKode: person.eierforholdKode,
+        personStatusKode: person.personStatusKode,
+        navn: person.navn,
+        eierAdresse: person.eierAdresse,
+        bruksenhetsnummer: person.bruksenhetsnummer,
+        teller: person.teller,
+        nevner: person.nevner,
+      })) ?? []
 
   if (!hjemmelshaverList.length) return null
 
@@ -77,7 +81,7 @@ export function Hjemmelshavere({ hjemmelshavere }: Readonly<Props>) {
       title={t("rapport.BYG0011.hjemmelshavere.tittel")}
       items={hjemmelshaverList}
       columns={columns}
-      rowKey={(item) => item.eierident}
+      rowKey={(item) => item.eierident ?? Math.random().toString()}
     />
   )
 }
