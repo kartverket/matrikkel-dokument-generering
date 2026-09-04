@@ -1,12 +1,12 @@
 import { describe, expect, test } from "bun:test"
 import { byggRapportSchema } from "../../src/lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
+import { getPreviewCaseData } from "../../src/mock/preview-data.ts"
 import { createBygg32341Report } from "../../src/mock/reports/bygg/fixtures/bygg-32-341.ts"
 import { createBygg42221Report } from "../../src/mock/reports/bygg/fixtures/bygg-42-221.ts"
 import { createBygg1098Report } from "../../src/mock/reports/bygg/fixtures/bygg-109-8.ts"
 import { createByggSlottsplassen1Report } from "../../src/mock/reports/bygg/fixtures/bygg-slottsplassen-1.ts"
 import { createByggStasjonsveien1Report } from "../../src/mock/reports/bygg/fixtures/bygg-stasjonsveien-1.ts"
 import { normalizeByggRapport } from "../../src/mock/reports/bygg/normalize-bygg-report.ts"
-import { getPreviewCaseData } from "../../src/mock/preview-data.ts"
 import { grupperBygninger } from "../../src/sections/Bygninger.tsx"
 
 describe("Mock server fixtures", () => {

@@ -23,36 +23,34 @@ export function BygningsendringSection({ bygning }: Readonly<Props>) {
 
   return (
     <section>
-        <div className="flex items-baseline gap-2">
-          <h2 className="font-bold text-gray-900 text-lg">{tittel}</h2>
-          {status && <Tag>{status}</Tag>}
-        </div>
+      <div className="flex items-baseline gap-2">
+        <h2 className="font-bold text-gray-900 text-lg">{tittel}</h2>
+        {status && <Tag>{status}</Tag>}
+      </div>
 
-        <OmBygget
-          bygningstypeKode={bygning.bygningstypeKode}
-          naringsgruppeKode={bygning.naringsgruppeKode}
-          etasjedata={bygning.etasjedata}
-          representasjonspunkt={bygning.representasjonspunkt}
-          sefrakminner={bygning.sefrakminner}
-        />
+      <OmBygget
+        bygningstypeKode={bygning.bygningstypeKode}
+        naringsgruppeKode={bygning.naringsgruppeKode}
+        etasjedata={bygning.etasjedata}
+        representasjonspunkt={bygning.representasjonspunkt}
+        sefrakminner={bygning.sefrakminner}
+      />
 
-        {bygning.etasjedata != null && (
-          <ArealSection etasjedata={bygning.etasjedata} />
-        )}
+      {bygning.etasjedata != null && (
+        <ArealSection etasjedata={bygning.etasjedata} />
+      )}
 
-        {bygning.bygningsstatuser != null && (
-          <BygningsstatuserSection
-            bygningsstatuser={bygning.bygningsstatuser}
-          />
-        )}
+      {bygning.bygningsstatuser != null && (
+        <BygningsstatuserSection bygningsstatuser={bygning.bygningsstatuser} />
+      )}
 
-        {bygning.etasjer != null && bygning.etasjer.length > 0 && (
-          <EtasjerSection etasjer={bygning.etasjer} />
-        )}
+      {bygning.etasjer != null && bygning.etasjer.length > 0 && (
+        <EtasjerSection etasjer={bygning.etasjer} />
+      )}
 
-        {bygning.bruksenheter.length > 0 && (
-          <Bruksenheter bruksenheter={bygning.bruksenheter} />
-        )}
+      {bygning.bruksenheter.length > 0 && (
+        <Bruksenheter bruksenheter={bygning.bruksenheter} />
+      )}
     </section>
   )
 }

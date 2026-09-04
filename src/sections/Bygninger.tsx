@@ -9,15 +9,15 @@ interface Props {
 export function grupperBygninger(bygninger: Array<Bygning>) {
   return bygninger.reduce<Array<{ bygning: Bygning; endringer: Bygning[] }>>(
     (grupper, bygning) => {
-    if (bygning.lopenummer == null || bygning.lopenummer === 0) {
-      grupper.push({ bygning, endringer: [] })
-      return grupper
-    }
+      if (bygning.lopenummer == null || bygning.lopenummer === 0) {
+        grupper.push({ bygning, endringer: [] })
+        return grupper
+      }
 
-    const sisteGruppe = grupper.at(-1)
-    if (sisteGruppe) {
-      sisteGruppe.endringer.push(bygning)
-    }
+      const sisteGruppe = grupper.at(-1)
+      if (sisteGruppe) {
+        sisteGruppe.endringer.push(bygning)
+      }
 
       return grupper
     },
@@ -37,13 +37,11 @@ export function Bygninger({ bygninger }: Readonly<Props>) {
           key={`${bygning.bygningsnummer}-${bygning.lopenummer}`}
           className="pdf-building pdf-page-break-before"
         >
-          <BygningSection
-            bygning={bygning}
-          />
+          <BygningSection bygning={bygning} />
 
           {endringer.length > 0 && (
             <>
-              <hr className="w-full my-8 border border-kv-green-border" />
+              <hr className="my-8 w-full border border-kv-green-border" />
 
               {endringer.map((endring) => (
                 <BygningsendringSection

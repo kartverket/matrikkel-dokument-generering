@@ -54,7 +54,7 @@ function createByggUtvalgReport(): NormalizedByggRapport {
       ...baseReport.metadata,
       generertTidspunkt: PREVIEW_GENERERT_TIDSPUNKT,
     },
-    bygninger: baseReport.bygninger
+    bygninger: baseReport.bygninger,
   }
 }
 
