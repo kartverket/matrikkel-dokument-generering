@@ -34,7 +34,7 @@ export function BygningsendringSection({ bygning }: Readonly<Props>) {
       <div className="flex-1 space-y-8">
         <div className="flex items-baseline gap-2">
           <h2 className="font-bold text-gray-900 text-lg">{tittel}</h2>
-          {status && <Tag>{status}</Tag>}
+          {status && <Tag data-size="sm">{status}</Tag>}
         </div>
 
         <OmBygget
