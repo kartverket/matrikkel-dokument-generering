@@ -1,7 +1,6 @@
 import { Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
-import { SectionTitle } from "./utils/SectionTitle.tsx"
 
 type Props = Pick<Bygning, "hjemmelshavere">
 
@@ -40,10 +39,11 @@ export function Hjemmelshavere({ hjemmelshavere }: Readonly<Props>) {
   const valueCellStyle: string = "border-b-0! text-xs"
 
   return (
-    <section className="space-y-2">
-      <SectionTitle>{t("rapport.BYG0011.hjemmelshavere.tittel")}</SectionTitle>
-
-      <Table>
+    <section>
+      <Table border>
+        <caption className="text-left text-base">
+          {t("rapport.BYG0011.hjemmelshavere.tittel")}
+        </caption>
         <Table.Head>
           <Table.Row>
             <Table.HeaderCell className={headerCellStyle}>

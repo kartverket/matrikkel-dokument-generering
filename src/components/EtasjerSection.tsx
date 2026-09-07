@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next"
 import { oversettKode } from "../lib/i18n/koder/oversettKode.ts"
 import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 import { formatAreal } from "../lib/utils/formatAreal.ts"
-import { SectionTitle } from "./utils/SectionTitle.tsx"
 
 type Props = Pick<Bygning, "etasjer">
 
@@ -15,56 +14,41 @@ export function EtasjerSection({ etasjer }: Props) {
 
   const etasjeliste = etasjer.filter((etasje) => etasje != null)
 
-  const headerCellStyle: string = "border-b! text-xs"
-  const valueCellStyle: string = "border-b-0! text-xs"
+  const headerCellStyle: string = "text-xs"
+  const valueCellStyle: string = "text-xs"
 
   return (
-    <section className="space-y-4">
-      <SectionTitle>{t(`${tKey}.title`)}</SectionTitle>
-
-      <Table
-        style={{
-          fontVariantNumeric: "tabular-nums",
-          tableLayout: "fixed",
-        }}
-        zebra
-      >
+    <section>
+      <Table border>
+        <caption className="text-left text-base">{t(`${tKey}.title`)}</caption>
         <Table.Head>
           <Table.Row>
-            <Table.HeaderCell className="text-xs" rowSpan={2}>
+            <Table.HeaderCell className={headerCellStyle}>
               {t(`${tKey}.etasjeplan`)}
             </Table.HeaderCell>
-            <Table.HeaderCell className="text-xs" rowSpan={2}>
+            <Table.HeaderCell className={headerCellStyle}>
               {t(`${tKey}.etasje`)}
             </Table.HeaderCell>
-            <Table.HeaderCell className="text-xs" rowSpan={2}>
+            <Table.HeaderCell className={headerCellStyle}>
               {t(`${tKey}.antallBoenheter`)}
             </Table.HeaderCell>
-            <Table.HeaderCell className="text-center text-xs" colSpan={3}>
-              {t(`${arealKey}.bruksareal`)}
-            </Table.HeaderCell>
-            <Table.HeaderCell className="text-center text-xs" colSpan={3}>
-              {t(`${arealKey}.bruttoareal`)}
-            </Table.HeaderCell>
-          </Table.Row>
-          <Table.Row>
             <Table.HeaderCell className={headerCellStyle}>
-              {t(`${arealKey}.bolig`)}
+              {t(`${arealKey}.bolig_bra`)}
             </Table.HeaderCell>
             <Table.HeaderCell className={headerCellStyle}>
-              {t(`${arealKey}.annet`)}
+              {t(`${arealKey}.annet_bra`)}
             </Table.HeaderCell>
             <Table.HeaderCell className={headerCellStyle}>
-              {t(`${arealKey}.total`)}
+              {t(`${arealKey}.total_bra`)}
             </Table.HeaderCell>
             <Table.HeaderCell className={headerCellStyle}>
-              {t(`${arealKey}.bolig`)}
+              {t(`${arealKey}.bolig_bta`)}
             </Table.HeaderCell>
             <Table.HeaderCell className={headerCellStyle}>
-              {t(`${arealKey}.annet`)}
+              {t(`${arealKey}.annet_bta`)}
             </Table.HeaderCell>
             <Table.HeaderCell className={headerCellStyle}>
-              {t(`${arealKey}.total`)}
+              {t(`${arealKey}.total_bta`)}
             </Table.HeaderCell>
           </Table.Row>
         </Table.Head>

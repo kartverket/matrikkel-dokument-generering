@@ -35,13 +35,13 @@ export function Bygninger({ bygninger }: Readonly<Props>) {
       {grupper.map(({ bygning, endringer }) => (
         <div
           key={`${bygning.bygningsnummer}-${bygning.lopenummer}`}
-          className="pdf-building pdf-page-break-before"
+          className="pdf-building pdf-page-break-before space-y-16"
         >
           <BygningSection bygning={bygning} />
 
           {endringer.length > 0 && (
             <>
-              <hr className="my-8 w-full border border-kv-green-border" />
+              {/*<hr className="my-8 w-full border border-kv-green-border" />*/}
 
               {endringer.map((endring) => (
                 <BygningsendringSection

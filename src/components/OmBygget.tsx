@@ -2,7 +2,6 @@ import { Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import { oversettKode } from "../lib/i18n/koder/oversettKode.ts"
 import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
-import { SectionTitle } from "./utils/SectionTitle.tsx"
 
 type Props = Pick<
   Bygning,
@@ -49,14 +48,13 @@ export function OmBygget({
     })
     .filter((id): id is string => id != null)
 
-  const headerCellStyle: string = "border-b-0! text-xs"
-  const valueCellStyle: string = "border-b-0! text-xs"
+  const headerCellStyle: string = "text-xs"
+  const valueCellStyle: string = "text-xs"
 
   return (
-    <div className="space-y-2">
-      <SectionTitle>{t(`${tKey}.tittel`)}</SectionTitle>
-
-      <Table>
+    <div>
+      <Table border>
+        <caption className="text-left text-base">{t(`${tKey}.tittel`)}</caption>
         <Table.Head>
           <Table.Row>
             <Table.HeaderCell className={headerCellStyle}>

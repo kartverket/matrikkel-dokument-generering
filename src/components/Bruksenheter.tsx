@@ -2,7 +2,6 @@ import { Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { Bruksenhet } from "../lib/schema/reports/bygg/shared/bruksenhet.schema.ts"
 import { cn } from "../lib/utils/cn.ts"
-import { SectionTitle } from "./utils/SectionTitle.tsx"
 
 type Props = Readonly<{
   bruksenheter: Bruksenhet[]
@@ -22,10 +21,9 @@ export function Bruksenheter({ bruksenheter }: Props) {
   const valueCellStyle: string = "text-xs"
 
   return (
-    <section className="space-y-2">
-      <SectionTitle>{t(`${tKey}.tittel`)}</SectionTitle>
-
+    <section>
       <Table border>
+        <caption className="text-left text-base">{t(`${tKey}.tittel`)}</caption>
         <Table.Head>
           <Table.Row>
             <Table.HeaderCell className={headerCellStyle}>

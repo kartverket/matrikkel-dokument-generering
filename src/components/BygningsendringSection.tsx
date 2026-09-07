@@ -24,35 +24,39 @@ export function BygningsendringSection({ bygning }: Readonly<Props>) {
 
   return (
     <section>
-      <div className="flex items-baseline gap-2">
-        <h2 className="font-bold text-gray-900 text-lg">{tittel}</h2>
-        {status && <Tag data-size="sm">{status}</Tag>}
-        {endringskode && <Tag data-size="sm">{endringskode}</Tag>}
+      <div className="space-y-4">
+        <div className="flex items-baseline gap-2">
+          <h2 className="font-bold text-gray-900 text-xl">{tittel}</h2>
+          {status && <Tag data-size="sm">{status}</Tag>}
+          {endringskode && <Tag data-size="sm">{endringskode}</Tag>}
+        </div>
+
+        <OmBygget
+          bygningstypeKode={bygning.bygningstypeKode}
+          naringsgruppeKode={bygning.naringsgruppeKode}
+          etasjedata={bygning.etasjedata}
+          representasjonspunkt={bygning.representasjonspunkt}
+          sefrakminner={bygning.sefrakminner}
+        />
+
+        {bygning.etasjedata != null && (
+          <ArealSection etasjedata={bygning.etasjedata} />
+        )}
+
+        {bygning.bygningsstatuser != null && (
+          <BygningsstatuserSection
+            bygningsstatuser={bygning.bygningsstatuser}
+          />
+        )}
+
+        {bygning.etasjer != null && bygning.etasjer.length > 0 && (
+          <EtasjerSection etasjer={bygning.etasjer} />
+        )}
+
+        {bygning.bruksenheter.length > 0 && (
+          <Bruksenheter bruksenheter={bygning.bruksenheter} />
+        )}
       </div>
-
-      <OmBygget
-        bygningstypeKode={bygning.bygningstypeKode}
-        naringsgruppeKode={bygning.naringsgruppeKode}
-        etasjedata={bygning.etasjedata}
-        representasjonspunkt={bygning.representasjonspunkt}
-        sefrakminner={bygning.sefrakminner}
-      />
-
-      {bygning.etasjedata != null && (
-        <ArealSection etasjedata={bygning.etasjedata} />
-      )}
-
-      {bygning.bygningsstatuser != null && (
-        <BygningsstatuserSection bygningsstatuser={bygning.bygningsstatuser} />
-      )}
-
-      {bygning.etasjer != null && bygning.etasjer.length > 0 && (
-        <EtasjerSection etasjer={bygning.etasjer} />
-      )}
-
-      {bygning.bruksenheter.length > 0 && (
-        <Bruksenheter bruksenheter={bygning.bruksenheter} />
-      )}
     </section>
   )
 }
