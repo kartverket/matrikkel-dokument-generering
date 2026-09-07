@@ -13,6 +13,7 @@ import {
   renderRapportsListPage,
   renderScenariosListPage,
 } from "../../pages/previewRenderer.ts"
+import { logger } from "../app.ts"
 import {
   notImplementedResponseSchema,
   pdfErrorResponseSchema,
@@ -276,7 +277,7 @@ export function registerDocumentRoutes(app: OpenAPIHono) {
       return c.body(result.body, 200, { "Content-Type": result.contentType })
     } catch (error) {
       const details = error instanceof Error ? error.message : "Ukjent feil"
-      console.error("PDF generation error:", error)
+      logger.error(error, "PDF generation error")
       return c.json({ error: "PDF-generering feilet", details }, 502)
     }
   })
@@ -354,7 +355,7 @@ export function registerDocumentRoutes(app: OpenAPIHono) {
       return c.body(result.body, 200, { "Content-Type": result.contentType })
     } catch (error) {
       const details = error instanceof Error ? error.message : "Ukjent feil"
-      console.error("Preview PDF generation error:", error)
+      logger.error(error, "Preview PDF generation error:")
       return c.json({ error: "PDF-generering feilet", details }, 502)
     }
   })
