@@ -21,7 +21,7 @@ function Byg0011DocumentRenderer({
       <div>
         <Heading
           level={1}
-          className="mb-8 flex break-after-avoid items-center gap-6 font-medium text-kv-title"
+          className="mt-8 mb-8 flex break-after-avoid items-center gap-6 text-5xl text-kv-title"
         >
           {t("rapport.BYG0011.rapportTittel")}
           <Tag data-size="md">{antallBygg} bygg</Tag>

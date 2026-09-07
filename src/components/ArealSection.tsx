@@ -2,7 +2,6 @@ import { Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 import { formatAreal } from "../lib/utils/formatAreal.ts"
-import { SectionTitle } from "./utils/SectionTitle.tsx"
 
 type Props = Pick<Bygning, "etasjedata">
 
@@ -11,41 +10,32 @@ export function ArealSection({ etasjedata }: Props) {
   const tKey = "rapport.BYG0011.areal" as const
   const enhet = t(`${tKey}.enhet`)
 
-  const headerCellStyle: string = "border-b! text-xs"
-  const valueCellStyle: string = "border-b-0! text-xs"
+  const headerCellStyle: string = "text-xs"
+  const valueCellStyle: string = "text-xs"
 
   return (
-    <section className="space-y-2">
-      <SectionTitle>{t(`${tKey}.tittel`)}</SectionTitle>
-
-      <Table>
+    <section>
+      <Table border>
+        <caption className="text-left text-base">{t(`${tKey}.tittel`)}</caption>
         <Table.Head>
           <Table.Row>
-            <Table.HeaderCell className="text-center text-xs" colSpan={3}>
-              {t(`${tKey}.bruksareal`)}
-            </Table.HeaderCell>
-            <Table.HeaderCell className="text-center text-xs" colSpan={3}>
-              {t(`${tKey}.bruttoareal`)}
-            </Table.HeaderCell>
-          </Table.Row>
-          <Table.Row>
             <Table.HeaderCell className={headerCellStyle}>
-              {t(`${tKey}.bolig`)}
+              {t(`${tKey}.bolig_bra`)}
             </Table.HeaderCell>
             <Table.HeaderCell className={headerCellStyle}>
-              {t(`${tKey}.annet`)}
+              {t(`${tKey}.annet_bra`)}
             </Table.HeaderCell>
             <Table.HeaderCell className={headerCellStyle}>
-              {t(`${tKey}.total`)}
+              {t(`${tKey}.total_bra`)}
             </Table.HeaderCell>
             <Table.HeaderCell className={headerCellStyle}>
-              {t(`${tKey}.bolig`)}
+              {t(`${tKey}.bolig_bta`)}
             </Table.HeaderCell>
             <Table.HeaderCell className={headerCellStyle}>
-              {t(`${tKey}.annet`)}
+              {t(`${tKey}.annet_bta`)}
             </Table.HeaderCell>
             <Table.HeaderCell className={headerCellStyle}>
-              {t(`${tKey}.total`)}
+              {t(`${tKey}.total_bta`)}
             </Table.HeaderCell>
           </Table.Row>
         </Table.Head>

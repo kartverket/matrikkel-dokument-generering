@@ -115,11 +115,12 @@ export const nb = {
       },
       areal: {
         tittel: "Areal",
-        bruksareal: "Bruksareal",
-        bruttoareal: "Bruttoareal",
-        bolig: "Bolig",
-        annet: "Annet",
-        total: "Total",
+        bolig_bra: "Bolig (BRA)",
+        bolig_bta: "Bolig (BTA)",
+        annet_bra: "Annet (BRA)",
+        annet_bta: "Annet (BTA)",
+        total_bra: "Totalt (BRA)",
+        total_bta: "Totalt (BTA)",
         enhet: "m²",
       },
       bygningsstatuser: {

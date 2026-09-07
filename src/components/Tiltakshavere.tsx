@@ -1,7 +1,6 @@
 import { Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { Kontaktperson } from "../lib/schema/reports/bygg/shared/kontaktperson.schema.ts"
-import { SectionTitle } from "./utils/SectionTitle.tsx"
 
 interface Props {
   readonly tiltakshavere: Array<Kontaktperson>
@@ -24,10 +23,11 @@ export function Tiltakshavere({ tiltakshavere }: Readonly<Props>) {
   const valueCellStyle: string = "border-b-0! text-xs"
 
   return (
-    <section className="space-y-2">
-      <SectionTitle>{t("rapport.BYG0011.tiltakshavere.tittel")}</SectionTitle>
-
-      <Table>
+    <section>
+      <Table border>
+        <caption className="text-left text-base">
+          {t("rapport.BYG0011.tiltakshavere.tittel")}
+        </caption>
         <Table.Head>
           <Table.Row>
             <Table.HeaderCell className={headerCellStyle}>
