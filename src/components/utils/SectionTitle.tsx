@@ -11,7 +11,6 @@ export function SectionTitle({ children }: Readonly<SectionTitleProps>) {
       <Heading level={3} className="min-w-max text-base">
         {children}
       </Heading>
-      <hr className="w-full border border-kv-green-border" />
     </span>
   )
 }
