@@ -21,7 +21,7 @@ export function Bruksenheter({ bruksenheter }: Props) {
     <section className="space-y-2">
       <SectionTitle>{t(`${tKey}.tittel`)}</SectionTitle>
 
-      <Table>
+      <Table border>
         <Table.Head>
           <Table.Row>
             <Table.HeaderCell className="text-xs">
@@ -58,31 +58,31 @@ export function Bruksenheter({ bruksenheter }: Props) {
             <Table.Row
               key={enhet.bruksenhetsnummer ?? Math.random().toString()}
             >
-              <Table.Cell className="border-b-0! text-xs">
+              <Table.Cell className="text-xs">
                 {enhet.bruksenhetsnummer}
               </Table.Cell>
-              <Table.Cell className="border-b-0! text-xs">
+              <Table.Cell className="text-xs">
                 {enhet.bruksenhetsTypeKode?.displayTekst ?? "-"}
               </Table.Cell>
-              <Table.Cell className="border-b-0! text-right text-xs">
+              <Table.Cell className="text-right text-xs">
                 {enhet.bruksareal != null ? `${enhet.bruksareal} m²` : "-"}
               </Table.Cell>
-              <Table.Cell className="border-b-0! text-right text-xs">
+              <Table.Cell className="text-right text-xs">
                 {enhet.antallRom ?? "-"}
               </Table.Cell>
-              <Table.Cell className="border-b-0! text-right text-xs">
+              <Table.Cell className="text-right text-xs">
                 {enhet.antallBad ?? "-"}
               </Table.Cell>
-              <Table.Cell className="border-b-0! text-right text-xs">
+              <Table.Cell className="text-right text-xs">
                 {enhet.antallWC ?? "-"}
               </Table.Cell>
-              <Table.Cell className="border-b-0! text-xs">
+              <Table.Cell className="text-xs">
                 {enhet.kjokkentilgang?.displayTekst ?? "-"}
               </Table.Cell>
-              <Table.Cell className="border-b-0! text-xs">
+              <Table.Cell className="text-xs">
                 {enhet.adresseIdentRapportInfo?.adresseAsString ?? "-"}
               </Table.Cell>
-              <Table.Cell className="border-b-0! text-xs">
+              <Table.Cell className="text-xs">
                 {enhet.matrikkelnrRapportInfo?.matrikkelNummer ?? "-"}
               </Table.Cell>
             </Table.Row>

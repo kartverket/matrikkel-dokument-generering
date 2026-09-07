@@ -19,7 +19,13 @@ export function EtasjerSection({ etasjer }: Props) {
     <section className="space-y-4">
       <SectionTitle>{t(`${tKey}.title`)}</SectionTitle>
 
-      <Table>
+      <Table
+        style={{
+          fontVariantNumeric: "tabular-nums",
+          tableLayout: "fixed",
+        }}
+        zebra
+      >
         <Table.Head>
           <Table.Row>
             <Table.HeaderCell className="text-xs" rowSpan={2}>
