@@ -1,9 +1,8 @@
+import { Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import { oversettKode } from "../lib/i18n/koder/oversettKode.ts"
 import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 import { formatAreal } from "../lib/utils/formatAreal.ts"
-import { ArealGruppe } from "./ArealSection.tsx"
-import { LabelValue } from "./utils/LabelValue.tsx"
 import { SectionTitle } from "./utils/SectionTitle.tsx"
 
 type Props = Pick<Bygning, "etasjer">
@@ -14,60 +13,99 @@ export function EtasjerSection({ etasjer }: Props) {
   const arealKey = "rapport.BYG0011.areal" as const
   const enhet = t(`${arealKey}.enhet`)
 
+  const etasjeliste = etasjer.filter((etasje) => etasje != null)
+
   return (
     <section className="space-y-4">
       <SectionTitle>{t(`${tKey}.title`)}</SectionTitle>
 
-      {etasjer
-        .filter((etasje) => etasje != null)
-        .map((etasje) => (
-          <div
-            key={`${etasje.etasjeplanKode?.kodeverdi}-${etasje.etasjenummer}`}
-            className="flex gap-8"
-          >
-            <div className="flex gap-4">
-              <LabelValue
-                label={t(`${tKey}.etasjeplan`)}
-                value={
-                  etasje.etasjeplanKode?.kodeverdi != null
-                    ? oversettKode({
-                        t,
-                        kodeverk: "etasjeplan",
-                        kode: etasje.etasjeplanKode.kodeverdi,
-                      })
-                    : undefined
-                }
-              />
-              <LabelValue
-                label={t(`${tKey}.etasje`)}
-                value={etasje.etasjenummer}
-              />
-              <LabelValue
-                label={t(`${tKey}.antallBoenheter`)}
-                value={etasje.etasjedata?.antallBoenheter}
-              />
-            </div>
-
-            <ArealGruppe
-              tittel={t(`${arealKey}.bruksareal`)}
-              bolig={formatAreal(etasje.etasjedata?.bruksarealTilBolig, enhet)}
-              annet={formatAreal(etasje.etasjedata?.bruksarealTilAnnet, enhet)}
-              total={formatAreal(etasje.etasjedata?.bruksarealTotalt, enhet)}
-              boligLabel={t(`${arealKey}.bolig`)}
-              annetLabel={t(`${arealKey}.annet`)}
-              totalLabel={t(`${arealKey}.total`)}
-            />
-            <ArealGruppe
-              tittel={t(`${arealKey}.bruttoareal`)}
-              bolig={formatAreal(etasje.etasjedata?.bruttoarealTilBolig, enhet)}
-              annet={formatAreal(etasje.etasjedata?.bruttoarealTilAnnet, enhet)}
-              total={formatAreal(etasje.etasjedata?.bruttoarealTotalt, enhet)}
-              boligLabel={t(`${arealKey}.bolig`)}
-              annetLabel={t(`${arealKey}.annet`)}
-              totalLabel={t(`${arealKey}.total`)}
-            />
-          </div>
-        ))}
+      <Table>
+        <Table.Head>
+          <Table.Row>
+            <Table.HeaderCell className="text-xs" rowSpan={2}>
+              {t(`${tKey}.etasjeplan`)}
+            </Table.HeaderCell>
+            <Table.HeaderCell className="text-xs" rowSpan={2}>
+              {t(`${tKey}.etasje`)}
+            </Table.HeaderCell>
+            <Table.HeaderCell className="text-xs" rowSpan={2}>
+              {t(`${tKey}.antallBoenheter`)}
+            </Table.HeaderCell>
+            <Table.HeaderCell className="text-center text-xs" colSpan={3}>
+              {t(`${arealKey}.bruksareal`)}
+            </Table.HeaderCell>
+            <Table.HeaderCell className="text-center text-xs" colSpan={3}>
+              {t(`${arealKey}.bruttoareal`)}
+            </Table.HeaderCell>
+          </Table.Row>
+          <Table.Row>
+            <Table.HeaderCell className="text-xs">
+              {t(`${arealKey}.bolig`)}
+            </Table.HeaderCell>
+            <Table.HeaderCell className="text-xs">
+              {t(`${arealKey}.annet`)}
+            </Table.HeaderCell>
+            <Table.HeaderCell className="text-xs">
+              {t(`${arealKey}.total`)}
+            </Table.HeaderCell>
+            <Table.HeaderCell className="text-xs">
+              {t(`${arealKey}.bolig`)}
+            </Table.HeaderCell>
+            <Table.HeaderCell className="text-xs">
+              {t(`${arealKey}.annet`)}
+            </Table.HeaderCell>
+            <Table.HeaderCell className="text-xs">
+              {t(`${arealKey}.total`)}
+            </Table.HeaderCell>
+          </Table.Row>
+        </Table.Head>
+        <Table.Body>
+          {etasjeliste.map((etasje) => (
+            <Table.Row
+              key={`${etasje.etasjeplanKode?.kodeverdi}-${etasje.etasjenummer}`}
+            >
+              <Table.Cell className="border-b-0! text-xs">
+                {etasje.etasjeplanKode?.kodeverdi != null
+                  ? oversettKode({
+                      t,
+                      kodeverk: "etasjeplan",
+                      kode: etasje.etasjeplanKode.kodeverdi,
+                    })
+                  : "-"}
+              </Table.Cell>
+              <Table.Cell className="border-b-0! text-xs">
+                {etasje.etasjenummer ?? "-"}
+              </Table.Cell>
+              <Table.Cell className="border-b-0! text-xs">
+                {etasje.etasjedata?.antallBoenheter ?? "-"}
+              </Table.Cell>
+              <Table.Cell className="border-b-0! text-xs">
+                {formatAreal(etasje.etasjedata?.bruksarealTilBolig, enhet) ??
+                  "-"}
+              </Table.Cell>
+              <Table.Cell className="border-b-0! text-xs">
+                {formatAreal(etasje.etasjedata?.bruksarealTilAnnet, enhet) ??
+                  "-"}
+              </Table.Cell>
+              <Table.Cell className="border-b-0! text-xs">
+                {formatAreal(etasje.etasjedata?.bruksarealTotalt, enhet) ?? "-"}
+              </Table.Cell>
+              <Table.Cell className="border-b-0! text-xs">
+                {formatAreal(etasje.etasjedata?.bruttoarealTilBolig, enhet) ??
+                  "-"}
+              </Table.Cell>
+              <Table.Cell className="border-b-0! text-xs">
+                {formatAreal(etasje.etasjedata?.bruttoarealTilAnnet, enhet) ??
+                  "-"}
+              </Table.Cell>
+              <Table.Cell className="border-b-0! text-xs">
+                {formatAreal(etasje.etasjedata?.bruttoarealTotalt, enhet) ??
+                  "-"}
+              </Table.Cell>
+            </Table.Row>
+          ))}
+        </Table.Body>
+      </Table>
     </section>
   )
 }
