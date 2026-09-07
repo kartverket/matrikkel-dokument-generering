@@ -19,6 +19,8 @@ export function PdfHeader({ metadata, rapportKode }: Readonly<PdfHeaderProps>) {
         day: "numeric",
         month: "long",
         year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
         timeZone: "Europe/Oslo",
       }).format(generertDato)
     : ""
