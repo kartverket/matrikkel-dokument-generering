@@ -1,6 +1,13 @@
 import { structuredLogger } from "@hono/structured-logger"
 import pino, { type Logger } from "pino"
 
+// Gjør c.set/c.get typesikre for valideringsfeil satt av defaultHook i app.ts.
+declare module "hono" {
+  interface ContextVariableMap {
+    validationIssuesKeys: string[]
+  }
+}
+
 export function createLogger(): Logger {
   return pino({
     level: "INFO",
@@ -30,6 +37,8 @@ export function createStructuredHonoLogger(
 
       const durationMs = Math.round(elapsedMs * 100) / 100
       const status = c.res.status
+      const validationIssues = c.get("validationIssuesKeys")
+
       logger[logLevelForStatus(status)]({
         status,
         method: c.req.method,
@@ -37,6 +46,7 @@ export function createStructuredHonoLogger(
         query: c.req.queries(),
         message: `${c.req.method} ${c.req.path} ${c.res.status} ${durationMs}ms`,
         duration_ms: durationMs,
+        ...(validationIssues ? { validationIssues } : {}),
       })
     },
     onError: (logger, err, c, elapsedMs) => {

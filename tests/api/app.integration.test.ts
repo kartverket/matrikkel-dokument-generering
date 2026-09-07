@@ -1,5 +1,5 @@
 import { describe, expect, spyOn, test } from "bun:test"
-import { createApp } from "../../src/api/app.ts"
+import { createApp, logger } from "../../src/api/app.ts"
 import { byggRapportSchema } from "../../src/lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 import { createBygg32341Report } from "../../src/mock/reports/bygg/fixtures/bygg-32-341.ts"
 import { createBygg42221Report } from "../../src/mock/reports/bygg/fixtures/bygg-42-221.ts"
@@ -69,15 +69,48 @@ describe("HTTP API", () => {
     expect(response.status).toBe(400)
     expect(response.headers.get("Content-Type")).toContain("application/json")
     expect(await response.json()).toEqual({
-      errors: {
-        valid: false,
-        errors: expect.objectContaining({
-          rapportKode: expect.any(Array),
-          metadata: expect.any(Array),
-          locale: expect.any(Array),
-        }),
+      validationIssues: {
+        bygninger: expect.any(Array),
+        rapportKode: expect.any(Array),
+        metadata: expect.any(Array),
+        locale: expect.any(Array),
       },
     })
+  })
+
+  test("logs why a validation request failed, as a warning, not an error", async () => {
+    const warnLog = spyOn(logger, "warn").mockImplementation(() => logger)
+    const errorLog = spyOn(logger, "error").mockImplementation(() => logger)
+
+    try {
+      const response = await app.request("/create-document/BYG0011", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: "{}",
+      })
+
+      expect(response.status).toBe(400)
+      expect(errorLog).not.toHaveBeenCalled()
+      expect(warnLog).toHaveBeenCalledWith(
+        expect.objectContaining({
+          duration_ms: expect.any(Number),
+          message: expect.any(String),
+          status: 400,
+          method: "POST",
+          query: {},
+          path: "/create-document/BYG0011",
+          validationIssues: expect.arrayContaining([
+            "bygninger",
+            "metadata",
+            "locale",
+            "rapportKode",
+          ]),
+        }),
+      )
+    } finally {
+      warnLog.mockRestore()
+      errorLog.mockRestore()
+    }
   })
 
   test("returns the documented error format for malformed JSON", async () => {
@@ -154,7 +187,7 @@ describe("HTTP API", () => {
   test("returns a generic response for unexpected errors", async () => {
     const errorApp = createApp()
     const error = new Error("Sensitive internal details")
-    const errorLog = spyOn(console, "error").mockImplementation(() => {})
+    const errorLog = spyOn(logger, "error").mockImplementation(() => logger)
     errorApp.get("/throws", () => {
       throw error
     })
@@ -167,7 +200,14 @@ describe("HTTP API", () => {
       expect(response.headers.get("Content-Type")).toContain("text/plain")
       expect(body).toBe("Internal Server Error")
       expect(body).not.toContain(error.message)
-      expect(errorLog).toHaveBeenCalledWith("Unhandled request error", error)
+      expect(errorLog).toHaveBeenCalledWith(
+        expect.objectContaining({
+          status: 500,
+          method: "GET",
+          path: "/throws",
+          err: expect.objectContaining({ message: error.message }),
+        }),
+      )
     } finally {
       errorLog.mockRestore()
     }
