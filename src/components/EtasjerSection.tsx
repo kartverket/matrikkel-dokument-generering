@@ -39,22 +39,22 @@ export function EtasjerSection({ etasjer }: Props) {
             </Table.HeaderCell>
           </Table.Row>
           <Table.Row>
-            <Table.HeaderCell className="text-xs">
+            <Table.HeaderCell className="border-b! text-xs">
               {t(`${arealKey}.bolig`)}
             </Table.HeaderCell>
-            <Table.HeaderCell className="text-xs">
+            <Table.HeaderCell className="border-b! text-xs">
               {t(`${arealKey}.annet`)}
             </Table.HeaderCell>
-            <Table.HeaderCell className="text-xs">
+            <Table.HeaderCell className="border-b! text-xs">
               {t(`${arealKey}.total`)}
             </Table.HeaderCell>
-            <Table.HeaderCell className="text-xs">
+            <Table.HeaderCell className="border-b! text-xs">
               {t(`${arealKey}.bolig`)}
             </Table.HeaderCell>
-            <Table.HeaderCell className="text-xs">
+            <Table.HeaderCell className="border-b! text-xs">
               {t(`${arealKey}.annet`)}
             </Table.HeaderCell>
-            <Table.HeaderCell className="text-xs">
+            <Table.HeaderCell className="border-b! text-xs">
               {t(`${arealKey}.total`)}
             </Table.HeaderCell>
           </Table.Row>

@@ -1,6 +1,7 @@
+import { Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { Kontaktperson } from "../lib/schema/reports/bygg/shared/kontaktperson.schema.ts"
-import { TableSection } from "./utils/TableSection.tsx"
+import { SectionTitle } from "./utils/SectionTitle.tsx"
 
 interface Props {
   readonly tiltakshavere: Array<Kontaktperson>
@@ -15,41 +16,56 @@ export function Tiltakshavere({ tiltakshavere }: Readonly<Props>) {
       (item): item is Kontaktperson & { eierident: string } => !!item.eierident,
     )
 
-  const columns = [
-    {
-      key: "rolle",
-      labelKey: t("rapport.BYG0011.tiltakshavere.rolle"),
-      render: (item: Kontaktperson) =>
-        item.kontaktpersonKode?.displayTekst || "-",
-    },
-    {
-      key: "eierident",
-      labelKey: t("rapport.BYG0011.tiltakshavere.fodselsnum"),
-      render: (item: Kontaktperson) => item.eierident,
-    },
-    {
-      key: "navn",
-      labelKey: t("rapport.BYG0011.tiltakshavere.navn"),
-      render: (item: Kontaktperson) => item.navn,
-    },
-    {
-      key: "adresse",
-      labelKey: t("rapport.BYG0011.tiltakshavere.addresse"),
-      render: (item: Kontaktperson) => item.eierAdresse || "-",
-    },
-    {
-      key: "bruksenhet",
-      labelKey: t("rapport.BYG0011.tiltakshavere.bruksenhet"),
-      render: (item: Kontaktperson) => item.bruksenhetsnummer || "-",
-    },
-  ]
+  if (validTiltakshavere.length === 0) {
+    return null
+  }
 
   return (
-    <TableSection
-      title={t("rapport.BYG0011.tiltakshavere.tittel")}
-      items={validTiltakshavere}
-      columns={columns}
-      rowKey={(item) => item.eierident}
-    />
+    <section className="space-y-2">
+      <SectionTitle>{t("rapport.BYG0011.tiltakshavere.tittel")}</SectionTitle>
+
+      <Table>
+        <Table.Head>
+          <Table.Row>
+            <Table.HeaderCell className="text-xs">
+              {t("rapport.BYG0011.tiltakshavere.rolle")}
+            </Table.HeaderCell>
+            <Table.HeaderCell className="text-xs">
+              {t("rapport.BYG0011.tiltakshavere.fodselsnum")}
+            </Table.HeaderCell>
+            <Table.HeaderCell className="text-xs">
+              {t("rapport.BYG0011.tiltakshavere.navn")}
+            </Table.HeaderCell>
+            <Table.HeaderCell className="text-xs">
+              {t("rapport.BYG0011.tiltakshavere.addresse")}
+            </Table.HeaderCell>
+            <Table.HeaderCell className="text-xs">
+              {t("rapport.BYG0011.tiltakshavere.bruksenhet")}
+            </Table.HeaderCell>
+          </Table.Row>
+        </Table.Head>
+        <Table.Body>
+          {validTiltakshavere.map((item) => (
+            <Table.Row key={item.eierident}>
+              <Table.Cell className="border-b-0! text-xs">
+                {item.kontaktpersonKode?.displayTekst || "-"}
+              </Table.Cell>
+              <Table.Cell className="border-b-0! text-xs">
+                {item.eierident}
+              </Table.Cell>
+              <Table.Cell className="border-b-0! text-xs">
+                {item.navn}
+              </Table.Cell>
+              <Table.Cell className="border-b-0! text-xs">
+                {item.eierAdresse || "-"}
+              </Table.Cell>
+              <Table.Cell className="border-b-0! text-xs">
+                {item.bruksenhetsnummer || "-"}
+              </Table.Cell>
+            </Table.Row>
+          ))}
+        </Table.Body>
+      </Table>
+    </section>
   )
 }

@@ -1,8 +1,8 @@
+import { Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import { oversettKode } from "../lib/i18n/koder/oversettKode.ts"
 import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 import { formatDate } from "../lib/utils/formatDate.ts"
-import { LabelValue } from "./utils/LabelValue.tsx"
 import { SectionTitle } from "./utils/SectionTitle.tsx"
 
 type Props = Pick<Bygning, "bygningsstatuser">
@@ -17,18 +17,28 @@ export function BygningsstatuserSection({ bygningsstatuser }: Props) {
     <section className="space-y-2">
       <SectionTitle>{t(`${tKey}.tittel`)}</SectionTitle>
 
-      <div className="grid grid-flow-col grid-cols-6 grid-rows-2 gap-x-4 gap-y-0.5">
-        {STATUSREKKEFØLGE.map((kode) => (
-          <LabelValue
-            key={kode}
-            className="contents"
-            label={oversettKode({ t, kodeverk: "bygningsstatus", kode })}
-            value={formatDate(i18n, bygningsstatuser?.[kode], "-", {
-              dateStyle: "short",
-            })}
-          />
-        ))}
-      </div>
+      <Table>
+        <Table.Head>
+          <Table.Row>
+            {STATUSREKKEFØLGE.map((kode) => (
+              <Table.HeaderCell key={kode} className="border-b-0! text-xs">
+                {oversettKode({ t, kodeverk: "bygningsstatus", kode })}
+              </Table.HeaderCell>
+            ))}
+          </Table.Row>
+        </Table.Head>
+        <Table.Body>
+          <Table.Row>
+            {STATUSREKKEFØLGE.map((kode) => (
+              <Table.Cell key={kode} className="border-b-0! text-xs">
+                {formatDate(i18n, bygningsstatuser?.[kode], "-", {
+                  dateStyle: "short",
+                })}
+              </Table.Cell>
+            ))}
+          </Table.Row>
+        </Table.Body>
+      </Table>
     </section>
   )
 }
