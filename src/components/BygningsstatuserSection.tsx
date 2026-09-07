@@ -13,6 +13,9 @@ export function BygningsstatuserSection({ bygningsstatuser }: Props) {
   const { t, i18n } = useTranslation()
   const tKey = "rapport.BYG0011.bygningsstatuser" as const
 
+  const headerCellStyle: string = "border-b-0! text-xs"
+  const valueCellStyle: string = "border-b-0! text-xs"
+
   return (
     <section className="space-y-2">
       <SectionTitle>{t(`${tKey}.tittel`)}</SectionTitle>
@@ -21,7 +24,7 @@ export function BygningsstatuserSection({ bygningsstatuser }: Props) {
         <Table.Head>
           <Table.Row>
             {STATUSREKKEFØLGE.map((kode) => (
-              <Table.HeaderCell key={kode} className="border-b-0! text-xs">
+              <Table.HeaderCell key={kode} className={headerCellStyle}>
                 {oversettKode({ t, kodeverk: "bygningsstatus", kode })}
               </Table.HeaderCell>
             ))}
@@ -30,7 +33,7 @@ export function BygningsstatuserSection({ bygningsstatuser }: Props) {
         <Table.Body>
           <Table.Row>
             {STATUSREKKEFØLGE.map((kode) => (
-              <Table.Cell key={kode} className="border-b-0! text-xs">
+              <Table.Cell key={kode} className={valueCellStyle}>
                 {formatDate(i18n, bygningsstatuser?.[kode], "-", {
                   dateStyle: "short",
                 })}

@@ -15,6 +15,9 @@ export function EtasjerSection({ etasjer }: Props) {
 
   const etasjeliste = etasjer.filter((etasje) => etasje != null)
 
+  const headerCellStyle: string = "border-b! text-xs"
+  const valueCellStyle: string = "border-b-0! text-xs"
+
   return (
     <section className="space-y-4">
       <SectionTitle>{t(`${tKey}.title`)}</SectionTitle>
@@ -45,22 +48,22 @@ export function EtasjerSection({ etasjer }: Props) {
             </Table.HeaderCell>
           </Table.Row>
           <Table.Row>
-            <Table.HeaderCell className="border-b! text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t(`${arealKey}.bolig`)}
             </Table.HeaderCell>
-            <Table.HeaderCell className="border-b! text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t(`${arealKey}.annet`)}
             </Table.HeaderCell>
-            <Table.HeaderCell className="border-b! text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t(`${arealKey}.total`)}
             </Table.HeaderCell>
-            <Table.HeaderCell className="border-b! text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t(`${arealKey}.bolig`)}
             </Table.HeaderCell>
-            <Table.HeaderCell className="border-b! text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t(`${arealKey}.annet`)}
             </Table.HeaderCell>
-            <Table.HeaderCell className="border-b! text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t(`${arealKey}.total`)}
             </Table.HeaderCell>
           </Table.Row>
@@ -70,7 +73,7 @@ export function EtasjerSection({ etasjer }: Props) {
             <Table.Row
               key={`${etasje.etasjeplanKode?.kodeverdi}-${etasje.etasjenummer}`}
             >
-              <Table.Cell className="border-b-0! text-xs">
+              <Table.Cell className={valueCellStyle}>
                 {etasje.etasjeplanKode?.kodeverdi != null
                   ? oversettKode({
                       t,
@@ -79,32 +82,32 @@ export function EtasjerSection({ etasjer }: Props) {
                     })
                   : "-"}
               </Table.Cell>
-              <Table.Cell className="border-b-0! text-xs">
+              <Table.Cell className={valueCellStyle}>
                 {etasje.etasjenummer ?? "-"}
               </Table.Cell>
-              <Table.Cell className="border-b-0! text-xs">
+              <Table.Cell className={valueCellStyle}>
                 {etasje.etasjedata?.antallBoenheter ?? "-"}
               </Table.Cell>
-              <Table.Cell className="border-b-0! text-xs">
+              <Table.Cell className={valueCellStyle}>
                 {formatAreal(etasje.etasjedata?.bruksarealTilBolig, enhet) ??
                   "-"}
               </Table.Cell>
-              <Table.Cell className="border-b-0! text-xs">
+              <Table.Cell className={valueCellStyle}>
                 {formatAreal(etasje.etasjedata?.bruksarealTilAnnet, enhet) ??
                   "-"}
               </Table.Cell>
-              <Table.Cell className="border-b-0! text-xs">
+              <Table.Cell className={valueCellStyle}>
                 {formatAreal(etasje.etasjedata?.bruksarealTotalt, enhet) ?? "-"}
               </Table.Cell>
-              <Table.Cell className="border-b-0! text-xs">
+              <Table.Cell className={valueCellStyle}>
                 {formatAreal(etasje.etasjedata?.bruttoarealTilBolig, enhet) ??
                   "-"}
               </Table.Cell>
-              <Table.Cell className="border-b-0! text-xs">
+              <Table.Cell className={valueCellStyle}>
                 {formatAreal(etasje.etasjedata?.bruttoarealTilAnnet, enhet) ??
                   "-"}
               </Table.Cell>
-              <Table.Cell className="border-b-0! text-xs">
+              <Table.Cell className={valueCellStyle}>
                 {formatAreal(etasje.etasjedata?.bruttoarealTotalt, enhet) ??
                   "-"}
               </Table.Cell>

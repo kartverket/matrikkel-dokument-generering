@@ -1,6 +1,7 @@
 import { Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { Bruksenhet } from "../lib/schema/reports/bygg/shared/bruksenhet.schema.ts"
+import { cn } from "../lib/utils/cn.ts"
 import { SectionTitle } from "./utils/SectionTitle.tsx"
 
 type Props = Readonly<{
@@ -17,6 +18,9 @@ export function Bruksenheter({ bruksenheter }: Props) {
     return null
   }
 
+  const headerCellStyle: string = "text-xs"
+  const valueCellStyle: string = "text-xs"
+
   return (
     <section className="space-y-2">
       <SectionTitle>{t(`${tKey}.tittel`)}</SectionTitle>
@@ -24,31 +28,31 @@ export function Bruksenheter({ bruksenheter }: Props) {
       <Table border>
         <Table.Head>
           <Table.Row>
-            <Table.HeaderCell className="text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t(`${tKey}.bruksenhetsNr`)}
             </Table.HeaderCell>
-            <Table.HeaderCell className="text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t(`${tKey}.bruksenhetsTypeKode`)}
             </Table.HeaderCell>
-            <Table.HeaderCell className="text-right text-xs">
+            <Table.HeaderCell className={cn(headerCellStyle, "text-right")}>
               {t(`${tKey}.bruksAreal`)}
             </Table.HeaderCell>
-            <Table.HeaderCell className="text-right text-xs">
+            <Table.HeaderCell className={cn(headerCellStyle, "text-right")}>
               {t(`${tKey}.antallRom`)}
             </Table.HeaderCell>
-            <Table.HeaderCell className="text-right text-xs">
+            <Table.HeaderCell className={cn(headerCellStyle, "text-right")}>
               {t(`${tKey}.antallBad`)}
             </Table.HeaderCell>
-            <Table.HeaderCell className="text-right text-xs">
+            <Table.HeaderCell className={cn(headerCellStyle, "text-right")}>
               {t(`${tKey}.antallWC`)}
             </Table.HeaderCell>
-            <Table.HeaderCell className="text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t(`${tKey}.kjokkenTilgangKode`)}
             </Table.HeaderCell>
-            <Table.HeaderCell className="text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t(`${tKey}.adresse`)}
             </Table.HeaderCell>
-            <Table.HeaderCell className="text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t(`${tKey}.matrikkelNr`)}
             </Table.HeaderCell>
           </Table.Row>
@@ -58,31 +62,31 @@ export function Bruksenheter({ bruksenheter }: Props) {
             <Table.Row
               key={enhet.bruksenhetsnummer ?? Math.random().toString()}
             >
-              <Table.Cell className="text-xs">
+              <Table.Cell className={valueCellStyle}>
                 {enhet.bruksenhetsnummer}
               </Table.Cell>
-              <Table.Cell className="text-xs">
+              <Table.Cell className={valueCellStyle}>
                 {enhet.bruksenhetsTypeKode?.displayTekst ?? "-"}
               </Table.Cell>
-              <Table.Cell className="text-right text-xs">
+              <Table.Cell className={cn(valueCellStyle, "text-right")}>
                 {enhet.bruksareal != null ? `${enhet.bruksareal} m²` : "-"}
               </Table.Cell>
-              <Table.Cell className="text-right text-xs">
+              <Table.Cell className={cn(valueCellStyle, "text-right")}>
                 {enhet.antallRom ?? "-"}
               </Table.Cell>
-              <Table.Cell className="text-right text-xs">
+              <Table.Cell className={cn(valueCellStyle, "text-right")}>
                 {enhet.antallBad ?? "-"}
               </Table.Cell>
-              <Table.Cell className="text-right text-xs">
+              <Table.Cell className={cn(valueCellStyle, "text-right")}>
                 {enhet.antallWC ?? "-"}
               </Table.Cell>
-              <Table.Cell className="text-xs">
+              <Table.Cell className={valueCellStyle}>
                 {enhet.kjokkentilgang?.displayTekst ?? "-"}
               </Table.Cell>
-              <Table.Cell className="text-xs">
+              <Table.Cell className={valueCellStyle}>
                 {enhet.adresseIdentRapportInfo?.adresseAsString ?? "-"}
               </Table.Cell>
-              <Table.Cell className="text-xs">
+              <Table.Cell className={valueCellStyle}>
                 {enhet.matrikkelnrRapportInfo?.matrikkelNummer ?? "-"}
               </Table.Cell>
             </Table.Row>

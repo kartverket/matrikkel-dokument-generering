@@ -36,6 +36,9 @@ export function Hjemmelshavere({ hjemmelshavere }: Readonly<Props>) {
 
   if (!hjemmelshaverList.length) return null
 
+  const headerCellStyle: string = "text-xs"
+  const valueCellStyle: string = "border-b-0! text-xs"
+
   return (
     <section className="space-y-2">
       <SectionTitle>{t("rapport.BYG0011.hjemmelshavere.tittel")}</SectionTitle>
@@ -43,25 +46,25 @@ export function Hjemmelshavere({ hjemmelshavere }: Readonly<Props>) {
       <Table>
         <Table.Head>
           <Table.Row>
-            <Table.HeaderCell className="text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t("rapport.BYG0011.hjemmelshavere.rolle")}
             </Table.HeaderCell>
-            <Table.HeaderCell className="text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t("rapport.BYG0011.hjemmelshavere.status")}
             </Table.HeaderCell>
-            <Table.HeaderCell className="text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t("rapport.BYG0011.hjemmelshavere.fodselsnum")}
             </Table.HeaderCell>
-            <Table.HeaderCell className="text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t("rapport.BYG0011.hjemmelshavere.navn")}
             </Table.HeaderCell>
-            <Table.HeaderCell className="text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t("rapport.BYG0011.hjemmelshavere.addresse")}
             </Table.HeaderCell>
-            <Table.HeaderCell className="text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t("rapport.BYG0011.hjemmelshavere.bruksenhet")}
             </Table.HeaderCell>
-            <Table.HeaderCell className="text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t("rapport.BYG0011.hjemmelshavere.andel")}
             </Table.HeaderCell>
           </Table.Row>
@@ -69,25 +72,25 @@ export function Hjemmelshavere({ hjemmelshavere }: Readonly<Props>) {
         <Table.Body>
           {hjemmelshaverList.map((item) => (
             <Table.Row key={item.eierident ?? Math.random().toString()}>
-              <Table.Cell className="border-b-0! text-xs">
+              <Table.Cell className={valueCellStyle}>
                 {item.eierforholdKode?.displayTekst || "-"}
               </Table.Cell>
-              <Table.Cell className="border-b-0! text-xs">
+              <Table.Cell className={valueCellStyle}>
                 {item.personStatusKode?.displayTekst || "-"}
               </Table.Cell>
-              <Table.Cell className="border-b-0! text-xs">
+              <Table.Cell className={valueCellStyle}>
                 {item.eierident}
               </Table.Cell>
-              <Table.Cell className="border-b-0! text-xs">
+              <Table.Cell className={valueCellStyle}>
                 {item.navn || "-"}
               </Table.Cell>
-              <Table.Cell className="border-b-0! text-xs">
+              <Table.Cell className={valueCellStyle}>
                 {item.eierAdresse || "-"}
               </Table.Cell>
-              <Table.Cell className="border-b-0! text-xs">
+              <Table.Cell className={valueCellStyle}>
                 {item.bruksenhetsnummer || "-"}
               </Table.Cell>
-              <Table.Cell className="border-b-0! text-xs">
+              <Table.Cell className={valueCellStyle}>
                 {item.teller && item.nevner
                   ? `${item.teller}/${item.nevner}`
                   : "-"}

@@ -11,6 +11,9 @@ export function Kulturminner({ enkeltminner }: Props) {
 
   if (enkeltminner.length === 0) return null
 
+  const headerCellStyle: string = "text-xs"
+  const valueCellStyle: string = "border-b-0! text-xs"
+
   return (
     <div className="space-y-2">
       <SectionTitle>{t(`${tKey}.tittel`)}</SectionTitle>
@@ -18,16 +21,16 @@ export function Kulturminner({ enkeltminner }: Props) {
       <Table>
         <Table.Head>
           <Table.Row>
-            <Table.HeaderCell className="text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t(`${tKey}.enkeltminneNr`)}
             </Table.HeaderCell>
-            <Table.HeaderCell className="text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t(`${tKey}.enkeltminneArtKode`)}
             </Table.HeaderCell>
-            <Table.HeaderCell className="text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t(`${tKey}.vernetypeKode`)}
             </Table.HeaderCell>
-            <Table.HeaderCell className="text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t(`${tKey}.kulturminnekategoriKode`)}
             </Table.HeaderCell>
           </Table.Row>
@@ -35,16 +38,16 @@ export function Kulturminner({ enkeltminner }: Props) {
         <Table.Body>
           {enkeltminner.map((minne, index) => (
             <Table.Row key={minne.enkeltminneNummer ?? index}>
-              <Table.Cell className="border-b-0! text-xs">
+              <Table.Cell className={valueCellStyle}>
                 {minne.enkeltminneNummer ?? "-"}
               </Table.Cell>
-              <Table.Cell className="border-b-0! text-xs">
+              <Table.Cell className={valueCellStyle}>
                 {minne.enkeltminneArtKode?.displayTekst ?? "-"}
               </Table.Cell>
-              <Table.Cell className="border-b-0! text-xs">
+              <Table.Cell className={valueCellStyle}>
                 {minne.vernetypeKode?.displayTekst ?? "-"}
               </Table.Cell>
-              <Table.Cell className="border-b-0! text-xs">
+              <Table.Cell className={valueCellStyle}>
                 {minne.kulturminnekategoriKode?.displayTekst ?? "-"}
               </Table.Cell>
             </Table.Row>

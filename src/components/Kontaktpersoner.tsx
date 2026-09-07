@@ -20,6 +20,9 @@ export function Kontaktpersoner({ kontaktpersoner }: Readonly<Props>) {
     return null
   }
 
+  const headerCellStyle: string = "text-xs"
+  const valueCellStyle: string = "border-b-0! text-xs"
+
   return (
     <section className="space-y-2">
       <SectionTitle>{t("rapport.BYG0011.kontaktpersoner.tittel")}</SectionTitle>
@@ -27,19 +30,19 @@ export function Kontaktpersoner({ kontaktpersoner }: Readonly<Props>) {
       <Table>
         <Table.Head>
           <Table.Row>
-            <Table.HeaderCell className="text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t("rapport.BYG0011.kontaktpersoner.rolle")}
             </Table.HeaderCell>
-            <Table.HeaderCell className="text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t("rapport.BYG0011.kontaktpersoner.fodselsnum")}
             </Table.HeaderCell>
-            <Table.HeaderCell className="text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t("rapport.BYG0011.kontaktpersoner.navn")}
             </Table.HeaderCell>
-            <Table.HeaderCell className="text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t("rapport.BYG0011.kontaktpersoner.addresse")}
             </Table.HeaderCell>
-            <Table.HeaderCell className="text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t("rapport.BYG0011.kontaktpersoner.bruksenhet")}
             </Table.HeaderCell>
           </Table.Row>
@@ -47,19 +50,17 @@ export function Kontaktpersoner({ kontaktpersoner }: Readonly<Props>) {
         <Table.Body>
           {validKontaktpersoner.map((item) => (
             <Table.Row key={item.eierident}>
-              <Table.Cell className="border-b-0! text-xs">
+              <Table.Cell className={valueCellStyle}>
                 {item.kontaktpersonKode?.displayTekst || "-"}
               </Table.Cell>
-              <Table.Cell className="border-b-0! text-xs">
+              <Table.Cell className={valueCellStyle}>
                 {item.eierident}
               </Table.Cell>
-              <Table.Cell className="border-b-0! text-xs">
-                {item.navn}
-              </Table.Cell>
-              <Table.Cell className="border-b-0! text-xs">
+              <Table.Cell className={valueCellStyle}>{item.navn}</Table.Cell>
+              <Table.Cell className={valueCellStyle}>
                 {item.eierAdresse || "-"}
               </Table.Cell>
-              <Table.Cell className="border-b-0! text-xs">
+              <Table.Cell className={valueCellStyle}>
                 {item.bruksenhetsnummer || "-"}
               </Table.Cell>
             </Table.Row>

@@ -49,6 +49,9 @@ export function OmBygget({
     })
     .filter((id): id is string => id != null)
 
+  const headerCellStyle: string = "border-b-0! text-xs"
+  const valueCellStyle: string = "border-b-0! text-xs"
+
   return (
     <div className="space-y-2">
       <SectionTitle>{t(`${tKey}.tittel`)}</SectionTitle>
@@ -56,38 +59,38 @@ export function OmBygget({
       <Table>
         <Table.Head>
           <Table.Row>
-            <Table.HeaderCell className="border-b-0! text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t(`${tKey}.bygningstype`)}
             </Table.HeaderCell>
-            <Table.HeaderCell className="border-b-0! text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t(`${tKey}.naringsgruppe`)}
             </Table.HeaderCell>
-            <Table.HeaderCell className="border-b-0! text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t(`${tKey}.boenheter`)}
             </Table.HeaderCell>
-            <Table.HeaderCell className="border-b-0! text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t(`${tKey}.representasjonspunkt`)}
             </Table.HeaderCell>
-            <Table.HeaderCell className="border-b-0! text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t(`${tKey}.sefrakId`)}
             </Table.HeaderCell>
           </Table.Row>
         </Table.Head>
         <Table.Body>
           <Table.Row>
-            <Table.Cell className="border-b-0! text-xs">
+            <Table.Cell className={valueCellStyle}>
               {bygningstype ?? "-"}
             </Table.Cell>
-            <Table.Cell className="border-b-0! text-xs">
+            <Table.Cell className={valueCellStyle}>
               {naringsgruppe ?? "-"}
             </Table.Cell>
-            <Table.Cell className="border-b-0! text-xs">
+            <Table.Cell className={valueCellStyle}>
               {etasjedata?.antallBoenheter ?? "-"}
             </Table.Cell>
-            <Table.Cell className="border-b-0! text-xs">
+            <Table.Cell className={valueCellStyle}>
               {koordinater ?? "-"}
             </Table.Cell>
-            <Table.Cell className="border-b-0! text-xs">
+            <Table.Cell className={valueCellStyle}>
               {sefrakIDs != null && sefrakIDs.length > 0 ? (
                 <div className="flex flex-col">
                   {sefrakIDs.map((id) => (

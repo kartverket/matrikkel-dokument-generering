@@ -11,6 +11,9 @@ export function ArealSection({ etasjedata }: Props) {
   const tKey = "rapport.BYG0011.areal" as const
   const enhet = t(`${tKey}.enhet`)
 
+  const headerCellStyle: string = "border-b! text-xs"
+  const valueCellStyle: string = "border-b-0! text-xs"
+
   return (
     <section className="space-y-2">
       <SectionTitle>{t(`${tKey}.tittel`)}</SectionTitle>
@@ -26,44 +29,44 @@ export function ArealSection({ etasjedata }: Props) {
             </Table.HeaderCell>
           </Table.Row>
           <Table.Row>
-            <Table.HeaderCell className="border-b! text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t(`${tKey}.bolig`)}
             </Table.HeaderCell>
-            <Table.HeaderCell className="border-b! text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t(`${tKey}.annet`)}
             </Table.HeaderCell>
-            <Table.HeaderCell className="border-b! text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t(`${tKey}.total`)}
             </Table.HeaderCell>
-            <Table.HeaderCell className="border-b! text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t(`${tKey}.bolig`)}
             </Table.HeaderCell>
-            <Table.HeaderCell className="border-b! text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t(`${tKey}.annet`)}
             </Table.HeaderCell>
-            <Table.HeaderCell className="border-b! text-xs">
+            <Table.HeaderCell className={headerCellStyle}>
               {t(`${tKey}.total`)}
             </Table.HeaderCell>
           </Table.Row>
         </Table.Head>
         <Table.Body>
           <Table.Row>
-            <Table.Cell className="border-b-0! text-xs">
+            <Table.Cell className={valueCellStyle}>
               {formatAreal(etasjedata?.bruksarealTilBolig, enhet) ?? "-"}
             </Table.Cell>
-            <Table.Cell className="border-b-0! text-xs">
+            <Table.Cell className={valueCellStyle}>
               {formatAreal(etasjedata?.bruksarealTilAnnet, enhet) ?? "-"}
             </Table.Cell>
-            <Table.Cell className="border-b-0! text-xs">
+            <Table.Cell className={valueCellStyle}>
               {formatAreal(etasjedata?.bruksarealTotalt, enhet) ?? "-"}
             </Table.Cell>
-            <Table.Cell className="border-b-0! text-xs">
+            <Table.Cell className={valueCellStyle}>
               {formatAreal(etasjedata?.bruttoarealTilBolig, enhet) ?? "-"}
             </Table.Cell>
-            <Table.Cell className="border-b-0! text-xs">
+            <Table.Cell className={valueCellStyle}>
               {formatAreal(etasjedata?.bruttoarealTilAnnet, enhet) ?? "-"}
             </Table.Cell>
-            <Table.Cell className="border-b-0! text-xs">
+            <Table.Cell className={valueCellStyle}>
               {formatAreal(etasjedata?.bruttoarealTotalt, enhet) ?? "-"}
             </Table.Cell>
           </Table.Row>
