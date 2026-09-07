@@ -1,6 +1,8 @@
+import { Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { Bruksenhet } from "../lib/schema/reports/bygg/shared/bruksenhet.schema.ts"
-import { TableSection } from "./utils/TableSection.tsx"
+import { cn } from "../lib/utils/cn.ts"
+import { SectionTitle } from "./utils/SectionTitle.tsx"
 
 type Props = Readonly<{
   bruksenheter: Bruksenhet[]
@@ -16,68 +18,81 @@ export function Bruksenheter({ bruksenheter }: Props) {
     return null
   }
 
-  const columns = [
-    {
-      key: "bruksenhetsnummer",
-      labelKey: t(`${tKey}.bruksenhetsNr`),
-      render: (item: Bruksenhet) => item.bruksenhetsnummer,
-    },
-    {
-      key: "type",
-      labelKey: t(`${tKey}.bruksenhetsTypeKode`),
-      render: (item: Bruksenhet) =>
-        item.bruksenhetsTypeKode?.displayTekst ?? "-",
-    },
-    {
-      key: "areal",
-      labelKey: t(`${tKey}.bruksAreal`),
-      align: "right" as const,
-      render: (item: Bruksenhet) =>
-        item.bruksareal != null ? `${item.bruksareal} m²` : "-",
-    },
-    {
-      key: "rom",
-      labelKey: t(`${tKey}.antallRom`),
-      align: "right" as const,
-      render: (item: Bruksenhet) => item.antallRom ?? "-",
-    },
-    {
-      key: "bad",
-      labelKey: t(`${tKey}.antallBad`),
-      align: "right" as const,
-      render: (item: Bruksenhet) => item.antallBad ?? "-",
-    },
-    {
-      key: "wc",
-      labelKey: t(`${tKey}.antallWC`),
-      align: "right" as const,
-      render: (item: Bruksenhet) => item.antallWC ?? "-",
-    },
-    {
-      key: "kjokken",
-      labelKey: t(`${tKey}.kjokkenTilgangKode`),
-      render: (item: Bruksenhet) => item.kjokkentilgang?.displayTekst ?? "-",
-    },
-    {
-      key: "adresse",
-      labelKey: t(`${tKey}.adresse`),
-      render: (item: Bruksenhet) =>
-        item.adresseIdentRapportInfo?.adresseAsString ?? "-",
-    },
-    {
-      key: "matrikkelnr",
-      labelKey: t(`${tKey}.matrikkelNr`),
-      render: (item: Bruksenhet) =>
-        item.matrikkelnrRapportInfo?.matrikkelNummer ?? "-",
-    },
-  ]
+  const headerCellStyle: string = "text-xs"
+  const valueCellStyle: string = "text-xs"
 
   return (
-    <TableSection
-      title={t(`${tKey}.tittel`)}
-      items={filtrerteEnheter}
-      columns={columns}
-      rowKey={(item) => item.bruksenhetsnummer ?? Math.random().toString()}
-    />
+    <section className="space-y-2">
+      <SectionTitle>{t(`${tKey}.tittel`)}</SectionTitle>
+
+      <Table border>
+        <Table.Head>
+          <Table.Row>
+            <Table.HeaderCell className={headerCellStyle}>
+              {t(`${tKey}.bruksenhetsNr`)}
+            </Table.HeaderCell>
+            <Table.HeaderCell className={headerCellStyle}>
+              {t(`${tKey}.bruksenhetsTypeKode`)}
+            </Table.HeaderCell>
+            <Table.HeaderCell className={cn(headerCellStyle, "text-right")}>
+              {t(`${tKey}.bruksAreal`)}
+            </Table.HeaderCell>
+            <Table.HeaderCell className={cn(headerCellStyle, "text-right")}>
+              {t(`${tKey}.antallRom`)}
+            </Table.HeaderCell>
+            <Table.HeaderCell className={cn(headerCellStyle, "text-right")}>
+              {t(`${tKey}.antallBad`)}
+            </Table.HeaderCell>
+            <Table.HeaderCell className={cn(headerCellStyle, "text-right")}>
+              {t(`${tKey}.antallWC`)}
+            </Table.HeaderCell>
+            <Table.HeaderCell className={headerCellStyle}>
+              {t(`${tKey}.kjokkenTilgangKode`)}
+            </Table.HeaderCell>
+            <Table.HeaderCell className={headerCellStyle}>
+              {t(`${tKey}.adresse`)}
+            </Table.HeaderCell>
+            <Table.HeaderCell className={headerCellStyle}>
+              {t(`${tKey}.matrikkelNr`)}
+            </Table.HeaderCell>
+          </Table.Row>
+        </Table.Head>
+        <Table.Body>
+          {filtrerteEnheter.map((enhet) => (
+            <Table.Row
+              key={enhet.bruksenhetsnummer ?? Math.random().toString()}
+            >
+              <Table.Cell className={valueCellStyle}>
+                {enhet.bruksenhetsnummer}
+              </Table.Cell>
+              <Table.Cell className={valueCellStyle}>
+                {enhet.bruksenhetsTypeKode?.displayTekst ?? "-"}
+              </Table.Cell>
+              <Table.Cell className={cn(valueCellStyle, "text-right")}>
+                {enhet.bruksareal != null ? `${enhet.bruksareal} m²` : "-"}
+              </Table.Cell>
+              <Table.Cell className={cn(valueCellStyle, "text-right")}>
+                {enhet.antallRom ?? "-"}
+              </Table.Cell>
+              <Table.Cell className={cn(valueCellStyle, "text-right")}>
+                {enhet.antallBad ?? "-"}
+              </Table.Cell>
+              <Table.Cell className={cn(valueCellStyle, "text-right")}>
+                {enhet.antallWC ?? "-"}
+              </Table.Cell>
+              <Table.Cell className={valueCellStyle}>
+                {enhet.kjokkentilgang?.displayTekst ?? "-"}
+              </Table.Cell>
+              <Table.Cell className={valueCellStyle}>
+                {enhet.adresseIdentRapportInfo?.adresseAsString ?? "-"}
+              </Table.Cell>
+              <Table.Cell className={valueCellStyle}>
+                {enhet.matrikkelnrRapportInfo?.matrikkelNummer ?? "-"}
+              </Table.Cell>
+            </Table.Row>
+          ))}
+        </Table.Body>
+      </Table>
+    </section>
   )
 }

@@ -1,7 +1,7 @@
+import { Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import { oversettKode } from "../lib/i18n/koder/oversettKode.ts"
 import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
-import { LabelValue } from "./utils/LabelValue.tsx"
 import { SectionTitle } from "./utils/SectionTitle.tsx"
 
 type Props = Pick<
@@ -49,23 +49,61 @@ export function OmBygget({
     })
     .filter((id): id is string => id != null)
 
+  const headerCellStyle: string = "border-b-0! text-xs"
+  const valueCellStyle: string = "border-b-0! text-xs"
+
   return (
     <div className="space-y-2">
       <SectionTitle>{t(`${tKey}.tittel`)}</SectionTitle>
 
-      <div className="grid grid-cols-5 gap-4">
-        <LabelValue label={t(`${tKey}.bygningstype`)} value={bygningstype} />
-        <LabelValue label={t(`${tKey}.naringsgruppe`)} value={naringsgruppe} />
-        <LabelValue
-          label={t(`${tKey}.boenheter`)}
-          value={etasjedata?.antallBoenheter}
-        />
-        <LabelValue
-          label={t(`${tKey}.representasjonspunkt`)}
-          value={koordinater}
-        />
-        <LabelValue label={t(`${tKey}.sefrakId`)} value={sefrakIDs} />
-      </div>
+      <Table>
+        <Table.Head>
+          <Table.Row>
+            <Table.HeaderCell className={headerCellStyle}>
+              {t(`${tKey}.bygningstype`)}
+            </Table.HeaderCell>
+            <Table.HeaderCell className={headerCellStyle}>
+              {t(`${tKey}.naringsgruppe`)}
+            </Table.HeaderCell>
+            <Table.HeaderCell className={headerCellStyle}>
+              {t(`${tKey}.boenheter`)}
+            </Table.HeaderCell>
+            <Table.HeaderCell className={headerCellStyle}>
+              {t(`${tKey}.representasjonspunkt`)}
+            </Table.HeaderCell>
+            <Table.HeaderCell className={headerCellStyle}>
+              {t(`${tKey}.sefrakId`)}
+            </Table.HeaderCell>
+          </Table.Row>
+        </Table.Head>
+        <Table.Body>
+          <Table.Row>
+            <Table.Cell className={valueCellStyle}>
+              {bygningstype ?? "-"}
+            </Table.Cell>
+            <Table.Cell className={valueCellStyle}>
+              {naringsgruppe ?? "-"}
+            </Table.Cell>
+            <Table.Cell className={valueCellStyle}>
+              {etasjedata?.antallBoenheter ?? "-"}
+            </Table.Cell>
+            <Table.Cell className={valueCellStyle}>
+              {koordinater ?? "-"}
+            </Table.Cell>
+            <Table.Cell className={valueCellStyle}>
+              {sefrakIDs != null && sefrakIDs.length > 0 ? (
+                <div className="flex flex-col">
+                  {sefrakIDs.map((id) => (
+                    <span key={id}>{id}</span>
+                  ))}
+                </div>
+              ) : (
+                "-"
+              )}
+            </Table.Cell>
+          </Table.Row>
+        </Table.Body>
+      </Table>
     </div>
   )
 }
