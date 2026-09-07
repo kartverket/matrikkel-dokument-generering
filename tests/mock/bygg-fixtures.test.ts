@@ -39,6 +39,15 @@ describe("Mock server fixtures", () => {
 
       expect(parseResult.success).toBe(true)
     })
+
+    test(`${name} sets erBygningsendring based on lopenummer`, () => {
+      const normalizedReport = normalizeByggRapport(create())
+
+      for (const bygning of normalizedReport.bygninger) {
+        const forventetErBygningsendring = (bygning.lopenummer ?? 0) > 0
+        expect(bygning.erBygningsendring).toBe(forventetErBygningsendring)
+      }
+    })
   })
 
   test("bygg-alle-5 groups changes under the preceding current building", async () => {

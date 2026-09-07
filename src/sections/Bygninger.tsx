@@ -9,7 +9,7 @@ interface Props {
 export function grupperBygninger(bygninger: Array<Bygning>) {
   return bygninger.reduce<Array<{ bygning: Bygning; endringer: Bygning[] }>>(
     (grupper, bygning) => {
-      if (bygning.lopenummer == null || bygning.lopenummer === 0) {
+      if (!bygning.erBygningsendring) {
         grupper.push({ bygning, endringer: [] })
         return grupper
       }
