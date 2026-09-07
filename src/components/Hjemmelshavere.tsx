@@ -1,6 +1,7 @@
+import { Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
-import { TableSection } from "./utils/TableSection.tsx"
+import { SectionTitle } from "./utils/SectionTitle.tsx"
 
 type Props = Pick<Bygning, "hjemmelshavere">
 
@@ -35,53 +36,69 @@ export function Hjemmelshavere({ hjemmelshavere }: Readonly<Props>) {
 
   if (!hjemmelshaverList.length) return null
 
-  const columns = [
-    {
-      key: "rolle",
-      labelKey: t("rapport.BYG0011.hjemmelshavere.rolle"),
-      render: (item: FlattenedPerson) =>
-        item.eierforholdKode?.displayTekst || "-",
-    },
-    {
-      key: "status",
-      labelKey: t("rapport.BYG0011.hjemmelshavere.status"),
-      render: (item: FlattenedPerson) =>
-        item.personStatusKode?.displayTekst || "-",
-    },
-    {
-      key: "eierident",
-      labelKey: t("rapport.BYG0011.hjemmelshavere.fodselsnum"),
-      render: (item: FlattenedPerson) => item.eierident,
-    },
-    {
-      key: "navn",
-      labelKey: t("rapport.BYG0011.hjemmelshavere.navn"),
-      render: (item: FlattenedPerson) => item.navn || "-",
-    },
-    {
-      key: "adresse",
-      labelKey: t("rapport.BYG0011.hjemmelshavere.addresse"),
-      render: (item: FlattenedPerson) => item.eierAdresse || "-",
-    },
-    {
-      key: "bruksenhet",
-      labelKey: t("rapport.BYG0011.hjemmelshavere.bruksenhet"),
-      render: (item: FlattenedPerson) => item.bruksenhetsnummer || "-",
-    },
-    {
-      key: "andel",
-      labelKey: t("rapport.BYG0011.hjemmelshavere.andel"),
-      render: (item: FlattenedPerson) =>
-        item.teller && item.nevner ? `${item.teller}/${item.nevner}` : "-",
-    },
-  ]
+  const headerCellStyle: string = "text-xs"
+  const valueCellStyle: string = "border-b-0! text-xs"
 
   return (
-    <TableSection
-      title={t("rapport.BYG0011.hjemmelshavere.tittel")}
-      items={hjemmelshaverList}
-      columns={columns}
-      rowKey={(item) => item.eierident ?? Math.random().toString()}
-    />
+    <section className="space-y-2">
+      <SectionTitle>{t("rapport.BYG0011.hjemmelshavere.tittel")}</SectionTitle>
+
+      <Table>
+        <Table.Head>
+          <Table.Row>
+            <Table.HeaderCell className={headerCellStyle}>
+              {t("rapport.BYG0011.hjemmelshavere.rolle")}
+            </Table.HeaderCell>
+            <Table.HeaderCell className={headerCellStyle}>
+              {t("rapport.BYG0011.hjemmelshavere.status")}
+            </Table.HeaderCell>
+            <Table.HeaderCell className={headerCellStyle}>
+              {t("rapport.BYG0011.hjemmelshavere.fodselsnum")}
+            </Table.HeaderCell>
+            <Table.HeaderCell className={headerCellStyle}>
+              {t("rapport.BYG0011.hjemmelshavere.navn")}
+            </Table.HeaderCell>
+            <Table.HeaderCell className={headerCellStyle}>
+              {t("rapport.BYG0011.hjemmelshavere.addresse")}
+            </Table.HeaderCell>
+            <Table.HeaderCell className={headerCellStyle}>
+              {t("rapport.BYG0011.hjemmelshavere.bruksenhet")}
+            </Table.HeaderCell>
+            <Table.HeaderCell className={headerCellStyle}>
+              {t("rapport.BYG0011.hjemmelshavere.andel")}
+            </Table.HeaderCell>
+          </Table.Row>
+        </Table.Head>
+        <Table.Body>
+          {hjemmelshaverList.map((item) => (
+            <Table.Row key={item.eierident ?? Math.random().toString()}>
+              <Table.Cell className={valueCellStyle}>
+                {item.eierforholdKode?.displayTekst || "-"}
+              </Table.Cell>
+              <Table.Cell className={valueCellStyle}>
+                {item.personStatusKode?.displayTekst || "-"}
+              </Table.Cell>
+              <Table.Cell className={valueCellStyle}>
+                {item.eierident}
+              </Table.Cell>
+              <Table.Cell className={valueCellStyle}>
+                {item.navn || "-"}
+              </Table.Cell>
+              <Table.Cell className={valueCellStyle}>
+                {item.eierAdresse || "-"}
+              </Table.Cell>
+              <Table.Cell className={valueCellStyle}>
+                {item.bruksenhetsnummer || "-"}
+              </Table.Cell>
+              <Table.Cell className={valueCellStyle}>
+                {item.teller && item.nevner
+                  ? `${item.teller}/${item.nevner}`
+                  : "-"}
+              </Table.Cell>
+            </Table.Row>
+          ))}
+        </Table.Body>
+      </Table>
+    </section>
   )
 }
