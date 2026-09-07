@@ -1,10 +1,7 @@
 import { prometheus } from "@hono/prometheus"
 import type { OpenAPIHono } from "@hono/zod-openapi"
-import { logger } from "hono/logger"
 
 export function registerObservability(app: OpenAPIHono) {
-  app.use("*", logger())
-
   const { printMetrics, registerMetrics } = prometheus({
     collectDefaultMetrics: true,
   })
