@@ -13,12 +13,12 @@ import {
   renderRapportsListPage,
   renderScenariosListPage,
 } from "../../pages/previewRenderer.ts"
+import { logger } from "../app.ts"
 import {
   notImplementedResponseSchema,
   pdfErrorResponseSchema,
   validationErrorResponseSchema,
 } from "../openapi/response.schemas.ts"
-import { logger } from "../app.ts"
 
 const outputFormatSchema = z
   .enum(["pdf", "html"])

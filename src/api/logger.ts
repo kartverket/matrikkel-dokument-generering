@@ -1,32 +1,35 @@
-import { structuredLogger } from "@hono/structured-logger";
-import pino, { type Logger } from "pino";
+import { structuredLogger } from "@hono/structured-logger"
+import pino, { type Logger } from "pino"
 
 export function createLogger(): Logger {
   return pino({
-    level: 'INFO',
+    level: "INFO",
     base: null,
     messageKey: "message",
     timestamp: pino.stdTimeFunctions.isoTime,
     formatters: {
       level: (level) => ({ level: level.toUpperCase() }),
     },
-  });
+  })
 }
 
 function logLevelForStatus(status: number): "info" | "warn" | "error" {
-  if (status >= 500) return "error";
-  if (status >= 400) return "warn";
-  return "info";
+  if (status >= 500) return "error"
+  if (status >= 400) return "warn"
+  return "info"
 }
 
-export function createStructuredHonoLogger(logger: Logger, internalPath: string) {
+export function createStructuredHonoLogger(
+  logger: Logger,
+  internalPath: string,
+) {
   return structuredLogger({
     createLogger: () => logger,
     onResponse: (logger, c, elapsedMs) => {
-      if (c.req.path.startsWith(internalPath)) return;
+      if (c.req.path.startsWith(internalPath)) return
 
-      const durationMs = Math.round(elapsedMs * 100) / 100;
-      const status = c.res.status;
+      const durationMs = Math.round(elapsedMs * 100) / 100
+      const status = c.res.status
       logger[logLevelForStatus(status)]({
         status,
         method: c.req.method,
@@ -34,11 +37,11 @@ export function createStructuredHonoLogger(logger: Logger, internalPath: string)
         query: c.req.queries(),
         message: `${c.req.method} ${c.req.path} ${c.res.status} ${durationMs}ms`,
         duration_ms: durationMs,
-      });
+      })
     },
     onError: (logger, err, c, elapsedMs) => {
-      const durationMs = Math.round(elapsedMs * 100) / 100;
-      const status = c.res.status;
+      const durationMs = Math.round(elapsedMs * 100) / 100
+      const status = c.res.status
       logger[logLevelForStatus(status)]({
         status,
         method: c.req.method,
@@ -47,7 +50,7 @@ export function createStructuredHonoLogger(logger: Logger, internalPath: string)
         message: `${c.req.method} ${c.req.path} ${c.res.status} ${durationMs}ms`,
         duration_ms: durationMs,
         err: { message: err.message, stack: err.stack },
-      });
+      })
     },
-  });
+  })
 }
