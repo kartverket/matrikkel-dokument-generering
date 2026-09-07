@@ -13,7 +13,9 @@ function formatMatrikkelnummer(
 ): string | undefined {
   if (info?.gnr == null || info?.bnr == null) return undefined
 
-  let matrikkelnummer = `${info.gnr}/${info.bnr}`
+  let matrikkelnummer = info.annenKommune
+    ? `${info.kommunenummer}-${info.gnr}/${info.bnr}`
+    : `${info.gnr}/${info.bnr}`
   if (info.fnr != null) matrikkelnummer += `/${info.fnr}`
   if (info.snr != null) matrikkelnummer += `/${info.snr}`
 
