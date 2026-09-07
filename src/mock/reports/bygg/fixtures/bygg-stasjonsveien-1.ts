@@ -260,7 +260,7 @@ function createBygning(input: {
     utgattBeskrivelse: "Aktiv",
     erFerdigstilt: true,
     bygningErFerdigstilt: true,
-    erBygningsendring: false,
+    erBygningsendring: (input.lopenummer ?? 0) > 0,
     objektnummer: numericBygningsnummer,
   }
 }

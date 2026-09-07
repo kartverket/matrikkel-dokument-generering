@@ -230,7 +230,7 @@ function createBygning(lopenummer = 0): Bygning {
     utgattBeskrivelse: "Aktiv",
     erFerdigstilt: true,
     bygningErFerdigstilt: true,
-    erBygningsendring: false,
+    erBygningsendring: lopenummer > 0,
     objektnummer: 81416001,
   }
 }

@@ -378,7 +378,7 @@ function createBygning(input: {
       input.bygningstatusKode === "TB" || input.bygningstatusKode === "FA",
     bygningErFerdigstilt:
       input.bygningstatusKode === "TB" || input.bygningstatusKode === "FA",
-    erBygningsendring: false,
+    erBygningsendring: (input.lopenummer ?? 0) > 0,
     objektnummer: numericBygningsnummer,
   }
 }
