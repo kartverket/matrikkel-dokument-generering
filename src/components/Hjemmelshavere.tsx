@@ -18,20 +18,23 @@ interface FlattenedPerson {
 export function Hjemmelshavere({ hjemmelshavere }: Readonly<Props>) {
   const { t } = useTranslation()
 
-  const hjemmelshaverList: FlattenedPerson[] =
-    hjemmelshavere
-      .flatMap((eierforhold) => eierforhold.matrikkelenhetEiereInfos || [])
-      .flatMap((matrikkel) => matrikkel.personEierforhold || [])
-      .map((person) => ({
-        eierident: person.eierident,
-        eierforholdKode: person.eierforholdKode,
-        personStatusKode: person.personStatusKode,
-        navn: person.navn,
-        eierAdresse: person.eierAdresse,
-        bruksenhetsnummer: person.bruksenhetsnummer,
-        teller: person.teller,
-        nevner: person.nevner,
-      })) ?? []
+  const hjemmelshaverList: FlattenedPerson[] = hjemmelshavere
+    .flatMap((eierforhold) => [
+      ...(eierforhold.personEiereInfos || []),
+      ...(eierforhold.matrikkelenhetEiereInfos || []).flatMap(
+        (matrikkel) => matrikkel.personEierforhold || [],
+      ),
+    ])
+    .map((eier) => ({
+      eierident: eier.eierident,
+      eierforholdKode: eier.eierforholdKode,
+      personStatusKode: eier.personStatusKode,
+      navn: eier.navn,
+      eierAdresse: eier.eierAdresse,
+      bruksenhetsnummer: eier.bruksenhetsnummer,
+      teller: eier.teller,
+      nevner: eier.nevner,
+    }))
 
   if (!hjemmelshaverList.length) return null
 
