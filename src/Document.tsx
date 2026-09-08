@@ -24,7 +24,7 @@ function Byg0011DocumentRenderer({
           className="mt-8 mb-8 flex break-after-avoid items-center gap-6 text-5xl text-kv-title"
         >
           {t("rapport.BYG0011.rapportTittel")}
-          <Tag data-size="md">{antallBygg} bygg</Tag>
+          <Tag data-size="lg">{antallBygg} bygg</Tag>
         </Heading>
 
         <ByggUtvalgskriterier kriterier={rapport.utvalgskriterier} />
