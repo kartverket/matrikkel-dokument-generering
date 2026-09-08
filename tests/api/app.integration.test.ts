@@ -1,12 +1,12 @@
 import { describe, expect, spyOn, test } from "bun:test"
 import { createApp, logger } from "../../src/api/app.ts"
+import { createValidationErrors } from "../../src/api/validation.ts"
 import { byggRapportSchema } from "../../src/lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 import { createBygg32341Report } from "../../src/mock/reports/bygg/fixtures/bygg-32-341.ts"
 import { createBygg42221Report } from "../../src/mock/reports/bygg/fixtures/bygg-42-221.ts"
 import { createBygg1098Report } from "../../src/mock/reports/bygg/fixtures/bygg-109-8.ts"
 import { createByggSlottsplassen1Report } from "../../src/mock/reports/bygg/fixtures/bygg-slottsplassen-1.ts"
 import { createByggStasjonsveien1Report } from "../../src/mock/reports/bygg/fixtures/bygg-stasjonsveien-1.ts"
-import { createValidationErrors } from "../../src/api/validation.ts"
 
 const app = createApp()
 

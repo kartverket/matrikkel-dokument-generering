@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi"
+import type { z } from "@hono/zod-openapi"
 
 export function createValidationErrors(
   issues: z.ZodIssue[],
