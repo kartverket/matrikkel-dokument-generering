@@ -11,7 +11,7 @@ export function ArealSection({ etasjedata }: Props) {
   const enhet = t(`${tKey}.enhet`)
 
   const headerCellStyle: string = "text-xs"
-  const valueCellStyle: string = "text-xs"
+  const valueCellStyle: string = "border-b-0! text-xs"
 
   return (
     <section>

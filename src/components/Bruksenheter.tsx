@@ -33,7 +33,7 @@ export function Bruksenheter({ bruksenheter }: Props) {
   }
 
   const headerCellStyle: string = "text-xs"
-  const valueCellStyle: string = "text-xs"
+  const valueCellStyle: string = "border-b-0! text-xs"
 
   return (
     <section>
@@ -81,16 +81,16 @@ export function Bruksenheter({ bruksenheter }: Props) {
               <Table.Cell className={valueCellStyle}>
                 {enhet.bruksenhetsTypeKode?.displayTekst ?? "-"}
               </Table.Cell>
-              <Table.Cell className={cn(valueCellStyle, "text-right")}>
+              <Table.Cell className={cn(valueCellStyle)}>
                 {enhet.bruksareal != null ? `${enhet.bruksareal} m²` : "-"}
               </Table.Cell>
-              <Table.Cell className={cn(valueCellStyle, "text-right")}>
+              <Table.Cell className={cn(valueCellStyle)}>
                 {enhet.antallRom ?? "-"}
               </Table.Cell>
-              <Table.Cell className={cn(valueCellStyle, "text-right")}>
+              <Table.Cell className={cn(valueCellStyle)}>
                 {enhet.antallBad ?? "-"}
               </Table.Cell>
-              <Table.Cell className={cn(valueCellStyle, "text-right")}>
+              <Table.Cell className={cn(valueCellStyle)}>
                 {enhet.antallWC ?? "-"}
               </Table.Cell>
               <Table.Cell className={valueCellStyle}>

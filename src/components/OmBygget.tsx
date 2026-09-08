@@ -54,7 +54,7 @@ export function OmBygget({
     .filter((id): id is string => id != null)
 
   const headerCellStyle: string = "text-xs"
-  const valueCellStyle: string = "text-xs"
+  const valueCellStyle: string = "border-b-0! text-xs"
 
   return (
     <div>

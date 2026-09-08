@@ -15,7 +15,7 @@ export function EtasjerSection({ etasjer }: Props) {
   const etasjeliste = etasjer.filter((etasje) => etasje != null)
 
   const headerCellStyle: string = "text-xs"
-  const valueCellStyle: string = "text-xs"
+  const valueCellStyle: string = "border-b-0! text-xs"
 
   return (
     <section>

@@ -20,7 +20,7 @@ export function Kontaktpersoner({ kontaktpersoner }: Readonly<Props>) {
   }
 
   const headerCellStyle: string = "text-xs"
-  const valueCellStyle: string = "text-xs"
+  const valueCellStyle: string = "border-b-0! text-xs"
 
   return (
     <section>
