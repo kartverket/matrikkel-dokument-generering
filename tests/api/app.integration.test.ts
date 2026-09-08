@@ -6,6 +6,7 @@ import { createBygg42221Report } from "../../src/mock/reports/bygg/fixtures/bygg
 import { createBygg1098Report } from "../../src/mock/reports/bygg/fixtures/bygg-109-8.ts"
 import { createByggSlottsplassen1Report } from "../../src/mock/reports/bygg/fixtures/bygg-slottsplassen-1.ts"
 import { createByggStasjonsveien1Report } from "../../src/mock/reports/bygg/fixtures/bygg-stasjonsveien-1.ts"
+import { createValidationErrors } from "../../src/api/validation.ts"
 
 const app = createApp()
 
@@ -76,17 +77,16 @@ describe("HTTP API", () => {
 
     const body = await response.json()
 
-    expect(body).toEqual({
-      success: false,
-      error: {
-        name: "ZodError",
-        message: expect.any(String),
-      },
-    })
-
-    expect(JSON.parse(body.error.message)).toEqual(
+    const expectedErrors = createValidationErrors(
       expectedParseResult.error.issues,
     )
+
+    expect(body).toEqual({
+      errors: {
+        valid: false,
+        errors: expectedErrors,
+      },
+    })
   })
 
   test("logs why a validation request failed, as a warning, not an error", async () => {

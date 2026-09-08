@@ -30,7 +30,7 @@ const bygningSchema = z.object({
     example: "12 345 678",
   }),
 
-  lopenummer: z.number().int().nonnegative().optional().meta({
+  lopenummer: z.number().int().nonnegative().nullable().optional().meta({
     title: "Lopenr",
     example: 1,
   }),

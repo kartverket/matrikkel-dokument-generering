@@ -23,9 +23,9 @@ export const bruksenhetSchema = z.object({
       "Bruksarealet til bruksenheten gitt endringen. Oppgis i kvadratmeter. ",
   }),
 
-  antallRom: z.number().int().nonnegative().optional(),
-  antallBad: z.number().int().nonnegative().optional(),
-  antallWC: z.number().int().nonnegative().optional(),
+  antallRom: z.number().int().optional(),
+  antallBad: z.number().int().optional(),
+  antallWC: z.number().int().optional(),
   etasjenummer: z.string().optional(),
   lopenummer: z.string().optional(),
 
