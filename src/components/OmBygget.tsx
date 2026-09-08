@@ -38,7 +38,7 @@ export function OmBygget({
 
   const koordinater =
     representasjonspunkt?.nord != null && representasjonspunkt?.ost != null
-      ? `${representasjonspunkt.nord}, ${representasjonspunkt.ost}`
+      ? `N: ${representasjonspunkt.nord}, Ø: ${representasjonspunkt.ost}`
       : undefined
 
   const sefrakIDs = sefrakminner
