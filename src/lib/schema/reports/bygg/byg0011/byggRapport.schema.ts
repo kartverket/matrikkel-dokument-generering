@@ -23,14 +23,14 @@ import { sefrakSchema } from "../shared/sefrak.schema.ts"
 import { byggEndringSchema } from "./byggEndring.schema.ts"
 
 const bygningSchema = z.object({
-  bygningsnummer: z.number().nonnegative().meta({
+  bygningsnummer: z.number().nonnegative().or(z.string()).meta({
     title: "Bygningsnummer",
     description:
       "En entydig identifikasjon av bygningen som er unik på landsbasis og tildeles automatisk.",
     example: "12 345 678",
   }),
 
-  lopenummer: z.number().int().nonnegative().optional().meta({
+  lopenummer: z.number().int().nonnegative().nullable().meta({
     title: "Lopenr",
     example: 1,
   }),

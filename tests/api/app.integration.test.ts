@@ -66,16 +66,27 @@ describe("HTTP API", () => {
       body: "{}",
     })
 
+    const expectedParseResult = byggRapportSchema.safeParse({})
+    if (expectedParseResult.success) {
+      throw new Error("Expected the empty body to fail schema validation")
+    }
+
     expect(response.status).toBe(400)
     expect(response.headers.get("Content-Type")).toContain("application/json")
-    expect(await response.json()).toEqual({
-      validationIssues: {
-        bygninger: expect.any(Array),
-        rapportKode: expect.any(Array),
-        metadata: expect.any(Array),
-        locale: expect.any(Array),
+
+    const body = await response.json()
+
+    expect(body).toEqual({
+      success: false,
+      error: {
+        name: "ZodError",
+        message: expect.any(String),
       },
     })
+
+    expect(JSON.parse(body.error.message)).toEqual(
+      expectedParseResult.error.issues,
+    )
   })
 
   test("logs why a validation request failed, as a warning, not an error", async () => {
