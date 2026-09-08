@@ -113,6 +113,8 @@ export const nn = {
         representasjonspunkt: "Representasjonspunkt",
         sefrakId: "Sefrak-id",
         bebygdAreal: "Bebygd areal",
+        nord: "N",
+        ost: "Ø",
       },
       areal: {
         tittel: "Areal",
