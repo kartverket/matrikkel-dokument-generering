@@ -1,5 +1,6 @@
 import { describe, expect, spyOn, test } from "bun:test"
 import { createApp, logger } from "../../src/api/app.ts"
+import { createValidationErrors } from "../../src/api/validation.ts"
 import { byggRapportSchema } from "../../src/lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
 import { createBygg32341Report } from "../../src/mock/reports/bygg/fixtures/bygg-32-341.ts"
 import { createBygg42221Report } from "../../src/mock/reports/bygg/fixtures/bygg-42-221.ts"
@@ -76,17 +77,16 @@ describe("HTTP API", () => {
 
     const body = await response.json()
 
-    expect(body).toEqual({
-      success: false,
-      error: {
-        name: "ZodError",
-        message: expect.any(String),
-      },
-    })
-
-    expect(JSON.parse(body.error.message)).toEqual(
+    const expectedErrors = createValidationErrors(
       expectedParseResult.error.issues,
     )
+
+    expect(body).toEqual({
+      errors: {
+        valid: false,
+        errors: expectedErrors,
+      },
+    })
   })
 
   test("logs why a validation request failed, as a warning, not an error", async () => {

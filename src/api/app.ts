@@ -1,10 +1,11 @@
-import { OpenAPIHono, z } from "@hono/zod-openapi"
+import { OpenAPIHono } from "@hono/zod-openapi"
 import { HTTPException } from "hono/http-exception"
 import { createLogger, createStructuredHonoLogger } from "./logger.ts"
 import { registerObservability } from "./observability.ts"
 import { registerDocumentationRoutes } from "./routes/docs.routes.ts"
 import { registerDocumentRoutes } from "./routes/documents.routes.ts"
 import { registerHealthRoutes } from "./routes/health.routes.ts"
+import { createValidationErrors } from "./validation.ts"
 
 export const logger = createLogger()
 
@@ -12,8 +13,18 @@ export function createApp() {
   const app = new OpenAPIHono({
     defaultHook: (result, c) => {
       if (!result.success) {
-        const fieldErrors = z.flattenError(result.error).fieldErrors
-        c.set("validationIssuesKeys", Object.keys(fieldErrors))
+        const errors = createValidationErrors(result.error.issues)
+        c.set("validationIssuesKeys", Object.keys(errors))
+
+        return c.json(
+          {
+            errors: {
+              valid: false as const,
+              errors,
+            },
+          },
+          400,
+        )
       }
     },
   })
