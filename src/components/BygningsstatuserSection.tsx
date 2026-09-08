@@ -13,7 +13,7 @@ export function BygningsstatuserSection({ bygningsstatuser }: Props) {
   const tKey = "rapport.BYG0011.bygningsstatuser" as const
 
   const headerCellStyle: string = "text-xs"
-  const valueCellStyle: string = "text-xs"
+  const valueCellStyle: string = "border-b-0! text-xs"
 
   return (
     <section>

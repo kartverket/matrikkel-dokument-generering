@@ -36,8 +36,8 @@ export function BygningSection({ bygning }: Readonly<Props>) {
     ) ?? []
 
   return (
-    <section className="flex flex-col gap-4">
-      <div className="flex items-center justify-between bg-kv-green px-6 py-4">
+    <section className="flex flex-col">
+      <div className="flex items-center justify-between bg-kv-green-dark px-6 py-4">
         <div>
           <p className="font-medium text-white text-xs opacity-80">
             {t("rapport.BYG0011.bygningsnummer")}
@@ -48,26 +48,33 @@ export function BygningSection({ bygning }: Readonly<Props>) {
         </div>
 
         <div className="flex gap-2">
-          {bygningstype && <Tag data-size="sm">{bygningstype}</Tag>}
+          {bygningstype && (
+            <Tag data-size="sm" data-color="neutral">
+              {bygningstype}
+            </Tag>
+          )}
 
-          {status && <Tag data-size="sm">{status}</Tag>}
+          {status && (
+            <Tag data-size="sm" data-color="neutral">
+              {status}
+            </Tag>
+          )}
         </div>
+      </div>
+      <div className="mb-4 flex items-center gap-2 bg-kv-green-subtle px-2 py-2">
+        <h2 className="font-bold text-gray-900 text-xl">
+          {t("rapport.BYG0011.naavarendeBygning")}
+        </h2>
       </div>
 
       <div className="space-y-6">
-        {/* Section title with status */}
-        <div className="mb-4 flex items-baseline gap-2">
-          <h2 className="font-bold text-gray-900 text-xl">
-            {t("rapport.BYG0011.naavarendeBygning")}
-          </h2>
-        </div>
-
         <OmBygget
           bygningstypeKode={bygning.bygningstypeKode}
           naringsgruppeKode={bygning.naringsgruppeKode}
           etasjedata={bygning.etasjedata}
           representasjonspunkt={bygning.representasjonspunkt}
           sefrakminner={bygning.sefrakminner}
+          bebygdAreal={bygning.bebygdAreal}
         />
         {bygning.etasjedata != null && (
           <ArealSection etasjedata={bygning.etasjedata} />

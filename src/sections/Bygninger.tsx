@@ -39,18 +39,13 @@ export function Bygninger({ bygninger }: Readonly<Props>) {
         >
           <BygningSection bygning={bygning} />
 
-          {endringer.length > 0 && (
-            <>
-              {/*<hr className="my-8 w-full border border-kv-green-border" />*/}
-
-              {endringer.map((endring) => (
-                <BygningsendringSection
-                  key={`${endring.bygningsnummer}-${endring.lopenummer}`}
-                  bygning={endring}
-                />
-              ))}
-            </>
-          )}
+          {endringer.length > 0 &&
+            endringer.map((endring) => (
+              <BygningsendringSection
+                key={`${endring.bygningsnummer}-${endring.lopenummer}`}
+                bygning={endring}
+              />
+            ))}
         </div>
       ))}
     </section>

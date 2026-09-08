@@ -25,10 +25,25 @@ export function BygningsendringSection({ bygning }: Readonly<Props>) {
   return (
     <section>
       <div className="space-y-4">
-        <div className="flex items-baseline gap-2">
-          <h2 className="font-bold text-gray-900 text-xl">{tittel}</h2>
-          {status && <Tag data-size="sm">{status}</Tag>}
-          {endringskode && <Tag data-size="sm">{endringskode}</Tag>}
+        <div className="flex items-center justify-between space-x-2 bg-kv-green-subtle px-2 py-2">
+          <div className="flex items-baseline gap-2">
+            <h2 className="font-bold text-gray-900 text-xl">{tittel}</h2>
+            {status && (
+              <Tag data-size="sm" data-color="neutral">
+                {status}
+              </Tag>
+            )}
+            {endringskode && (
+              <Tag data-size="sm" data-color="neutral">
+                {endringskode}
+              </Tag>
+            )}
+          </div>
+
+          <h2 className="text-right text-gray-900 text-sm">
+            <div className="text-sm">Bygningsnummer</div>
+            <div className="text-sm">{bygning.bygningsnummer}</div>
+          </h2>
         </div>
 
         <OmBygget
@@ -37,6 +52,7 @@ export function BygningsendringSection({ bygning }: Readonly<Props>) {
           etasjedata={bygning.etasjedata}
           representasjonspunkt={bygning.representasjonspunkt}
           sefrakminner={bygning.sefrakminner}
+          bebygdAreal={bygning.bebygdAreal}
         />
 
         {bygning.etasjedata != null && (

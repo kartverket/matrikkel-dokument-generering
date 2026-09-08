@@ -4,10 +4,11 @@
 @import "@kv-designsystem/react/green" layer(designsystem);
 
 @theme {
-  --color-kv-green-subtle: #f6faf7;
   --color-kv-green-border: #97c7a6;
+  --color-kv-green-subtle: #edf6f0;
+  --color-kv-green-dark: #264b2d;
   --color-kv-green: #156c30;
-  --color-kv-title: #0f5f2d;
+  --color-kv-title: #264b2d;
   --color-kv-green-tinted: #edf6f0;
   --color-kv-background-tinted: #daeed7;
 
