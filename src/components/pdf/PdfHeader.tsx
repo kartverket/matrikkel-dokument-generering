@@ -29,7 +29,7 @@ export function PdfHeader({ metadata, rapportKode }: Readonly<PdfHeaderProps>) {
     <div className="w-full text-pdf-label leading-tight">
       <div className="grid w-full grid-cols-3 items-center">
         <span>
-          {t(`rapport.${rapportKode}.rapportTittel`) + " " + `${rapportKode}`}
+          {`${t(`rapport.${rapportKode}.rapportTittel`)} ${rapportKode}`}
         </span>
         <span className="text-center">{rapportDato}</span>
         <span className="text-right">
