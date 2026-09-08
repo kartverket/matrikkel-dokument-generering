@@ -14,13 +14,6 @@ export function createApp() {
       if (!result.success) {
         const fieldErrors = z.flattenError(result.error).fieldErrors
         c.set("validationIssuesKeys", Object.keys(fieldErrors))
-
-        return c.json(
-          {
-            validationIssues: fieldErrors,
-          },
-          400,
-        )
       }
     },
   })
