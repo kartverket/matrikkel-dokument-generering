@@ -26,7 +26,7 @@ const matrikkelenhetEierforholdRapportInfoSchema = z.object({
   selveierskap: z.boolean().optional(),
   personEierforhold: z.array(personEierforholdRapportInfoSchema).optional(),
   matrikkelnrRapportInfo: matrikkelnrRapportInfoSchema.optional(),
-  eierforholdKode: kodeSchemaOgTekst(eierforholdKodeSchema),
+  eierforholdKode: kodeSchemaOgTekst(eierforholdKodeSchema).optional(),
   datoFra: z.iso.datetime({ offset: true }).optional(),
   arealtype: z.string().optional(),
 
