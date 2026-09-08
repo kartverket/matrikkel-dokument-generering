@@ -2,6 +2,7 @@ import { Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import { oversettKode } from "../lib/i18n/koder/oversettKode.ts"
 import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
+import { formatAreal } from "../lib/utils/formatAreal.ts"
 
 type Props = Pick<
   Bygning,
@@ -10,6 +11,7 @@ type Props = Pick<
   | "etasjedata"
   | "representasjonspunkt"
   | "sefrakminner"
+  | "bebygdAreal"
 >
 
 export function OmBygget({
@@ -18,9 +20,12 @@ export function OmBygget({
   etasjedata,
   representasjonspunkt,
   sefrakminner,
+  bebygdAreal,
 }: Props) {
   const { t } = useTranslation()
   const tKey = "rapport.BYG0011.omBygget" as const
+  const enhet = t(`rapport.BYG0011.areal.enhet`)
+
   const bygningstype =
     bygningstypeKode?.kodeverdi != null
       ? `${bygningstypeKode.kodeverdi} ${oversettKode({ t, kodeverk: "bygningstype", kode: bygningstypeKode.kodeverdi })}`
@@ -67,6 +72,9 @@ export function OmBygget({
               {t(`${tKey}.boenheter`)}
             </Table.HeaderCell>
             <Table.HeaderCell className={headerCellStyle}>
+              {t(`${tKey}.bebygdAreal`)}
+            </Table.HeaderCell>
+            <Table.HeaderCell className={headerCellStyle}>
               {t(`${tKey}.representasjonspunkt`)}
             </Table.HeaderCell>
             <Table.HeaderCell className={headerCellStyle}>
@@ -84,6 +92,9 @@ export function OmBygget({
             </Table.Cell>
             <Table.Cell className={valueCellStyle}>
               {etasjedata?.antallBoenheter ?? "-"}
+            </Table.Cell>
+            <Table.Cell className={valueCellStyle}>
+              {formatAreal(bebygdAreal, enhet) ?? "-"}
             </Table.Cell>
             <Table.Cell className={valueCellStyle}>
               {koordinater ?? "-"}

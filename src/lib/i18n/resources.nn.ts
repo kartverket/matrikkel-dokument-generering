@@ -112,6 +112,7 @@ export const nn = {
         boenheter: "Bygningar",
         representasjonspunkt: "Representasjonspunkt",
         sefrakId: "Sefrak-id",
+        bebygdAreal: "Bebygd areal",
       },
       areal: {
         tittel: "Areal",

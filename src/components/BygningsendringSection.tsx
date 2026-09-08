@@ -37,6 +37,7 @@ export function BygningsendringSection({ bygning }: Readonly<Props>) {
           etasjedata={bygning.etasjedata}
           representasjonspunkt={bygning.representasjonspunkt}
           sefrakminner={bygning.sefrakminner}
+          bebygdAreal={bygning.bebygdAreal}
         />
 
         {bygning.etasjedata != null && (
