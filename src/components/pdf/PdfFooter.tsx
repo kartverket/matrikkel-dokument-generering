@@ -13,7 +13,7 @@ export function PdfFooter({ metadata }: Readonly<PdfFooterProps>) {
   const { kommune } = metadata
 
   return (
-    <div className="w-full text-pdf-label leading-tight">
+    <div className="w-full text-gray-500 text-pdf-label leading-tight">
       <div className="flex w-full items-center justify-between">
         <span>{`${kommune.kommuneNr} ${kommune.kommuneNavn}`}</span>
         <span>
