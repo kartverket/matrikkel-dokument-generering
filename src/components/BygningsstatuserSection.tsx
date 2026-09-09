@@ -12,13 +12,13 @@ export function BygningsstatuserSection({ bygningsstatuser }: Props) {
   const { t, i18n } = useTranslation()
   const tKey = "rapport.BYG0011.bygningsstatuser" as const
 
-  const headerCellStyle: string = "text-xs"
-  const valueCellStyle: string = "border-b-0! text-xs"
+  const headerCellStyle: string = "text-tiny"
+  const valueCellStyle: string = "border-b-0! text-tiny"
 
   return (
     <section>
       <Table border>
-        <caption className="text-left text-base">{t(`${tKey}.tittel`)}</caption>
+        <caption className="text-left text-sm">{t(`${tKey}.tittel`)}</caption>
         <Table.Head>
           <Table.Row>
             {STATUSREKKEFØLGE.map((kode) => (
