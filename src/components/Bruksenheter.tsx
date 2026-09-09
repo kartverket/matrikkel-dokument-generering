@@ -100,7 +100,7 @@ export function Bruksenheter({ bruksenheter }: Props) {
                 {enhet.adresseIdentRapportInfo?.adresseAsString ?? "-"}
               </Table.Cell>
               <Table.Cell className={valueCellStyle}>
-                {formatMatrikkelnummer(enhet.matrikkelnrRapportInfo) ?? "-"}
+                {enhet.matrikkelnrRapportInfo?.matrikkelNummer ?? "-"}
               </Table.Cell>
             </Table.Row>
           ))}
