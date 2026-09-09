@@ -19,13 +19,13 @@ export function Tiltakshavere({ tiltakshavere }: Readonly<Props>) {
     return null
   }
 
-  const headerCellStyle: string = "text-xs"
-  const valueCellStyle: string = "border-b-0! text-xs"
+  const headerCellStyle: string = "text-tiny"
+  const valueCellStyle: string = "border-b-0! text-tiny"
 
   return (
     <section>
       <Table border>
-        <caption className="text-left text-base">
+        <caption className="text-left text-sm">
           {t("rapport.BYG0011.tiltakshavere.tittel")}
         </caption>
         <Table.Head>

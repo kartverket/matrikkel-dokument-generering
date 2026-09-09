@@ -14,13 +14,13 @@ export function EtasjerSection({ etasjer }: Props) {
 
   const etasjeliste = etasjer.filter((etasje) => etasje != null)
 
-  const headerCellStyle: string = "text-xs"
-  const valueCellStyle: string = "border-b-0! text-xs"
+  const headerCellStyle: string = "text-tiny"
+  const valueCellStyle: string = "border-b-0! text-tiny"
 
   return (
     <section>
       <Table border>
-        <caption className="text-left text-base">{t(`${tKey}.title`)}</caption>
+        <caption className="text-left text-sm">{t(`${tKey}.title`)}</caption>
         <Table.Head>
           <Table.Row>
             <Table.HeaderCell className={headerCellStyle}>

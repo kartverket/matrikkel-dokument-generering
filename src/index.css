@@ -13,6 +13,7 @@
   --color-kv-background-tinted: #daeed7;
 
   --text-pdf-label: 9pt;
+  --text-tiny: 10px;
 }
 
 body {

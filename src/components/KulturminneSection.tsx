@@ -10,13 +10,13 @@ export function Kulturminner({ enkeltminner }: Props) {
 
   if (enkeltminner.length === 0) return null
 
-  const headerCellStyle: string = "text-xs"
-  const valueCellStyle: string = "border-b-0! text-xs"
+  const headerCellStyle: string = "text-tiny"
+  const valueCellStyle: string = "border-b-0! text-tiny"
 
   return (
     <div>
       <Table border>
-        <caption className="text-left text-base">{t(`${tKey}.tittel`)}</caption>
+        <caption className="text-left text-sm">{t(`${tKey}.tittel`)}</caption>
         <Table.Head>
           <Table.Row>
             <Table.HeaderCell className={headerCellStyle}>

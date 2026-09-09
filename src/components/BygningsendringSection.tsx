@@ -41,8 +41,8 @@ export function BygningsendringSection({ bygning }: Readonly<Props>) {
           </div>
 
           <h2 className="text-right text-gray-900 text-sm">
-            <div className="text-sm">Bygningsnummer</div>
-            <div className="text-sm">{bygning.bygningsnummer}</div>
+            <div className="text-xs">{t(`rapport.BYG0011.bygningsnummer`)}</div>
+            <div className="text-xs">{bygning.bygningsnummer}</div>
           </h2>
         </div>
 
