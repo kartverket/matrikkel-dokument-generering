@@ -27,7 +27,7 @@ export const koderNn = {
   },
   bygningsstatus: {
     RA: "Rammeløyve",
-    IG: "Igangsetjings- løyve",
+    IG: "Igangsetjingsløyve",
     MB: "Mellombels bruksløyve",
     FA: "Ferdigattest",
     TB: "Teke i bruk",
