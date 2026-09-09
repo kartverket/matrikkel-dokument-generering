@@ -1,26 +1,11 @@
 import { Table } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { Bruksenhet } from "../lib/schema/reports/bygg/shared/bruksenhet.schema.ts"
-import type { MatrikkelnrRapportInfo } from "../lib/schema/reports/bygg/shared/matrikkelnrRapportInfo.schema.ts"
 import { cn } from "../lib/utils/cn.ts"
 
 type Props = Readonly<{
   bruksenheter: Bruksenhet[]
 }>
-
-function formatMatrikkelnummer(
-  info: MatrikkelnrRapportInfo | undefined,
-): string | undefined {
-  if (info?.gnr == null || info?.bnr == null) return undefined
-
-  let matrikkelnummer = info.annenKommune
-    ? `${info.kommunenummer}-${info.gnr}/${info.bnr}`
-    : `${info.gnr}/${info.bnr}`
-  if (info.fnr != null) matrikkelnummer += `/${info.fnr}`
-  if (info.snr != null) matrikkelnummer += `/${info.snr}`
-
-  return matrikkelnummer
-}
 
 export function Bruksenheter({ bruksenheter }: Props) {
   const { t } = useTranslation()
