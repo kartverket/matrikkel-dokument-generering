@@ -48,14 +48,14 @@ function createBygning(input: {
   lopenummer?: number
 }): Bygning {
   const numericBygningsnummer = input.bygningsnummer
-  const matrikkelNummer = `${input.kommuneNr}-${input.gnr}/${input.bnr}/0/0`
+  const matrikkelNummer = `${input.kommuneNr} - ${input.gnr} / ${input.bnr}`
   const statusDato = isoDate("2024-01-01")
   const bruksenhetsnummer = input.antallBoenheter > 0 ? "H0101" : undefined
 
   return {
     bygningsnummer: input.bygningsnummer,
     lopenummer: input.lopenummer ?? 0,
-    bygningsendringsKode: kode(input.endringsKode ?? "X", "Bygningsendring"),
+    bygningsendringsKode: kode(input.endringsKode ?? "T", "Tilbygg"),
     bygningstypeKode: kode(input.bygningstypeKode, "Bygningstype"),
     naringsgruppeKode: kode(input.naringsgruppeKode, "Naringsgruppe"),
     bygningstatusKode: kode(input.bygningstatusKode, "Bygningsstatus"),
@@ -260,20 +260,8 @@ function createBygning(input: {
         ],
         matrikkelenhetEiereInfos: [
           {
-            selveierskap: true,
-            personEierforhold: [
-              {
-                eierident: "02028012345",
-                navn: "Lars Hansen",
-                personStatusKode: kode("B", "Bosatt"),
-                eierforholdKode: kode("H", "Hjemmelshaver"),
-                andelsNummer: 1,
-                datoFra: isoDate("2019-01-01"),
-                harAndel: true,
-                teller: 1,
-                nevner: 1,
-              },
-            ],
+            selveierskap: false,
+            personEierforhold: [],
             matrikkelnrRapportInfo: {
               kommunenummer: input.kommuneNr,
               gnr: Number(input.gnr),
@@ -282,8 +270,6 @@ function createBygning(input: {
               snr: 0,
               matrikkelNummer,
             },
-            eierforholdKode: kode("H", "Hjemmelshaver"),
-            datoFra: isoDate("2019-01-01"),
             arealtype: "Bebygd",
             matrikkelenhet: matrikkelNummer,
             harAndel: true,
