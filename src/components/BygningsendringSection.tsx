@@ -16,8 +16,8 @@ export function BygningsendringSection({ bygning }: Readonly<Props>) {
 
   const tittel = t(
     "rapport.BYG0011.bygningsendring",
-    "Bygningsendring {{lopenummer}}",
-    { lopenummer: bygning.lopenummer },
+    "Bygningsendring {{bygningsnummer}} - {{lopenummer}}",
+    { bygningsnummer: bygning.bygningsnummer, lopenummer: bygning.lopenummer },
   )
   const status = bygning.bygningstatusKode?.displayTekst
   const endringskode = bygning.bygningsendringsKode?.displayTekst
@@ -39,11 +39,6 @@ export function BygningsendringSection({ bygning }: Readonly<Props>) {
               </Tag>
             )}
           </div>
-
-          <h2 className="text-right text-gray-900 text-sm">
-            <div className="text-xs">{t(`rapport.BYG0011.bygningsnummer`)}</div>
-            <div className="text-xs">{bygning.bygningsnummer}</div>
-          </h2>
         </div>
 
         <OmBygget
