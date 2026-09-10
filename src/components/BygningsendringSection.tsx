@@ -1,11 +1,14 @@
 import { Tag } from "@kv-designsystem/react"
 import { useTranslation } from "react-i18next"
 import type { Bygning } from "../lib/schema/reports/bygg/byg0011/byggRapport.schema.ts"
+import type { Kontaktperson } from "../lib/schema/reports/bygg/shared/kontaktperson.schema.ts"
 import { ArealSection } from "./ArealSection.tsx"
 import { Bruksenheter } from "./Bruksenheter.tsx"
 import { BygningsstatuserSection } from "./BygningsstatuserSection.tsx"
 import { EtasjerSection } from "./EtasjerSection.tsx"
+import { Kontaktpersoner } from "./Kontaktpersoner.tsx"
 import { OmBygget } from "./OmBygget.tsx"
+import { Tiltakshavere } from "./Tiltakshavere.tsx"
 
 interface Props {
   readonly bygning: Bygning
@@ -21,6 +24,16 @@ export function BygningsendringSection({ bygning }: Readonly<Props>) {
   )
   const status = bygning.bygningstatusKode?.displayTekst
   const endringskode = bygning.bygningsendringsKode?.displayTekst
+
+  const tiltakshavere =
+    bygning.kontaktpersoner?.filter(
+      (k): k is Kontaktperson => k?.kontaktpersonKode?.kodeverdi === "T",
+    ) ?? []
+
+  const øvrigeKontaktpersoner =
+    bygning.kontaktpersoner?.filter(
+      (k): k is Kontaktperson => k?.kontaktpersonKode?.kodeverdi !== "T",
+    ) ?? []
 
   return (
     <section>
@@ -71,6 +84,14 @@ export function BygningsendringSection({ bygning }: Readonly<Props>) {
 
         {bygning.bruksenheter.length > 0 && (
           <Bruksenheter bruksenheter={bygning.bruksenheter} />
+        )}
+
+        {tiltakshavere.length > 0 && (
+          <Tiltakshavere tiltakshavere={tiltakshavere} />
+        )}
+
+        {øvrigeKontaktpersoner.length > 0 && (
+          <Kontaktpersoner kontaktpersoner={øvrigeKontaktpersoner} />
         )}
       </div>
     </section>
