@@ -249,7 +249,7 @@ export const nb = {
         fodselsnum: "Fødsels-/org.nr",
         navn: "Navn",
         addresse: "Adresse",
-        bruksenhet: "Knyttet bruksenhet",
+        bruksenhet: "Bruksenhet",
       },
       bygningslinje: {
         title: "Bygningslinjer",
