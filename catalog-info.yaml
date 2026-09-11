@@ -11,4 +11,4 @@ spec:
   owner: "heimdall"
   system: "m22"
   consumesApis:
-  - api:default/matrikkel-pdf-generering
+  - api:default/pdf-generator
