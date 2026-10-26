@@ -24,7 +24,7 @@
     "@hono/structured-logger": "^1.0.0",
     "@hono/swagger-ui": "^0.6.1",
     "@hono/zod-openapi": "^1.6.3",
-    "@kv-designsystem/react": "^1.0.0-alpha.4",
+    "@kv-designsystem/react": "^1.0.0-alpha.6",
     "@tailwindcss/cli": "^4.3.3",
     "clsx": "^2.1.1",
     "hono": "^4.13.13",
