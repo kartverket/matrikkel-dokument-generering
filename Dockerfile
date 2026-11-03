@@ -1,5 +1,5 @@
 # Stage 1: Build
-FROM oven/bun:1.4.4-alpine@sha256:4cf82f5686b196504fe119db3fcd9185b191f82ece82c40680e597228ec6070a AS builder
+FROM dhi.io/bun:1.4.4-alpine3.24-dev@sha256:2699d4021abe1deee50092d5dc3043f93779d6d1a7ef2dadff8a8a6fa1324b76 AS builder
 
 WORKDIR /srv
 
@@ -10,22 +10,18 @@ RUN bun run build     # builds dist/
 RUN bun build src/api/server.ts --outfile server.js --target bun --bundle
 
 # Stage 2: Runtime
-FROM oven/bun:1.4.4-alpine@sha256:4cf82f5686b196504fe119db3fcd9185b191f82ece82c40680e597228ec6070a
+FROM dhi.io/bun:1.4.4-alpine3.24@sha256:109847d243a134c7fefc3f3d39d26c2b2080117b36149bb3b307de7ff81e9217 AS runtime
 
-ENV USER_ID=150 \
-    USER_NAME=apprunner \
+ENV USER_ID=65532 \
     TZ=Europe/Oslo \
     PORT=8087
-
-RUN addgroup -g ${USER_ID} ${USER_NAME} \
-    && adduser -u ${USER_ID} -G ${USER_NAME} -D ${USER_NAME}
 
 WORKDIR /srv
 
 COPY --from=builder --chown=${USER_ID}:${USER_ID} /srv/server.js ./server.js
 COPY --from=builder --chown=${USER_ID}:${USER_ID} /srv/dist ./dist
 
-USER ${USER_NAME}
+USER ${USER_ID}
 
 EXPOSE 8087
 
