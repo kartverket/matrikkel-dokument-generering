@@ -10,7 +10,7 @@ RUN bun run build     # builds dist/
 RUN bun build src/api/server.ts --outfile server.js --target bun --bundle
 
 # Stage 2: Runtime
-FROM dhi.io/bun:1.4.4-alpine3.24@sha256:109847d243a134c7fefc3f3d39d26c2b2080117b36149bb3b307de7ff81e9217 AS runtime
+FROM dhi.io/bun:1.4.4-alpine@sha256:109847d243a134c7fefc3f3d39d26c2b2080117b36149bb3b307de7ff81e9217 AS runtime
 
 ENV USER_ID=65532 \
     TZ=Europe/Oslo \
