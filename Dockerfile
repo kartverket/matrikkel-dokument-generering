@@ -1,5 +1,5 @@
 # Stage 1: Build
-FROM dhi.io/bun:1.4.4-alpine3.24-dev@sha256:2699d4021abe1deee50092d5dc3043f93779d6d1a7ef2dadff8a8a6fa1324b76 AS builder
+FROM dhi.io/bun:1.4.4-alpine-dev@sha256:fb05b8b061db844af9e2ff18caa7f91c99e17144f2f982b9f0ae99783af57bbd AS builder
 
 WORKDIR /srv
 
@@ -10,7 +10,7 @@ RUN bun run build     # builds dist/
 RUN bun build src/api/server.ts --outfile server.js --target bun --bundle
 
 # Stage 2: Runtime
-FROM dhi.io/bun:1.4.4-alpine3.24@sha256:109847d243a134c7fefc3f3d39d26c2b2080117b36149bb3b307de7ff81e9217 AS runtime
+FROM dhi.io/bun:1.4.4-alpine@sha256:109847d243a134c7fefc3f3d39d26c2b2080117b36149bb3b307de7ff81e9217 AS runtime
 
 ENV USER_ID=65532 \
     TZ=Europe/Oslo \
