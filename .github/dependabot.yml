@@ -25,6 +25,9 @@ updates:
     schedule:
       interval: "weekly"
       day: "sunday"
+    cooldown:
+      exclude: # ikke cooldown for interne pakker
+        - "kartverket/*"
     groups:
       all-github-actions:
         patterns:
