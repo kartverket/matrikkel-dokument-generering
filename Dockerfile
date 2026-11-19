@@ -1,5 +1,5 @@
 # Stage 1: Build
-FROM dhi.io/bun:1.4.4-alpine-dev@sha256:fb05b8b061db844af9e2ff18caa7f91c99e17144f2f982b9f0ae99783af57bbd AS builder
+FROM dhi.io/bun:1.4.4-alpine-dev@sha256:eeac9f33abcae851f1408466ccc598e3e43ef155a83142a9fad8343e4ae08590 AS builder
 
 WORKDIR /srv
 
